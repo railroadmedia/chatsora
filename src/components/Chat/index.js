@@ -5,7 +5,7 @@ export default {
     install(Vue, options) {
         Vue.component(
             Chat.name,
-            Chat,
+            Chat
         );
     },
 };
