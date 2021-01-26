@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/railroadmedia/chatsora.git"
   },
-  "main": "./dist/chatsora.umd.min.js",
+  "main": "./dist/chatsora.umd.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -15,6 +15,7 @@
     "lib:build": "vue-cli-service build --target lib --name chatsora ./src/index.js; chmod 777 -R ./"
   },
   "dependencies": {
+    "ansi-styles": "^5.1.0",
     "autoprefixer": "^9.8.6",
     "core-js": "^3.6.5",
     "postcss": "^7.0.35",
