@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/railroadmedia/chatsora.git"
   },
-  "main": "./dist/chatsora.umd.js",
+  "main": "./dist/chatsora.umd.min.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
