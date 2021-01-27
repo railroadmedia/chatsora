@@ -16865,71 +16865,28 @@ var es_object_keys = __webpack_require__("b64b");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.for-each.js
 var web_dom_collections_for_each = __webpack_require__("159b");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"18fe4e4d-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=template&id=1758f52e&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',[_vm._v("messages")]),_c('div',[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.message),expression:"message"}],attrs:{"placeholder":"Type a message and press enter"},domProps:{"value":(_vm.message)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.sendMessage($event)},"input":function($event){if($event.target.composing){ return; }_vm.message=$event.target.value}}})])])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"10337961-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=template&id=384ac806&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-w-full tw-h-full tw-relative"},[_c('div',{staticClass:"messages-container tw-absolute tw-top-0 tw-left-0 tw-right-0 tw-overflow-y-auto"},[_c('div',_vm._l((_vm.$_messages),function(item){return _c('div',{key:item.id},[_vm._v(_vm._s(item.user.displayName)+": "+_vm._s(item.text))])}),0)]),_c('div',{staticClass:"tw-absolute tw-bottom-0 tw-left-0 tw-right-0"},[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.message),expression:"message"}],attrs:{"placeholder":"Type a message and press enter"},domProps:{"value":(_vm.message)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.sendMessage($event)},"input":function($event){if($event.target.composing){ return; }_vm.message=$event.target.value}}})])])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/Chat/Chat.vue?vue&type=template&id=1758f52e&
+// CONCATENATED MODULE: ./src/components/Chat/Chat.vue?vue&type=template&id=384ac806&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.trim.js
 var es_string_trim = __webpack_require__("498a");
 
-// EXTERNAL MODULE: ./node_modules/regenerator-runtime/runtime.js
-var runtime = __webpack_require__("96cf");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.to-string.js
-var es_object_to_string = __webpack_require__("d3b7");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.promise.js
-var es_promise = __webpack_require__("e6cf");
-
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js
-
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
-  try {
-    var info = gen[key](arg);
-    var value = info.value;
-  } catch (error) {
-    reject(error);
-    return;
-  }
-
-  if (info.done) {
-    resolve(value);
-  } else {
-    Promise.resolve(value).then(_next, _throw);
-  }
-}
-
-function _asyncToGenerator(fn) {
-  return function () {
-    var self = this,
-        args = arguments;
-    return new Promise(function (resolve, reject) {
-      var gen = fn.apply(self, args);
-
-      function _next(value) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
-      }
-
-      function _throw(err) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
-      }
-
-      _next(undefined);
-    });
-  };
-}
 // EXTERNAL MODULE: ./node_modules/stream-chat/dist/browser.es.js
 var browser_es = __webpack_require__("36c4");
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=script&lang=js&
 
-
-
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -16962,11 +16919,18 @@ var browser_es = __webpack_require__("36c4");
   },
   data: function data() {
     return {
-      messages: [],
       message: '',
       streamClient: null,
       channel: null
     };
+  },
+  computed: {
+    $_messages: {
+      cache: false,
+      get: function get() {
+        return this.channel ? this.channel.state.messages : [];
+      }
+    }
   },
   mounted: function mounted() {
     this.setupChat();
@@ -16975,67 +16939,29 @@ var browser_es = __webpack_require__("36c4");
     sendMessage: function sendMessage() {
       var _this = this;
 
-      return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var response;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return _this.channel.sendMessage({
-                  text: _this.message.trim()
-                });
-
-              case 2:
-                response = _context.sent;
-                console.log("Chat::sendMessage response: %s", JSON.stringify(response)); // {"message":{"id":"d690d4f8-24f2-4dbe-8e73-d4f6729b58f2","text":"test message\n","html":"<p>test message<br/></p>\n","type":"regular","user":{"id":"150259","role":"admin","created_at":"2021-01-26T09:25:38.136621Z","updated_at":"2021-01-26T14:10:37.276276Z","last_active":"2021-01-26T14:10:37.276276Z","banned":false,"online":true,"avatarUrl":"https://d2vyvo0tyx8ig5.cloudfront.net/avatars/150259_1557736362228.jpg","displayName":"bogdan.d","profileUrl":"https://dev.drumeo.com/laravel/public/members/profile/150259"},"attachments":[],"latest_reactions":[],"own_reactions":[],"reaction_counts":null,"reaction_scores":{},"reply_count":0,"cid":"messaging:test","created_at":"2021-01-26T14:18:51.511115Z","updated_at":"2021-01-26T14:18:51.511115Z","shadowed":false,"mentioned_users":[],"silent":false,"pinned":false,"pinned_at":null,"pinned_by":null,"pin_expires":null},"duration":"10.54ms"}
-
-              case 4:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
+      this.channel.sendMessage({
+        text: this.message.trim()
+      }).then(function () {
+        _this.message = '';
+      });
     },
     setupChat: function setupChat() {
       var _this2 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-        var state;
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _this2.streamClient = new browser_es["a" /* StreamChat */](_this2.apiKey, {
-                  timeout: 6000
-                });
-                _context2.next = 3;
-                return _this2.streamClient.connectUser({
-                  id: _this2.userId
-                }, _this2.token);
-
-              case 3:
-                _this2.channel = _this2.streamClient.channel('messaging', _this2.channelName, {});
-                _context2.next = 6;
-                return _this2.channel.watch();
-
-              case 6:
-                state = _context2.sent;
-                console.log("Chat::setupChat channel state: %s", JSON.stringify(state)); // todo - channel state contains existing messages - parse it into existing messages
-
-                _this2.channel.on('message.new', function (event) {
-                  console.log('received a new message', event.message.text);
-                  console.log("Now have ".concat(_this2.channel.state.messages.length, " stored in local state"));
-                });
-
-              case 9:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
+      this.streamClient = new browser_es["a" /* StreamChat */](this.apiKey, {
+        timeout: 6000
+      });
+      this.streamClient.connectUser({
+        id: this.userId
+      }, this.token).then(function () {
+        _this2.channel = _this2.streamClient.channel('messaging', _this2.channelName, {});
+        return _this2.channel.watch();
+      }).then(function () {
+        _this2.channel.on('message.new', function (event) {
+          console.log('received a new message', event.message.text);
+          console.log("Now have ".concat(_this2.channel.state.messages.length, " stored in local state"));
+        });
+      });
     }
   }
 });
