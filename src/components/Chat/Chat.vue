@@ -75,7 +75,8 @@ export default {
                 })
                 .then(() => {
                     this.channel.on('message.new', event => {
-                        console.log('received a new message', event.message.text);
+                        // message {"id":"ba84ad90-f146-4378-8af0-ff48c8a21910","text":"test url message https://dev.drumeo.com/members","html":"<p>test url message <a href=\"https://dev.drumeo.com/members\" rel=\"nofollow\">https://dev.drumeo.com/members</a></p>\n","type":"regular","user":{"id":"150259","role":"admin","created_at":"2021-01-26T09:25:38.136621Z","updated_at":"2021-01-28T14:12:48.841987Z","last_active":"2021-01-28T14:12:48.841987Z","banned":false,"online":true,"displayName":"bogdan.d","profileUrl":"https://dev.drumeo.com/laravel/public/members/profile/150259","avatarUrl":"https://d2vyvo0tyx8ig5.cloudfront.net/avatars/150259_1557736362228.jpg"},"attachments":[],"latest_reactions":[],"own_reactions":[],"reaction_counts":null,"reaction_scores":{},"reply_count":0,"cid":"messaging:test","created_at":"2021-01-28T14:21:18.727646Z","updated_at":"2021-01-28T14:21:18.727646Z","shadowed":false,"mentioned_users":[],"silent":false,"pinned":false,"pinned_at":null,"pinned_by":null,"pin_expires":null}
+                        console.log('received a new message: %s', JSON.stringify(event.message));
                         console.log(`Now have ${this.channel.state.messages.length} stored in local state`);
                     });
                 });

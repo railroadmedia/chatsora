@@ -16874,12 +16874,12 @@ var es_object_keys = __webpack_require__("b64b");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.for-each.js
 var web_dom_collections_for_each = __webpack_require__("159b");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"10337961-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=template&id=384ac806&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"10337961-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=template&id=440eea24&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-w-full tw-h-full tw-relative"},[_c('div',{staticClass:"messages-container tw-absolute tw-top-0 tw-left-0 tw-right-0 tw-overflow-y-auto"},[_c('div',_vm._l((_vm.$_messages),function(item){return _c('div',{key:item.id},[_vm._v(_vm._s(item.user.displayName)+": "+_vm._s(item.text))])}),0)]),_c('div',{staticClass:"tw-absolute tw-bottom-0 tw-left-0 tw-right-0"},[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.message),expression:"message"}],attrs:{"placeholder":"Type a message and press enter"},domProps:{"value":(_vm.message)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.sendMessage($event)},"input":function($event){if($event.target.composing){ return; }_vm.message=$event.target.value}}})])])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/Chat/Chat.vue?vue&type=template&id=384ac806&
+// CONCATENATED MODULE: ./src/components/Chat/Chat.vue?vue&type=template&id=440eea24&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.trim.js
 var es_string_trim = __webpack_require__("498a");
@@ -16967,7 +16967,8 @@ var browser_es = __webpack_require__("36c4");
         return _this2.channel.watch();
       }).then(function () {
         _this2.channel.on('message.new', function (event) {
-          console.log('received a new message', event.message.text);
+          // message {"id":"ba84ad90-f146-4378-8af0-ff48c8a21910","text":"test url message https://dev.drumeo.com/members","html":"<p>test url message <a href=\"https://dev.drumeo.com/members\" rel=\"nofollow\">https://dev.drumeo.com/members</a></p>\n","type":"regular","user":{"id":"150259","role":"admin","created_at":"2021-01-26T09:25:38.136621Z","updated_at":"2021-01-28T14:12:48.841987Z","last_active":"2021-01-28T14:12:48.841987Z","banned":false,"online":true,"displayName":"bogdan.d","profileUrl":"https://dev.drumeo.com/laravel/public/members/profile/150259","avatarUrl":"https://d2vyvo0tyx8ig5.cloudfront.net/avatars/150259_1557736362228.jpg"},"attachments":[],"latest_reactions":[],"own_reactions":[],"reaction_counts":null,"reaction_scores":{},"reply_count":0,"cid":"messaging:test","created_at":"2021-01-28T14:21:18.727646Z","updated_at":"2021-01-28T14:21:18.727646Z","shadowed":false,"mentioned_users":[],"silent":false,"pinned":false,"pinned_at":null,"pinned_by":null,"pin_expires":null}
+          console.log('received a new message: %s', JSON.stringify(event.message));
           console.log("Now have ".concat(_this2.channel.state.messages.length, " stored in local state"));
         });
       });
