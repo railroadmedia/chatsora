@@ -1,7 +1,12 @@
 <template>
     <div id="app">
-        <div>
-            <chat></chat>
+        <div style="width: 340px; height: 690px; border: 1px solid gray;">
+            <chat
+                api-key=""
+                token=""
+                user-id="150259"
+                channel-name="test"
+            ></chat>
         </div>
     </div>
 </template>

@@ -1,3 +1,17 @@
+.tw-border-b {
+  border-bottom-style: solid;
+}
 .messages-container {
-    bottom: 200px;
+  bottom: 100px;
+
+  p {
+    margin: 0;
+  }
+}
+.new-message-container {
+  height: 100px;
+
+  textarea {
+    height: 68px;
+  }
 }

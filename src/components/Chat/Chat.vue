@@ -1,19 +1,51 @@
 <template>
-    <div class="tw-w-full tw-h-full tw-relative">
-        <div class="messages-container tw-absolute tw-top-0 tw-left-0 tw-right-0 tw-overflow-y-auto">
-            <div>
+    <div class="tw-w-full tw-h-full tw-relative vuesora-override">
+        <div class="tw-h-10 tw-w-full tw-border-b tw-border-gray-600 tw-flex tw-flex-row tw-place-items-center">
+            <a
+                href="#"
+                class="tw-no-underline tw-font-semibold tw-ml-4"
+                @click.stop.prevent="toggleShowMembers"
+                v-if="channel"
+            >{{ channel.state.watcher_count }} ONLINE</a>
+        </div>
+        <div class="messages-container tw-absolute tw-top-10 mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto tw-p-3" style="">
+            <div ref="messages">
                 <div
                     v-for="item in $_messages"
                     :key="item.id"
-                >{{ item.user.displayName }}: {{ item.text }}</div>
+                    class="tw-flex tw-flex-row tw-py-2"
+                >
+                    <div class="tw-w-10 tw-h-10 tw-flex-shrink-0 tw-mr-1 tw-rounded-full tw-overflow-hidden">
+                        <a
+                            :href="item.user.profileUrl"
+                            target="_blank"
+                            class="tw-no-underline"
+                        >
+                            <img :src="item.user.avatarUrl" class="tw-max-w-full tw-h-auto" >
+                        </a>
+                    </div>
+                    <div class="tw-mt-2 tw-text-base">
+                        <a
+                            :href="item.user.profileUrl"
+                            target="_blank"
+                            class="tw-no-underline hover:tw-underline tw-text-black tw-font-semibold tw-text-lg"
+                        >{{ item.user.displayName }}</a>
+                        <span class="tw-mx-1 tw-font-semibold tw-text-sm" v-if="item.user.role == 'admin'">(Moderator):</span>
+                        <span class="tw-mr-1 tw-font-semibold tw-text-sm" v-if="item.user.role == 'user'">:</span>
+                        {{ item.text }}
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="tw-absolute tw-bottom-0 tw-left-0 tw-right-0">
-            <textarea
-                v-model="message"
-                placeholder="Type a message and press enter"
-                v-on:keyup.enter="sendMessage"
-            ></textarea>
+        <div class="new-message-container box-border tw-absolute tw-bottom-0 tw-left-0 tw-right-0">
+            <div class="tw-flex tw-flex-col tw-p-4">
+                <textarea
+                    v-model="message"
+                    placeholder="Type a message and press enter"
+                    v-on:keyup.enter="sendMessage"
+                    class=""
+                ></textarea>
+            </div>
         </div>
     </div>
 </template>
@@ -42,6 +74,7 @@ export default {
             message: '',
             streamClient: null,
             channel: null,
+            showMembers: false,
         };
     },
     computed: {
@@ -57,11 +90,13 @@ export default {
     },
     methods: {
         sendMessage() {
+            let text = this.message.trim();
+
+            this.message = '';
+
             this.channel
-                .sendMessage({ text: this.message.trim() })
-                .then(() => {
-                    this.message = '';
-                });
+                .sendMessage({ text })
+                .then(() => {});
         },
 
         setupChat() {
@@ -74,12 +109,13 @@ export default {
                     return this.channel.watch();
                 })
                 .then(() => {
-                    this.channel.on('message.new', event => {
-                        // message {"id":"ba84ad90-f146-4378-8af0-ff48c8a21910","text":"test url message https://dev.drumeo.com/members","html":"<p>test url message <a href=\"https://dev.drumeo.com/members\" rel=\"nofollow\">https://dev.drumeo.com/members</a></p>\n","type":"regular","user":{"id":"150259","role":"admin","created_at":"2021-01-26T09:25:38.136621Z","updated_at":"2021-01-28T14:12:48.841987Z","last_active":"2021-01-28T14:12:48.841987Z","banned":false,"online":true,"displayName":"bogdan.d","profileUrl":"https://dev.drumeo.com/laravel/public/members/profile/150259","avatarUrl":"https://d2vyvo0tyx8ig5.cloudfront.net/avatars/150259_1557736362228.jpg"},"attachments":[],"latest_reactions":[],"own_reactions":[],"reaction_counts":null,"reaction_scores":{},"reply_count":0,"cid":"messaging:test","created_at":"2021-01-28T14:21:18.727646Z","updated_at":"2021-01-28T14:21:18.727646Z","shadowed":false,"mentioned_users":[],"silent":false,"pinned":false,"pinned_at":null,"pinned_by":null,"pin_expires":null}
-                        console.log('received a new message: %s', JSON.stringify(event.message));
-                        console.log(`Now have ${this.channel.state.messages.length} stored in local state`);
-                    });
+                    // this.channel.on('message.new', event => {
+                    // });
                 });
+        },
+
+        toggleShowMembers() {
+            this.showMembers = !this.showMembers;
         },
     },
 }
