@@ -7,11 +7,24 @@
   p {
     margin: 0;
   }
+
+  .message-body .message-menu {
+    display: none;
+  }
+
+  .message-body:hover .message-menu {
+    display: block;
+  }
 }
 .new-message-container {
   height: 100px;
 
   textarea {
     height: 68px;
+  }
+}
+.message-edit {
+  textarea {
+    height: 100px;
   }
 }
