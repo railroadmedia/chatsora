@@ -39,17 +39,19 @@
                             {{ item.text }}
                             <div
                                 class="cs-message-menu tw-absolute tw-top-0 tw-right-0"
-                                v-if="item.user.id == userId"
+                                v-if="item.user.id == userId || isAdministrator"
                             >
                                 <div class="tw-flex tw-flex-row">
                                     <div
                                         class="tw-cursor-pointer cs-menu-item"
                                         title="Edit message"
+                                        v-if="item.user.id == userId"
                                         @click.stop.prevent="editMessage(item)"
                                     ><i class="far fa-comment-edit"></i></div>
                                     <div
                                         class="tw-cursor-pointer cs-menu-item"
                                         title="Remove message"
+                                        v-if="isAdministrator"
                                         @click.stop.prevent="showRemoveMessage(item)"
                                     ><i class="far fa-times-circle"></i></div>
                                 </div>
@@ -76,24 +78,50 @@
                         </div>
                     </div>
                 </div>
+                <div
+                    class="tw-py-2 tw-text-red-400"
+                    v-for="(message, index) in messageErrors"
+                    :key="`error-message-${index}`"
+                >{{ message }}</div>
             </div>
         </div>
-        <div v-if="showDialog" class="cs-dialog-container tw-absolute mt-1 tw-top-10 tw-left-0 tw-right-0 tw-z-10">
-            <div class="tw-w-full tw-h-full tw-flex tw-flex-col tw-place-content-center tw-place-items-center tw-bg-black tw-bg-opacity-25">
-                <div class="tw-flex-none tw-w-3/4 tw-p-3 tw-bg-white">
-                    <div class="cs-dialog-title">Delete message?</div>
-                    <div class="cs-dialog-body">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.</div>
-                    <div class="cs-dialog-actions tw-flex tw-flex-row tw-justify-end tw-mt-2">
-                        <div
-                            class="tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-border-solid tw-text-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center tw-mr-2"
-                            title="Cancel message edit"
-                            @click.stop.prevent="closeDialog()"
-                        >Cancel</div>
-                        <div
-                            class="tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-border-solid tw-text-white tw-bg-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center"
-                            title="Save message updates"
-                            @click.stop.prevent="closeDialog(true)"
-                        >Save</div>
+        <div
+            v-if="showDialog"
+            class="cs-dialog-container tw-absolute tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-z-10"
+        >
+            <div
+                class="tw-w-full tw-h-full tw-relative"
+            >
+                <div class="tw-absolute tw-inset-0 tw-bg-black tw-bg-opacity-25 tw-z-20" @click.stop.prevent="closeDialog()"></div>
+                <div class="tw-w-full tw-h-full tw-flex tw-flex-col tw-place-content-center tw-place-items-center">
+                    <div class="cs-dialog-window tw-flex-none tw-w-3/4 tw-bg-white tw-z-30">
+                        <div class="tw-bg-gray-200 tw-py-4 tw-px-3 tw-flex tw-items-center tw-place-content-between">
+                            <span class="tw-font-semibold tw-text-gray-700">Delete message?</span>
+                            <i class="fal fa-times tw-font-semibold tw-cursor-pointer" @click.stop.prevent="closeDialog()"></i>
+                        </div>
+                        <div class="tw-p-3">
+                            <p>This message will be permanently removed!</p>
+                            <div class="tw-flex tw-items-center tw-mt-2">
+                                <input type="checkbox" id="all-messages" v-model.lazy="messageRemove.allMessages">
+                                <label for="all-messages" class="tw-ml-1 tw-select-none">Delete all messages from {{ messageRemove.userDisplayName }}</label>
+                            </div>
+                            <div class="tw-flex tw-items-center tw-mt-2">
+                                <input type="checkbox" id="block-user" v-model.lazy="messageRemove.blockUser">
+                                <label for="block-user" class="tw-ml-1 tw-select-none">Block {{ messageRemove.userDisplayName }}</label>
+                            </div>
+                        </div>
+                        <div class="tw-flex tw-flex-row tw-justify-center tw-py-4 tw-px-3">
+                            <div
+                                class="tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-border-solid tw-text-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center tw-mr-2"
+                                title="Cancel message edit"
+                                @click.stop.prevent="closeDialog()"
+                            >Cancel</div>
+                            <div
+                                class="tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-border-solid tw-text-white tw-bg-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center"
+                                title="Save message updates"
+                                @click.stop.prevent="closeDialog(true)"
+                            >Ok</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -129,6 +157,10 @@ export default {
         channelName: {
             type: String,
         },
+        isAdministrator: {
+            type: Boolean,
+            default: () => false,
+        },
     },
     data() {
         return {
@@ -141,9 +173,12 @@ export default {
                 id: null,
                 text: ''
             },
+            messageErrors: [],
             messageRemove: {
                 id: null,
-                userId: null
+                userId: null,
+                allMessages: false,
+                blockUser: false
             },
         };
     },
@@ -166,7 +201,26 @@ export default {
 
             this.channel
                 .sendMessage({ text })
-                .then(() => {});
+                .then(() => {
+                    this.messageErrors = [];
+                })
+                .catch((error) => {
+                    let message = 'Message send error, please try again, if the error persists contact support.';
+
+                    if (error.response) {
+                        if (error.response.data && error.response.data.code) {
+                            if (error.response.data.code == 17) {
+                                message = 'Message send error, your account is currently suspended from chat, please contact support.';
+                            } else {
+                                message = message + ' Error code: ' + error.response.data.code;
+                            }
+                        } else if (error.response.data && error.response.data.StatusCode) {
+                            message = message + ' Error status code: ' + error.response.data.StatusCode;
+                        }
+                    }
+
+                    this.messageErrors.push(message);
+                });
         },
 
         setupChat() {
@@ -180,7 +234,7 @@ export default {
                 })
                 .then(() => {
                     // console.log("Chat::setupChat channel: %s", JSON.stringify(Object.keys(this.channel.state)));
-                    console.log("Chat::setupChat channel: %s", JSON.stringify(this.channel.state.messages));
+                    // console.log("Chat::setupChat messages: %s", JSON.stringify(this.channel.state.messages));
                     // this.channel.on('message.new', event => {
                     // });
                 });
@@ -218,14 +272,42 @@ export default {
         showRemoveMessage(message) {
             this.messageRemove = {
                 id: message.id,
-                userId: message.user.id
+                userId: message.user.id,
+                userDisplayName: message.user.displayName,
+                allMessages: false,
+                blockUser: false
             };
             this.showDialog = true;
         },
 
         closeDialog(confirmation) {
+
+            if (confirmation) {
+                this.streamClient.deleteMessage(this.messageRemove.id);
+
+                if (this.messageRemove.allMessages) {
+                    // todo - add logic to delete all messages
+                }
+
+                if (this.messageRemove.blockUser) {
+                    this.channel.banUser(
+                        this.messageRemove.userId,
+                        {
+                            banned_by_id: this.userId,
+                            reason: 'default'
+                        }
+                    );
+                }
+            }
+
             this.showDialog = false;
-            console.log("Chat::closeDialog confirmation: %s", JSON.stringify(confirmation));
+            this.messageRemove = {
+                id: null,
+                userId: null,
+                userName: null,
+                allMessages: false,
+                blockUser: false
+            };
         },
 
         getUserMembership(user) {
