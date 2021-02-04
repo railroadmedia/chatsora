@@ -6,7 +6,40 @@
                 class="tw-no-underline tw-font-semibold tw-ml-4"
                 @click.stop.prevent="toggleShowMembers"
                 v-if="channel"
-            >{{ channel.state.watcher_count }} ONLINE</a>
+            >{{ $_watcher_count }} ONLINE</a>
+        </div>
+        <div
+            class="cs-members-container tw-absolute tw-top-10 mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto tw-z-40"
+            v-if="showMembers"
+        >
+            <div class="tw-bg-gray-50 tw-p-3">
+                <div
+                    class="tw-flex tw-flex-row tw-py-2"
+                    v-for="item in $_watchers"
+                    :key="item.id"
+                >
+                    <div
+                        class="tw-flex-none tw-mr-1 tw-w-12 tw-h-12 tw-relative tw-overflow-hidden cs-user-avatar"
+                        :class="getUserMembership(item)"
+                    >
+                        <a
+                            :href="item.profileUrl"
+                            target="_blank"
+                            class="tw-no-underline"
+                        >
+                            <img :src="item.avatarUrl" class="tw-max-w-full tw-h-auto" >
+                        </a>
+                    </div>
+                    <div class="cs-message-body tw-mt-2 tw-text-base">
+                        <a
+                            :href="item.profileUrl"
+                            target="_blank"
+                            class="tw-no-underline hover:tw-underline tw-text-black tw-font-semibold tw-text-lg"
+                        >{{ item.displayName }}</a>
+                        <span class="tw-mx-1 tw-font-semibold tw-text-sm" v-if="item.role == 'admin'">(Moderator)</span>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="cs-messages-container tw-absolute tw-top-10 mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto tw-p-3">
             <div ref="messages">
@@ -102,10 +135,6 @@
                         <div class="tw-p-3">
                             <p>This message will be permanently removed!</p>
                             <div class="tw-flex tw-items-center tw-mt-2">
-                                <input type="checkbox" id="all-messages" v-model.lazy="messageRemove.allMessages">
-                                <label for="all-messages" class="tw-ml-1 tw-select-none">Delete all messages from {{ messageRemove.userDisplayName }}</label>
-                            </div>
-                            <div class="tw-flex tw-items-center tw-mt-2">
                                 <input type="checkbox" id="block-user" v-model.lazy="messageRemove.blockUser">
                                 <label for="block-user" class="tw-ml-1 tw-select-none">Block {{ messageRemove.userDisplayName }}</label>
                             </div>
@@ -177,16 +206,28 @@ export default {
             messageRemove: {
                 id: null,
                 userId: null,
-                allMessages: false,
                 blockUser: false
             },
+            channelWatchers: {},
         };
     },
     computed: {
         $_messages: {
             cache: false,
             get() {
-                return this.channel ? this.channel.state.messages : [];
+                return this.channel ? this.channel.state.messages.filter(message => message.type == 'regular') : [];
+            },
+        },
+        $_watchers: {
+            cache: false,
+            get() {
+                return this.channelWatchers;
+            },
+        },
+        $_watcher_count: {
+            cache: false,
+            get() {
+                return Object.keys(this.channelWatchers).length;
             },
         },
     },
@@ -233,11 +274,40 @@ export default {
                     return this.channel.watch();
                 })
                 .then(() => {
-                    // console.log("Chat::setupChat channel: %s", JSON.stringify(Object.keys(this.channel.state)));
+                    this.fetchWatchers();
+
+                    this.channel
+                        .on('user.watching.start', (event) => {
+                            this.$set(this.channelWatchers, event.user.id, event.user);
+                        });
+
+                    this.channel
+                        .on('user.watching.stop', (event) => {
+                            if (this.channelWatchers[event.user.id]) {
+                                this.$delete(this.channelWatchers, event.user.id);
+                            }
+                        });
+
                     // console.log("Chat::setupChat messages: %s", JSON.stringify(this.channel.state.messages));
                     // this.channel.on('message.new', event => {
                     // });
                 });
+        },
+
+        fetchWatchers() {
+
+            const limit = 1000;
+
+            this.channel.query({
+                watchers: { limit, offset: 0 },
+            })
+            .then(result => {
+                if (result.watchers) {
+                    result.watchers.forEach(user => {
+                        this.$set(this.channelWatchers, user.id, user);
+                    });
+                }
+            });
         },
 
         toggleShowMembers() {
@@ -285,10 +355,6 @@ export default {
             if (confirmation) {
                 this.streamClient.deleteMessage(this.messageRemove.id);
 
-                if (this.messageRemove.allMessages) {
-                    // todo - add logic to delete all messages
-                }
-
                 if (this.messageRemove.blockUser) {
                     this.channel.banUser(
                         this.messageRemove.userId,
@@ -305,7 +371,6 @@ export default {
                 id: null,
                 userId: null,
                 userName: null,
-                allMessages: false,
                 blockUser: false
             };
         },
