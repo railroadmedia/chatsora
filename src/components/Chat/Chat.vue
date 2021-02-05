@@ -41,8 +41,8 @@
                 </div>
             </div>
         </div>
-        <div class="cs-messages-container tw-absolute tw-top-10 mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto tw-p-3">
-            <div ref="messages">
+        <div class="cs-messages-container tw-absolute tw-top-10 mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto tw-p-3" ref="messages">
+            <div>
                 <div
                     v-for="item in $_messages"
                     :key="item.id"
@@ -69,7 +69,7 @@
                             >{{ item.user.displayName }}</a>
                             <span class="tw-mx-1 tw-font-semibold tw-text-sm" v-if="item.user.role == 'admin'">(Moderator):</span>
                             <span class="tw-mr-1 tw-font-semibold tw-text-sm" v-if="item.user.role == 'user'">:</span>
-                            {{ item.text }}
+                            <span v-html="getParsedMessage(item.text)"></span>
                             <div
                                 class="cs-message-menu tw-absolute tw-top-0 tw-right-0"
                                 v-if="item.user.id == userId || isAdministrator"
@@ -218,6 +218,12 @@ export default {
                 return this.channel ? this.channel.state.messages.filter(message => message.type == 'regular') : [];
             },
         },
+        $_messages_count: {
+            cache: false,
+            get() {
+                return this.$_messages.length;
+            },
+        },
         $_watchers: {
             cache: false,
             get() {
@@ -233,6 +239,20 @@ export default {
     },
     mounted() {
         this.setupChat();
+    },
+    watch: {
+        $_messages_count: function () {
+            let container = this.$refs.messages;
+
+            if (Math.ceil(container.scrollHeight - container.scrollTop) === container.clientHeight) {
+                this.$nextTick(() => {
+                    container.scroll({
+                        top: container.scrollHeight,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        }
     },
     methods: {
         sendMessage() {
@@ -377,6 +397,48 @@ export default {
 
         getUserMembership(user) {
             return 'cs-membership-' + user.accessLevelName;
+        },
+
+        getUrlsParsedText(text) {
+            return text.replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z09+&@#/%=~_|])/img, '<a href="$1">$1</a>');
+        },
+
+        getEmoticonsParsedText(text) {
+
+            let emoticons = {
+                ':)': 'fal fa-smile',
+                ':-)': 'fal fa-laugh',
+                ':D': 'fal fa-grin-beam',
+                ':-|': 'fal fa-grin',
+                ':|': 'fal fa-grin',
+                ':P': 'fal fa-grin-tongue',
+                ':p': 'fal fa-grin-tongue',
+                ':(': 'fal fa-frown',
+            }
+
+            let patterns = [];
+
+            let metachars = /[[\]{}()*+?.\\|^$\-,&#\s]/g;
+
+            for (let i in emoticons) {
+                if (emoticons[i]){
+                    patterns.push('('+i.replace(metachars, "\\$&")+')');
+                }
+            }
+
+            return text.replace(
+                new RegExp(patterns.join('|'),'g'),
+                function (match) {
+                    return typeof emoticons[match] != 'undefined' ?
+                        `<i class="${emoticons[match]}"></i>` : match;
+                }
+            );
+        },
+
+        getParsedMessage(text) {
+            let urlParsed = this.getUrlsParsedText(text);
+
+            return this.getEmoticonsParsedText(urlParsed);
         },
     },
 }
