@@ -48,7 +48,7 @@
                     :key="item.id"
                     class="tw-py-2 tw-relative"
                 >
-                    <div class="tw-flex tw-flex-row" v-if="messageEdit.id != item.id">
+                    <div class="tw-flex tw-flex-row" v-if="item.type == 'regular' && messageEdit.id != item.id">
                         <div
                             class="tw-flex-none tw-mr-1 tw-w-12 tw-h-12 tw-relative tw-overflow-hidden cs-user-avatar"
                             :class="getUserMembership(item.user)"
@@ -91,7 +91,7 @@
                             </div>
                         </div>
                     </div>
-                    <div v-if="messageEdit.id == item.id">
+                    <div v-if="item.type == 'regular' && messageEdit.id == item.id">
                         <div class="cs-message-edit">
                             <textarea
                                 v-model="messageEdit.text"
@@ -109,6 +109,9 @@
                                 >Save</div>
                             </div>
                         </div>
+                    </div>
+                    <div v-if="item.type == 'system'" class="tw-py-2 tw-text-gray-500">
+                        {{ item.text }}
                     </div>
                 </div>
                 <div
@@ -194,6 +197,7 @@ export default {
     data() {
         return {
             message: '',
+            messages: [],
             streamClient: null,
             channel: null,
             showMembers: false,
@@ -215,13 +219,13 @@ export default {
         $_messages: {
             cache: false,
             get() {
-                return this.channel ? this.channel.state.messages.filter(message => message.type == 'regular') : [];
+                return this.messages;
             },
         },
         $_messages_count: {
             cache: false,
             get() {
-                return this.$_messages.length;
+                return this.messages.length;
             },
         },
         $_watchers: {
@@ -293,8 +297,16 @@ export default {
                     this.channel = this.streamClient.channel('messaging', this.channelName, {})
                     return this.channel.watch();
                 })
-                .then(() => {
+                .then((state) => {
                     this.fetchWatchers();
+
+                    state.messages.forEach(message => {
+                        if (message.type == 'regular') {
+                            this.messages.push(message);
+                        }
+                    });
+
+                    this.messages.push({id: 'greeting', type: 'system', text: 'Welcome to chat!'});
 
                     this.channel
                         .on('user.watching.start', (event) => {
@@ -308,9 +320,12 @@ export default {
                             }
                         });
 
-                    // console.log("Chat::setupChat messages: %s", JSON.stringify(this.channel.state.messages));
-                    // this.channel.on('message.new', event => {
-                    // });
+                    this.channel
+                        .on('message.new', (event) => {
+                            if (event && event.message && event.message.type == 'regular') {
+                                this.messages.push(event.message);
+                            }
+                        });
                 });
         },
 
@@ -318,16 +333,17 @@ export default {
 
             const limit = 1000;
 
-            this.channel.query({
-                watchers: { limit, offset: 0 },
-            })
-            .then(result => {
-                if (result.watchers) {
-                    result.watchers.forEach(user => {
-                        this.$set(this.channelWatchers, user.id, user);
-                    });
-                }
-            });
+            this.channel
+                .query({
+                    watchers: { limit, offset: 0 },
+                })
+                .then(result => {
+                    if (result.watchers) {
+                        result.watchers.forEach(user => {
+                            this.$set(this.channelWatchers, user.id, user);
+                        });
+                    }
+                });
         },
 
         toggleShowMembers() {
