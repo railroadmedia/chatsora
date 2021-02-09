@@ -1,8 +1,5 @@
 @import './variables.scss';
 
-.tw-border-b {
-  border-bottom-style: solid;
-}
 .cs-members-container {
   bottom: 100px;
 }
@@ -14,16 +11,19 @@
     margin: 0;
   }
 
-  .cs-message-body .cs-message-menu {
+  .cs-message-menu {
+    top: -12px;
+    right: 10px;
+  }
+
+  .cs-message .cs-message-menu {
     display: none;
   }
 
-  .cs-message-body:hover .cs-message-menu {
+  .cs-message:hover .cs-message-menu {
     display: block;
   }
-  .cs-menu-item + .cs-menu-item {
-    margin-left: 5px;
-  }
+
   .cs-message-edit {
     textarea {
       height: 100px;

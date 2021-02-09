@@ -41,12 +41,12 @@
                 </div>
             </div>
         </div>
-        <div class="cs-messages-container tw-absolute tw-top-10 mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto tw-p-3" ref="messages">
-            <div>
+        <div class="cs-messages-container tw-absolute tw-top-10 mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto" ref="messages">
+            <div class="tw-mt-4">
                 <div
                     v-for="item in $_messages"
                     :key="item.id"
-                    class="tw-py-2 tw-relative"
+                    class="cs-message tw-p-3 tw-relative hover:tw-bg-gray-100"
                 >
                     <div class="tw-flex tw-flex-row" v-if="item.type == 'regular' && messageEdit.id != item.id">
                         <div
@@ -61,7 +61,7 @@
                                 <img :src="item.user.avatarUrl" class="tw-max-w-full tw-h-auto" >
                             </a>
                         </div>
-                        <div class="cs-message-body tw-mt-2 tw-text-base">
+                        <div class="tw-mt-2 tw-text-base">
                             <a
                                 :href="item.user.profileUrl"
                                 target="_blank"
@@ -70,23 +70,55 @@
                             <span class="tw-mx-1 tw-font-semibold tw-text-sm" v-if="item.user.role == 'admin'">(Moderator):</span>
                             <span class="tw-mr-1 tw-font-semibold tw-text-sm" v-if="item.user.role == 'user'">:</span>
                             <span v-html="getParsedMessage(item.text)"></span>
-                            <div
-                                class="cs-message-menu tw-absolute tw-top-0 tw-right-0"
-                                v-if="item.user.id == userId || isAdministrator"
-                            >
-                                <div class="tw-flex tw-flex-row">
+                        </div>
+                        <div
+                            class="cs-message-menu tw-absolute tw-text-base"
+                            v-if="item.user.id == userId || isAdministrator"
+                        >
+                            <div class="tw-flex tw-flex-row tw-bg-white tw-rounded-lg tw-border tw-border-gray-400 tw-divide-x tw-divide-gray-400 tw-text-gray-500 tw-cursor-pointer">
+                                <div
+                                    class="tw-px-2 hover:tw-text-black"
+                                    :class="{'tw-text-black': item.id == messageReact}"
+                                    @click.stop.prevent="toggleMessageReact(item)"
+                                ><i class="fal fa-smile"></i></div>
+                                <div
+                                    class="tw-px-2 hover:tw-text-black"
+                                ><i class="fal fa-reply-all"></i></div>
+                                <div
+                                    class="tw-px-2 hover:tw-text-black"
+                                    :class="{'tw-text-black': item.id == messageMenu}"
+                                    @click.stop.prevent="toggleMessageMenu(item)"
+                                ><i class="fal fa-ellipsis-h"></i></div>
+                            </div>
+                            <div class="tw-relative">
+                                <div
+                                    class="tw-mt-1 tw-absolute tw-right-0 tw-flex tw-flex-row tw-bg-white tw-rounded-lg tw-text-gray-500 tw-text-center tw-cursor-pointer tw-text-sm"
+                                    v-if="item.id == messageMenu"
+                                >
                                     <div
-                                        class="tw-cursor-pointer cs-menu-item"
-                                        title="Edit message"
+                                        class="hover:tw-text-black tw-px-2 tw-py-1"
+                                    >Pin</div>
+                                    <div
+                                        class="hover:tw-text-black tw-px-2 tw-py-1"
                                         v-if="item.user.id == userId"
                                         @click.stop.prevent="editMessage(item)"
-                                    ><i class="far fa-comment-edit"></i></div>
+                                    >Edit</div>
                                     <div
-                                        class="tw-cursor-pointer cs-menu-item"
-                                        title="Remove message"
+                                        class="hover:tw-text-black tw-px-2 tw-py-1"
                                         v-if="isAdministrator"
                                         @click.stop.prevent="showRemoveMessage(item)"
-                                    ><i class="far fa-times-circle"></i></div>
+                                    >Remove</div>
+                                </div>
+                                <div
+                                    class="tw-mt-1 tw-absolute tw-right-0 tw-flex tw-flex-row tw-bg-white tw-rounded-lg tw-text-gray-500 tw-text-center space-x-1 tw-px-1"
+                                    v-if="item.id == messageReact"
+                                >
+                                    <div
+                                        class="hover:tw-text-black tw-cursor-pointer tw-p-1"
+                                        v-for="reactOption in messageReactOptions"
+                                        :key="reactOption.type"
+                                        @click.stop.prevent="reactToMessage(item, reactOption)"
+                                    ><i :class="reactOption.classes"></i></div>
                                 </div>
                             </div>
                         </div>
@@ -98,12 +130,12 @@
                             ></textarea>
                             <div class="tw-flex tw-flex-row tw-justify-end tw-mt-2">
                                 <div
-                                    class="tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-border-solid tw-text-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center tw-mr-2"
+                                    class="tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center tw-mr-2"
                                     title="Cancel message edit"
                                     @click.stop.prevent="cancelMessageEdit(item)"
                                 >Cancel</div>
                                 <div
-                                    class="tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-border-solid tw-text-white tw-bg-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center"
+                                    class="tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-white tw-bg-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center"
                                     title="Save message updates"
                                     @click.stop.prevent="saveMessageEdit(item)"
                                 >Save</div>
@@ -144,12 +176,12 @@
                         </div>
                         <div class="tw-flex tw-flex-row tw-justify-center tw-py-4 tw-px-3">
                             <div
-                                class="tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-border-solid tw-text-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center tw-mr-2"
+                                class="tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center tw-mr-2"
                                 title="Cancel message edit"
                                 @click.stop.prevent="closeDialog()"
                             >Cancel</div>
                             <div
-                                class="tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-border-solid tw-text-white tw-bg-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center"
+                                class="tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-white tw-bg-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center"
                                 title="Save message updates"
                                 @click.stop.prevent="closeDialog(true)"
                             >Ok</div>
@@ -206,6 +238,16 @@ export default {
                 id: null,
                 text: ''
             },
+            messageMenu: null,
+            messageReact: null,
+            messageReactOptions: [
+                {classes: 'fal fa-thumbs-up', type: 'thumb'},
+                {classes: 'fal fa-heart', type: 'heart'},
+                {classes: 'fal fa-laugh', type: 'laugh'},
+                {classes: 'fal fa-surprise', type: 'surprised'},
+                {classes: 'fal fa-sad-tear', type: 'sad'},
+                {classes: 'fal fa-angry', type: 'angry'},
+            ],
             messageErrors: [],
             messageRemove: {
                 id: null,
@@ -264,28 +306,30 @@ export default {
 
             this.message = '';
 
-            this.channel
-                .sendMessage({ text })
-                .then(() => {
-                    this.messageErrors = [];
-                })
-                .catch((error) => {
-                    let message = 'Message send error, please try again, if the error persists contact support.';
+            if (text) {
+                this.channel
+                    .sendMessage({ text })
+                    .then(() => {
+                        this.messageErrors = [];
+                    })
+                    .catch((error) => {
+                        let message = 'Message send error, please try again, if the error persists contact support.';
 
-                    if (error.response) {
-                        if (error.response.data && error.response.data.code) {
-                            if (error.response.data.code == 17) {
-                                message = 'Message send error, your account is currently suspended from chat, please contact support.';
-                            } else {
-                                message = message + ' Error code: ' + error.response.data.code;
+                        if (error.response) {
+                            if (error.response.data && error.response.data.code) {
+                                if (error.response.data.code == 17) {
+                                    message = 'Message send error, your account is currently suspended from chat, please contact support.';
+                                } else {
+                                    message = message + ' Error code: ' + error.response.data.code;
+                                }
+                            } else if (error.response.data && error.response.data.StatusCode) {
+                                message = message + ' Error status code: ' + error.response.data.StatusCode;
                             }
-                        } else if (error.response.data && error.response.data.StatusCode) {
-                            message = message + ' Error status code: ' + error.response.data.StatusCode;
                         }
-                    }
 
-                    this.messageErrors.push(message);
-                });
+                        this.messageErrors.push(message);
+                    });
+            }
         },
 
         setupChat() {
@@ -300,11 +344,7 @@ export default {
                 .then((state) => {
                     this.fetchWatchers();
 
-                    state.messages.forEach(message => {
-                        if (message.type == 'regular') {
-                            this.messages.push(message);
-                        }
-                    });
+                    this.processMessages(state);
 
                     this.messages.push({id: 'greeting', type: 'system', text: 'Welcome to chat!'});
 
@@ -344,6 +384,15 @@ export default {
                         });
                     }
                 });
+        },
+
+        processMessages(state) {
+            state.messages.forEach(message => {
+                if (message.type == 'regular') {
+                    this.messages.push(message);
+                }
+            });
+            // console.log("Chat::processMessages messages: %s", JSON.stringify(this.messages));
         },
 
         toggleShowMembers() {
@@ -455,6 +504,26 @@ export default {
             let urlParsed = this.getUrlsParsedText(text);
 
             return this.getEmoticonsParsedText(urlParsed);
+        },
+
+        toggleMessageMenu(message) {
+            this.messageMenu = this.messageMenu == message.id ? null : message.id;
+            this.messageReact = null;
+        },
+
+        toggleMessageReact(message) {
+            this.messageReact = this.messageReact == message.id ? null : message.id;
+            this.messageMenu = null;
+        },
+
+        reactToMessage(message, reactOption) {
+            this.channel
+                .sendReaction(message.id, {
+                    type: reactOption.type
+                })
+                .then(response => {
+                    console.log("Chat::reactToMessage response: %s", JSON.stringify(response));
+                });
         },
     },
 }
