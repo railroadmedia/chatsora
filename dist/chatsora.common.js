@@ -17499,12 +17499,25 @@ var es_object_keys = __webpack_require__("b64b");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.for-each.js
 var web_dom_collections_for_each = __webpack_require__("159b");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5339f287-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=template&id=91a121b2&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-w-full tw-h-full tw-relative vuesora-override"},[_c('div',{staticClass:"tw-h-10 tw-w-full tw-border-b tw-border-gray-600 tw-flex tw-flex-row tw-place-items-center"},[(_vm.channel)?_c('a',{staticClass:"tw-no-underline tw-font-semibold tw-ml-4",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowMembers($event)}}},[_vm._v(_vm._s(_vm.$_watcher_count)+" ONLINE")]):_vm._e()]),(_vm.showMembers)?_c('div',{staticClass:"cs-members-container tw-absolute tw-top-10 mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto tw-z-40"},[_c('div',{staticClass:"tw-bg-gray-50 tw-p-3"},_vm._l((_vm.$_watchers),function(item){return _c('div',{key:item.id,staticClass:"tw-flex tw-flex-row tw-py-2"},[_c('div',{staticClass:"tw-flex-none tw-mr-1 tw-w-12 tw-h-12 tw-relative tw-overflow-hidden cs-user-avatar",class:_vm.getUserMembership(item)},[_c('a',{staticClass:"tw-no-underline",attrs:{"href":item.profileUrl,"target":"_blank"}},[_c('img',{staticClass:"tw-max-w-full tw-h-auto",attrs:{"src":item.avatarUrl}})])]),_c('div',{staticClass:"cs-message-body tw-mt-2 tw-text-base"},[_c('a',{staticClass:"tw-no-underline hover:tw-underline tw-text-black tw-font-semibold tw-text-lg",attrs:{"href":item.profileUrl,"target":"_blank"}},[_vm._v(_vm._s(item.displayName))]),(item.role == 'admin')?_c('span',{staticClass:"tw-mx-1 tw-font-semibold tw-text-sm"},[_vm._v("(Moderator)")]):_vm._e()])])}),0)]):_vm._e(),_c('div',{ref:"messages",staticClass:"cs-messages-container tw-absolute tw-top-10 mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto"},[_c('div',{staticClass:"tw-mt-4"},[_vm._l((_vm.$_messages),function(item){return _c('div',{key:item.id,staticClass:"cs-message tw-p-3 tw-relative hover:tw-bg-gray-100"},[(item.type == 'regular' && _vm.messageEdit.id != item.id)?_c('div',{staticClass:"tw-flex tw-flex-row"},[_c('div',{staticClass:"tw-flex-none tw-mr-1 tw-w-12 tw-h-12 tw-relative tw-overflow-hidden cs-user-avatar",class:_vm.getUserMembership(item.user)},[_c('a',{staticClass:"tw-no-underline",attrs:{"href":item.user.profileUrl,"target":"_blank"}},[_c('img',{staticClass:"tw-max-w-full tw-h-auto",attrs:{"src":item.user.avatarUrl}})])]),_c('div',{staticClass:"tw-mt-2 tw-text-base"},[_c('a',{staticClass:"tw-no-underline hover:tw-underline tw-text-black tw-font-semibold tw-text-lg",attrs:{"href":item.user.profileUrl,"target":"_blank"}},[_vm._v(_vm._s(item.user.displayName))]),(item.user.role == 'admin')?_c('span',{staticClass:"tw-mx-1 tw-font-semibold tw-text-sm"},[_vm._v("(Moderator):")]):_vm._e(),(item.user.role == 'user')?_c('span',{staticClass:"tw-mr-1 tw-font-semibold tw-text-sm"},[_vm._v(":")]):_vm._e(),_c('span',{domProps:{"innerHTML":_vm._s(_vm.getParsedMessage(item.text))}})]),(item.user.id == _vm.userId || _vm.isAdministrator)?_c('div',{staticClass:"cs-message-menu tw-absolute tw-text-base"},[_c('div',{staticClass:"tw-flex tw-flex-row tw-bg-white tw-rounded-lg tw-border tw-border-gray-400 tw-divide-x tw-divide-gray-400 tw-text-gray-500 tw-cursor-pointer"},[_c('div',{staticClass:"tw-px-2 hover:tw-text-black",class:{'tw-text-black': item.id == _vm.messageReact},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleMessageReact(item)}}},[_c('i',{staticClass:"fal fa-smile"})]),_vm._m(0,true),_c('div',{staticClass:"tw-px-2 hover:tw-text-black",class:{'tw-text-black': item.id == _vm.messageMenu},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleMessageMenu(item)}}},[_c('i',{staticClass:"fal fa-ellipsis-h"})])]),_c('div',{staticClass:"tw-relative"},[(item.id == _vm.messageMenu)?_c('div',{staticClass:"tw-mt-1 tw-absolute tw-right-0 tw-flex tw-flex-row tw-bg-white tw-rounded-lg tw-text-gray-500 tw-text-center tw-cursor-pointer tw-text-sm"},[_c('div',{staticClass:"hover:tw-text-black tw-px-2 tw-py-1"},[_vm._v("Pin")]),(item.user.id == _vm.userId)?_c('div',{staticClass:"hover:tw-text-black tw-px-2 tw-py-1",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.editMessage(item)}}},[_vm._v("Edit")]):_vm._e(),(_vm.isAdministrator)?_c('div',{staticClass:"hover:tw-text-black tw-px-2 tw-py-1",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.showRemoveMessage(item)}}},[_vm._v("Remove")]):_vm._e()]):_vm._e(),(item.id == _vm.messageReact)?_c('div',{staticClass:"tw-mt-1 tw-absolute tw-right-0 tw-flex tw-flex-row tw-bg-white tw-rounded-lg tw-text-gray-500 tw-text-center space-x-1 tw-px-1"},_vm._l((_vm.messageReactOptions),function(reactOption){return _c('div',{key:reactOption.type,staticClass:"hover:tw-text-black tw-cursor-pointer tw-p-1",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.reactToMessage(item, reactOption)}}},[_c('i',{class:reactOption.classes})])}),0):_vm._e()])]):_vm._e()]):_vm._e(),(item.type == 'regular' && _vm.messageEdit.id == item.id)?_c('div',[_c('div',{staticClass:"cs-message-edit"},[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.messageEdit.text),expression:"messageEdit.text"}],domProps:{"value":(_vm.messageEdit.text)},on:{"input":function($event){if($event.target.composing){ return; }_vm.$set(_vm.messageEdit, "text", $event.target.value)}}}),_c('div',{staticClass:"tw-flex tw-flex-row tw-justify-end tw-mt-2"},[_c('div',{staticClass:"tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center tw-mr-2",attrs:{"title":"Cancel message edit"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.cancelMessageEdit(item)}}},[_vm._v("Cancel")]),_c('div',{staticClass:"tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-white tw-bg-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center",attrs:{"title":"Save message updates"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.saveMessageEdit(item)}}},[_vm._v("Save")])])])]):_vm._e(),(item.type == 'system')?_c('div',{staticClass:"tw-py-2 tw-text-gray-500"},[_vm._v(" "+_vm._s(item.text)+" ")]):_vm._e()])}),_vm._l((_vm.messageErrors),function(message,index){return _c('div',{key:("error-message-" + index),staticClass:"tw-py-2 tw-text-red-400"},[_vm._v(_vm._s(message))])})],2)]),(_vm.showDialog)?_c('div',{staticClass:"cs-dialog-container tw-absolute tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-z-10"},[_c('div',{staticClass:"tw-w-full tw-h-full tw-relative"},[_c('div',{staticClass:"tw-absolute tw-inset-0 tw-bg-black tw-bg-opacity-25 tw-z-20",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}}),_c('div',{staticClass:"tw-w-full tw-h-full tw-flex tw-flex-col tw-place-content-center tw-place-items-center"},[_c('div',{staticClass:"cs-dialog-window tw-flex-none tw-w-3/4 tw-bg-white tw-z-30"},[_c('div',{staticClass:"tw-bg-gray-200 tw-py-4 tw-px-3 tw-flex tw-items-center tw-place-content-between"},[_c('span',{staticClass:"tw-font-semibold tw-text-gray-700"},[_vm._v("Delete message?")]),_c('i',{staticClass:"fal fa-times tw-font-semibold tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}})]),_c('div',{staticClass:"tw-p-3"},[_c('p',[_vm._v("This message will be permanently removed!")]),_c('div',{staticClass:"tw-flex tw-items-center tw-mt-2"},[_c('input',{directives:[{name:"model",rawName:"v-model.lazy",value:(_vm.messageRemove.blockUser),expression:"messageRemove.blockUser",modifiers:{"lazy":true}}],attrs:{"type":"checkbox","id":"block-user"},domProps:{"checked":Array.isArray(_vm.messageRemove.blockUser)?_vm._i(_vm.messageRemove.blockUser,null)>-1:(_vm.messageRemove.blockUser)},on:{"change":function($event){var $$a=_vm.messageRemove.blockUser,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.$set(_vm.messageRemove, "blockUser", $$a.concat([$$v])))}else{$$i>-1&&(_vm.$set(_vm.messageRemove, "blockUser", $$a.slice(0,$$i).concat($$a.slice($$i+1))))}}else{_vm.$set(_vm.messageRemove, "blockUser", $$c)}}}}),_c('label',{staticClass:"tw-ml-1 tw-select-none",attrs:{"for":"block-user"}},[_vm._v("Block "+_vm._s(_vm.messageRemove.userDisplayName))])])]),_c('div',{staticClass:"tw-flex tw-flex-row tw-justify-center tw-py-4 tw-px-3"},[_c('div',{staticClass:"tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center tw-mr-2",attrs:{"title":"Cancel message edit"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}},[_vm._v("Cancel")]),_c('div',{staticClass:"tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-white tw-bg-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center",attrs:{"title":"Save message updates"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog(true)}}},[_vm._v("Ok")])])])])])]):_vm._e(),_c('div',{staticClass:"cs-new-message-container box-border tw-absolute tw-bottom-0 tw-left-0 tw-right-0"},[_c('div',{staticClass:"tw-flex tw-flex-col tw-p-4"},[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.message),expression:"message"}],attrs:{"placeholder":"Type a message and press enter"},domProps:{"value":(_vm.message)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.sendMessage($event)},"input":function($event){if($event.target.composing){ return; }_vm.message=$event.target.value}}})])])])}
-var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-px-2 hover:tw-text-black"},[_c('i',{staticClass:"fal fa-reply-all"})])}]
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5339f287-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=template&id=53069ff0&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-w-full tw-h-full tw-relative vuesora-override"},[_c('div',{staticClass:"tw-h-10 tw-w-full tw-border-b tw-border-gray-600 tw-flex tw-flex-row tw-place-items-center"},[(_vm.channel)?_c('a',{staticClass:"tw-no-underline tw-font-semibold tw-ml-4",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowMembers($event)}}},[_vm._v(_vm._s(_vm.$_watcher_count)+" ONLINE")]):_vm._e()]),(_vm.showMembers)?_c('div',{staticClass:"cs-members-container tw-absolute tw-top-10 mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto tw-z-40"},[_c('div',{staticClass:"tw-bg-gray-50 tw-p-3"},_vm._l((_vm.$_watchers),function(item){return _c('div',{key:item.id,staticClass:"tw-py-2"},[_c('chat-user',{attrs:{"user":item}})],1)}),0)]):_vm._e(),_c('div',{ref:"messages",staticClass:"cs-messages-container tw-absolute tw-top-10 mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto"},[_c('div',{staticClass:"tw-mt-4"},[_vm._l((_vm.$_messages),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId}})],1)}),_vm._l((_vm.messageErrors),function(message,index){return _c('div',{key:("error-message-" + index),staticClass:"tw-py-2 tw-text-red-400"},[_vm._v(_vm._s(message))])})],2)]),(_vm.showDialog)?_c('div',{staticClass:"cs-dialog-container tw-absolute tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-z-10"},[_c('div',{staticClass:"tw-w-full tw-h-full tw-relative"},[_c('div',{staticClass:"tw-absolute tw-inset-0 tw-bg-black tw-bg-opacity-25 tw-z-20",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}}),_c('div',{staticClass:"tw-w-full tw-h-full tw-flex tw-flex-col tw-place-content-center tw-place-items-center"},[_c('div',{staticClass:"cs-dialog-window tw-flex-none tw-w-3/4 tw-bg-white tw-z-30"},[_c('div',{staticClass:"tw-bg-gray-200 tw-py-4 tw-px-3 tw-flex tw-items-center tw-place-content-between"},[_c('span',{staticClass:"tw-font-semibold tw-text-gray-700"},[_vm._v("Delete message?")]),_c('i',{staticClass:"fal fa-times tw-font-semibold tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}})]),_c('div',{staticClass:"tw-p-3"},[_c('p',[_vm._v("This message will be permanently removed!")]),_c('div',{staticClass:"tw-flex tw-items-center tw-mt-2"},[_c('input',{directives:[{name:"model",rawName:"v-model.lazy",value:(_vm.messageRemove.blockUser),expression:"messageRemove.blockUser",modifiers:{"lazy":true}}],attrs:{"type":"checkbox","id":"block-user"},domProps:{"checked":Array.isArray(_vm.messageRemove.blockUser)?_vm._i(_vm.messageRemove.blockUser,null)>-1:(_vm.messageRemove.blockUser)},on:{"change":function($event){var $$a=_vm.messageRemove.blockUser,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.$set(_vm.messageRemove, "blockUser", $$a.concat([$$v])))}else{$$i>-1&&(_vm.$set(_vm.messageRemove, "blockUser", $$a.slice(0,$$i).concat($$a.slice($$i+1))))}}else{_vm.$set(_vm.messageRemove, "blockUser", $$c)}}}}),_c('label',{staticClass:"tw-ml-1 tw-select-none",attrs:{"for":"block-user"}},[_vm._v("Block "+_vm._s(_vm.messageRemove.userDisplayName))])])]),_c('div',{staticClass:"tw-flex tw-flex-row tw-justify-center tw-py-4 tw-px-3"},[_c('div',{staticClass:"tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center tw-mr-2",attrs:{"title":"Cancel message edit"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}},[_vm._v("Cancel")]),_c('div',{staticClass:"tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-white tw-bg-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center",attrs:{"title":"Save message updates"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog(true)}}},[_vm._v("Ok")])])])])])]):_vm._e(),_c('div',{staticClass:"cs-new-message-container box-border tw-absolute tw-bottom-0 tw-left-0 tw-right-0"},[_c('div',{staticClass:"tw-flex tw-flex-col tw-p-4"},[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.message),expression:"message"}],attrs:{"placeholder":"Type a message and press enter"},domProps:{"value":(_vm.message)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.sendMessage($event)},"input":function($event){if($event.target.composing){ return; }_vm.message=$event.target.value}}})])])])}
+var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/Chat/Chat.vue?vue&type=template&id=91a121b2&
+// CONCATENATED MODULE: ./src/components/Chat/Chat.vue?vue&type=template&id=53069ff0&
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.trim.js
+var es_string_trim = __webpack_require__("498a");
+
+// EXTERNAL MODULE: ./node_modules/stream-chat/dist/browser.es.js
+var browser_es = __webpack_require__("36c4");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5339f287-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatMessage.vue?vue&type=template&id=59f71650&
+var ChatMessagevue_type_template_id_59f71650_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cs-message tw-p-3 hover:tw-bg-gray-100 tw-relative"},[(_vm.message.type == 'regular' && _vm.messageEdit.id != _vm.message.id)?_c('div',{staticClass:"tw-flex tw-flex-col tw-max-w-full"},[_c('chat-user',{attrs:{"user":_vm.message.user},scopedSlots:_vm._u([{key:"footer",fn:function(){return [(_vm.$_has_reactions)?_c('div',{staticClass:"tw-inline-flex tw-mt-1"},[_c('div',{staticClass:"tw-flex tw-flex-row tw-rounded-lg tw-border tw-border-gray-400 tw-divide-x tw-divide-gray-400 tw-text-gray-500 tw-cursor-pointer"},_vm._l((_vm.message.reaction_counts),function(count,reaction){return _c('div',{key:("message-reaction-" + reaction),staticClass:"tw-px-2 hover:tw-text-black"},[_c('i',{class:_vm.getReactionClasses(reaction)}),_c('span',{staticClass:"tw-text-sm tw-text-black tw-ml-1"},[_vm._v(_vm._s(count))])])}),0)]):_vm._e()]},proxy:true}],null,false,2825479604)},[_c('span',{staticClass:"tw-mr-1 tw-font-semibold tw-text-sm"},[_vm._v(":")]),_c('span',{staticClass:"tw-whitespace-normal",domProps:{"innerHTML":_vm._s(_vm.getParsedMessage(_vm.message.text))}})]),_c('chat-message-menu',{attrs:{"is-administrator":_vm.isAdministrator,"message":_vm.message,"message-reactions":_vm.messageReactions,"user-id":_vm.userId}})],1):_vm._e(),(_vm.message.type == 'regular' && _vm.messageEdit.id == _vm.message.id)?_c('div',[_c('div',{staticClass:"cs-message-edit"},[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.messageEdit.text),expression:"messageEdit.text"}],domProps:{"value":(_vm.messageEdit.text)},on:{"input":function($event){if($event.target.composing){ return; }_vm.$set(_vm.messageEdit, "text", $event.target.value)}}}),_c('div',{staticClass:"tw-flex tw-flex-row tw-justify-end tw-mt-2"},[_c('div',{staticClass:"tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center tw-mr-2",attrs:{"title":"Cancel message edit"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.cancelMessageEdit()}}},[_vm._v("Cancel")]),_c('div',{staticClass:"tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-white tw-bg-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center",attrs:{"title":"Save message updates"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.saveMessageEdit()}}},[_vm._v("Save")])])])]):_vm._e(),(_vm.message.type == 'system')?_c('div',{staticClass:"tw-py-2 tw-text-gray-500"},[_vm._v(" "+_vm._s(_vm.message.text)+" ")]):_vm._e()])}
+var ChatMessagevue_type_template_id_59f71650_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/components/Chat/ChatMessage.vue?vue&type=template&id=59f71650&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.join.js
 var es_array_join = __webpack_require__("a15b");
@@ -17521,22 +17534,14 @@ var es_regexp_to_string = __webpack_require__("25f0");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.replace.js
 var es_string_replace = __webpack_require__("5319");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.trim.js
-var es_string_trim = __webpack_require__("498a");
-
-// EXTERNAL MODULE: ./node_modules/stream-chat/dist/browser.es.js
-var browser_es = __webpack_require__("36c4");
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5339f287-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatMessageMenu.vue?vue&type=template&id=1324ff6b&
+var ChatMessageMenuvue_type_template_id_1324ff6b_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cs-message-menu tw-absolute tw-text-base"},[_c('div',{staticClass:"tw-flex tw-flex-row tw-bg-white tw-rounded-lg tw-border tw-border-gray-400 tw-divide-x tw-divide-gray-400 tw-text-gray-500 tw-cursor-pointer"},[_c('div',{staticClass:"tw-px-2 hover:tw-text-black",class:{'tw-text-black': _vm.messageReact},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleMessageReact()}}},[_c('i',{staticClass:"fal fa-smile"})]),_vm._m(0),_c('div',{staticClass:"tw-px-2 hover:tw-text-black",class:{'tw-text-black': _vm.messageMenu},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleMessageMenu()}}},[_c('i',{staticClass:"fal fa-ellipsis-h"})])]),_c('div',{staticClass:"tw-relative"},[(_vm.messageMenu)?_c('div',{staticClass:"tw-mt-1 tw-absolute tw-right-0 tw-flex tw-flex-row tw-bg-white tw-rounded-lg tw-text-gray-500 tw-text-center tw-cursor-pointer tw-text-sm"},[_c('div',{staticClass:"hover:tw-text-black tw-px-2 tw-py-1"},[_vm._v("Pin")]),(_vm.message.user.id == _vm.userId)?_c('div',{staticClass:"hover:tw-text-black tw-px-2 tw-py-1",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.editMessage()}}},[_vm._v("Edit")]):_vm._e(),(_vm.isAdministrator)?_c('div',{staticClass:"hover:tw-text-black tw-px-2 tw-py-1",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.removeMessage()}}},[_vm._v("Remove")]):_vm._e()]):_vm._e(),(_vm.messageReact)?_c('div',{staticClass:"tw-mt-1 tw-absolute tw-right-0 tw-flex tw-flex-row tw-bg-white tw-rounded-lg tw-text-gray-500 tw-text-center space-x-1 tw-px-1"},_vm._l((_vm.messageReactions),function(classes,reaction){return _c('div',{key:("add-reaction-" + reaction),staticClass:"hover:tw-text-black tw-cursor-pointer tw-p-1",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.reactToMessage(reaction)}}},[_c('i',{class:classes})])}),0):_vm._e()])])}
+var ChatMessageMenuvue_type_template_id_1324ff6b_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-px-2 hover:tw-text-black"},[_c('i',{staticClass:"fal fa-reply-all"})])}]
 
 
+// CONCATENATED MODULE: ./src/components/Chat/ChatMessageMenu.vue?vue&type=template&id=1324ff6b&
 
-
-
-
-
-
-
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatMessageMenu.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -17588,174 +17593,33 @@ var browser_es = __webpack_require__("36c4");
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ var Chatvue_type_script_lang_js_ = ({
-  name: 'Chat',
+/* harmony default export */ var ChatMessageMenuvue_type_script_lang_js_ = ({
+  name: 'ChatMessageMenu',
   props: {
-    apiKey: {
-      type: String
+    message: {
+      type: Object,
+      default: function _default() {
+        return {
+          id: '',
+          type: '',
+          text: '',
+          user: {
+            displayName: '',
+            avatarUrl: '',
+            profileUrl: '',
+            role: '',
+            accessLevelName: ''
+          }
+        };
+      }
     },
-    token: {
-      type: String
+    messageReactions: {
+      type: Object,
+      default: function _default() {
+        return {};
+      }
     },
     userId: {
-      type: String
-    },
-    channelName: {
       type: String
     },
     isAdministrator: {
@@ -17767,293 +17631,55 @@ var browser_es = __webpack_require__("36c4");
   },
   data: function data() {
     return {
-      message: '',
-      messages: [],
-      streamClient: null,
-      channel: null,
-      showMembers: false,
-      showDialog: false,
-      messageEdit: {
-        id: null,
-        text: ''
-      },
-      messageMenu: null,
-      messageReact: null,
-      messageReactOptions: [{
-        classes: 'fal fa-thumbs-up',
-        type: 'thumb'
-      }, {
-        classes: 'fal fa-heart',
-        type: 'heart'
-      }, {
-        classes: 'fal fa-laugh',
-        type: 'laugh'
-      }, {
-        classes: 'fal fa-surprise',
-        type: 'surprised'
-      }, {
-        classes: 'fal fa-sad-tear',
-        type: 'sad'
-      }, {
-        classes: 'fal fa-angry',
-        type: 'angry'
-      }],
-      messageErrors: [],
-      messageRemove: {
-        id: null,
-        userId: null,
-        blockUser: false
-      },
-      channelWatchers: {}
+      messageMenu: false,
+      messageReact: false
     };
   },
-  computed: {
-    $_messages: {
-      cache: false,
-      get: function get() {
-        return this.messages;
-      }
-    },
-    $_messages_count: {
-      cache: false,
-      get: function get() {
-        return this.messages.length;
-      }
-    },
-    $_watchers: {
-      cache: false,
-      get: function get() {
-        return this.channelWatchers;
-      }
-    },
-    $_watcher_count: {
-      cache: false,
-      get: function get() {
-        return Object.keys(this.channelWatchers).length;
-      }
-    }
-  },
   mounted: function mounted() {
-    this.setupChat();
-  },
-  watch: {
-    $_messages_count: function $_messages_count() {
-      var container = this.$refs.messages;
+    var _this = this;
 
-      if (Math.ceil(container.scrollHeight - container.scrollTop) === container.clientHeight) {
-        this.$nextTick(function () {
-          container.scroll({
-            top: container.scrollHeight,
-            behavior: 'smooth'
-          });
-        });
+    this.$root.$on('messageMenuToggled', function (payload) {
+      if (payload.message.id != _this.message.id) {
+        _this.messageReact = false;
+        _this.messageMenu = false;
       }
-    }
+    });
   },
   methods: {
-    sendMessage: function sendMessage() {
-      var _this = this;
-
-      var text = this.message.trim();
-      this.message = '';
-
-      if (text) {
-        this.channel.sendMessage({
-          text: text
-        }).then(function () {
-          _this.messageErrors = [];
-        }).catch(function (error) {
-          var message = 'Message send error, please try again, if the error persists contact support.';
-
-          if (error.response) {
-            if (error.response.data && error.response.data.code) {
-              if (error.response.data.code == 17) {
-                message = 'Message send error, your account is currently suspended from chat, please contact support.';
-              } else {
-                message = message + ' Error code: ' + error.response.data.code;
-              }
-            } else if (error.response.data && error.response.data.StatusCode) {
-              message = message + ' Error status code: ' + error.response.data.StatusCode;
-            }
-          }
-
-          _this.messageErrors.push(message);
-        });
-      }
-    },
-    setupChat: function setupChat() {
-      var _this2 = this;
-
-      this.streamClient = new browser_es["a" /* StreamChat */](this.apiKey, {
-        timeout: 6000
+    toggleMessageMenu: function toggleMessageMenu() {
+      this.$root.$emit('messageMenuToggled', {
+        message: this.message
       });
-      this.streamClient.connectUser({
-        id: this.userId
-      }, this.token).then(function () {
-        _this2.channel = _this2.streamClient.channel('messaging', _this2.channelName, {});
-        return _this2.channel.watch();
-      }).then(function (state) {
-        _this2.fetchWatchers();
-
-        _this2.processMessages(state);
-
-        _this2.messages.push({
-          id: 'greeting',
-          type: 'system',
-          text: 'Welcome to chat!'
-        });
-
-        _this2.channel.on('user.watching.start', function (event) {
-          _this2.$set(_this2.channelWatchers, event.user.id, event.user);
-        });
-
-        _this2.channel.on('user.watching.stop', function (event) {
-          if (_this2.channelWatchers[event.user.id]) {
-            _this2.$delete(_this2.channelWatchers, event.user.id);
-          }
-        });
-
-        _this2.channel.on('message.new', function (event) {
-          if (event && event.message && event.message.type == 'regular') {
-            _this2.messages.push(event.message);
-          }
-        });
+      this.messageMenu = !this.messageMenu;
+      this.messageReact = false;
+    },
+    toggleMessageReact: function toggleMessageReact() {
+      this.$root.$emit('messageMenuToggled', {
+        message: this.message
+      });
+      this.messageReact = !this.messageReact;
+      this.messageMenu = false;
+    },
+    editMessage: function editMessage() {
+      this.$root.$emit('editMessage', {
+        message: this.message
       });
     },
-    fetchWatchers: function fetchWatchers() {
-      var _this3 = this;
-
-      var limit = 1000;
-      this.channel.query({
-        watchers: {
-          limit: limit,
-          offset: 0
-        }
-      }).then(function (result) {
-        if (result.watchers) {
-          result.watchers.forEach(function (user) {
-            _this3.$set(_this3.channelWatchers, user.id, user);
-          });
-        }
+    removeMessage: function removeMessage() {
+      this.$root.$emit('removeMessage', {
+        message: this.message
       });
     },
-    processMessages: function processMessages(state) {
-      var _this4 = this;
-
-      state.messages.forEach(function (message) {
-        if (message.type == 'regular') {
-          _this4.messages.push(message);
-        }
-      }); // console.log("Chat::processMessages messages: %s", JSON.stringify(this.messages));
-    },
-    toggleShowMembers: function toggleShowMembers() {
-      this.showMembers = !this.showMembers;
-    },
-    editMessage: function editMessage(message) {
-      this.messageEdit = {
-        id: message.id,
-        text: message.text
-      };
-    },
-    cancelMessageEdit: function cancelMessageEdit() {
-      this.messageEdit = {
-        id: null,
-        text: ''
-      };
-    },
-    saveMessageEdit: function saveMessageEdit() {
-      var _this5 = this;
-
-      this.streamClient.updateMessage(this.messageEdit).then(function () {
-        _this5.messageEdit = {
-          id: null,
-          text: ''
-        };
-      });
-    },
-    showRemoveMessage: function showRemoveMessage(message) {
-      this.messageRemove = {
-        id: message.id,
-        userId: message.user.id,
-        userDisplayName: message.user.displayName,
-        allMessages: false,
-        blockUser: false
-      };
-      this.showDialog = true;
-    },
-    closeDialog: function closeDialog(confirmation) {
-      if (confirmation) {
-        this.streamClient.deleteMessage(this.messageRemove.id);
-
-        if (this.messageRemove.blockUser) {
-          this.channel.banUser(this.messageRemove.userId, {
-            banned_by_id: this.userId,
-            reason: 'default'
-          });
-        }
-      }
-
-      this.showDialog = false;
-      this.messageRemove = {
-        id: null,
-        userId: null,
-        userName: null,
-        blockUser: false
-      };
-    },
-    getUserMembership: function getUserMembership(user) {
-      return 'cs-membership-' + user.accessLevelName;
-    },
-    getUrlsParsedText: function getUrlsParsedText(text) {
-      return text.replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z09+&@#/%=~_|])/img, '<a href="$1">$1</a>');
-    },
-    getEmoticonsParsedText: function getEmoticonsParsedText(text) {
-      var emoticons = {
-        ':)': 'fal fa-smile',
-        ':-)': 'fal fa-laugh',
-        ':D': 'fal fa-grin-beam',
-        ':-|': 'fal fa-grin',
-        ':|': 'fal fa-grin',
-        ':P': 'fal fa-grin-tongue',
-        ':p': 'fal fa-grin-tongue',
-        ':(': 'fal fa-frown'
-      };
-      var patterns = [];
-      var metachars = /[[\]{}()*+?.\\|^$\-,&#\s]/g;
-
-      for (var i in emoticons) {
-        if (emoticons[i]) {
-          patterns.push('(' + i.replace(metachars, "\\$&") + ')');
-        }
-      }
-
-      return text.replace(new RegExp(patterns.join('|'), 'g'), function (match) {
-        return typeof emoticons[match] != 'undefined' ? "<i class=\"".concat(emoticons[match], "\"></i>") : match;
-      });
-    },
-    getParsedMessage: function getParsedMessage(text) {
-      var urlParsed = this.getUrlsParsedText(text);
-      return this.getEmoticonsParsedText(urlParsed);
-    },
-    toggleMessageMenu: function toggleMessageMenu(message) {
-      this.messageMenu = this.messageMenu == message.id ? null : message.id;
-      this.messageReact = null;
-    },
-    toggleMessageReact: function toggleMessageReact(message) {
-      this.messageReact = this.messageReact == message.id ? null : message.id;
-      this.messageMenu = null;
-    },
-    reactToMessage: function reactToMessage(message, reactOption) {
-      this.channel.sendReaction(message.id, {
-        type: reactOption.type
-      }).then(function (response) {
-        console.log("Chat::reactToMessage response: %s", JSON.stringify(response));
+    reactToMessage: function reactToMessage(reaction) {
+      this.$root.$emit('reactToMessage', {
+        message: this.message,
+        reaction: reaction
       });
     }
   }
 });
-// CONCATENATED MODULE: ./src/components/Chat/Chat.vue?vue&type=script&lang=js&
- /* harmony default export */ var Chat_Chatvue_type_script_lang_js_ = (Chatvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/Chat/ChatMessageMenu.vue?vue&type=script&lang=js&
+ /* harmony default export */ var Chat_ChatMessageMenuvue_type_script_lang_js_ = (ChatMessageMenuvue_type_script_lang_js_); 
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 /* globals __VUE_SSR_CONTEXT__ */
 
@@ -18154,7 +17780,7 @@ function normalizeComponent (
   }
 }
 
-// CONCATENATED MODULE: ./src/components/Chat/Chat.vue
+// CONCATENATED MODULE: ./src/components/Chat/ChatMessageMenu.vue
 
 
 
@@ -18163,6 +17789,687 @@ function normalizeComponent (
 /* normalize component */
 
 var component = normalizeComponent(
+  Chat_ChatMessageMenuvue_type_script_lang_js_,
+  ChatMessageMenuvue_type_template_id_1324ff6b_render,
+  ChatMessageMenuvue_type_template_id_1324ff6b_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var ChatMessageMenu = (component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5339f287-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatUser.vue?vue&type=template&id=c6f3b772&
+var ChatUservue_type_template_id_c6f3b772_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-flex tw-flex-row"},[_c('div',{staticClass:"tw-flex-none tw-mr-1 tw-w-12 tw-h-12 tw-relative tw-overflow-hidden cs-user-avatar",class:_vm.getUserMembershipClass()},[_c('a',{staticClass:"tw-no-underline",attrs:{"href":_vm.user.profileUrl,"target":"_blank"}},[_c('img',{staticClass:"tw-max-w-full tw-h-auto",attrs:{"src":_vm.user.avatarUrl}})])]),_c('div',{staticClass:"tw-mt-2 tw-text-base tw-flex tw-flex-col"},[_c('div',{},[_c('a',{staticClass:"tw-no-underline hover:tw-underline tw-text-black tw-font-semibold tw-text-lg",attrs:{"href":_vm.user.profileUrl,"target":"_blank"}},[_vm._v(_vm._s(_vm.user.displayName))]),(_vm.user.role == 'admin')?_c('span',{staticClass:"tw-ml-1 tw-font-semibold tw-text-sm"},[_vm._v("(Moderator)")]):_vm._e(),_vm._t("default")],2),_vm._t("footer")],2)])}
+var ChatUservue_type_template_id_c6f3b772_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/components/Chat/ChatUser.vue?vue&type=template&id=c6f3b772&
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatUser.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ var ChatUservue_type_script_lang_js_ = ({
+  name: 'ChatUser',
+  props: {
+    user: {
+      type: Object,
+      default: function _default() {
+        return {
+          displayName: '',
+          avatarUrl: '',
+          profileUrl: '',
+          role: '',
+          accessLevelName: ''
+        };
+      }
+    }
+  },
+  methods: {
+    getUserMembershipClass: function getUserMembershipClass() {
+      return 'cs-membership-' + this.user.accessLevelName;
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/components/Chat/ChatUser.vue?vue&type=script&lang=js&
+ /* harmony default export */ var Chat_ChatUservue_type_script_lang_js_ = (ChatUservue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/Chat/ChatUser.vue
+
+
+
+
+
+/* normalize component */
+
+var ChatUser_component = normalizeComponent(
+  Chat_ChatUservue_type_script_lang_js_,
+  ChatUservue_type_template_id_c6f3b772_render,
+  ChatUservue_type_template_id_c6f3b772_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var ChatUser = (ChatUser_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatMessage.vue?vue&type=script&lang=js&
+
+
+
+
+
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ var ChatMessagevue_type_script_lang_js_ = ({
+  name: 'ChatMessage',
+  components: {
+    ChatMessageMenu: ChatMessageMenu,
+    ChatUser: ChatUser
+  },
+  props: {
+    message: {
+      type: Object,
+      default: function _default() {
+        return {
+          id: '',
+          type: '',
+          text: '',
+          user: {
+            displayName: '',
+            avatarUrl: '',
+            profileUrl: '',
+            role: '',
+            accessLevelName: ''
+          }
+        };
+      }
+    },
+    userId: {
+      type: String
+    },
+    isAdministrator: {
+      type: Boolean,
+      default: function _default() {
+        return false;
+      }
+    }
+  },
+  data: function data() {
+    return {
+      messageEdit: {
+        id: null,
+        text: ''
+      },
+      messageReactions: {
+        'thumb': 'fal fa-thumbs-up',
+        'heart': 'fal fa-heart',
+        'laugh': 'fal fa-laugh',
+        'surprised': 'fal fa-surprise',
+        'sad': 'fal fa-sad-tear',
+        'angry': 'fal fa-angry'
+      }
+    };
+  },
+  computed: {
+    $_has_reactions: {
+      cache: false,
+      get: function get() {
+        return this.message && this.message.reaction_counts && Object.keys(this.message.reaction_counts).length > 0;
+      }
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.$root.$on('editMessage', function (payload) {
+      if (payload.message.id == _this.message.id) {
+        _this.messageEdit = {
+          id: payload.message.id,
+          text: payload.message.text
+        };
+      } else {
+        _this.cancelMessageEdit();
+      }
+    });
+  },
+  methods: {
+    getUrlsParsedText: function getUrlsParsedText(text) {
+      return text.replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z09+&@#/%=~_|])/img, '<a href="$1">$1</a>');
+    },
+    getEmoticonsParsedText: function getEmoticonsParsedText(text) {
+      var emoticons = {
+        ':)': 'fal fa-smile',
+        ':-)': 'fal fa-laugh',
+        ':D': 'fal fa-grin-beam',
+        ':-|': 'fal fa-grin',
+        ':|': 'fal fa-grin',
+        ':P': 'fal fa-grin-tongue',
+        ':p': 'fal fa-grin-tongue',
+        ':(': 'fal fa-frown'
+      };
+      var patterns = [];
+      var metachars = /[[\]{}()*+?.\\|^$\-,&#\s]/g;
+
+      for (var i in emoticons) {
+        if (emoticons[i]) {
+          patterns.push('(' + i.replace(metachars, "\\$&") + ')');
+        }
+      }
+
+      return text.replace(new RegExp(patterns.join('|'), 'g'), function (match) {
+        return typeof emoticons[match] != 'undefined' ? "<i class=\"".concat(emoticons[match], "\"></i>") : match;
+      });
+    },
+    getParsedMessage: function getParsedMessage(text) {
+      var urlParsed = this.getUrlsParsedText(text);
+      return this.getEmoticonsParsedText(urlParsed);
+    },
+    cancelMessageEdit: function cancelMessageEdit() {
+      this.messageEdit = {
+        id: null,
+        text: ''
+      };
+    },
+    saveMessageEdit: function saveMessageEdit() {
+      this.$root.$emit('updateMessage', {
+        message: this.message,
+        text: this.messageEdit.text
+      });
+      this.messageEdit = {
+        id: null,
+        text: ''
+      };
+    },
+    getReactionClasses: function getReactionClasses(reaction) {
+      return this.messageReactions[reaction];
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/components/Chat/ChatMessage.vue?vue&type=script&lang=js&
+ /* harmony default export */ var Chat_ChatMessagevue_type_script_lang_js_ = (ChatMessagevue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/Chat/ChatMessage.vue
+
+
+
+
+
+/* normalize component */
+
+var ChatMessage_component = normalizeComponent(
+  Chat_ChatMessagevue_type_script_lang_js_,
+  ChatMessagevue_type_template_id_59f71650_render,
+  ChatMessagevue_type_template_id_59f71650_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var ChatMessage = (ChatMessage_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=script&lang=js&
+
+
+
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ var Chatvue_type_script_lang_js_ = ({
+  name: 'Chat',
+  components: {
+    ChatMessage: ChatMessage,
+    ChatUser: ChatUser
+  },
+  props: {
+    apiKey: {
+      type: String
+    },
+    token: {
+      type: String
+    },
+    userId: {
+      type: String
+    },
+    channelName: {
+      type: String
+    },
+    isAdministrator: {
+      type: Boolean,
+      default: function _default() {
+        return false;
+      }
+    }
+  },
+  data: function data() {
+    return {
+      message: '',
+      messages: {},
+      streamClient: null,
+      channel: null,
+      showMembers: false,
+      showDialog: false,
+      messageErrors: [],
+      messageRemove: {
+        id: null,
+        userId: null,
+        blockUser: false
+      },
+      channelWatchers: {}
+    };
+  },
+  computed: {
+    $_messages: {
+      cache: false,
+      get: function get() {
+        return this.messages;
+      }
+    },
+    $_messages_count: {
+      cache: false,
+      get: function get() {
+        return Object.keys(this.messages).length;
+      }
+    },
+    $_watchers: {
+      cache: false,
+      get: function get() {
+        return this.channelWatchers;
+      }
+    },
+    $_watcher_count: {
+      cache: false,
+      get: function get() {
+        return Object.keys(this.channelWatchers).length;
+      }
+    }
+  },
+  mounted: function mounted() {
+    this.setupChat();
+    this.$root.$on('updateMessage', this.updateMessage);
+    this.$root.$on('reactToMessage', this.reactToMessage);
+    this.$root.$on('removeMessage', this.removeMessage);
+  },
+  watch: {
+    $_messages_count: function $_messages_count() {
+      var container = this.$refs.messages;
+
+      if (Math.ceil(container.scrollHeight - container.scrollTop) === container.clientHeight) {
+        this.$nextTick(function () {
+          container.scroll({
+            top: container.scrollHeight,
+            behavior: 'smooth'
+          });
+        });
+      }
+    }
+  },
+  methods: {
+    sendMessage: function sendMessage() {
+      var _this = this;
+
+      var text = this.message.trim();
+      this.message = '';
+
+      if (text) {
+        this.channel.sendMessage({
+          text: text
+        }).then(function () {
+          _this.messageErrors = [];
+        }).catch(function (error) {
+          var message = 'Message send error, please try again, if the error persists contact support.';
+
+          if (error.response) {
+            if (error.response.data && error.response.data.code) {
+              if (error.response.data.code == 17) {
+                message = 'Message send error, your account is currently suspended from chat, please contact support.';
+              } else {
+                message = message + ' Error code: ' + error.response.data.code;
+              }
+            } else if (error.response.data && error.response.data.StatusCode) {
+              message = message + ' Error status code: ' + error.response.data.StatusCode;
+            }
+          }
+
+          _this.messageErrors.push(message);
+        });
+      }
+    },
+    setupChat: function setupChat() {
+      var _this2 = this;
+
+      this.streamClient = new browser_es["a" /* StreamChat */](this.apiKey, {
+        timeout: 6000
+      });
+      this.streamClient.connectUser({
+        id: this.userId
+      }, this.token).then(function () {
+        _this2.channel = _this2.streamClient.channel('messaging', _this2.channelName, {});
+        return _this2.channel.watch();
+      }).then(function (state) {
+        _this2.fetchWatchers();
+
+        _this2.processMessages(state);
+
+        var greeting = {
+          id: 'greeting',
+          type: 'system',
+          text: 'Welcome to chat!'
+        };
+
+        _this2.$set(_this2.messages, greeting.id, greeting);
+
+        _this2.channel.on('user.watching.start', function (event) {
+          _this2.$set(_this2.channelWatchers, event.user.id, event.user);
+        });
+
+        _this2.channel.on('user.watching.stop', function (event) {
+          if (_this2.channelWatchers[event.user.id]) {
+            _this2.$delete(_this2.channelWatchers, event.user.id);
+          }
+        });
+
+        _this2.channel.on('message.new', function (event) {
+          if (event && event.message && event.message.type == 'regular') {
+            _this2.$set(_this2.messages, event.message.id, event.message);
+          }
+        });
+
+        _this2.channel.on('message.updated', function (event) {
+          console.log("Chat::setupChat [message.updated]");
+
+          if (event && event.message) {
+            if (event.message.type == 'regular') {
+              _this2.$set(_this2.messages, event.message.id, event.message);
+            } else {
+              _this2.$delete(_this2.messages, event.message.id);
+            }
+          }
+        });
+
+        _this2.channel.on('message.deleted', function (event) {
+          if (event && event.message && event.message.type != 'regular') {
+            _this2.$delete(_this2.messages, event.message.id, event.message);
+          }
+        });
+
+        _this2.channel.on('reaction.new', function (event) {
+          if (event && event.message) {
+            _this2.$set(_this2.messages, event.message.id, event.message);
+          }
+        }); // this.channel.on(event => {
+        //     console.log('event', event);
+        // });
+
+      });
+    },
+    fetchWatchers: function fetchWatchers() {
+      var _this3 = this;
+
+      var limit = 1000;
+      this.channel.query({
+        watchers: {
+          limit: limit,
+          offset: 0
+        }
+      }).then(function (result) {
+        if (result.watchers) {
+          result.watchers.forEach(function (user) {
+            _this3.$set(_this3.channelWatchers, user.id, user);
+          });
+        }
+      });
+    },
+    processMessages: function processMessages(state) {
+      var _this4 = this;
+
+      state.messages.forEach(function (message) {
+        if (message.type == 'regular') {
+          _this4.$set(_this4.messages, message.id, message);
+        }
+      });
+    },
+    toggleShowMembers: function toggleShowMembers() {
+      this.showMembers = !this.showMembers;
+    },
+    updateMessage: function updateMessage(payload) {
+      this.streamClient.updateMessage({
+        id: payload.message.id,
+        text: payload.text
+      }).then(function () {// console.log("Chat::updateMessage");
+        // todo - check for banned users
+      });
+    },
+    removeMessage: function removeMessage(payload) {
+      this.messageRemove = {
+        id: payload.message.id,
+        userId: payload.message.user.id,
+        userDisplayName: payload.message.user.displayName,
+        allMessages: false,
+        blockUser: false
+      };
+      this.showDialog = true;
+    },
+    closeDialog: function closeDialog(confirmation) {
+      if (confirmation) {
+        this.streamClient.deleteMessage(this.messageRemove.id);
+
+        if (this.messageRemove.blockUser) {
+          this.channel.banUser(this.messageRemove.userId, {
+            banned_by_id: this.userId,
+            reason: 'default'
+          });
+        }
+      }
+
+      this.showDialog = false;
+      this.messageRemove = {
+        id: null,
+        userId: null,
+        userName: null,
+        blockUser: false
+      };
+    },
+    reactToMessage: function reactToMessage(payload) {
+      this.channel.sendReaction(payload.message.id, {
+        type: payload.reaction
+      }).then(function () {// console.log("Chat::reactToMessage response: %s", JSON.stringify(response));
+        // todo - check for banned users
+      });
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/components/Chat/Chat.vue?vue&type=script&lang=js&
+ /* harmony default export */ var Chat_Chatvue_type_script_lang_js_ = (Chatvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/Chat/Chat.vue
+
+
+
+
+
+/* normalize component */
+
+var Chat_component = normalizeComponent(
   Chat_Chatvue_type_script_lang_js_,
   render,
   staticRenderFns,
@@ -18173,7 +18480,7 @@ var component = normalizeComponent(
   
 )
 
-/* harmony default export */ var Chat = (component.exports);
+/* harmony default export */ var Chat = (Chat_component.exports);
 // CONCATENATED MODULE: ./src/components/index.js
 
 var Components = {

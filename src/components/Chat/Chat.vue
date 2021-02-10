@@ -14,30 +14,11 @@
         >
             <div class="tw-bg-gray-50 tw-p-3">
                 <div
-                    class="tw-flex tw-flex-row tw-py-2"
+                    class="tw-py-2"
                     v-for="item in $_watchers"
                     :key="item.id"
                 >
-                    <div
-                        class="tw-flex-none tw-mr-1 tw-w-12 tw-h-12 tw-relative tw-overflow-hidden cs-user-avatar"
-                        :class="getUserMembership(item)"
-                    >
-                        <a
-                            :href="item.profileUrl"
-                            target="_blank"
-                            class="tw-no-underline"
-                        >
-                            <img :src="item.avatarUrl" class="tw-max-w-full tw-h-auto" >
-                        </a>
-                    </div>
-                    <div class="cs-message-body tw-mt-2 tw-text-base">
-                        <a
-                            :href="item.profileUrl"
-                            target="_blank"
-                            class="tw-no-underline hover:tw-underline tw-text-black tw-font-semibold tw-text-lg"
-                        >{{ item.displayName }}</a>
-                        <span class="tw-mx-1 tw-font-semibold tw-text-sm" v-if="item.role == 'admin'">(Moderator)</span>
-                    </div>
+                    <chat-user :user="item"></chat-user>
                 </div>
             </div>
         </div>
@@ -46,105 +27,12 @@
                 <div
                     v-for="item in $_messages"
                     :key="item.id"
-                    class="cs-message tw-p-3 tw-relative hover:tw-bg-gray-100"
                 >
-                    <div class="tw-flex tw-flex-row" v-if="item.type == 'regular' && messageEdit.id != item.id">
-                        <div
-                            class="tw-flex-none tw-mr-1 tw-w-12 tw-h-12 tw-relative tw-overflow-hidden cs-user-avatar"
-                            :class="getUserMembership(item.user)"
-                        >
-                            <a
-                                :href="item.user.profileUrl"
-                                target="_blank"
-                                class="tw-no-underline"
-                            >
-                                <img :src="item.user.avatarUrl" class="tw-max-w-full tw-h-auto" >
-                            </a>
-                        </div>
-                        <div class="tw-mt-2 tw-text-base">
-                            <a
-                                :href="item.user.profileUrl"
-                                target="_blank"
-                                class="tw-no-underline hover:tw-underline tw-text-black tw-font-semibold tw-text-lg"
-                            >{{ item.user.displayName }}</a>
-                            <span class="tw-mx-1 tw-font-semibold tw-text-sm" v-if="item.user.role == 'admin'">(Moderator):</span>
-                            <span class="tw-mr-1 tw-font-semibold tw-text-sm" v-if="item.user.role == 'user'">:</span>
-                            <span v-html="getParsedMessage(item.text)"></span>
-                        </div>
-                        <div
-                            class="cs-message-menu tw-absolute tw-text-base"
-                            v-if="item.user.id == userId || isAdministrator"
-                        >
-                            <div class="tw-flex tw-flex-row tw-bg-white tw-rounded-lg tw-border tw-border-gray-400 tw-divide-x tw-divide-gray-400 tw-text-gray-500 tw-cursor-pointer">
-                                <div
-                                    class="tw-px-2 hover:tw-text-black"
-                                    :class="{'tw-text-black': item.id == messageReact}"
-                                    @click.stop.prevent="toggleMessageReact(item)"
-                                ><i class="fal fa-smile"></i></div>
-                                <div
-                                    class="tw-px-2 hover:tw-text-black"
-                                ><i class="fal fa-reply-all"></i></div>
-                                <div
-                                    class="tw-px-2 hover:tw-text-black"
-                                    :class="{'tw-text-black': item.id == messageMenu}"
-                                    @click.stop.prevent="toggleMessageMenu(item)"
-                                ><i class="fal fa-ellipsis-h"></i></div>
-                            </div>
-                            <div class="tw-relative">
-                                <div
-                                    class="tw-mt-1 tw-absolute tw-right-0 tw-flex tw-flex-row tw-bg-white tw-rounded-lg tw-text-gray-500 tw-text-center tw-cursor-pointer tw-text-sm"
-                                    v-if="item.id == messageMenu"
-                                >
-                                    <div
-                                        class="hover:tw-text-black tw-px-2 tw-py-1"
-                                    >Pin</div>
-                                    <div
-                                        class="hover:tw-text-black tw-px-2 tw-py-1"
-                                        v-if="item.user.id == userId"
-                                        @click.stop.prevent="editMessage(item)"
-                                    >Edit</div>
-                                    <div
-                                        class="hover:tw-text-black tw-px-2 tw-py-1"
-                                        v-if="isAdministrator"
-                                        @click.stop.prevent="showRemoveMessage(item)"
-                                    >Remove</div>
-                                </div>
-                                <div
-                                    class="tw-mt-1 tw-absolute tw-right-0 tw-flex tw-flex-row tw-bg-white tw-rounded-lg tw-text-gray-500 tw-text-center space-x-1 tw-px-1"
-                                    v-if="item.id == messageReact"
-                                >
-                                    <div
-                                        class="hover:tw-text-black tw-cursor-pointer tw-p-1"
-                                        v-for="reactOption in messageReactOptions"
-                                        :key="reactOption.type"
-                                        @click.stop.prevent="reactToMessage(item, reactOption)"
-                                    ><i :class="reactOption.classes"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div v-if="item.type == 'regular' && messageEdit.id == item.id">
-                        <div class="cs-message-edit">
-                            <textarea
-                                v-model="messageEdit.text"
-                            ></textarea>
-                            <div class="tw-flex tw-flex-row tw-justify-end tw-mt-2">
-                                <div
-                                    class="tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center tw-mr-2"
-                                    title="Cancel message edit"
-                                    @click.stop.prevent="cancelMessageEdit(item)"
-                                >Cancel</div>
-                                <div
-                                    class="tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-white tw-bg-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center"
-                                    title="Save message updates"
-                                    @click.stop.prevent="saveMessageEdit(item)"
-                                >Save</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div v-if="item.type == 'system'" class="tw-py-2 tw-text-gray-500">
-                        {{ item.text }}
-                    </div>
+                    <chat-message
+                        :is-administrator="isAdministrator"
+                        :message="item"
+                        :user-id="userId"
+                    ></chat-message>
                 </div>
                 <div
                     class="tw-py-2 tw-text-red-400"
@@ -153,6 +41,7 @@
                 >{{ message }}</div>
             </div>
         </div>
+
         <div
             v-if="showDialog"
             class="cs-dialog-container tw-absolute tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-z-10"
@@ -190,6 +79,7 @@
                 </div>
             </div>
         </div>
+
         <div class="cs-new-message-container box-border tw-absolute tw-bottom-0 tw-left-0 tw-right-0">
             <div class="tw-flex tw-flex-col tw-p-4">
                 <textarea
@@ -205,9 +95,15 @@
 
 <script>
 import { StreamChat } from 'stream-chat';
+import ChatMessage from './ChatMessage.vue';
+import ChatUser from './ChatUser.vue';
 
 export default {
     name: 'Chat',
+    components: {
+        ChatMessage,
+        ChatUser,
+    },
     props: {
         apiKey: {
             type: String,
@@ -229,25 +125,11 @@ export default {
     data() {
         return {
             message: '',
-            messages: [],
+            messages: {},
             streamClient: null,
             channel: null,
             showMembers: false,
             showDialog: false,
-            messageEdit: {
-                id: null,
-                text: ''
-            },
-            messageMenu: null,
-            messageReact: null,
-            messageReactOptions: [
-                {classes: 'fal fa-thumbs-up', type: 'thumb'},
-                {classes: 'fal fa-heart', type: 'heart'},
-                {classes: 'fal fa-laugh', type: 'laugh'},
-                {classes: 'fal fa-surprise', type: 'surprised'},
-                {classes: 'fal fa-sad-tear', type: 'sad'},
-                {classes: 'fal fa-angry', type: 'angry'},
-            ],
             messageErrors: [],
             messageRemove: {
                 id: null,
@@ -267,7 +149,7 @@ export default {
         $_messages_count: {
             cache: false,
             get() {
-                return this.messages.length;
+                return  Object.keys(this.messages).length;
             },
         },
         $_watchers: {
@@ -285,6 +167,10 @@ export default {
     },
     mounted() {
         this.setupChat();
+
+        this.$root.$on('updateMessage', this.updateMessage);
+        this.$root.$on('reactToMessage', this.reactToMessage);
+        this.$root.$on('removeMessage', this.removeMessage);
     },
     watch: {
         $_messages_count: function () {
@@ -346,7 +232,9 @@ export default {
 
                     this.processMessages(state);
 
-                    this.messages.push({id: 'greeting', type: 'system', text: 'Welcome to chat!'});
+                    let greeting = {id: 'greeting', type: 'system', text: 'Welcome to chat!'};
+
+                    this.$set(this.messages, greeting.id, greeting);
 
                     this.channel
                         .on('user.watching.start', (event) => {
@@ -363,9 +251,39 @@ export default {
                     this.channel
                         .on('message.new', (event) => {
                             if (event && event.message && event.message.type == 'regular') {
-                                this.messages.push(event.message);
+                                this.$set(this.messages, event.message.id, event.message);
                             }
                         });
+
+                    this.channel
+                        .on('message.updated', (event) => {
+                            console.log("Chat::setupChat [message.updated]");
+                            if (event && event.message) {
+                                if (event.message.type == 'regular') {
+                                    this.$set(this.messages, event.message.id, event.message);
+                                } else {
+                                    this.$delete(this.messages, event.message.id);
+                                }
+                            }
+                        });
+
+                    this.channel
+                        .on('message.deleted', (event) => {
+                            if (event && event.message && event.message.type != 'regular') {
+                                this.$delete(this.messages, event.message.id, event.message);
+                            }
+                        });
+
+                    this.channel
+                        .on('reaction.new', (event) => {
+                            if (event && event.message) {
+                                this.$set(this.messages, event.message.id, event.message);
+                            }
+                        });
+
+                    // this.channel.on(event => {
+                    //     console.log('event', event);
+                    // });
                 });
         },
 
@@ -389,46 +307,32 @@ export default {
         processMessages(state) {
             state.messages.forEach(message => {
                 if (message.type == 'regular') {
-                    this.messages.push(message);
+                    this.$set(this.messages, message.id, message);
                 }
             });
-            // console.log("Chat::processMessages messages: %s", JSON.stringify(this.messages));
         },
 
         toggleShowMembers() {
             this.showMembers = !this.showMembers;
         },
 
-        editMessage(message) {
-            this.messageEdit = {
-                id: message.id,
-                text: message.text
-            };
-        },
-
-        cancelMessageEdit() {
-            this.messageEdit = {
-                id: null,
-                text: ''
-            };
-        },
-
-        saveMessageEdit() {
+        updateMessage(payload) {
             this.streamClient
-                .updateMessage(this.messageEdit)
+                .updateMessage({
+                    id: payload.message.id,
+                    text: payload.text
+                })
                 .then(() => {
-                    this.messageEdit = {
-                        id: null,
-                        text: ''
-                    };
+                    // console.log("Chat::updateMessage");
+                    // todo - check for banned users
                 });
         },
 
-        showRemoveMessage(message) {
+        removeMessage(payload) {
             this.messageRemove = {
-                id: message.id,
-                userId: message.user.id,
-                userDisplayName: message.user.displayName,
+                id: payload.message.id,
+                userId: payload.message.user.id,
+                userDisplayName: payload.message.user.displayName,
                 allMessages: false,
                 blockUser: false
             };
@@ -460,69 +364,17 @@ export default {
             };
         },
 
-        getUserMembership(user) {
-            return 'cs-membership-' + user.accessLevelName;
-        },
-
-        getUrlsParsedText(text) {
-            return text.replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z09+&@#/%=~_|])/img, '<a href="$1">$1</a>');
-        },
-
-        getEmoticonsParsedText(text) {
-
-            let emoticons = {
-                ':)': 'fal fa-smile',
-                ':-)': 'fal fa-laugh',
-                ':D': 'fal fa-grin-beam',
-                ':-|': 'fal fa-grin',
-                ':|': 'fal fa-grin',
-                ':P': 'fal fa-grin-tongue',
-                ':p': 'fal fa-grin-tongue',
-                ':(': 'fal fa-frown',
-            }
-
-            let patterns = [];
-
-            let metachars = /[[\]{}()*+?.\\|^$\-,&#\s]/g;
-
-            for (let i in emoticons) {
-                if (emoticons[i]){
-                    patterns.push('('+i.replace(metachars, "\\$&")+')');
-                }
-            }
-
-            return text.replace(
-                new RegExp(patterns.join('|'),'g'),
-                function (match) {
-                    return typeof emoticons[match] != 'undefined' ?
-                        `<i class="${emoticons[match]}"></i>` : match;
-                }
-            );
-        },
-
-        getParsedMessage(text) {
-            let urlParsed = this.getUrlsParsedText(text);
-
-            return this.getEmoticonsParsedText(urlParsed);
-        },
-
-        toggleMessageMenu(message) {
-            this.messageMenu = this.messageMenu == message.id ? null : message.id;
-            this.messageReact = null;
-        },
-
-        toggleMessageReact(message) {
-            this.messageReact = this.messageReact == message.id ? null : message.id;
-            this.messageMenu = null;
-        },
-
-        reactToMessage(message, reactOption) {
+        reactToMessage(payload) {
             this.channel
-                .sendReaction(message.id, {
-                    type: reactOption.type
-                })
-                .then(response => {
-                    console.log("Chat::reactToMessage response: %s", JSON.stringify(response));
+                .sendReaction(
+                    payload.message.id,
+                    {
+                        type: payload.reaction
+                    }
+                )
+                .then(() => {
+                    // console.log("Chat::reactToMessage response: %s", JSON.stringify(response));
+                    // todo - check for banned users
                 });
         },
     },
