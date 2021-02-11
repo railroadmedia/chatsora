@@ -12,6 +12,8 @@
                                 class="tw-px-2 hover:tw-text-black"
                                 v-for="(count, reaction) in message.reaction_counts"
                                 :key="`message-reaction-${reaction}`"
+                                @click.stop.prevent="toggleMessageReaction(reaction)"
+                                :title="getReactionUsers(reaction)"
                             >
                                 <i :class="getReactionClasses(reaction)"></i>
                                 <span class="tw-text-sm tw-text-black tw-ml-1">{{ count }}</span>
@@ -77,6 +79,9 @@ export default {
                     role: '',
                     accessLevelName: '',
                 },
+                latest_reactions: [],
+                own_reactions: [],
+                reaction_counts: {}
             }),
         },
         userId: {
@@ -196,6 +201,39 @@ export default {
         getReactionClasses(reaction) {
             return this.messageReactions[reaction];
         },
+
+        toggleMessageReaction(reaction) {
+            this.$root
+                .$emit(
+                    'toggleMessageReaction',
+                    {
+                        message: this.message,
+                        reaction: reaction
+                    }
+                );
+        },
+
+        hasOwnReaction(message, reactionType) {
+            let has = false;
+
+            message.own_reactions.forEach((reaction) => {
+                has = has || reaction.type == reactionType;
+            });
+
+            return has;
+        },
+
+        getReactionUsers(reactionType) {
+            let reactionUsers =
+                this.message
+                    .latest_reactions
+                    .filter((reaction) => reaction.type == reactionType )
+                    .map((reaction) => reaction.user.displayName );
+
+            // todo - update users who reacted string
+
+            return reactionUsers.join();
+        }
     },
 }
 </script>

@@ -200,6 +200,23 @@ exports.f = DESCRIPTORS ? nativeGetOwnPropertyDescriptor : function getOwnProper
 
 /***/ }),
 
+/***/ "07ac":
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__("23e7");
+var $values = __webpack_require__("6f53").values;
+
+// `Object.values` method
+// https://tc39.es/ecma262/#sec-object.values
+$({ target: 'Object', stat: true }, {
+  values: function values(O) {
+    return $values(O);
+  }
+});
+
+
+/***/ }),
+
 /***/ "0a06":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -426,6 +443,35 @@ function _iterableToArray(iter) {
 }
 
 module.exports = _iterableToArray;
+
+/***/ }),
+
+/***/ "13d5":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__("23e7");
+var $reduce = __webpack_require__("d58f").left;
+var arrayMethodIsStrict = __webpack_require__("a640");
+var arrayMethodUsesToLength = __webpack_require__("ae40");
+var CHROME_VERSION = __webpack_require__("2d00");
+var IS_NODE = __webpack_require__("605d");
+
+var STRICT_METHOD = arrayMethodIsStrict('reduce');
+var USES_TO_LENGTH = arrayMethodUsesToLength('reduce', { 1: 0 });
+// Chrome 80-82 has a critical bug
+// https://bugs.chromium.org/p/chromium/issues/detail?id=1049982
+var CHROME_BUG = !IS_NODE && CHROME_VERSION > 79 && CHROME_VERSION < 83;
+
+// `Array.prototype.reduce` method
+// https://tc39.es/ecma262/#sec-array.prototype.reduce
+$({ target: 'Array', proto: true, forced: !STRICT_METHOD || !USES_TO_LENGTH || CHROME_BUG }, {
+  reduce: function reduce(callbackfn /* , initialValue */) {
+    return $reduce(this, callbackfn, arguments.length, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
 
 /***/ }),
 
@@ -9741,6 +9787,32 @@ module.exports = {
 
 /***/ }),
 
+/***/ "4de4":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__("23e7");
+var $filter = __webpack_require__("b727").filter;
+var arrayMethodHasSpeciesSupport = __webpack_require__("1dde");
+var arrayMethodUsesToLength = __webpack_require__("ae40");
+
+var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('filter');
+// Edge 14- issue
+var USES_TO_LENGTH = arrayMethodUsesToLength('filter');
+
+// `Array.prototype.filter` method
+// https://tc39.es/ecma262/#sec-array.prototype.filter
+// with adding support of @@species
+$({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT || !USES_TO_LENGTH }, {
+  filter: function filter(callbackfn /* , thisArg */) {
+    return $filter(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+
+/***/ }),
+
 /***/ "4df4":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10441,6 +10513,45 @@ var TEMPLATE = String(String).split('String');
 })(Function.prototype, 'toString', function toString() {
   return typeof this == 'function' && getInternalState(this).source || inspectSource(this);
 });
+
+
+/***/ }),
+
+/***/ "6f53":
+/***/ (function(module, exports, __webpack_require__) {
+
+var DESCRIPTORS = __webpack_require__("83ab");
+var objectKeys = __webpack_require__("df75");
+var toIndexedObject = __webpack_require__("fc6a");
+var propertyIsEnumerable = __webpack_require__("d1e7").f;
+
+// `Object.{ entries, values }` methods implementation
+var createMethod = function (TO_ENTRIES) {
+  return function (it) {
+    var O = toIndexedObject(it);
+    var keys = objectKeys(O);
+    var length = keys.length;
+    var i = 0;
+    var result = [];
+    var key;
+    while (length > i) {
+      key = keys[i++];
+      if (!DESCRIPTORS || propertyIsEnumerable.call(O, key)) {
+        result.push(TO_ENTRIES ? [key, O[key]] : O[key]);
+      }
+    }
+    return result;
+  };
+};
+
+module.exports = {
+  // `Object.entries` method
+  // https://tc39.es/ecma262/#sec-object.entries
+  entries: createMethod(true),
+  // `Object.values` method
+  // https://tc39.es/ecma262/#sec-object.values
+  values: createMethod(false)
+};
 
 
 /***/ }),
@@ -16080,6 +16191,53 @@ module.exports = function (it, TAG, STATIC) {
 
 /***/ }),
 
+/***/ "d58f":
+/***/ (function(module, exports, __webpack_require__) {
+
+var aFunction = __webpack_require__("1c0b");
+var toObject = __webpack_require__("7b0b");
+var IndexedObject = __webpack_require__("44ad");
+var toLength = __webpack_require__("50c4");
+
+// `Array.prototype.{ reduce, reduceRight }` methods implementation
+var createMethod = function (IS_RIGHT) {
+  return function (that, callbackfn, argumentsLength, memo) {
+    aFunction(callbackfn);
+    var O = toObject(that);
+    var self = IndexedObject(O);
+    var length = toLength(O.length);
+    var index = IS_RIGHT ? length - 1 : 0;
+    var i = IS_RIGHT ? -1 : 1;
+    if (argumentsLength < 2) while (true) {
+      if (index in self) {
+        memo = self[index];
+        index += i;
+        break;
+      }
+      index += i;
+      if (IS_RIGHT ? index < 0 : length <= index) {
+        throw TypeError('Reduce of empty array with no initial value');
+      }
+    }
+    for (;IS_RIGHT ? index >= 0 : length > index; index += i) if (index in self) {
+      memo = callbackfn(memo, self[index], index, O);
+    }
+    return memo;
+  };
+};
+
+module.exports = {
+  // `Array.prototype.reduce` method
+  // https://tc39.es/ecma262/#sec-array.prototype.reduce
+  left: createMethod(false),
+  // `Array.prototype.reduceRight` method
+  // https://tc39.es/ecma262/#sec-array.prototype.reduceright
+  right: createMethod(true)
+};
+
+
+/***/ }),
+
 /***/ "d784":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16209,6 +16367,32 @@ module.exports = function (KEY, length, exec, sham) {
 
   if (sham) createNonEnumerableProperty(RegExp.prototype[SYMBOL], 'sham', true);
 };
+
+
+/***/ }),
+
+/***/ "d81d":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__("23e7");
+var $map = __webpack_require__("b727").map;
+var arrayMethodHasSpeciesSupport = __webpack_require__("1dde");
+var arrayMethodUsesToLength = __webpack_require__("ae40");
+
+var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('map');
+// FF49- issue
+var USES_TO_LENGTH = arrayMethodUsesToLength('map');
+
+// `Array.prototype.map` method
+// https://tc39.es/ecma262/#sec-array.prototype.map
+// with adding support of @@species
+$({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT || !USES_TO_LENGTH }, {
+  map: function map(callbackfn /* , thisArg */) {
+    return $map(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
 
 
 /***/ }),
@@ -17499,12 +17683,18 @@ var es_object_keys = __webpack_require__("b64b");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.for-each.js
 var web_dom_collections_for_each = __webpack_require__("159b");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5339f287-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=template&id=53069ff0&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-w-full tw-h-full tw-relative vuesora-override"},[_c('div',{staticClass:"tw-h-10 tw-w-full tw-border-b tw-border-gray-600 tw-flex tw-flex-row tw-place-items-center"},[(_vm.channel)?_c('a',{staticClass:"tw-no-underline tw-font-semibold tw-ml-4",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowMembers($event)}}},[_vm._v(_vm._s(_vm.$_watcher_count)+" ONLINE")]):_vm._e()]),(_vm.showMembers)?_c('div',{staticClass:"cs-members-container tw-absolute tw-top-10 mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto tw-z-40"},[_c('div',{staticClass:"tw-bg-gray-50 tw-p-3"},_vm._l((_vm.$_watchers),function(item){return _c('div',{key:item.id,staticClass:"tw-py-2"},[_c('chat-user',{attrs:{"user":item}})],1)}),0)]):_vm._e(),_c('div',{ref:"messages",staticClass:"cs-messages-container tw-absolute tw-top-10 mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto"},[_c('div',{staticClass:"tw-mt-4"},[_vm._l((_vm.$_messages),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId}})],1)}),_vm._l((_vm.messageErrors),function(message,index){return _c('div',{key:("error-message-" + index),staticClass:"tw-py-2 tw-text-red-400"},[_vm._v(_vm._s(message))])})],2)]),(_vm.showDialog)?_c('div',{staticClass:"cs-dialog-container tw-absolute tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-z-10"},[_c('div',{staticClass:"tw-w-full tw-h-full tw-relative"},[_c('div',{staticClass:"tw-absolute tw-inset-0 tw-bg-black tw-bg-opacity-25 tw-z-20",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}}),_c('div',{staticClass:"tw-w-full tw-h-full tw-flex tw-flex-col tw-place-content-center tw-place-items-center"},[_c('div',{staticClass:"cs-dialog-window tw-flex-none tw-w-3/4 tw-bg-white tw-z-30"},[_c('div',{staticClass:"tw-bg-gray-200 tw-py-4 tw-px-3 tw-flex tw-items-center tw-place-content-between"},[_c('span',{staticClass:"tw-font-semibold tw-text-gray-700"},[_vm._v("Delete message?")]),_c('i',{staticClass:"fal fa-times tw-font-semibold tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}})]),_c('div',{staticClass:"tw-p-3"},[_c('p',[_vm._v("This message will be permanently removed!")]),_c('div',{staticClass:"tw-flex tw-items-center tw-mt-2"},[_c('input',{directives:[{name:"model",rawName:"v-model.lazy",value:(_vm.messageRemove.blockUser),expression:"messageRemove.blockUser",modifiers:{"lazy":true}}],attrs:{"type":"checkbox","id":"block-user"},domProps:{"checked":Array.isArray(_vm.messageRemove.blockUser)?_vm._i(_vm.messageRemove.blockUser,null)>-1:(_vm.messageRemove.blockUser)},on:{"change":function($event){var $$a=_vm.messageRemove.blockUser,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.$set(_vm.messageRemove, "blockUser", $$a.concat([$$v])))}else{$$i>-1&&(_vm.$set(_vm.messageRemove, "blockUser", $$a.slice(0,$$i).concat($$a.slice($$i+1))))}}else{_vm.$set(_vm.messageRemove, "blockUser", $$c)}}}}),_c('label',{staticClass:"tw-ml-1 tw-select-none",attrs:{"for":"block-user"}},[_vm._v("Block "+_vm._s(_vm.messageRemove.userDisplayName))])])]),_c('div',{staticClass:"tw-flex tw-flex-row tw-justify-center tw-py-4 tw-px-3"},[_c('div',{staticClass:"tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center tw-mr-2",attrs:{"title":"Cancel message edit"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}},[_vm._v("Cancel")]),_c('div',{staticClass:"tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-white tw-bg-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center",attrs:{"title":"Save message updates"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog(true)}}},[_vm._v("Ok")])])])])])]):_vm._e(),_c('div',{staticClass:"cs-new-message-container box-border tw-absolute tw-bottom-0 tw-left-0 tw-right-0"},[_c('div',{staticClass:"tw-flex tw-flex-col tw-p-4"},[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.message),expression:"message"}],attrs:{"placeholder":"Type a message and press enter"},domProps:{"value":(_vm.message)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.sendMessage($event)},"input":function($event){if($event.target.composing){ return; }_vm.message=$event.target.value}}})])])])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5339f287-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=template&id=69c81616&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-w-full tw-h-full tw-relative vuesora-override"},[_c('div',{staticClass:"tw-h-10 tw-w-full tw-border-b tw-border-gray-600 tw-flex tw-flex-row tw-place-items-center"},[(_vm.channel)?_c('a',{staticClass:"tw-no-underline tw-font-semibold tw-ml-4",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowMembers($event)}}},[_vm._v(_vm._s(_vm.$_watcher_count)+" ONLINE")]):_vm._e()]),(_vm.showMembers)?_c('div',{staticClass:"cs-members-container tw-absolute tw-top-10 mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto tw-z-40"},[_c('div',{staticClass:"tw-bg-gray-50 tw-p-3"},_vm._l((_vm.$_watchers),function(item){return _c('div',{key:item.id,staticClass:"tw-py-2"},[_c('chat-user',{attrs:{"user":item}})],1)}),0)]):_vm._e(),_c('div',{ref:"messages",staticClass:"cs-messages-container tw-absolute tw-top-10 mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto"},[_c('div',{staticClass:"tw-mt-4"},[_vm._l((_vm.$_messages),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId}})],1)}),_vm._l((_vm.messageErrors),function(message,index){return _c('div',{key:("error-message-" + index),staticClass:"tw-p-3 tw-text-red-400"},[_vm._v(_vm._s(message))])})],2)]),(_vm.showDialog)?_c('div',{staticClass:"cs-dialog-container tw-absolute tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-z-10"},[_c('div',{staticClass:"tw-w-full tw-h-full tw-relative"},[_c('div',{staticClass:"tw-absolute tw-inset-0 tw-bg-black tw-bg-opacity-25 tw-z-20",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}}),_c('div',{staticClass:"tw-w-full tw-h-full tw-flex tw-flex-col tw-place-content-center tw-place-items-center"},[_c('div',{staticClass:"cs-dialog-window tw-flex-none tw-w-3/4 tw-bg-white tw-z-30"},[_c('div',{staticClass:"tw-bg-gray-200 tw-py-4 tw-px-3 tw-flex tw-items-center tw-place-content-between"},[_c('span',{staticClass:"tw-font-semibold tw-text-gray-700"},[_vm._v("Delete message?")]),_c('i',{staticClass:"fal fa-times tw-font-semibold tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}})]),_c('div',{staticClass:"tw-p-3"},[_c('p',[_vm._v("This message will be permanently removed!")]),_c('div',{staticClass:"tw-flex tw-items-center tw-mt-2"},[_c('input',{directives:[{name:"model",rawName:"v-model.lazy",value:(_vm.messageRemove.blockUser),expression:"messageRemove.blockUser",modifiers:{"lazy":true}}],attrs:{"type":"checkbox","id":"block-user"},domProps:{"checked":Array.isArray(_vm.messageRemove.blockUser)?_vm._i(_vm.messageRemove.blockUser,null)>-1:(_vm.messageRemove.blockUser)},on:{"change":function($event){var $$a=_vm.messageRemove.blockUser,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.$set(_vm.messageRemove, "blockUser", $$a.concat([$$v])))}else{$$i>-1&&(_vm.$set(_vm.messageRemove, "blockUser", $$a.slice(0,$$i).concat($$a.slice($$i+1))))}}else{_vm.$set(_vm.messageRemove, "blockUser", $$c)}}}}),_c('label',{staticClass:"tw-ml-1 tw-select-none",attrs:{"for":"block-user"}},[_vm._v("Block "+_vm._s(_vm.messageRemove.userDisplayName))])])]),_c('div',{staticClass:"tw-flex tw-flex-row tw-justify-center tw-py-4 tw-px-3"},[_c('div',{staticClass:"tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center tw-mr-2",attrs:{"title":"Cancel message edit"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}},[_vm._v("Cancel")]),_c('div',{staticClass:"tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-white tw-bg-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center",attrs:{"title":"Save message updates"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog(true)}}},[_vm._v("Ok")])])])])])]):_vm._e(),_c('div',{staticClass:"cs-new-message-container box-border tw-absolute tw-bottom-0 tw-left-0 tw-right-0"},[_c('div',{staticClass:"tw-flex tw-flex-col tw-p-4"},[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.message),expression:"message"}],attrs:{"placeholder":"Type a message and press enter"},domProps:{"value":(_vm.message)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.sendMessage($event)},"input":function($event){if($event.target.composing){ return; }_vm.message=$event.target.value}}})])])])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/Chat/Chat.vue?vue&type=template&id=53069ff0&
+// CONCATENATED MODULE: ./src/components/Chat/Chat.vue?vue&type=template&id=69c81616&
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.reduce.js
+var es_array_reduce = __webpack_require__("13d5");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.values.js
+var es_object_values = __webpack_require__("07ac");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.trim.js
 var es_string_trim = __webpack_require__("498a");
@@ -17512,15 +17702,21 @@ var es_string_trim = __webpack_require__("498a");
 // EXTERNAL MODULE: ./node_modules/stream-chat/dist/browser.es.js
 var browser_es = __webpack_require__("36c4");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5339f287-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatMessage.vue?vue&type=template&id=59f71650&
-var ChatMessagevue_type_template_id_59f71650_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cs-message tw-p-3 hover:tw-bg-gray-100 tw-relative"},[(_vm.message.type == 'regular' && _vm.messageEdit.id != _vm.message.id)?_c('div',{staticClass:"tw-flex tw-flex-col tw-max-w-full"},[_c('chat-user',{attrs:{"user":_vm.message.user},scopedSlots:_vm._u([{key:"footer",fn:function(){return [(_vm.$_has_reactions)?_c('div',{staticClass:"tw-inline-flex tw-mt-1"},[_c('div',{staticClass:"tw-flex tw-flex-row tw-rounded-lg tw-border tw-border-gray-400 tw-divide-x tw-divide-gray-400 tw-text-gray-500 tw-cursor-pointer"},_vm._l((_vm.message.reaction_counts),function(count,reaction){return _c('div',{key:("message-reaction-" + reaction),staticClass:"tw-px-2 hover:tw-text-black"},[_c('i',{class:_vm.getReactionClasses(reaction)}),_c('span',{staticClass:"tw-text-sm tw-text-black tw-ml-1"},[_vm._v(_vm._s(count))])])}),0)]):_vm._e()]},proxy:true}],null,false,2825479604)},[_c('span',{staticClass:"tw-mr-1 tw-font-semibold tw-text-sm"},[_vm._v(":")]),_c('span',{staticClass:"tw-whitespace-normal",domProps:{"innerHTML":_vm._s(_vm.getParsedMessage(_vm.message.text))}})]),_c('chat-message-menu',{attrs:{"is-administrator":_vm.isAdministrator,"message":_vm.message,"message-reactions":_vm.messageReactions,"user-id":_vm.userId}})],1):_vm._e(),(_vm.message.type == 'regular' && _vm.messageEdit.id == _vm.message.id)?_c('div',[_c('div',{staticClass:"cs-message-edit"},[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.messageEdit.text),expression:"messageEdit.text"}],domProps:{"value":(_vm.messageEdit.text)},on:{"input":function($event){if($event.target.composing){ return; }_vm.$set(_vm.messageEdit, "text", $event.target.value)}}}),_c('div',{staticClass:"tw-flex tw-flex-row tw-justify-end tw-mt-2"},[_c('div',{staticClass:"tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center tw-mr-2",attrs:{"title":"Cancel message edit"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.cancelMessageEdit()}}},[_vm._v("Cancel")]),_c('div',{staticClass:"tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-white tw-bg-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center",attrs:{"title":"Save message updates"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.saveMessageEdit()}}},[_vm._v("Save")])])])]):_vm._e(),(_vm.message.type == 'system')?_c('div',{staticClass:"tw-py-2 tw-text-gray-500"},[_vm._v(" "+_vm._s(_vm.message.text)+" ")]):_vm._e()])}
-var ChatMessagevue_type_template_id_59f71650_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5339f287-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatMessage.vue?vue&type=template&id=7ea141ee&
+var ChatMessagevue_type_template_id_7ea141ee_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cs-message tw-p-3 hover:tw-bg-gray-100 tw-relative"},[(_vm.message.type == 'regular' && _vm.messageEdit.id != _vm.message.id)?_c('div',{staticClass:"tw-flex tw-flex-col tw-max-w-full"},[_c('chat-user',{attrs:{"user":_vm.message.user},scopedSlots:_vm._u([{key:"footer",fn:function(){return [(_vm.$_has_reactions)?_c('div',{staticClass:"tw-inline-flex tw-mt-1"},[_c('div',{staticClass:"tw-flex tw-flex-row tw-rounded-lg tw-border tw-border-gray-400 tw-divide-x tw-divide-gray-400 tw-text-gray-500 tw-cursor-pointer"},_vm._l((_vm.message.reaction_counts),function(count,reaction){return _c('div',{key:("message-reaction-" + reaction),staticClass:"tw-px-2 hover:tw-text-black",attrs:{"title":_vm.getReactionUsers(reaction)},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleMessageReaction(reaction)}}},[_c('i',{class:_vm.getReactionClasses(reaction)}),_c('span',{staticClass:"tw-text-sm tw-text-black tw-ml-1"},[_vm._v(_vm._s(count))])])}),0)]):_vm._e()]},proxy:true}],null,false,172512906)},[_c('span',{staticClass:"tw-mr-1 tw-font-semibold tw-text-sm"},[_vm._v(":")]),_c('span',{staticClass:"tw-whitespace-normal",domProps:{"innerHTML":_vm._s(_vm.getParsedMessage(_vm.message.text))}})]),_c('chat-message-menu',{attrs:{"is-administrator":_vm.isAdministrator,"message":_vm.message,"message-reactions":_vm.messageReactions,"user-id":_vm.userId}})],1):_vm._e(),(_vm.message.type == 'regular' && _vm.messageEdit.id == _vm.message.id)?_c('div',[_c('div',{staticClass:"cs-message-edit"},[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.messageEdit.text),expression:"messageEdit.text"}],domProps:{"value":(_vm.messageEdit.text)},on:{"input":function($event){if($event.target.composing){ return; }_vm.$set(_vm.messageEdit, "text", $event.target.value)}}}),_c('div',{staticClass:"tw-flex tw-flex-row tw-justify-end tw-mt-2"},[_c('div',{staticClass:"tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center tw-mr-2",attrs:{"title":"Cancel message edit"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.cancelMessageEdit()}}},[_vm._v("Cancel")]),_c('div',{staticClass:"tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-white tw-bg-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center",attrs:{"title":"Save message updates"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.saveMessageEdit()}}},[_vm._v("Save")])])])]):_vm._e(),(_vm.message.type == 'system')?_c('div',{staticClass:"tw-py-2 tw-text-gray-500"},[_vm._v(" "+_vm._s(_vm.message.text)+" ")]):_vm._e()])}
+var ChatMessagevue_type_template_id_7ea141ee_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/Chat/ChatMessage.vue?vue&type=template&id=59f71650&
+// CONCATENATED MODULE: ./src/components/Chat/ChatMessage.vue?vue&type=template&id=7ea141ee&
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.filter.js
+var es_array_filter = __webpack_require__("4de4");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.join.js
 var es_array_join = __webpack_require__("a15b");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.map.js
+var es_array_map = __webpack_require__("d81d");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.constructor.js
 var es_regexp_constructor = __webpack_require__("4d63");
@@ -17534,12 +17730,12 @@ var es_regexp_to_string = __webpack_require__("25f0");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.replace.js
 var es_string_replace = __webpack_require__("5319");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5339f287-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatMessageMenu.vue?vue&type=template&id=1324ff6b&
-var ChatMessageMenuvue_type_template_id_1324ff6b_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cs-message-menu tw-absolute tw-text-base"},[_c('div',{staticClass:"tw-flex tw-flex-row tw-bg-white tw-rounded-lg tw-border tw-border-gray-400 tw-divide-x tw-divide-gray-400 tw-text-gray-500 tw-cursor-pointer"},[_c('div',{staticClass:"tw-px-2 hover:tw-text-black",class:{'tw-text-black': _vm.messageReact},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleMessageReact()}}},[_c('i',{staticClass:"fal fa-smile"})]),_vm._m(0),_c('div',{staticClass:"tw-px-2 hover:tw-text-black",class:{'tw-text-black': _vm.messageMenu},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleMessageMenu()}}},[_c('i',{staticClass:"fal fa-ellipsis-h"})])]),_c('div',{staticClass:"tw-relative"},[(_vm.messageMenu)?_c('div',{staticClass:"tw-mt-1 tw-absolute tw-right-0 tw-flex tw-flex-row tw-bg-white tw-rounded-lg tw-text-gray-500 tw-text-center tw-cursor-pointer tw-text-sm"},[_c('div',{staticClass:"hover:tw-text-black tw-px-2 tw-py-1"},[_vm._v("Pin")]),(_vm.message.user.id == _vm.userId)?_c('div',{staticClass:"hover:tw-text-black tw-px-2 tw-py-1",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.editMessage()}}},[_vm._v("Edit")]):_vm._e(),(_vm.isAdministrator)?_c('div',{staticClass:"hover:tw-text-black tw-px-2 tw-py-1",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.removeMessage()}}},[_vm._v("Remove")]):_vm._e()]):_vm._e(),(_vm.messageReact)?_c('div',{staticClass:"tw-mt-1 tw-absolute tw-right-0 tw-flex tw-flex-row tw-bg-white tw-rounded-lg tw-text-gray-500 tw-text-center space-x-1 tw-px-1"},_vm._l((_vm.messageReactions),function(classes,reaction){return _c('div',{key:("add-reaction-" + reaction),staticClass:"hover:tw-text-black tw-cursor-pointer tw-p-1",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.reactToMessage(reaction)}}},[_c('i',{class:classes})])}),0):_vm._e()])])}
-var ChatMessageMenuvue_type_template_id_1324ff6b_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-px-2 hover:tw-text-black"},[_c('i',{staticClass:"fal fa-reply-all"})])}]
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5339f287-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatMessageMenu.vue?vue&type=template&id=1e773fba&
+var ChatMessageMenuvue_type_template_id_1e773fba_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cs-message-menu tw-absolute tw-text-base"},[_c('div',{staticClass:"tw-flex tw-flex-row tw-bg-white tw-rounded-lg tw-border tw-border-gray-400 tw-divide-x tw-divide-gray-400 tw-text-gray-500 tw-cursor-pointer"},[_c('div',{staticClass:"tw-px-2 hover:tw-text-black",class:{'tw-text-black': _vm.messageReact},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleMessageReact()}}},[_c('i',{staticClass:"fal fa-smile"})]),_vm._m(0),_c('div',{staticClass:"tw-px-2 hover:tw-text-black",class:{'tw-text-black': _vm.messageMenu},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleMessageMenu()}}},[_c('i',{staticClass:"fal fa-ellipsis-h"})])]),_c('div',{staticClass:"tw-relative"},[(_vm.messageMenu)?_c('div',{staticClass:"tw-mt-1 tw-absolute tw-right-0 tw-flex tw-flex-row tw-bg-white tw-rounded-lg tw-text-gray-500 tw-text-center tw-cursor-pointer tw-text-sm"},[_c('div',{staticClass:"hover:tw-text-black tw-px-2 tw-py-1"},[_vm._v("Pin")]),(_vm.message.user.id == _vm.userId)?_c('div',{staticClass:"hover:tw-text-black tw-px-2 tw-py-1",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.editMessage()}}},[_vm._v("Edit")]):_vm._e(),(_vm.isAdministrator)?_c('div',{staticClass:"hover:tw-text-black tw-px-2 tw-py-1",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.removeMessage()}}},[_vm._v("Remove")]):_vm._e()]):_vm._e(),(_vm.messageReact)?_c('div',{staticClass:"tw-mt-1 tw-absolute tw-right-0 tw-flex tw-flex-row tw-bg-white tw-rounded-lg tw-text-gray-500 tw-text-center space-x-1 tw-px-1"},_vm._l((_vm.messageReactions),function(classes,reaction){return _c('div',{key:("add-reaction-" + reaction),staticClass:"hover:tw-text-black tw-cursor-pointer tw-p-1",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.reactToMessage(reaction)}}},[_c('i',{class:classes})])}),0):_vm._e()])])}
+var ChatMessageMenuvue_type_template_id_1e773fba_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-px-2 hover:tw-text-black"},[_c('i',{staticClass:"fal fa-reply-all"})])}]
 
 
-// CONCATENATED MODULE: ./src/components/Chat/ChatMessageMenu.vue?vue&type=template&id=1324ff6b&
+// CONCATENATED MODULE: ./src/components/Chat/ChatMessageMenu.vue?vue&type=template&id=1e773fba&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatMessageMenu.vue?vue&type=script&lang=js&
 //
@@ -17671,7 +17867,7 @@ var ChatMessageMenuvue_type_template_id_1324ff6b_staticRenderFns = [function () 
       });
     },
     reactToMessage: function reactToMessage(reaction) {
-      this.$root.$emit('reactToMessage', {
+      this.$root.$emit('toggleMessageReaction', {
         message: this.message,
         reaction: reaction
       });
@@ -17790,8 +17986,8 @@ function normalizeComponent (
 
 var component = normalizeComponent(
   Chat_ChatMessageMenuvue_type_script_lang_js_,
-  ChatMessageMenuvue_type_template_id_1324ff6b_render,
-  ChatMessageMenuvue_type_template_id_1324ff6b_staticRenderFns,
+  ChatMessageMenuvue_type_template_id_1e773fba_render,
+  ChatMessageMenuvue_type_template_id_1e773fba_staticRenderFns,
   false,
   null,
   null,
@@ -17888,6 +18084,12 @@ var ChatUser_component = normalizeComponent(
 
 
 
+
+
+
+
+//
+//
 //
 //
 //
@@ -17965,7 +18167,10 @@ var ChatUser_component = normalizeComponent(
             profileUrl: '',
             role: '',
             accessLevelName: ''
-          }
+          },
+          latest_reactions: [],
+          own_reactions: [],
+          reaction_counts: {}
         };
       }
     },
@@ -18067,6 +18272,28 @@ var ChatUser_component = normalizeComponent(
     },
     getReactionClasses: function getReactionClasses(reaction) {
       return this.messageReactions[reaction];
+    },
+    toggleMessageReaction: function toggleMessageReaction(reaction) {
+      this.$root.$emit('toggleMessageReaction', {
+        message: this.message,
+        reaction: reaction
+      });
+    },
+    hasOwnReaction: function hasOwnReaction(message, reactionType) {
+      var has = false;
+      message.own_reactions.forEach(function (reaction) {
+        has = has || reaction.type == reactionType;
+      });
+      return has;
+    },
+    getReactionUsers: function getReactionUsers(reactionType) {
+      var reactionUsers = this.message.latest_reactions.filter(function (reaction) {
+        return reaction.type == reactionType;
+      }).map(function (reaction) {
+        return reaction.user.displayName;
+      }); // todo - update users who reacted string
+
+      return reactionUsers.join();
     }
   }
 });
@@ -18082,8 +18309,8 @@ var ChatUser_component = normalizeComponent(
 
 var ChatMessage_component = normalizeComponent(
   Chat_ChatMessagevue_type_script_lang_js_,
-  ChatMessagevue_type_template_id_59f71650_render,
-  ChatMessagevue_type_template_id_59f71650_staticRenderFns,
+  ChatMessagevue_type_template_id_7ea141ee_render,
+  ChatMessagevue_type_template_id_7ea141ee_staticRenderFns,
   false,
   null,
   null,
@@ -18093,6 +18320,8 @@ var ChatMessage_component = normalizeComponent(
 
 /* harmony default export */ var ChatMessage = (ChatMessage_component.exports);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=script&lang=js&
+
+
 
 
 
@@ -18225,6 +18454,7 @@ var ChatMessage_component = normalizeComponent(
     return {
       message: '',
       messages: {},
+      messagesReactions: {},
       streamClient: null,
       channel: null,
       showMembers: false,
@@ -18262,16 +18492,30 @@ var ChatMessage_component = normalizeComponent(
       get: function get() {
         return Object.keys(this.channelWatchers).length;
       }
+    },
+    $_errors_count: {
+      cache: false,
+      get: function get() {
+        return this.messageErrors.length;
+      }
     }
   },
   mounted: function mounted() {
     this.setupChat();
     this.$root.$on('updateMessage', this.updateMessage);
-    this.$root.$on('reactToMessage', this.reactToMessage);
     this.$root.$on('removeMessage', this.removeMessage);
+    this.$root.$on('toggleMessageReaction', this.toggleMessageReaction);
   },
   watch: {
     $_messages_count: function $_messages_count() {
+      this.scrollMessages();
+    },
+    $_errors_count: function $_errors_count() {
+      this.scrollMessages();
+    }
+  },
+  methods: {
+    scrollMessages: function scrollMessages() {
       var container = this.$refs.messages;
 
       if (Math.ceil(container.scrollHeight - container.scrollTop) === container.clientHeight) {
@@ -18282,9 +18526,7 @@ var ChatMessage_component = normalizeComponent(
           });
         });
       }
-    }
-  },
-  methods: {
+    },
     sendMessage: function sendMessage() {
       var _this = this;
 
@@ -18296,24 +18538,31 @@ var ChatMessage_component = normalizeComponent(
           text: text
         }).then(function () {
           _this.messageErrors = [];
-        }).catch(function (error) {
-          var message = 'Message send error, please try again, if the error persists contact support.';
+        }).catch(function (_ref) {
+          var response = _ref.response;
 
-          if (error.response) {
-            if (error.response.data && error.response.data.code) {
-              if (error.response.data.code == 17) {
-                message = 'Message send error, your account is currently suspended from chat, please contact support.';
-              } else {
-                message = message + ' Error code: ' + error.response.data.code;
-              }
-            } else if (error.response.data && error.response.data.StatusCode) {
-              message = message + ' Error status code: ' + error.response.data.StatusCode;
-            }
-          }
-
-          _this.messageErrors.push(message);
+          _this.errorHandler(response, 'Message send error');
         });
       }
+    },
+    errorHandler: function errorHandler(response, action) {
+      var message = "".concat(action, ", please try again, if the error persists contact support.");
+
+      if (response) {
+        var _response$data, _response$data2;
+
+        if ((_response$data = response.data) !== null && _response$data !== void 0 && _response$data.code) {
+          if (response.data.code == 17) {
+            message = "".concat(action, ", your account is currently suspended from chat, please contact support.");
+          } else {
+            message = message + ' Error code: ' + response.data.code;
+          }
+        } else if ((_response$data2 = response.data) !== null && _response$data2 !== void 0 && _response$data2.StatusCode) {
+          message = message + ' Error status code: ' + response.data.StatusCode;
+        }
+      }
+
+      this.messageErrors.push(message);
     },
     setupChat: function setupChat() {
       var _this2 = this;
@@ -18339,45 +18588,29 @@ var ChatMessage_component = normalizeComponent(
 
         _this2.$set(_this2.messages, greeting.id, greeting);
 
-        _this2.channel.on('user.watching.start', function (event) {
-          _this2.$set(_this2.channelWatchers, event.user.id, event.user);
+        _this2.channel.on('user.watching.start', function (_ref2) {
+          var user = _ref2.user;
+
+          _this2.$set(_this2.channelWatchers, user.id, user);
         });
 
-        _this2.channel.on('user.watching.stop', function (event) {
-          if (_this2.channelWatchers[event.user.id]) {
-            _this2.$delete(_this2.channelWatchers, event.user.id);
+        _this2.channel.on('user.watching.stop', function (_ref3) {
+          var user = _ref3.user;
+
+          if (_this2.channelWatchers[user.id]) {
+            _this2.$delete(_this2.channelWatchers, user.id);
           }
         });
 
-        _this2.channel.on('message.new', function (event) {
-          if (event && event.message && event.message.type == 'regular') {
-            _this2.$set(_this2.messages, event.message.id, event.message);
-          }
-        });
+        _this2.channel.on('message.new', _this2.messageUpdateHandler);
 
-        _this2.channel.on('message.updated', function (event) {
-          console.log("Chat::setupChat [message.updated]");
+        _this2.channel.on('message.updated', _this2.messageUpdateHandler);
 
-          if (event && event.message) {
-            if (event.message.type == 'regular') {
-              _this2.$set(_this2.messages, event.message.id, event.message);
-            } else {
-              _this2.$delete(_this2.messages, event.message.id);
-            }
-          }
-        });
+        _this2.channel.on('message.deleted', _this2.messageUpdateHandler);
 
-        _this2.channel.on('message.deleted', function (event) {
-          if (event && event.message && event.message.type != 'regular') {
-            _this2.$delete(_this2.messages, event.message.id, event.message);
-          }
-        });
+        _this2.channel.on('reaction.new', _this2.messageUpdateHandler);
 
-        _this2.channel.on('reaction.new', function (event) {
-          if (event && event.message) {
-            _this2.$set(_this2.messages, event.message.id, event.message);
-          }
-        }); // this.channel.on(event => {
+        _this2.channel.on('reaction.deleted', _this2.messageUpdateHandler); // this.channel.on(event => {
         //     console.log('event', event);
         // });
 
@@ -18392,52 +18625,104 @@ var ChatMessage_component = normalizeComponent(
           limit: limit,
           offset: 0
         }
-      }).then(function (result) {
-        if (result.watchers) {
-          result.watchers.forEach(function (user) {
+      }).then(function (_ref4) {
+        var watchers = _ref4.watchers;
+
+        if (watchers) {
+          watchers.forEach(function (user) {
             _this3.$set(_this3.channelWatchers, user.id, user);
           });
         }
       });
     },
-    processMessages: function processMessages(state) {
+    processMessages: function processMessages(_ref5) {
       var _this4 = this;
 
-      state.messages.forEach(function (message) {
+      var messages = _ref5.messages;
+      messages.forEach(function (message) {
         if (message.type == 'regular') {
           _this4.$set(_this4.messages, message.id, message);
+
+          _this4.processMessageReactions(message);
         }
       });
+    },
+    processMessageReactions: function processMessageReactions(message) {
+      var messageReactionsCount = Object.values(message.reaction_counts).reduce(function (a, b) {
+        return a + b;
+      }, 0);
+
+      if (message.latest_reactions.length != messageReactionsCount) {
+        console.log("Chat::processMessageReactions fetching message [%s] reactions", JSON.stringify(message.id));
+        this.channel.getReactions(message.id, {
+          limit: 1000
+        }).then(function (response) {
+          console.log("Chat::processMessageReactions message reactions fetch response: %s", JSON.stringify(response)); // todo - update message latest_reactions with response data
+        });
+      }
+    },
+    messageUpdateHandler: function messageUpdateHandler(_ref6) {
+      var message = _ref6.message;
+
+      if (message.type == 'regular') {
+        this.$set(this.messages, message.id, message);
+        this.processMessageReactions(message);
+      } else {
+        this.$delete(this.messages, message.id);
+      }
     },
     toggleShowMembers: function toggleShowMembers() {
       this.showMembers = !this.showMembers;
     },
-    updateMessage: function updateMessage(payload) {
+    updateMessage: function updateMessage(_ref7) {
+      var _this5 = this;
+
+      var message = _ref7.message,
+          text = _ref7.text;
       this.streamClient.updateMessage({
-        id: payload.message.id,
-        text: payload.text
-      }).then(function () {// console.log("Chat::updateMessage");
-        // todo - check for banned users
+        id: message.id,
+        text: text
+      }).then(function () {
+        _this5.messageErrors = [];
+      }).catch(function (_ref8) {
+        var response = _ref8.response;
+
+        _this5.errorHandler(response, 'Message update error');
       });
     },
-    removeMessage: function removeMessage(payload) {
+    removeMessage: function removeMessage(_ref9) {
+      var message = _ref9.message;
       this.messageRemove = {
-        id: payload.message.id,
-        userId: payload.message.user.id,
-        userDisplayName: payload.message.user.displayName,
+        id: message.id,
+        userId: message.user.id,
+        userDisplayName: message.user.displayName,
         allMessages: false,
         blockUser: false
       };
       this.showDialog = true;
     },
     closeDialog: function closeDialog(confirmation) {
+      var _this6 = this;
+
       if (confirmation) {
-        this.streamClient.deleteMessage(this.messageRemove.id);
+        this.streamClient.deleteMessage(this.messageRemove.id).then(function () {
+          _this6.messageErrors = [];
+        }).catch(function (_ref10) {
+          var response = _ref10.response;
+
+          _this6.errorHandler(response, 'Message delete error');
+        });
 
         if (this.messageRemove.blockUser) {
           this.channel.banUser(this.messageRemove.userId, {
             banned_by_id: this.userId,
             reason: 'default'
+          }).then(function () {
+            _this6.messageErrors = [];
+          }).catch(function (_ref11) {
+            var response = _ref11.response;
+
+            _this6.errorHandler(response, 'User ban error');
           });
         }
       }
@@ -18450,12 +18735,38 @@ var ChatMessage_component = normalizeComponent(
         blockUser: false
       };
     },
-    reactToMessage: function reactToMessage(payload) {
-      this.channel.sendReaction(payload.message.id, {
-        type: payload.reaction
-      }).then(function () {// console.log("Chat::reactToMessage response: %s", JSON.stringify(response));
-        // todo - check for banned users
+    hasOwnReaction: function hasOwnReaction(message, reactionType) {
+      var has = false;
+      message.own_reactions.forEach(function (reaction) {
+        has = has || reaction.type == reactionType;
       });
+      return has;
+    },
+    toggleMessageReaction: function toggleMessageReaction(_ref12) {
+      var _this7 = this;
+
+      var message = _ref12.message,
+          reaction = _ref12.reaction;
+
+      if (this.hasOwnReaction(message, reaction)) {
+        this.channel.deleteReaction(message.id, reaction).then(function () {
+          _this7.messageErrors = [];
+        }).catch(function (_ref13) {
+          var response = _ref13.response;
+
+          _this7.errorHandler(response, 'Message reaction remove error');
+        });
+      } else {
+        this.channel.sendReaction(message.id, {
+          type: reaction
+        }).then(function () {
+          _this7.messageErrors = [];
+        }).catch(function (_ref14) {
+          var response = _ref14.response;
+
+          _this7.errorHandler(response, 'Message reaction send error');
+        });
+      }
     }
   }
 });

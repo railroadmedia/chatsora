@@ -35,7 +35,7 @@
                     ></chat-message>
                 </div>
                 <div
-                    class="tw-py-2 tw-text-red-400"
+                    class="tw-p-3 tw-text-red-400"
                     v-for="(message, index) in messageErrors"
                     :key="`error-message-${index}`"
                 >{{ message }}</div>
@@ -126,6 +126,7 @@ export default {
         return {
             message: '',
             messages: {},
+            messagesReactions: {},
             streamClient: null,
             channel: null,
             showMembers: false,
@@ -164,16 +165,31 @@ export default {
                 return Object.keys(this.channelWatchers).length;
             },
         },
+        $_errors_count: {
+            cache: false,
+            get() {
+                return this.messageErrors.length;
+            },
+        },
     },
     mounted() {
         this.setupChat();
 
         this.$root.$on('updateMessage', this.updateMessage);
-        this.$root.$on('reactToMessage', this.reactToMessage);
         this.$root.$on('removeMessage', this.removeMessage);
+        this.$root.$on('toggleMessageReaction', this.toggleMessageReaction);
     },
     watch: {
         $_messages_count: function () {
+            this.scrollMessages();
+        },
+        $_errors_count: function () {
+            this.scrollMessages();
+        },
+    },
+    methods: {
+
+        scrollMessages() {
             let container = this.$refs.messages;
 
             if (Math.ceil(container.scrollHeight - container.scrollTop) === container.clientHeight) {
@@ -184,9 +200,8 @@ export default {
                     });
                 });
             }
-        }
-    },
-    methods: {
+        },
+
         sendMessage() {
             let text = this.message.trim();
 
@@ -198,24 +213,28 @@ export default {
                     .then(() => {
                         this.messageErrors = [];
                     })
-                    .catch((error) => {
-                        let message = 'Message send error, please try again, if the error persists contact support.';
-
-                        if (error.response) {
-                            if (error.response.data && error.response.data.code) {
-                                if (error.response.data.code == 17) {
-                                    message = 'Message send error, your account is currently suspended from chat, please contact support.';
-                                } else {
-                                    message = message + ' Error code: ' + error.response.data.code;
-                                }
-                            } else if (error.response.data && error.response.data.StatusCode) {
-                                message = message + ' Error status code: ' + error.response.data.StatusCode;
-                            }
-                        }
-
-                        this.messageErrors.push(message);
+                    .catch(({ response }) => {
+                        this.errorHandler(response, 'Message send error');
                     });
             }
+        },
+
+        errorHandler(response, action) {
+            let message = `${action}, please try again, if the error persists contact support.`;
+
+            if (response) {
+                if (response.data?.code) {
+                    if (response.data.code == 17) {
+                        message = `${action}, your account is currently suspended from chat, please contact support.`;
+                    } else {
+                        message = message + ' Error code: ' + response.data.code;
+                    }
+                } else if (response.data?.StatusCode) {
+                    message = message + ' Error status code: ' + response.data.StatusCode;
+                }
+            }
+
+            this.messageErrors.push(message);
         },
 
         setupChat() {
@@ -237,49 +256,22 @@ export default {
                     this.$set(this.messages, greeting.id, greeting);
 
                     this.channel
-                        .on('user.watching.start', (event) => {
-                            this.$set(this.channelWatchers, event.user.id, event.user);
+                        .on('user.watching.start', ({ user }) => {
+                            this.$set(this.channelWatchers, user.id, user);
                         });
 
                     this.channel
-                        .on('user.watching.stop', (event) => {
-                            if (this.channelWatchers[event.user.id]) {
-                                this.$delete(this.channelWatchers, event.user.id);
+                        .on('user.watching.stop', ({ user }) => {
+                            if (this.channelWatchers[user.id]) {
+                                this.$delete(this.channelWatchers, user.id);
                             }
                         });
 
-                    this.channel
-                        .on('message.new', (event) => {
-                            if (event && event.message && event.message.type == 'regular') {
-                                this.$set(this.messages, event.message.id, event.message);
-                            }
-                        });
-
-                    this.channel
-                        .on('message.updated', (event) => {
-                            console.log("Chat::setupChat [message.updated]");
-                            if (event && event.message) {
-                                if (event.message.type == 'regular') {
-                                    this.$set(this.messages, event.message.id, event.message);
-                                } else {
-                                    this.$delete(this.messages, event.message.id);
-                                }
-                            }
-                        });
-
-                    this.channel
-                        .on('message.deleted', (event) => {
-                            if (event && event.message && event.message.type != 'regular') {
-                                this.$delete(this.messages, event.message.id, event.message);
-                            }
-                        });
-
-                    this.channel
-                        .on('reaction.new', (event) => {
-                            if (event && event.message) {
-                                this.$set(this.messages, event.message.id, event.message);
-                            }
-                        });
+                    this.channel.on('message.new', this.messageUpdateHandler);
+                    this.channel.on('message.updated', this.messageUpdateHandler);
+                    this.channel.on('message.deleted', this.messageUpdateHandler);
+                    this.channel.on('reaction.new', this.messageUpdateHandler);
+                    this.channel.on('reaction.deleted', this.messageUpdateHandler);
 
                     // this.channel.on(event => {
                     //     console.log('event', event);
@@ -295,44 +287,74 @@ export default {
                 .query({
                     watchers: { limit, offset: 0 },
                 })
-                .then(result => {
-                    if (result.watchers) {
-                        result.watchers.forEach(user => {
+                .then(({ watchers }) => {
+                    if (watchers) {
+                        watchers.forEach(user => {
                             this.$set(this.channelWatchers, user.id, user);
                         });
                     }
                 });
         },
 
-        processMessages(state) {
-            state.messages.forEach(message => {
+        processMessages({ messages }) {
+            messages.forEach((message) => {
                 if (message.type == 'regular') {
                     this.$set(this.messages, message.id, message);
+
+                    this.processMessageReactions(message);
                 }
             });
+        },
+
+        processMessageReactions(message) {
+
+            const messageReactionsCount = Object.values(message.reaction_counts).reduce((a, b) => a + b, 0);
+
+            if (message.latest_reactions.length != messageReactionsCount) {
+
+                console.log("Chat::processMessageReactions fetching message [%s] reactions", JSON.stringify(message.id));
+
+                this.channel
+                    .getReactions(message.id, { limit: 1000 })
+                    .then((response) => {
+                        console.log("Chat::processMessageReactions message reactions fetch response: %s", JSON.stringify(response));
+                        // todo - update message latest_reactions with response data
+                    })
+            }
+        },
+
+        messageUpdateHandler({ message }) {
+            if (message.type == 'regular') {
+                this.$set(this.messages, message.id, message);
+                this.processMessageReactions(message);
+            } else {
+                this.$delete(this.messages, message.id);
+            }
         },
 
         toggleShowMembers() {
             this.showMembers = !this.showMembers;
         },
 
-        updateMessage(payload) {
+        updateMessage({ message, text }) {
             this.streamClient
                 .updateMessage({
-                    id: payload.message.id,
-                    text: payload.text
+                    id: message.id,
+                    text
                 })
                 .then(() => {
-                    // console.log("Chat::updateMessage");
-                    // todo - check for banned users
+                    this.messageErrors = [];
+                })
+                .catch(({ response }) => {
+                    this.errorHandler(response, 'Message update error');
                 });
         },
 
-        removeMessage(payload) {
+        removeMessage({ message }) {
             this.messageRemove = {
-                id: payload.message.id,
-                userId: payload.message.user.id,
-                userDisplayName: payload.message.user.displayName,
+                id: message.id,
+                userId: message.user.id,
+                userDisplayName: message.user.displayName,
                 allMessages: false,
                 blockUser: false
             };
@@ -342,16 +364,30 @@ export default {
         closeDialog(confirmation) {
 
             if (confirmation) {
-                this.streamClient.deleteMessage(this.messageRemove.id);
+                this.streamClient
+                    .deleteMessage(this.messageRemove.id)
+                    .then(() => {
+                        this.messageErrors = [];
+                    })
+                    .catch(({ response }) => {
+                        this.errorHandler(response, 'Message delete error');
+                    });
 
                 if (this.messageRemove.blockUser) {
-                    this.channel.banUser(
-                        this.messageRemove.userId,
-                        {
-                            banned_by_id: this.userId,
-                            reason: 'default'
-                        }
-                    );
+                    this.channel
+                        .banUser(
+                            this.messageRemove.userId,
+                            {
+                                banned_by_id: this.userId,
+                                reason: 'default'
+                            }
+                        )
+                        .then(() => {
+                            this.messageErrors = [];
+                        })
+                        .catch(({ response }) => {
+                            this.errorHandler(response, 'User ban error');
+                        });
                 }
             }
 
@@ -364,18 +400,36 @@ export default {
             };
         },
 
-        reactToMessage(payload) {
-            this.channel
-                .sendReaction(
-                    payload.message.id,
-                    {
-                        type: payload.reaction
-                    }
-                )
-                .then(() => {
-                    // console.log("Chat::reactToMessage response: %s", JSON.stringify(response));
-                    // todo - check for banned users
-                });
+        hasOwnReaction(message, reactionType) {
+            let has = false;
+
+            message.own_reactions.forEach((reaction) => {
+                has = has || reaction.type == reactionType;
+            });
+
+            return has;
+        },
+
+        toggleMessageReaction({ message, reaction }) {
+            if (this.hasOwnReaction(message, reaction)) {
+                this.channel
+                    .deleteReaction(message.id, reaction)
+                    .then(() => {
+                        this.messageErrors = [];
+                    })
+                    .catch(({ response }) => {
+                        this.errorHandler(response, 'Message reaction remove error');
+                    });
+            } else {
+                this.channel
+                    .sendReaction(message.id, { type: reaction })
+                    .then(() => {
+                        this.messageErrors = [];
+                    })
+                    .catch(({ response }) => {
+                        this.errorHandler(response, 'Message reaction send error');
+                    });
+            }
         },
     },
 }

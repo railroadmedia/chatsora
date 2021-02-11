@@ -123,7 +123,7 @@ export default {
 
         reactToMessage(reaction) {
             this.$root.$emit(
-                'reactToMessage',
+                'toggleMessageReaction',
                 {
                     message: this.message,
                     reaction: reaction
