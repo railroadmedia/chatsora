@@ -125,8 +125,7 @@ export default {
     data() {
         return {
             message: '',
-            messages: {},
-            messagesReactions: {},
+            messages: [],
             streamClient: null,
             channel: null,
             showMembers: false,
@@ -299,9 +298,43 @@ export default {
         processMessages({ messages }) {
             messages.forEach((message) => {
                 if (message.type == 'regular') {
-                    this.$set(this.messages, message.id, message);
 
-                    this.processMessageReactions(message);
+                    let messageCopy = (({ id, type, text }) => ({ id, type, text }))(message);
+
+                    const copyUser = ({ id, displayName, avatarUrl, profileUrl, role, accessLevelName }) => ({ id, displayName, avatarUrl, profileUrl, role, accessLevelName });
+
+                    messageCopy.user = copyUser(message.user);
+
+                    messageCopy.reaction_counts = {...message.reaction_counts};
+
+                    messageCopy.own_reactions = message.own_reactions.map(({type}) => ({type}));
+
+                    const messageReactionsCount = Object.values(message.reaction_counts).reduce((a, b) => a + b, 0);
+
+                    messageCopy.reactions = [];
+
+                    if (message.latest_reactions.length == messageReactionsCount) {
+
+                        message.latest_reactions.forEach((reaction) => {
+                            messageCopy.reactions.push({ type: reaction.type, user: copyUser(reaction.user) });
+                        });
+                    // } else if (
+                    //     this.messages[message.id]
+                    //     && this.messages[message.id].reactions
+                    //     && this.messages[message.id].reactions.length == messageReactionsCount
+                    // ) {
+                    //     messageCopy.reactions = this.messages[message.id].reactions;
+                    } else {
+                        this.channel
+                            .getReactions(message.id, { limit: 1000 })
+                            .then(({ reactions }) => {
+                                reactions.forEach((reaction) => {
+                                    messageCopy.reactions.push({ type: reaction.type, user: copyUser(reaction.user) });
+                                });
+                            });
+                    }
+
+                    this.messages.push(messageCopy);
                 }
             });
         },
@@ -326,7 +359,6 @@ export default {
         messageUpdateHandler({ message }) {
             if (message.type == 'regular') {
                 this.$set(this.messages, message.id, message);
-                this.processMessageReactions(message);
             } else {
                 this.$delete(this.messages, message.id);
             }

@@ -90,8 +90,8 @@ export default {
         this.$root
             .$on(
                 'messageMenuToggled',
-                (payload) => {
-                    if (payload.message.id != this.message.id) {
+                ({ message }) => {
+                    if (message.id != this.message.id) {
                         this.messageReact = false;
                         this.messageMenu = false;
                     }

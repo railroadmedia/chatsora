@@ -79,7 +79,6 @@ export default {
                     role: '',
                     accessLevelName: '',
                 },
-                latest_reactions: [],
                 own_reactions: [],
                 reaction_counts: {}
             }),
@@ -213,26 +212,61 @@ export default {
                 );
         },
 
-        hasOwnReaction(message, reactionType) {
+        hasOwnReaction(reactionType) {
             let has = false;
 
-            message.own_reactions.forEach((reaction) => {
+            this.message.own_reactions.forEach((reaction) => {
                 has = has || reaction.type == reactionType;
             });
 
             return has;
         },
 
+        formatReactionUsers(users, reactionType) {
+            let usersString;
+
+            switch(users.length) {
+                case 1:
+                    usersString = users[0];
+                break;
+
+                case 2:
+                    usersString = users[0] + ' and ' + users[1];
+                break;
+
+                case 3:
+                    usersString = users[0] + ', ' + users[1] + ' and ' + users[2];
+                break;
+
+                default:
+                    usersString = users[0] + ', ' + users[1] + ' and ' + (users.length - 2) + ' others';
+            }
+
+            if (this.hasOwnReaction(reactionType)) {
+                if (users.length == 1) {
+                    usersString = 'You and ' + usersString;
+                } else {
+                    usersString = 'You, ' + usersString;
+                }
+            }
+
+            return usersString;
+        },
+
         getReactionUsers(reactionType) {
-            let reactionUsers =
-                this.message
-                    .latest_reactions
-                    .filter((reaction) => reaction.type == reactionType )
+
+            let reactionUsers = [];
+
+            if (this.message.reactions && this.message.reactions.length) {
+
+                reactionUsers = this.message
+                    .reactions
+                    .filter((reaction) => reaction.type == reactionType && reaction.user.id != this.userId )
                     .map((reaction) => reaction.user.displayName );
 
-            // todo - update users who reacted string
+            }
 
-            return reactionUsers.join();
+            return reactionUsers.length ? this.formatReactionUsers(reactionUsers, reactionType) : 'Fetching user information...';
         }
     },
 }
