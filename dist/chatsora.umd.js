@@ -12453,6 +12453,84 @@ module.exports = __webpack_require__("96cf");
 
 /***/ }),
 
+/***/ "a434":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__("23e7");
+var toAbsoluteIndex = __webpack_require__("23cb");
+var toInteger = __webpack_require__("a691");
+var toLength = __webpack_require__("50c4");
+var toObject = __webpack_require__("7b0b");
+var arraySpeciesCreate = __webpack_require__("65f0");
+var createProperty = __webpack_require__("8418");
+var arrayMethodHasSpeciesSupport = __webpack_require__("1dde");
+var arrayMethodUsesToLength = __webpack_require__("ae40");
+
+var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('splice');
+var USES_TO_LENGTH = arrayMethodUsesToLength('splice', { ACCESSORS: true, 0: 0, 1: 2 });
+
+var max = Math.max;
+var min = Math.min;
+var MAX_SAFE_INTEGER = 0x1FFFFFFFFFFFFF;
+var MAXIMUM_ALLOWED_LENGTH_EXCEEDED = 'Maximum allowed length exceeded';
+
+// `Array.prototype.splice` method
+// https://tc39.es/ecma262/#sec-array.prototype.splice
+// with adding support of @@species
+$({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT || !USES_TO_LENGTH }, {
+  splice: function splice(start, deleteCount /* , ...items */) {
+    var O = toObject(this);
+    var len = toLength(O.length);
+    var actualStart = toAbsoluteIndex(start, len);
+    var argumentsLength = arguments.length;
+    var insertCount, actualDeleteCount, A, k, from, to;
+    if (argumentsLength === 0) {
+      insertCount = actualDeleteCount = 0;
+    } else if (argumentsLength === 1) {
+      insertCount = 0;
+      actualDeleteCount = len - actualStart;
+    } else {
+      insertCount = argumentsLength - 2;
+      actualDeleteCount = min(max(toInteger(deleteCount), 0), len - actualStart);
+    }
+    if (len + insertCount - actualDeleteCount > MAX_SAFE_INTEGER) {
+      throw TypeError(MAXIMUM_ALLOWED_LENGTH_EXCEEDED);
+    }
+    A = arraySpeciesCreate(O, actualDeleteCount);
+    for (k = 0; k < actualDeleteCount; k++) {
+      from = actualStart + k;
+      if (from in O) createProperty(A, k, O[from]);
+    }
+    A.length = actualDeleteCount;
+    if (insertCount < actualDeleteCount) {
+      for (k = actualStart; k < len - actualDeleteCount; k++) {
+        from = k + actualDeleteCount;
+        to = k + insertCount;
+        if (from in O) O[to] = O[from];
+        else delete O[to];
+      }
+      for (k = len; k > len - actualDeleteCount + insertCount; k--) delete O[k - 1];
+    } else if (insertCount > actualDeleteCount) {
+      for (k = len - actualDeleteCount; k > actualStart; k--) {
+        from = k + actualDeleteCount - 1;
+        to = k + insertCount - 1;
+        if (from in O) O[to] = O[from];
+        else delete O[to];
+      }
+    }
+    for (k = 0; k < insertCount; k++) {
+      O[k + actualStart] = arguments[k + 2];
+    }
+    O.length = len - actualDeleteCount + insertCount;
+    return A;
+  }
+});
+
+
+/***/ }),
+
 /***/ "a4b4":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17746,18 +17824,21 @@ var es_object_keys = __webpack_require__("b64b");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.for-each.js
 var web_dom_collections_for_each = __webpack_require__("159b");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5339f287-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=template&id=7e1f5607&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5339f287-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=template&id=687efb72&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-w-full tw-h-full tw-relative vuesora-override"},[_c('div',{staticClass:"tw-h-10 tw-w-full tw-border-b tw-border-gray-600 tw-flex tw-flex-row tw-place-items-center"},[(_vm.channel)?_c('a',{staticClass:"tw-no-underline tw-font-semibold tw-ml-4",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowMembers($event)}}},[_vm._v(_vm._s(_vm.$_watcher_count)+" ONLINE")]):_vm._e()]),(_vm.showMembers)?_c('div',{staticClass:"cs-members-container tw-absolute tw-top-10 mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto tw-z-40"},[_c('div',{staticClass:"tw-bg-gray-50 tw-p-3"},_vm._l((_vm.$_watchers),function(item){return _c('div',{key:item.id,staticClass:"tw-py-2"},[_c('chat-user',{attrs:{"user":item}})],1)}),0)]):_vm._e(),_c('div',{ref:"messages",staticClass:"cs-messages-container tw-absolute tw-top-10 mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto"},[_c('div',{staticClass:"tw-mt-4"},[_vm._l((_vm.$_messages),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId}})],1)}),_vm._l((_vm.messageErrors),function(message,index){return _c('div',{key:("error-message-" + index),staticClass:"tw-p-3 tw-text-red-400"},[_vm._v(_vm._s(message))])})],2)]),(_vm.showDialog)?_c('div',{staticClass:"cs-dialog-container tw-absolute tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-z-10"},[_c('div',{staticClass:"tw-w-full tw-h-full tw-relative"},[_c('div',{staticClass:"tw-absolute tw-inset-0 tw-bg-black tw-bg-opacity-25 tw-z-20",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}}),_c('div',{staticClass:"tw-w-full tw-h-full tw-flex tw-flex-col tw-place-content-center tw-place-items-center"},[_c('div',{staticClass:"cs-dialog-window tw-flex-none tw-w-3/4 tw-bg-white tw-z-30"},[_c('div',{staticClass:"tw-bg-gray-200 tw-py-4 tw-px-3 tw-flex tw-items-center tw-place-content-between"},[_c('span',{staticClass:"tw-font-semibold tw-text-gray-700"},[_vm._v("Delete message?")]),_c('i',{staticClass:"fal fa-times tw-font-semibold tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}})]),_c('div',{staticClass:"tw-p-3"},[_c('p',[_vm._v("This message will be permanently removed!")]),_c('div',{staticClass:"tw-flex tw-items-center tw-mt-2"},[_c('input',{directives:[{name:"model",rawName:"v-model.lazy",value:(_vm.messageRemove.blockUser),expression:"messageRemove.blockUser",modifiers:{"lazy":true}}],attrs:{"type":"checkbox","id":"block-user"},domProps:{"checked":Array.isArray(_vm.messageRemove.blockUser)?_vm._i(_vm.messageRemove.blockUser,null)>-1:(_vm.messageRemove.blockUser)},on:{"change":function($event){var $$a=_vm.messageRemove.blockUser,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.$set(_vm.messageRemove, "blockUser", $$a.concat([$$v])))}else{$$i>-1&&(_vm.$set(_vm.messageRemove, "blockUser", $$a.slice(0,$$i).concat($$a.slice($$i+1))))}}else{_vm.$set(_vm.messageRemove, "blockUser", $$c)}}}}),_c('label',{staticClass:"tw-ml-1 tw-select-none",attrs:{"for":"block-user"}},[_vm._v("Block "+_vm._s(_vm.messageRemove.userDisplayName))])])]),_c('div',{staticClass:"tw-flex tw-flex-row tw-justify-center tw-py-4 tw-px-3"},[_c('div',{staticClass:"tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center tw-mr-2",attrs:{"title":"Cancel message edit"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}},[_vm._v("Cancel")]),_c('div',{staticClass:"tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-white tw-bg-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center",attrs:{"title":"Save message updates"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog(true)}}},[_vm._v("Ok")])])])])])]):_vm._e(),_c('div',{staticClass:"cs-new-message-container box-border tw-absolute tw-bottom-0 tw-left-0 tw-right-0"},[_c('div',{staticClass:"tw-flex tw-flex-col tw-p-4"},[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.message),expression:"message"}],attrs:{"placeholder":"Type a message and press enter"},domProps:{"value":(_vm.message)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.sendMessage($event)},"input":function($event){if($event.target.composing){ return; }_vm.message=$event.target.value}}})])])])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/Chat/Chat.vue?vue&type=template&id=7e1f5607&
+// CONCATENATED MODULE: ./src/components/Chat/Chat.vue?vue&type=template&id=687efb72&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.map.js
 var es_array_map = __webpack_require__("d81d");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.reduce.js
 var es_array_reduce = __webpack_require__("13d5");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.splice.js
+var es_array_splice = __webpack_require__("a434");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.values.js
 var es_object_values = __webpack_require__("07ac");
@@ -17838,12 +17919,12 @@ function _objectSpread2(target) {
 // EXTERNAL MODULE: ./node_modules/stream-chat/dist/browser.es.js
 var browser_es = __webpack_require__("36c4");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5339f287-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatMessage.vue?vue&type=template&id=4f6fe8a6&
-var ChatMessagevue_type_template_id_4f6fe8a6_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cs-message tw-p-3 hover:tw-bg-gray-100 tw-relative"},[(_vm.message.type == 'regular' && _vm.messageEdit.id != _vm.message.id)?_c('div',{staticClass:"tw-flex tw-flex-col tw-max-w-full"},[_c('chat-user',{attrs:{"user":_vm.message.user},scopedSlots:_vm._u([{key:"footer",fn:function(){return [(_vm.$_has_reactions)?_c('div',{staticClass:"tw-inline-flex tw-mt-1"},[_c('div',{staticClass:"tw-flex tw-flex-row tw-rounded-lg tw-border tw-border-gray-400 tw-divide-x tw-divide-gray-400 tw-text-gray-500 tw-cursor-pointer"},_vm._l((_vm.message.reaction_counts),function(count,reaction){return _c('div',{key:("message-reaction-" + reaction),staticClass:"tw-px-2 hover:tw-text-black",attrs:{"title":_vm.getReactionUsers(reaction)},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleMessageReaction(reaction)}}},[_c('i',{class:_vm.getReactionClasses(reaction)}),_c('span',{staticClass:"tw-text-sm tw-text-black tw-ml-1"},[_vm._v(_vm._s(count))])])}),0)]):_vm._e()]},proxy:true}],null,false,172512906)},[_c('span',{staticClass:"tw-mr-1 tw-font-semibold tw-text-sm"},[_vm._v(":")]),_c('span',{staticClass:"tw-whitespace-normal",domProps:{"innerHTML":_vm._s(_vm.getParsedMessage(_vm.message.text))}})]),_c('chat-message-menu',{attrs:{"is-administrator":_vm.isAdministrator,"message":_vm.message,"message-reactions":_vm.messageReactions,"user-id":_vm.userId}})],1):_vm._e(),(_vm.message.type == 'regular' && _vm.messageEdit.id == _vm.message.id)?_c('div',[_c('div',{staticClass:"cs-message-edit"},[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.messageEdit.text),expression:"messageEdit.text"}],domProps:{"value":(_vm.messageEdit.text)},on:{"input":function($event){if($event.target.composing){ return; }_vm.$set(_vm.messageEdit, "text", $event.target.value)}}}),_c('div',{staticClass:"tw-flex tw-flex-row tw-justify-end tw-mt-2"},[_c('div',{staticClass:"tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center tw-mr-2",attrs:{"title":"Cancel message edit"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.cancelMessageEdit()}}},[_vm._v("Cancel")]),_c('div',{staticClass:"tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-white tw-bg-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center",attrs:{"title":"Save message updates"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.saveMessageEdit()}}},[_vm._v("Save")])])])]):_vm._e(),(_vm.message.type == 'system')?_c('div',{staticClass:"tw-py-2 tw-text-gray-500"},[_vm._v(" "+_vm._s(_vm.message.text)+" ")]):_vm._e()])}
-var ChatMessagevue_type_template_id_4f6fe8a6_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5339f287-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatMessage.vue?vue&type=template&id=58079846&
+var ChatMessagevue_type_template_id_58079846_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cs-message tw-p-3 hover:tw-bg-gray-100 tw-relative"},[(_vm.message.type == 'regular' && _vm.messageEdit.id != _vm.message.id)?_c('div',{staticClass:"tw-flex tw-flex-col tw-max-w-full"},[_c('chat-user',{attrs:{"user":_vm.message.user},scopedSlots:_vm._u([{key:"footer",fn:function(){return [(_vm.$_has_reactions)?_c('div',{staticClass:"tw-inline-flex tw-mt-1"},[_c('div',{staticClass:"tw-flex tw-flex-row tw-rounded-lg tw-border tw-border-gray-400 tw-divide-x tw-divide-gray-400 tw-text-gray-500 tw-cursor-pointer"},_vm._l((_vm.message.reaction_counts),function(count,reaction){return _c('div',{key:("message-reaction-" + reaction),staticClass:"tw-flex tw-flex-row tw-place-content-center tw-p-1 hover:tw-text-black",attrs:{"title":_vm.getReactionUsers(reaction)},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleMessageReaction(reaction)}}},[_c('i',{class:_vm.getReactionClasses(reaction)}),_c('span',{staticClass:"tw-text-xs tw-text-black cs-reaction-count"},[_vm._v(_vm._s(count))])])}),0)]):_vm._e()]},proxy:true}],null,false,123200989)},[_c('span',{staticClass:"tw-mr-1 tw-font-semibold tw-text-sm"},[_vm._v(":")]),(_vm.message.user.displayName.length > 15)?_c('br'):_vm._e(),_c('span',{staticClass:"tw-whitespace-normal",domProps:{"innerHTML":_vm._s(_vm.getParsedMessage(_vm.message.text))}})]),_c('chat-message-menu',{attrs:{"is-administrator":_vm.isAdministrator,"message":_vm.message,"message-reactions":_vm.messageReactions,"user-id":_vm.userId}})],1):_vm._e(),(_vm.message.type == 'regular' && _vm.messageEdit.id == _vm.message.id)?_c('div',[_c('div',{staticClass:"cs-message-edit"},[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.messageEdit.text),expression:"messageEdit.text"}],domProps:{"value":(_vm.messageEdit.text)},on:{"input":function($event){if($event.target.composing){ return; }_vm.$set(_vm.messageEdit, "text", $event.target.value)}}}),_c('div',{staticClass:"tw-flex tw-flex-row tw-justify-end tw-mt-2"},[_c('div',{staticClass:"tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center tw-mr-2",attrs:{"title":"Cancel message edit"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.cancelMessageEdit()}}},[_vm._v("Cancel")]),_c('div',{staticClass:"tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-white tw-bg-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center",attrs:{"title":"Save message updates"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.saveMessageEdit()}}},[_vm._v("Save")])])])]):_vm._e(),(_vm.message.type == 'system')?_c('div',{staticClass:"tw-py-2 tw-text-gray-500"},[_vm._v(" "+_vm._s(_vm.message.text)+" ")]):_vm._e()])}
+var ChatMessagevue_type_template_id_58079846_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/Chat/ChatMessage.vue?vue&type=template&id=4f6fe8a6&
+// CONCATENATED MODULE: ./src/components/Chat/ChatMessage.vue?vue&type=template&id=58079846&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.join.js
 var es_array_join = __webpack_require__("a15b");
@@ -18277,6 +18358,7 @@ var ChatUser_component = normalizeComponent(
 //
 //
 //
+//
 
 
 /* harmony default export */ var ChatMessagevue_type_script_lang_js_ = ({
@@ -18421,6 +18503,9 @@ var ChatUser_component = normalizeComponent(
       var usersString;
 
       switch (users.length) {
+        case 0:
+          break;
+
         case 1:
           usersString = users[0];
           break;
@@ -18438,7 +18523,9 @@ var ChatUser_component = normalizeComponent(
       }
 
       if (this.hasOwnReaction(reactionType)) {
-        if (users.length == 1) {
+        if (users.length == 0) {
+          usersString = 'You';
+        } else if (users.length == 1) {
           usersString = 'You and ' + usersString;
         } else {
           usersString = 'You, ' + usersString;
@@ -18460,7 +18547,7 @@ var ChatUser_component = normalizeComponent(
         });
       }
 
-      return reactionUsers.length ? this.formatReactionUsers(reactionUsers, reactionType) : 'Fetching user information...';
+      return reactionUsers.length || this.hasOwnReaction(reactionType) ? this.formatReactionUsers(reactionUsers, reactionType) : 'Fetching user information...';
     }
   }
 });
@@ -18476,8 +18563,8 @@ var ChatUser_component = normalizeComponent(
 
 var ChatMessage_component = normalizeComponent(
   Chat_ChatMessagevue_type_script_lang_js_,
-  ChatMessagevue_type_template_id_4f6fe8a6_render,
-  ChatMessagevue_type_template_id_4f6fe8a6_staticRenderFns,
+  ChatMessagevue_type_template_id_58079846_render,
+  ChatMessagevue_type_template_id_58079846_staticRenderFns,
   false,
   null,
   null,
@@ -18487,6 +18574,7 @@ var ChatMessage_component = normalizeComponent(
 
 /* harmony default export */ var ChatMessage = (ChatMessage_component.exports);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=script&lang=js&
+
 
 
 
@@ -18770,15 +18858,15 @@ var ChatMessage_component = normalizeComponent(
           }
         });
 
-        _this2.channel.on('message.new', _this2.messageUpdateHandler);
+        _this2.channel.on('message.new', _this2.pushMessage);
 
-        _this2.channel.on('message.updated', _this2.messageUpdateHandler);
+        _this2.channel.on('message.updated', _this2.updateMessageText);
 
-        _this2.channel.on('message.deleted', _this2.messageUpdateHandler);
+        _this2.channel.on('message.deleted', _this2.deleteMessage);
 
-        _this2.channel.on('reaction.new', _this2.messageUpdateHandler);
+        _this2.channel.on('reaction.new', _this2.pushMessageReaction);
 
-        _this2.channel.on('reaction.deleted', _this2.messageUpdateHandler); // this.channel.on(event => {
+        _this2.channel.on('reaction.deleted', _this2.deleteMessageReaction); // this.channel.on(event => {
         //     console.log('event', event);
         // });
 
@@ -18809,121 +18897,168 @@ var ChatMessage_component = normalizeComponent(
       var messages = _ref5.messages;
       messages.forEach(function (message) {
         if (message.type == 'regular') {
-          var messageCopy = function (_ref6) {
-            var id = _ref6.id,
-                type = _ref6.type,
-                text = _ref6.text;
-            return {
-              id: id,
-              type: type,
-              text: text
-            };
-          }(message);
-
-          var copyUser = function copyUser(_ref7) {
-            var id = _ref7.id,
-                displayName = _ref7.displayName,
-                avatarUrl = _ref7.avatarUrl,
-                profileUrl = _ref7.profileUrl,
-                role = _ref7.role,
-                accessLevelName = _ref7.accessLevelName;
-            return {
-              id: id,
-              displayName: displayName,
-              avatarUrl: avatarUrl,
-              profileUrl: profileUrl,
-              role: role,
-              accessLevelName: accessLevelName
-            };
-          };
-
-          messageCopy.user = copyUser(message.user);
-          messageCopy.reaction_counts = _objectSpread2({}, message.reaction_counts);
-          messageCopy.own_reactions = message.own_reactions.map(function (_ref8) {
-            var type = _ref8.type;
-            return {
-              type: type
-            };
+          _this4.pushMessage({
+            message: message
           });
-          var messageReactionsCount = Object.values(message.reaction_counts).reduce(function (a, b) {
-            return a + b;
-          }, 0);
-          messageCopy.reactions = [];
-
-          if (message.latest_reactions.length == messageReactionsCount) {
-            message.latest_reactions.forEach(function (reaction) {
-              messageCopy.reactions.push({
-                type: reaction.type,
-                user: copyUser(reaction.user)
-              });
-            }); // } else if (
-            //     this.messages[message.id]
-            //     && this.messages[message.id].reactions
-            //     && this.messages[message.id].reactions.length == messageReactionsCount
-            // ) {
-            //     messageCopy.reactions = this.messages[message.id].reactions;
-          } else {
-            _this4.channel.getReactions(message.id, {
-              limit: 1000
-            }).then(function (_ref9) {
-              var reactions = _ref9.reactions;
-              reactions.forEach(function (reaction) {
-                messageCopy.reactions.push({
-                  type: reaction.type,
-                  user: copyUser(reaction.user)
-                });
-              });
-            });
-          }
-
-          _this4.messages.push(messageCopy);
         }
       });
     },
-    processMessageReactions: function processMessageReactions(message) {
-      var messageReactionsCount = Object.values(message.reaction_counts).reduce(function (a, b) {
+    getUserCopy: function getUserCopy(_ref6) {
+      var id = _ref6.id,
+          displayName = _ref6.displayName,
+          avatarUrl = _ref6.avatarUrl,
+          profileUrl = _ref6.profileUrl,
+          role = _ref6.role,
+          accessLevelName = _ref6.accessLevelName;
+      return {
+        id: id,
+        displayName: displayName,
+        avatarUrl: avatarUrl,
+        profileUrl: profileUrl,
+        role: role,
+        accessLevelName: accessLevelName
+      };
+    },
+    pushMessage: function pushMessage(_ref7) {
+      var _this5 = this;
+
+      var message = _ref7.message;
+
+      var messageCopy = function (_ref8) {
+        var id = _ref8.id,
+            type = _ref8.type,
+            text = _ref8.text;
+        return {
+          id: id,
+          type: type,
+          text: text
+        };
+      }(message);
+
+      messageCopy.user = this.getUserCopy(message.user);
+      messageCopy.reaction_counts = _objectSpread2({}, message.reaction_counts);
+      messageCopy.own_reactions = message.own_reactions.map(function (_ref9) {
+        var type = _ref9.type;
+        return {
+          type: type
+        };
+      });
+      var messageReactionsCount = Object.values(message.reaction_counts || {}).reduce(function (a, b) {
         return a + b;
       }, 0);
+      messageCopy.reactions = [];
 
-      if (message.latest_reactions.length != messageReactionsCount) {
-        console.log("Chat::processMessageReactions fetching message [%s] reactions", JSON.stringify(message.id));
+      if (message.latest_reactions.length == messageReactionsCount) {
+        message.latest_reactions.forEach(function (reaction) {
+          messageCopy.reactions.push({
+            type: reaction.type,
+            user: _this5.getUserCopy(reaction.user)
+          });
+        });
+      } else {
         this.channel.getReactions(message.id, {
           limit: 1000
-        }).then(function (response) {
-          console.log("Chat::processMessageReactions message reactions fetch response: %s", JSON.stringify(response)); // todo - update message latest_reactions with response data
+        }).then(function (_ref10) {
+          var reactions = _ref10.reactions;
+          reactions.forEach(function (reaction) {
+            messageCopy.reactions.push({
+              type: reaction.type,
+              user: _this5.getUserCopy(reaction.user)
+            });
+          });
         });
       }
-    },
-    messageUpdateHandler: function messageUpdateHandler(_ref10) {
-      var message = _ref10.message;
 
-      if (message.type == 'regular') {
-        this.$set(this.messages, message.id, message);
-      } else {
-        this.$delete(this.messages, message.id);
-      }
+      this.messages.push(messageCopy);
+    },
+    updateMessageText: function updateMessageText(_ref11) {
+      var message = _ref11.message;
+      this.messages.forEach(function (storedMessage) {
+        if (storedMessage.id == message.id) {
+          storedMessage.text = message.text;
+        }
+      });
+    },
+    deleteMessage: function deleteMessage(_ref12) {
+      var message = _ref12.message;
+      var idx;
+      this.messages.forEach(function (storedMessage, index) {
+        if (storedMessage.id == message.id) {
+          idx = index;
+        }
+      });
+      this.messages.splice(idx, 1);
+    },
+    pushMessageReaction: function pushMessageReaction(_ref13) {
+      var _this6 = this;
+
+      var message = _ref13.message,
+          reaction = _ref13.reaction;
+      this.messages.forEach(function (storedMessage) {
+        if (storedMessage.id == message.id) {
+          storedMessage.reactions.push({
+            type: reaction.type,
+            user: _this6.getUserCopy(reaction.user)
+          });
+          storedMessage.reaction_counts = _objectSpread2({}, message.reaction_counts);
+
+          if (reaction.user.id == _this6.userId) {
+            storedMessage.own_reactions.push({
+              type: reaction.type
+            });
+          }
+        }
+      });
+      this.scrollMessages();
+    },
+    deleteMessageReaction: function deleteMessageReaction(_ref14) {
+      var _this7 = this;
+
+      var message = _ref14.message,
+          reaction = _ref14.reaction;
+      var idx;
+      this.messages.forEach(function (storedMessage) {
+        if (storedMessage.id == message.id) {
+          storedMessage.reactions.forEach(function (storedReaction, index) {
+            if (storedReaction.type == reaction.type && storedReaction.user.id == reaction.user.id) {
+              idx = index;
+            }
+          });
+          storedMessage.reactions.splice(idx, 1);
+          storedMessage.reaction_counts = _objectSpread2({}, message.reaction_counts);
+
+          if (reaction.user.id == _this7.userId) {
+            storedMessage.own_reactions.forEach(function (ownReaction, index) {
+              if (ownReaction.type == reaction.type) {
+                idx = index;
+              }
+            });
+            storedMessage.own_reactions.splice(idx, 1);
+          }
+        }
+      });
     },
     toggleShowMembers: function toggleShowMembers() {
       this.showMembers = !this.showMembers;
     },
-    updateMessage: function updateMessage(_ref11) {
-      var _this5 = this;
+    updateMessage: function updateMessage(_ref15) {
+      var _this8 = this;
 
-      var message = _ref11.message,
-          text = _ref11.text;
+      var message = _ref15.message,
+          text = _ref15.text;
       this.streamClient.updateMessage({
         id: message.id,
         text: text
       }).then(function () {
-        _this5.messageErrors = [];
-      }).catch(function (_ref12) {
-        var response = _ref12.response;
+        _this8.messageErrors = [];
+      }).catch(function (_ref16) {
+        var response = _ref16.response;
 
-        _this5.errorHandler(response, 'Message update error');
+        _this8.errorHandler(response, 'Message update error');
       });
     },
-    removeMessage: function removeMessage(_ref13) {
-      var message = _ref13.message;
+    removeMessage: function removeMessage(_ref17) {
+      var message = _ref17.message;
       this.messageRemove = {
         id: message.id,
         userId: message.user.id,
@@ -18934,15 +19069,15 @@ var ChatMessage_component = normalizeComponent(
       this.showDialog = true;
     },
     closeDialog: function closeDialog(confirmation) {
-      var _this6 = this;
+      var _this9 = this;
 
       if (confirmation) {
         this.streamClient.deleteMessage(this.messageRemove.id).then(function () {
-          _this6.messageErrors = [];
-        }).catch(function (_ref14) {
-          var response = _ref14.response;
+          _this9.messageErrors = [];
+        }).catch(function (_ref18) {
+          var response = _ref18.response;
 
-          _this6.errorHandler(response, 'Message delete error');
+          _this9.errorHandler(response, 'Message delete error');
         });
 
         if (this.messageRemove.blockUser) {
@@ -18950,11 +19085,11 @@ var ChatMessage_component = normalizeComponent(
             banned_by_id: this.userId,
             reason: 'default'
           }).then(function () {
-            _this6.messageErrors = [];
-          }).catch(function (_ref15) {
-            var response = _ref15.response;
+            _this9.messageErrors = [];
+          }).catch(function (_ref19) {
+            var response = _ref19.response;
 
-            _this6.errorHandler(response, 'User ban error');
+            _this9.errorHandler(response, 'User ban error');
           });
         }
       }
@@ -18974,29 +19109,29 @@ var ChatMessage_component = normalizeComponent(
       });
       return has;
     },
-    toggleMessageReaction: function toggleMessageReaction(_ref16) {
-      var _this7 = this;
+    toggleMessageReaction: function toggleMessageReaction(_ref20) {
+      var _this10 = this;
 
-      var message = _ref16.message,
-          reaction = _ref16.reaction;
+      var message = _ref20.message,
+          reaction = _ref20.reaction;
 
       if (this.hasOwnReaction(message, reaction)) {
         this.channel.deleteReaction(message.id, reaction).then(function () {
-          _this7.messageErrors = [];
-        }).catch(function (_ref17) {
-          var response = _ref17.response;
+          _this10.messageErrors = [];
+        }).catch(function (_ref21) {
+          var response = _ref21.response;
 
-          _this7.errorHandler(response, 'Message reaction remove error');
+          _this10.errorHandler(response, 'Message reaction remove error');
         });
       } else {
         this.channel.sendReaction(message.id, {
           type: reaction
         }).then(function () {
-          _this7.messageErrors = [];
-        }).catch(function (_ref18) {
-          var response = _ref18.response;
+          _this10.messageErrors = [];
+        }).catch(function (_ref22) {
+          var response = _ref22.response;
 
-          _this7.errorHandler(response, 'Message reaction send error');
+          _this10.errorHandler(response, 'Message reaction send error');
         });
       }
     }

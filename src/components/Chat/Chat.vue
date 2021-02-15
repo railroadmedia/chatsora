@@ -266,11 +266,11 @@ export default {
                             }
                         });
 
-                    this.channel.on('message.new', this.messageUpdateHandler);
-                    this.channel.on('message.updated', this.messageUpdateHandler);
-                    this.channel.on('message.deleted', this.messageUpdateHandler);
-                    this.channel.on('reaction.new', this.messageUpdateHandler);
-                    this.channel.on('reaction.deleted', this.messageUpdateHandler);
+                    this.channel.on('message.new', this.pushMessage);
+                    this.channel.on('message.updated', this.updateMessageText);
+                    this.channel.on('message.deleted', this.deleteMessage);
+                    this.channel.on('reaction.new', this.pushMessageReaction);
+                    this.channel.on('reaction.deleted', this.deleteMessageReaction);
 
                     // this.channel.on(event => {
                     //     console.log('event', event);
@@ -298,70 +298,105 @@ export default {
         processMessages({ messages }) {
             messages.forEach((message) => {
                 if (message.type == 'regular') {
-
-                    let messageCopy = (({ id, type, text }) => ({ id, type, text }))(message);
-
-                    const copyUser = ({ id, displayName, avatarUrl, profileUrl, role, accessLevelName }) => ({ id, displayName, avatarUrl, profileUrl, role, accessLevelName });
-
-                    messageCopy.user = copyUser(message.user);
-
-                    messageCopy.reaction_counts = {...message.reaction_counts};
-
-                    messageCopy.own_reactions = message.own_reactions.map(({type}) => ({type}));
-
-                    const messageReactionsCount = Object.values(message.reaction_counts).reduce((a, b) => a + b, 0);
-
-                    messageCopy.reactions = [];
-
-                    if (message.latest_reactions.length == messageReactionsCount) {
-
-                        message.latest_reactions.forEach((reaction) => {
-                            messageCopy.reactions.push({ type: reaction.type, user: copyUser(reaction.user) });
-                        });
-                    // } else if (
-                    //     this.messages[message.id]
-                    //     && this.messages[message.id].reactions
-                    //     && this.messages[message.id].reactions.length == messageReactionsCount
-                    // ) {
-                    //     messageCopy.reactions = this.messages[message.id].reactions;
-                    } else {
-                        this.channel
-                            .getReactions(message.id, { limit: 1000 })
-                            .then(({ reactions }) => {
-                                reactions.forEach((reaction) => {
-                                    messageCopy.reactions.push({ type: reaction.type, user: copyUser(reaction.user) });
-                                });
-                            });
-                    }
-
-                    this.messages.push(messageCopy);
+                    this.pushMessage({ message });
                 }
             });
         },
 
-        processMessageReactions(message) {
-
-            const messageReactionsCount = Object.values(message.reaction_counts).reduce((a, b) => a + b, 0);
-
-            if (message.latest_reactions.length != messageReactionsCount) {
-
-                console.log("Chat::processMessageReactions fetching message [%s] reactions", JSON.stringify(message.id));
-
-                this.channel
-                    .getReactions(message.id, { limit: 1000 })
-                    .then((response) => {
-                        console.log("Chat::processMessageReactions message reactions fetch response: %s", JSON.stringify(response));
-                        // todo - update message latest_reactions with response data
-                    })
-            }
+        getUserCopy({ id, displayName, avatarUrl, profileUrl, role, accessLevelName }) {
+            return { id, displayName, avatarUrl, profileUrl, role, accessLevelName };
         },
 
-        messageUpdateHandler({ message }) {
-            if (message.type == 'regular') {
-                this.$set(this.messages, message.id, message);
+        pushMessage({ message }) {
+            let messageCopy = (({ id, type, text }) => ({ id, type, text }))(message);
+
+            messageCopy.user = this.getUserCopy(message.user);
+
+            messageCopy.reaction_counts = {...message.reaction_counts};
+
+            messageCopy.own_reactions = message.own_reactions.map(({type}) => ({type}));
+
+            const messageReactionsCount = Object.values(message.reaction_counts || {}).reduce((a, b) => a + b, 0);
+
+            messageCopy.reactions = [];
+
+            if (message.latest_reactions.length == messageReactionsCount) {
+
+                message.latest_reactions.forEach((reaction) => {
+                    messageCopy.reactions.push({ type: reaction.type, user: this.getUserCopy(reaction.user) });
+                });
+
             } else {
-                this.$delete(this.messages, message.id);
+                this.channel
+                    .getReactions(message.id, { limit: 1000 })
+                    .then(({ reactions }) => {
+                        reactions.forEach((reaction) => {
+                            messageCopy.reactions.push({ type: reaction.type, user: this.getUserCopy(reaction.user) });
+                        });
+                    });
             }
+
+            this.messages.push(messageCopy);
+        },
+
+        updateMessageText({ message }) {
+            this.messages.forEach((storedMessage) => {
+                if (storedMessage.id == message.id) {
+                    storedMessage.text = message.text;
+                }
+            });
+        },
+
+        deleteMessage({ message }) {
+            let idx;
+
+            this.messages.forEach((storedMessage, index) => {
+                if (storedMessage.id == message.id) {
+                    idx = index;
+                }
+            });
+
+            this.messages.splice(idx, 1);
+        },
+
+        pushMessageReaction({ message, reaction }) {
+            this.messages.forEach((storedMessage) => {
+                if (storedMessage.id == message.id) {
+                    storedMessage.reactions.push({ type: reaction.type, user: this.getUserCopy(reaction.user) });
+                    storedMessage.reaction_counts = {...message.reaction_counts};
+                    if (reaction.user.id == this.userId) {
+                        storedMessage.own_reactions.push({ type: reaction.type });
+                    }
+                }
+            });
+            this.scrollMessages();
+        },
+
+        deleteMessageReaction({ message, reaction }) {
+            let idx;
+
+            this.messages.forEach((storedMessage) => {
+                if (storedMessage.id == message.id) {
+                    storedMessage.reactions.forEach((storedReaction, index) => {
+                        if (
+                            storedReaction.type == reaction.type
+                            && storedReaction.user.id == reaction.user.id
+                        ) {
+                            idx = index;
+                        }
+                    });
+                    storedMessage.reactions.splice(idx, 1);
+                    storedMessage.reaction_counts = {...message.reaction_counts};
+                    if (reaction.user.id == this.userId) {
+                        storedMessage.own_reactions.forEach((ownReaction, index) => {
+                            if (ownReaction.type == reaction.type) {
+                                idx = index;
+                            }
+                        });
+                        storedMessage.own_reactions.splice(idx, 1);
+                    }
+                }
+            });
         },
 
         toggleShowMembers() {

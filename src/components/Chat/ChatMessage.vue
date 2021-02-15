@@ -3,20 +3,21 @@
         <div class="tw-flex tw-flex-col tw-max-w-full" v-if="message.type == 'regular' && messageEdit.id != message.id">
             <chat-user :user="message.user">
                 <span class="tw-mr-1 tw-font-semibold tw-text-sm">:</span>
+                <br v-if="message.user.displayName.length > 15">
                 <span v-html="getParsedMessage(message.text)" class="tw-whitespace-normal"></span>
 
                 <template v-slot:footer>
                     <div class="tw-inline-flex tw-mt-1" v-if="$_has_reactions">
                         <div class="tw-flex tw-flex-row tw-rounded-lg tw-border tw-border-gray-400 tw-divide-x tw-divide-gray-400 tw-text-gray-500 tw-cursor-pointer">
                             <div
-                                class="tw-px-2 hover:tw-text-black"
+                                class="tw-flex tw-flex-row tw-place-content-center tw-p-1 hover:tw-text-black"
                                 v-for="(count, reaction) in message.reaction_counts"
                                 :key="`message-reaction-${reaction}`"
                                 @click.stop.prevent="toggleMessageReaction(reaction)"
                                 :title="getReactionUsers(reaction)"
                             >
                                 <i :class="getReactionClasses(reaction)"></i>
-                                <span class="tw-text-sm tw-text-black tw-ml-1">{{ count }}</span>
+                                <span class="tw-text-xs tw-text-black cs-reaction-count">{{ count }}</span>
                             </div>
                         </div>
                     </div>
@@ -226,6 +227,9 @@ export default {
             let usersString;
 
             switch(users.length) {
+                case 0:
+                break;
+
                 case 1:
                     usersString = users[0];
                 break;
@@ -243,7 +247,9 @@ export default {
             }
 
             if (this.hasOwnReaction(reactionType)) {
-                if (users.length == 1) {
+                if (users.length == 0) {
+                    usersString = 'You';
+                } else if (users.length == 1) {
                     usersString = 'You and ' + usersString;
                 } else {
                     usersString = 'You, ' + usersString;
@@ -266,7 +272,9 @@ export default {
 
             }
 
-            return reactionUsers.length ? this.formatReactionUsers(reactionUsers, reactionType) : 'Fetching user information...';
+            return reactionUsers.length || this.hasOwnReaction(reactionType)
+                ? this.formatReactionUsers(reactionUsers, reactionType)
+                : 'Fetching user information...';
         }
     },
 }
