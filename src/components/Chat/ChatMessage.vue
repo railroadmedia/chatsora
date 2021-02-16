@@ -1,5 +1,8 @@
 <template>
-    <div class="cs-message tw-p-3 hover:tw-bg-gray-100 tw-relative">
+    <div
+        class="cs-message tw-p-3 tw-relative"
+        :class="{'hover:tw-bg-gray-100': showMenu}"
+    >
         <div class="tw-flex tw-flex-col tw-max-w-full" v-if="message.type == 'regular' && messageEdit.id != message.id">
             <chat-user :user="message.user">
                 <span class="tw-mr-1 tw-font-semibold tw-text-sm">:</span>
@@ -29,6 +32,7 @@
                 :message="message"
                 :message-reactions="messageReactions"
                 :user-id="userId"
+                v-if="showMenu"
             ></chat-message-menu>
         </div>
         <div v-if="message.type == 'regular' && messageEdit.id == message.id">
@@ -90,6 +94,10 @@ export default {
         isAdministrator: {
             type: Boolean,
             default: () => false,
+        },
+        showMenu: {
+            type: Boolean,
+            default: () => true,
         },
     },
     data() {

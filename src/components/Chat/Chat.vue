@@ -9,6 +9,13 @@
             >{{ $_watcher_count }} ONLINE</a>
         </div>
         <div
+            class="tw-px-3 tw-h-10 tw-absolute tw-bg-white tw-top-0 tw-left-0 tw-right-0 tw-border-b tw-border-gray-600 tw-flex tw-flex-row tw-place-items-center tw-justify-between tw-z-10"
+            v-if="showThread"
+        >
+            <div><span class="tw-font-bold">Thread</span><span class="tw-ml-1">2 replies</span></div>
+            <div><i class="fal fa-times tw-font-semibold tw-cursor-pointer" @click.stop.prevent="hideMessageThread()"></i></div>
+        </div>
+        <div
             class="cs-members-container tw-absolute tw-top-10 mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto tw-z-40"
             v-if="showMembers"
         >
@@ -20,6 +27,19 @@
                 >
                     <chat-user :user="item"></chat-user>
                 </div>
+            </div>
+        </div>
+        <div
+            class="cs-thread-container tw-absolute tw-bg-white tw-top-10 mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto tw-z-40"
+            v-if="showThread"
+        >
+            <div class="tw-my-4 tw-border-b tw-border-gray-600">
+                <chat-message
+                    :is-administrator="isAdministrator"
+                    :message="messageThread"
+                    :user-id="userId"
+                    :show-menu="false"
+                ></chat-message>
             </div>
         </div>
         <div class="cs-messages-container tw-absolute tw-top-10 mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto" ref="messages">
@@ -130,6 +150,8 @@ export default {
             channel: null,
             showMembers: false,
             showDialog: false,
+            showThread: false,
+            messageThread: null,
             messageErrors: [],
             messageRemove: {
                 id: null,
@@ -177,6 +199,7 @@ export default {
         this.$root.$on('updateMessage', this.updateMessage);
         this.$root.$on('removeMessage', this.removeMessage);
         this.$root.$on('toggleMessageReaction', this.toggleMessageReaction);
+        this.$root.$on('messageThread',this.showMessageThread);
     },
     watch: {
         $_messages_count: function () {
@@ -202,14 +225,22 @@ export default {
         },
 
         sendMessage() {
-            let text = this.message.trim();
+            let payload = { text:  this.message.trim() };
 
             this.message = '';
 
-            if (text) {
+            if (payload.text) {
+
+                if (this.messageThread) {
+                    console.log("Chat::sendMessage messageThread.id: %s", JSON.stringify(this.messageThread.id));
+                    payload.parent_id = this.messageThread.id;
+                    payload.show_in_channel = false;
+                }
+
                 this.channel
-                    .sendMessage({ text })
-                    .then(() => {
+                    .sendMessage(payload)
+                    .then((response) => {
+                        console.log("Chat::sendMessage response: %s", JSON.stringify(response));
                         this.messageErrors = [];
                     })
                     .catch(({ response }) => {
@@ -272,9 +303,9 @@ export default {
                     this.channel.on('reaction.new', this.pushMessageReaction);
                     this.channel.on('reaction.deleted', this.deleteMessageReaction);
 
-                    // this.channel.on(event => {
-                    //     console.log('event', event);
-                    // });
+                    this.channel.on(event => {
+                        console.log('event', event);
+                    });
                 });
         },
 
@@ -299,6 +330,9 @@ export default {
             messages.forEach((message) => {
                 if (message.type == 'regular') {
                     this.pushMessage({ message });
+                    if (message.id == '85c93bf7-1f11-4a10-be70-8952290f890a') {
+                        console.log("Chat::processMessages message: %s", JSON.stringify(message));
+                    }
                 }
             });
         },
@@ -307,8 +341,8 @@ export default {
             return { id, displayName, avatarUrl, profileUrl, role, accessLevelName };
         },
 
-        pushMessage({ message }) {
-            let messageCopy = (({ id, type, text }) => ({ id, type, text }))(message);
+        getMessageCopy(message) {
+            let messageCopy = (({ id, type, text, reply_count }) => ({ id, type, text, reply_count }))(message);
 
             messageCopy.user = this.getUserCopy(message.user);
 
@@ -319,6 +353,7 @@ export default {
             const messageReactionsCount = Object.values(message.reaction_counts || {}).reduce((a, b) => a + b, 0);
 
             messageCopy.reactions = [];
+            messageCopy.replies = [];
 
             if (message.latest_reactions.length == messageReactionsCount) {
 
@@ -333,6 +368,23 @@ export default {
                         reactions.forEach((reaction) => {
                             messageCopy.reactions.push({ type: reaction.type, user: this.getUserCopy(reaction.user) });
                         });
+                    });
+            }
+
+            return messageCopy;
+        },
+
+        pushMessage({ message }) {
+            let messageCopy = this.getMessageCopy(message);
+
+            if (message.reply_count) {
+                this.channel
+                    .getReplies(message.id, { limit: 1000 })
+                    .then(({ messages }) => {
+                        messages.forEach((reply) => {
+                            messageCopy.replies.push(this.getMessageCopy(reply));
+                        });
+                        // console.log("Chat::pushMessage [getReplies] response: %s", JSON.stringify(response));
                     });
             }
 
@@ -497,6 +549,16 @@ export default {
                         this.errorHandler(response, 'Message reaction send error');
                     });
             }
+        },
+
+        showMessageThread({ message }) {
+            this.messageThread = message;
+            this.showMembers = false;
+            this.showThread = true;
+        },
+
+        hideMessageThread() {
+            this.showThread = false;
         },
     },
 }

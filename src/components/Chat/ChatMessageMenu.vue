@@ -8,6 +8,7 @@
             ><i class="fal fa-smile"></i></div>
             <div
                 class="tw-px-2 hover:tw-text-black"
+                @click.stop.prevent="showThread()"
             ><i class="fal fa-reply-all"></i></div>
             <div
                 class="tw-px-2 hover:tw-text-black"
@@ -97,6 +98,15 @@ export default {
                     }
                 }
             );
+
+        this.$root
+            .$on(
+                'messageThread',
+                () => {
+                    this.messageReact = false;
+                    this.messageMenu = false;
+                }
+            );
     },
     methods: {
         toggleMessageMenu() {
@@ -110,6 +120,13 @@ export default {
             this.$root.$emit('messageMenuToggled', { message: this.message });
 
             this.messageReact = !this.messageReact;
+            this.messageMenu = false;
+        },
+
+        showThread() {
+            this.$root.$emit('messageThread', { message: this.message });
+
+            this.messageReact = false;
             this.messageMenu = false;
         },
 
