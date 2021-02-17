@@ -12,11 +12,11 @@
             class="tw-px-3 tw-h-10 tw-absolute tw-bg-white tw-top-0 tw-left-0 tw-right-0 tw-border-b tw-border-gray-600 tw-flex tw-flex-row tw-place-items-center tw-justify-between tw-z-10"
             v-if="showThread"
         >
-            <div><span class="tw-font-bold">Thread</span><span class="tw-ml-1">2 replies</span></div>
+            <div><span class="tw-font-bold">Thread</span><span class="tw-ml-1">{{ $_reply_count_label }}</span></div>
             <div><i class="fal fa-times tw-font-semibold tw-cursor-pointer" @click.stop.prevent="hideMessageThread()"></i></div>
         </div>
         <div
-            class="cs-members-container tw-absolute tw-top-10 mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto tw-z-40"
+            class="cs-members-container tw-absolute tw-top-10 tw-mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto tw-z-40"
             v-if="showMembers"
         >
             <div class="tw-bg-gray-50 tw-p-3">
@@ -30,19 +30,36 @@
             </div>
         </div>
         <div
-            class="cs-thread-container tw-absolute tw-bg-white tw-top-10 mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto tw-z-40"
+            class="cs-thread-container tw-absolute tw-bg-white tw-top-10 tw-left-0 tw-right-0 tw-overflow-y-auto tw-z-40"
             v-if="showThread"
+            ref="threadMessages"
         >
-            <div class="tw-my-4 tw-border-b tw-border-gray-600">
-                <chat-message
-                    :is-administrator="isAdministrator"
-                    :message="messageThread"
-                    :user-id="userId"
-                    :show-menu="false"
-                ></chat-message>
+            <div class="tw-border-b tw-border-gray-600">
+                <div class="tw-my-4">
+                    <chat-message
+                        :is-administrator="isAdministrator"
+                        :message="messageThread"
+                        :user-id="userId"
+                        :show-menu="false"
+                        :show-thread="false"
+                    ></chat-message>
+                </div>
+            </div>
+            <div class="cs-messages-container tw-mt-4">
+                <div
+                    v-for="item in $_message_thread_replies"
+                    :key="item.id"
+                >
+                    <chat-message
+                        :is-administrator="isAdministrator"
+                        :message="item"
+                        :user-id="userId"
+                        :show-thread="false"
+                    ></chat-message>
+                </div>
             </div>
         </div>
-        <div class="cs-messages-container tw-absolute tw-top-10 mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto" ref="messages">
+        <div class="cs-messages-container tw-absolute tw-top-10 tw-mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto" ref="messages">
             <div class="tw-mt-4">
                 <div
                     v-for="item in $_messages"
@@ -192,6 +209,25 @@ export default {
                 return this.messageErrors.length;
             },
         },
+        $_message_thread_replies: {
+            cache: false,
+            get() {
+                return this.messageThread.replies.filter(item => item.type == 'reply');
+            },
+        },
+        $_reply_count_label: {
+            cache: false,
+            get() {
+                let label = '';
+
+                // todo - delete message reply and check reply_count
+                if (this.messageThread && this.messageThread.reply_count) {
+                    label = this.messageThread.reply_count + (this.messageThread.reply_count > 1 ? ' replies' : ' reply')
+                }
+
+                return label;
+            },
+        },
     },
     mounted() {
         this.setupChat();
@@ -207,6 +243,9 @@ export default {
         },
         $_errors_count: function () {
             this.scrollMessages();
+        },
+        $_reply_count_label: function () {
+            this.scrollThreadMessages();
         },
     },
     methods: {
@@ -224,6 +263,19 @@ export default {
             }
         },
 
+        scrollThreadMessages(force = false) {
+            let container = this.$refs.threadMessages;
+
+            if (container && (force || Math.ceil(container.scrollHeight - container.scrollTop) === container.clientHeight)) {
+                this.$nextTick(() => {
+                    container.scroll({
+                        top: container.scrollHeight,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        },
+
         sendMessage() {
             let payload = { text:  this.message.trim() };
 
@@ -232,15 +284,13 @@ export default {
             if (payload.text) {
 
                 if (this.messageThread) {
-                    console.log("Chat::sendMessage messageThread.id: %s", JSON.stringify(this.messageThread.id));
                     payload.parent_id = this.messageThread.id;
                     payload.show_in_channel = false;
                 }
 
                 this.channel
                     .sendMessage(payload)
-                    .then((response) => {
-                        console.log("Chat::sendMessage response: %s", JSON.stringify(response));
+                    .then(() => {
                         this.messageErrors = [];
                     })
                     .catch(({ response }) => {
@@ -303,9 +353,9 @@ export default {
                     this.channel.on('reaction.new', this.pushMessageReaction);
                     this.channel.on('reaction.deleted', this.deleteMessageReaction);
 
-                    this.channel.on(event => {
-                        console.log('event', event);
-                    });
+                    // this.channel.on(event => {
+                    //     console.log('event', event);
+                    // });
                 });
         },
 
@@ -330,9 +380,6 @@ export default {
             messages.forEach((message) => {
                 if (message.type == 'regular') {
                     this.pushMessage({ message });
-                    if (message.id == '85c93bf7-1f11-4a10-be70-8952290f890a') {
-                        console.log("Chat::processMessages message: %s", JSON.stringify(message));
-                    }
                 }
             });
         },
@@ -384,11 +431,23 @@ export default {
                         messages.forEach((reply) => {
                             messageCopy.replies.push(this.getMessageCopy(reply));
                         });
-                        // console.log("Chat::pushMessage [getReplies] response: %s", JSON.stringify(response));
+
+                        if (this.messageThread?.id == messageCopy.id) {
+                            this.scrollThreadMessages();
+                        }
                     });
             }
 
-            this.messages.push(messageCopy);
+            if (message.type == 'regular') {
+                this.messages.push(messageCopy);
+            } else if (message.type == 'reply' && message.parent_id) {
+                this.messages.forEach((parentMessage) => {
+                    if (parentMessage.id == message.parent_id) {
+                        parentMessage.replies.push(messageCopy);
+                        parentMessage.reply_count = parentMessage.reply_count + 1;
+                    }
+                });
+            }
         },
 
         updateMessageText({ message }) {
@@ -555,10 +614,15 @@ export default {
             this.messageThread = message;
             this.showMembers = false;
             this.showThread = true;
+
+            this.$nextTick(() => {
+                this.scrollThreadMessages(true);
+            });
         },
 
         hideMessageThread() {
             this.showThread = false;
+            this.messageThread = null;
         },
     },
 }

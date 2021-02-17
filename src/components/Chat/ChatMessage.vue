@@ -3,7 +3,7 @@
         class="cs-message tw-p-3 tw-relative"
         :class="{'hover:tw-bg-gray-100': showMenu}"
     >
-        <div class="tw-flex tw-flex-col tw-max-w-full" v-if="message.type == 'regular' && messageEdit.id != message.id">
+        <div class="tw-flex tw-flex-col tw-max-w-full" v-if="messageEdit.id != message.id">
             <chat-user :user="message.user">
                 <span class="tw-mr-1 tw-font-semibold tw-text-sm">:</span>
                 <br v-if="message.user.displayName.length > 15">
@@ -24,6 +24,17 @@
                             </div>
                         </div>
                     </div>
+                    <div v-if="message.reply_count && showThread" class="tw-inline-flex">
+                        <a
+                            class="tw-flex tw-flex-row tw-content-end"
+                            @click.stop.prevent="messageThread()"
+                        >
+                            <div class="tw-transform tw--rotate-180">
+                                <i class="fal fa-reply"></i>
+                            </div>
+                            <span class="tw-ml-1 tw-text-sm">{{ $_reply_count_label }}</span>
+                        </a>
+                    </div>
                 </template>
             </chat-user>
 
@@ -32,10 +43,11 @@
                 :message="message"
                 :message-reactions="messageReactions"
                 :user-id="userId"
+                :showThread="showThread"
                 v-if="showMenu"
             ></chat-message-menu>
         </div>
-        <div v-if="message.type == 'regular' && messageEdit.id == message.id">
+        <div v-if="messageEdit.id == message.id">
             <div class="cs-message-edit">
                 <textarea
                     v-model="messageEdit.text"
@@ -99,6 +111,10 @@ export default {
             type: Boolean,
             default: () => true,
         },
+        showThread: {
+            type: Boolean,
+            default: () => true,
+        },
     },
     data() {
         return {
@@ -121,6 +137,13 @@ export default {
             cache: false,
             get() {
                 return this.message && this.message.reaction_counts && Object.keys(this.message.reaction_counts).length > 0;
+            },
+        },
+
+        $_reply_count_label: {
+            cache: false,
+            get() {
+                return this.message.reply_count + (this.message.reply_count > 1 ? ' replies' : ' reply');
             },
         },
     },
@@ -283,7 +306,11 @@ export default {
             return reactionUsers.length || this.hasOwnReaction(reactionType)
                 ? this.formatReactionUsers(reactionUsers, reactionType)
                 : 'Fetching user information...';
-        }
+        },
+
+        messageThread() {
+            this.$root.$emit('messageThread', { message: this.message });
+        },
     },
 }
 </script>

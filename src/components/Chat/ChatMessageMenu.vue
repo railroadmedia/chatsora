@@ -8,7 +8,8 @@
             ><i class="fal fa-smile"></i></div>
             <div
                 class="tw-px-2 hover:tw-text-black"
-                @click.stop.prevent="showThread()"
+                @click.stop.prevent="messageThread()"
+                v-if="showThread"
             ><i class="fal fa-reply-all"></i></div>
             <div
                 class="tw-px-2 hover:tw-text-black"
@@ -80,6 +81,10 @@ export default {
             type: Boolean,
             default: () => false,
         },
+        showThread: {
+            type: Boolean,
+            default: () => true,
+        },
     },
     data() {
         return {
@@ -123,7 +128,7 @@ export default {
             this.messageMenu = false;
         },
 
-        showThread() {
+        messageThread() {
             this.$root.$emit('messageThread', { message: this.message });
 
             this.messageReact = false;
