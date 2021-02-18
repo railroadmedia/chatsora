@@ -81,7 +81,7 @@
 
         <div
             v-if="showDialog"
-            class="cs-dialog-container tw-absolute tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-z-10"
+            class="cs-dialog-container tw-absolute tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-z-50"
         >
             <div
                 class="tw-w-full tw-h-full tw-relative"
@@ -333,7 +333,7 @@ export default {
 
                     let greeting = {id: 'greeting', type: 'system', text: 'Welcome to chat!'};
 
-                    this.$set(this.messages, greeting.id, greeting);
+                    this.messages.push(greeting);
 
                     this.channel
                         .on('user.watching.start', ({ user }) => {
@@ -376,6 +376,9 @@ export default {
                 });
         },
 
+        /**
+         * Iterate over initial channel messages and call push message only for main channel non-deleted messages
+         */
         processMessages({ messages }) {
             messages.forEach((message) => {
                 if (message.type == 'regular') {
@@ -384,10 +387,18 @@ export default {
             });
         },
 
+        /**
+         * Create a copy of user object
+         */
         getUserCopy({ id, displayName, avatarUrl, profileUrl, role, accessLevelName }) {
             return { id, displayName, avatarUrl, profileUrl, role, accessLevelName };
         },
 
+        /**
+         * Create a copy of message object
+         * If the message object has more reactions than latest_reactions the method will fetch all reactions from API
+         * The message replies are not populated in this method
+         */
         getMessageCopy(message) {
             let messageCopy = (({ id, type, text, reply_count }) => ({ id, type, text, reply_count }))(message);
 
@@ -421,6 +432,10 @@ export default {
             return messageCopy;
         },
 
+        /**
+         * Push a message into internal state
+         * If the message has replies the method will fetch them from API
+         */
         pushMessage({ message }) {
             let messageCopy = this.getMessageCopy(message);
 
@@ -450,64 +465,130 @@ export default {
             }
         },
 
+        /**
+         * Update message text
+         */
         updateMessageText({ message }) {
             this.messages.forEach((storedMessage) => {
-                if (storedMessage.id == message.id) {
+                if (message.type == 'regular' && storedMessage.id == message.id) {
                     storedMessage.text = message.text;
+                } else if (message.type == 'reply' && message.parent_id && storedMessage.id == message.parent_id) {
+                    storedMessage.replies.forEach((storedReplyMessage) => {
+                        if (storedReplyMessage.id == message.id) {
+                            storedReplyMessage.text = message.text;
+                        }
+                    });
                 }
             });
         },
 
+        /**
+         * Delete a message from internal state
+         */
         deleteMessage({ message }) {
-            let idx;
+            let idx = null;
 
-            this.messages.forEach((storedMessage, index) => {
-                if (storedMessage.id == message.id) {
+            this.messages.forEach((storedMessage, messageIndex) => {
+                if (message.parent_id && storedMessage.id == message.parent_id) {
+
+                    storedMessage.replies.forEach((storedReplyMessage, replyIndex) => {
+                        if (storedReplyMessage.id == message.id) {
+                            idx = replyIndex;
+                        }
+                    });
+
+                    if (idx != null) {
+                        storedMessage.replies.splice(idx, 1);
+                        storedMessage.reply_count = storedMessage.reply_count - 1;
+                        idx = null;
+                    }
+
+                } else if (storedMessage.id == message.id) {
+                    idx = messageIndex;
+                }
+            });
+
+            if (idx != null && !message.parent_id) {
+                this.messages.splice(idx, 1);
+            }
+        },
+
+        /**
+         * Locates the internal message, main channel message or reply, and calls addMessageReaction
+         */
+        pushMessageReaction({ message, reaction }) {
+            this.messages.forEach((storedMessage) => {
+                if (message.parent_id && storedMessage.id == message.parent_id) {
+                    storedMessage.replies.forEach((storedReplyMessage) => {
+                        if (storedReplyMessage.id == message.id) {
+                            this.addMessageReaction(storedReplyMessage, reaction, {...message.reaction_counts});
+                        }
+                    });
+                } else if (storedMessage.id == message.id) {
+                    this.addMessageReaction(storedMessage, reaction, {...message.reaction_counts});
+                }
+            });
+
+            if (this.messageThread && this.messageThread.id == message.id) {
+                this.$nextTick(() => {
+                    this.scrollThreadMessages();
+                });
+            } else if (this.messageThread == null) {
+                this.scrollMessages();
+            }
+        },
+
+        /**
+         * Adds a reaction to an internal state message and updates reaction counts
+         */
+        addMessageReaction(storedMessage, reaction, messageRectionCounts) {
+            storedMessage.reactions.push({ type: reaction.type, user: this.getUserCopy(reaction.user) });
+            storedMessage.reaction_counts = messageRectionCounts;
+            if (reaction.user.id == this.userId) {
+                storedMessage.own_reactions.push({ type: reaction.type });
+            }
+        },
+
+        /**
+         * Locates the internal message, main channel message or reply, and calls removeMessageReaction
+         */
+        deleteMessageReaction({ message, reaction }) {
+            this.messages.forEach((storedMessage) => {
+                if (message.parent_id && storedMessage.id == message.parent_id) {
+                    storedMessage.replies.forEach((storedReplyMessage) => {
+                        if (storedReplyMessage.id == message.id) {
+                            this.removeMessageReaction(storedReplyMessage, reaction, {...message.reaction_counts});
+                        }
+                    });
+                } else if (storedMessage.id == message.id) {
+                    this.removeMessageReaction(storedMessage, reaction, {...message.reaction_counts});
+                }
+            });
+        },
+
+        /**
+         * Removes a reaction from an internal state message and updates reaction counts
+         */
+        removeMessageReaction(storedMessage, reaction, messageRectionCounts) {
+            let idx;
+            storedMessage.reactions.forEach((storedReaction, index) => {
+                if (
+                    storedReaction.type == reaction.type
+                    && storedReaction.user.id == reaction.user.id
+                ) {
                     idx = index;
                 }
             });
-
-            this.messages.splice(idx, 1);
-        },
-
-        pushMessageReaction({ message, reaction }) {
-            this.messages.forEach((storedMessage) => {
-                if (storedMessage.id == message.id) {
-                    storedMessage.reactions.push({ type: reaction.type, user: this.getUserCopy(reaction.user) });
-                    storedMessage.reaction_counts = {...message.reaction_counts};
-                    if (reaction.user.id == this.userId) {
-                        storedMessage.own_reactions.push({ type: reaction.type });
+            storedMessage.reactions.splice(idx, 1);
+            storedMessage.reaction_counts = messageRectionCounts;
+            if (reaction.user.id == this.userId) {
+                storedMessage.own_reactions.forEach((ownReaction, index) => {
+                    if (ownReaction.type == reaction.type) {
+                        idx = index;
                     }
-                }
-            });
-            this.scrollMessages();
-        },
-
-        deleteMessageReaction({ message, reaction }) {
-            let idx;
-
-            this.messages.forEach((storedMessage) => {
-                if (storedMessage.id == message.id) {
-                    storedMessage.reactions.forEach((storedReaction, index) => {
-                        if (
-                            storedReaction.type == reaction.type
-                            && storedReaction.user.id == reaction.user.id
-                        ) {
-                            idx = index;
-                        }
-                    });
-                    storedMessage.reactions.splice(idx, 1);
-                    storedMessage.reaction_counts = {...message.reaction_counts};
-                    if (reaction.user.id == this.userId) {
-                        storedMessage.own_reactions.forEach((ownReaction, index) => {
-                            if (ownReaction.type == reaction.type) {
-                                idx = index;
-                            }
-                        });
-                        storedMessage.own_reactions.splice(idx, 1);
-                    }
-                }
-            });
+                });
+                storedMessage.own_reactions.splice(idx, 1);
+            }
         },
 
         toggleShowMembers() {

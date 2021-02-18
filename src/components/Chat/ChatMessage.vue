@@ -3,7 +3,7 @@
         class="cs-message tw-p-3 tw-relative"
         :class="{'hover:tw-bg-gray-100': showMenu}"
     >
-        <div class="tw-flex tw-flex-col tw-max-w-full" v-if="messageEdit.id != message.id">
+        <div class="tw-flex tw-flex-col tw-max-w-full" v-if="messageEdit.id != message.id && message.type != 'system'">
             <chat-user :user="message.user">
                 <span class="tw-mr-1 tw-font-semibold tw-text-sm">:</span>
                 <br v-if="message.user.displayName.length > 15">
@@ -148,20 +148,22 @@ export default {
         },
     },
     mounted() {
-        this.$root
-            .$on(
-                'editMessage',
-                (payload) => {
-                    if (payload.message.id == this.message.id) {
-                        this.messageEdit = {
-                            id: payload.message.id,
-                            text: payload.message.text
-                        };
-                    } else {
-                        this.cancelMessageEdit();
+        if (this.message.type != 'system') {
+            this.$root
+                .$on(
+                    'editMessage',
+                    (payload) => {
+                        if (payload.message.id == this.message.id) {
+                            this.messageEdit = {
+                                id: payload.message.id,
+                                text: payload.message.text
+                            };
+                        } else {
+                            this.cancelMessageEdit();
+                        }
                     }
-                }
-            );
+                );
+        }
     },
     methods: {
         getUrlsParsedText(text) {
