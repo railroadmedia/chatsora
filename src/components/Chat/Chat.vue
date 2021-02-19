@@ -236,6 +236,8 @@ export default {
         this.$root.$on('removeMessage', this.removeMessage);
         this.$root.$on('toggleMessageReaction', this.toggleMessageReaction);
         this.$root.$on('messageThread',this.showMessageThread);
+        this.$root.$on('pinMessage',this.pinMessage);
+        this.$root.$on('unpinMessage',this.unpinMessage);
     },
     watch: {
         $_messages_count: function () {
@@ -348,14 +350,14 @@ export default {
                         });
 
                     this.channel.on('message.new', this.pushMessage);
-                    this.channel.on('message.updated', this.updateMessageText);
+                    this.channel.on('message.updated', this.updateMessageState);
                     this.channel.on('message.deleted', this.deleteMessage);
                     this.channel.on('reaction.new', this.pushMessageReaction);
                     this.channel.on('reaction.deleted', this.deleteMessageReaction);
 
-                    // this.channel.on(event => {
-                    //     console.log('event', event);
-                    // });
+                    this.channel.on(event => {
+                        console.log('event', event);
+                    });
                 });
         },
 
@@ -400,7 +402,7 @@ export default {
          * The message replies are not populated in this method
          */
         getMessageCopy(message) {
-            let messageCopy = (({ id, type, text, reply_count }) => ({ id, type, text, reply_count }))(message);
+            let messageCopy = (({ id, type, text, reply_count, pinned }) => ({ id, type, text, reply_count, pinned }))(message);
 
             messageCopy.user = this.getUserCopy(message.user);
 
@@ -466,12 +468,13 @@ export default {
         },
 
         /**
-         * Update message text
+         * Update message text and pinned status
          */
-        updateMessageText({ message }) {
+        updateMessageState({ message }) {
             this.messages.forEach((storedMessage) => {
                 if (message.type == 'regular' && storedMessage.id == message.id) {
                     storedMessage.text = message.text;
+                    storedMessage.pinned = message.pinned;
                 } else if (message.type == 'reply' && message.parent_id && storedMessage.id == message.parent_id) {
                     storedMessage.replies.forEach((storedReplyMessage) => {
                         if (storedReplyMessage.id == message.id) {
@@ -704,6 +707,28 @@ export default {
         hideMessageThread() {
             this.showThread = false;
             this.messageThread = null;
+        },
+
+        pinMessage({ message }) {
+            this.streamClient
+                .pinMessage({ id: message.id, text: message.text }, null)
+                .then(() => {
+                    this.messageErrors = [];
+                })
+                .catch(({ response }) => {
+                    this.errorHandler(response, 'Message pin error');
+                });
+        },
+
+        unpinMessage({ message }) {
+            this.streamClient
+                .unpinMessage({id: message.id, text: message.text }, null)
+                .then(() => {
+                    this.messageErrors = [];
+                })
+                .catch(({ response }) => {
+                    this.errorHandler(response, 'Message unpin error');
+                });
         },
     },
 }

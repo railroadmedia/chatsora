@@ -15,6 +15,7 @@
                 class="tw-px-2 hover:tw-text-black"
                 :class="{'tw-text-black': messageMenu}"
                 @click.stop.prevent="toggleMessageMenu()"
+                v-if="$_messageMenu"
             ><i class="fal fa-ellipsis-h"></i></div>
         </div>
         <div class="tw-relative">
@@ -24,7 +25,14 @@
             >
                 <div
                     class="hover:tw-text-black tw-px-2 tw-py-1"
+                    @click.stop.prevent="pinMessage()"
+                    v-if="$_show_pin"
                 >Pin</div>
+                <div
+                    class="hover:tw-text-black tw-px-2 tw-py-1"
+                    @click.stop.prevent="unpinMessage()"
+                    v-if="$_show_unpin"
+                >Unpin</div>
                 <div
                     class="hover:tw-text-black tw-px-2 tw-py-1"
                     v-if="message.user.id == userId"
@@ -92,6 +100,23 @@ export default {
             messageReact: false,
         };
     },
+    computed: {
+        $_messageMenu: {
+            get() {
+                return this.isAdministrator || this.message.user.id == this.userId;
+            },
+        },
+        $_show_pin: {
+            get() {
+                return this.isAdministrator && !this.message.pinned && this.message.type != 'reply';
+            },
+        },
+        $_show_unpin: {
+            get() {
+                return this.isAdministrator && this.message.pinned && this.message.type != 'reply';
+            },
+        },
+    },
     mounted() {
         this.$root
             .$on(
@@ -151,6 +176,14 @@ export default {
                     reaction: reaction
                 }
             );
+        },
+
+        pinMessage() {
+            this.$root.$emit('pinMessage', { message: this.message });
+        },
+
+        unpinMessage() {
+            this.$root.$emit('unpinMessage', { message: this.message });
         },
     },
 }

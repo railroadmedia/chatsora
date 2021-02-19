@@ -1,8 +1,17 @@
 <template>
     <div
         class="cs-message tw-p-3 tw-relative"
-        :class="{'hover:tw-bg-gray-100': showMenu}"
+        :class="{'hover:tw-bg-gray-100': showMenu, 'tw-bg-yellow-50': message.pinned}"
     >
+        <div class="tw-max-w-full" v-if="message.pinned">
+            <div class="tw-ml-16">
+                <a
+                    href="#"
+                    @click.stop.prevent="unpinMessage()"
+                    class="tw-text-gray-600 tw-inline-flex tw-flex-row"
+                ><i class="fal fa-thumbtack tw-transform tw-rotate-45"></i><span class="tw-ml-2 leading-none">pinned</span></a>
+            </div>
+        </div>
         <div class="tw-flex tw-flex-col tw-max-w-full" v-if="messageEdit.id != message.id && message.type != 'system'">
             <chat-user :user="message.user">
                 <span class="tw-mr-1 tw-font-semibold tw-text-sm">:</span>
@@ -312,6 +321,10 @@ export default {
 
         messageThread() {
             this.$root.$emit('messageThread', { message: this.message });
+        },
+
+        unpinMessage() {
+            this.$root.$emit('unpinMessage', { message: this.message });
         },
     },
 }
