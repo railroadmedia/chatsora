@@ -439,7 +439,7 @@ export default {
          */
         processMessages({ messages }) {
             messages.forEach((message) => {
-                if (message.type == 'regular' && message.id != 'd7867666-3f3a-497c-836e-82f7120695c5') {
+                if (message.type == 'regular') {
                     this.pushMessage({ message });
                 }
             });
