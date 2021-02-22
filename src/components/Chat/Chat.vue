@@ -1,12 +1,18 @@
 <template>
     <div class="tw-w-full tw-h-full tw-relative vuesora-override">
-        <div class="tw-h-10 tw-w-full tw-border-b tw-border-gray-600 tw-flex tw-flex-row tw-place-items-center">
+        <div class="tw-h-10 tw-w-full tw-border-b tw-border-gray-600 tw-flex tw-flex-row tw-items-center tw-place-content-between">
             <a
                 href="#"
                 class="tw-no-underline tw-font-semibold tw-ml-4"
                 @click.stop.prevent="toggleShowMembers"
                 v-if="channel"
             >{{ $_watcher_count }} ONLINE</a>
+            <a
+                href="#"
+                class="tw-no-underline tw-font-semibold tw-mr-4"
+                @click.stop.prevent="toggleShowPinned"
+                v-if="channel"
+            >Pins</a>
         </div>
         <div
             class="tw-px-3 tw-h-10 tw-absolute tw-bg-white tw-top-0 tw-left-0 tw-right-0 tw-border-b tw-border-gray-600 tw-flex tw-flex-row tw-place-items-center tw-justify-between tw-z-10"
@@ -48,6 +54,25 @@
             <div class="cs-messages-container tw-mt-4">
                 <div
                     v-for="item in $_message_thread_replies"
+                    :key="item.id"
+                >
+                    <chat-message
+                        :is-administrator="isAdministrator"
+                        :message="item"
+                        :user-id="userId"
+                        :show-thread="false"
+                    ></chat-message>
+                </div>
+            </div>
+        </div>
+        <div
+            class="cs-pinned-container tw-absolute tw-bg-white tw-top-10 tw-left-0 tw-right-0 tw-bottom-0 tw-overflow-y-auto tw-z-40"
+            v-if="showPinned"
+            ref="pinnedMessages"
+        >
+            <div class="cs-messages-container tw-mt-4">
+                <div
+                    v-for="item in $_pinned_messages"
                     :key="item.id"
                 >
                     <chat-message
@@ -131,6 +156,7 @@
 </template>
 
 <script>
+import { DateTime } from 'luxon';
 import { StreamChat } from 'stream-chat';
 import ChatMessage from './ChatMessage.vue';
 import ChatUser from './ChatUser.vue';
@@ -168,6 +194,7 @@ export default {
             showMembers: false,
             showDialog: false,
             showThread: false,
+            showPinned: false,
             messageThread: null,
             messageErrors: [],
             messageRemove: {
@@ -188,7 +215,13 @@ export default {
         $_messages_count: {
             cache: false,
             get() {
-                return  Object.keys(this.messages).length;
+                return  this.messages.length;
+            },
+        },
+        $_pinned_messages: {
+            cache: false,
+            get() {
+                return this.messages.filter(message => message.pinned);
             },
         },
         $_watchers: {
@@ -252,10 +285,10 @@ export default {
     },
     methods: {
 
-        scrollMessages() {
+        scrollMessages(force = false) {
             let container = this.$refs.messages;
 
-            if (Math.ceil(container.scrollHeight - container.scrollTop) === container.clientHeight) {
+            if (force || Math.ceil(container.scrollHeight - container.scrollTop) === container.clientHeight) {
                 this.$nextTick(() => {
                     container.scroll({
                         top: container.scrollHeight,
@@ -330,6 +363,7 @@ export default {
                 })
                 .then((state) => {
                     this.fetchWatchers();
+                    this.fetchPinnedMessages();
 
                     this.processMessages(state);
 
@@ -355,9 +389,13 @@ export default {
                     this.channel.on('reaction.new', this.pushMessageReaction);
                     this.channel.on('reaction.deleted', this.deleteMessageReaction);
 
-                    this.channel.on(event => {
-                        console.log('event', event);
-                    });
+                    // this.channel.on(event => {
+                    //     console.log('event', event);
+                    // });
+
+                    // this.$nextTick(() => {
+                    //     this.scrollMessages(force);
+                    // });
                 });
         },
 
@@ -378,12 +416,30 @@ export default {
                 });
         },
 
+        fetchPinnedMessages() {
+            const limit = 1000;
+
+            this.channel
+                .search(
+                    { pinned: true },
+                    null,
+                    { limit, offset: 0 }
+                )
+                .then(({ results }) => {
+                    results.forEach(({ message }) => {
+                        if (message.type == 'regular') {
+                            this.insertMessage(message);
+                        }
+                    });
+                });
+        },
+
         /**
          * Iterate over initial channel messages and call push message only for main channel non-deleted messages
          */
         processMessages({ messages }) {
             messages.forEach((message) => {
-                if (message.type == 'regular') {
+                if (message.type == 'regular' && message.id != 'd7867666-3f3a-497c-836e-82f7120695c5') {
                     this.pushMessage({ message });
                 }
             });
@@ -409,6 +465,7 @@ export default {
             messageCopy.reaction_counts = {...message.reaction_counts};
 
             messageCopy.own_reactions = message.own_reactions.map(({type}) => ({type}));
+            messageCopy.createdAt = DateTime.fromISO(message.created_at);
 
             const messageReactionsCount = Object.values(message.reaction_counts || {}).reduce((a, b) => a + b, 0);
 
@@ -464,6 +521,48 @@ export default {
                         parentMessage.reply_count = parentMessage.reply_count + 1;
                     }
                 });
+            }
+        },
+
+        /**
+         * Inserts a message into internal state
+         * If the message has replies the method will fetch them from API
+         * If the message already exists in the internal state, it will not be duplicated
+         */
+        insertMessage(message) {
+            let exists = false;
+            let idx = null;
+
+            const messageCreatedAt = DateTime.fromISO(message.created_at);
+
+            this.messages.forEach((storedMessage, storedIndex) => {
+                if (message.id == storedMessage.id) {
+                    exists = true;
+                }
+
+                if (idx == null && messageCreatedAt < storedMessage.createdAt) {
+                    idx = storedIndex;
+                }
+            });
+
+            if (!exists) {
+                let messageCopy = this.getMessageCopy(message);
+
+                if (message.reply_count) {
+                    this.channel
+                        .getReplies(message.id, { limit: 1000 })
+                        .then(({ messages }) => {
+                            messages.forEach((reply) => {
+                                messageCopy.replies.push(this.getMessageCopy(reply));
+                            });
+                        });
+                }
+
+                if (idx) {
+                    this.messages.splice(idx, 0, messageCopy);
+                } else {
+                    this.messages.push(messageCopy);
+                }
             }
         },
 
@@ -729,6 +828,10 @@ export default {
                 .catch(({ response }) => {
                     this.errorHandler(response, 'Message unpin error');
                 });
+        },
+
+        toggleShowPinned() {
+            this.showPinned = !this.showPinned;
         },
     },
 }

@@ -15,7 +15,7 @@
         <div class="tw-flex tw-flex-col tw-max-w-full" v-if="messageEdit.id != message.id && message.type != 'system'">
             <chat-user :user="message.user">
                 <span class="tw-mr-1 tw-font-semibold tw-text-sm">:</span>
-                <br v-if="message.user.displayName.length > 15">
+                <br v-if="message.user.displayName.length > 15 || firstWordLength() > 10">
                 <span v-html="getParsedMessage(message.text)" class="tw-whitespace-normal"></span>
 
                 <template v-slot:footer>
@@ -325,6 +325,10 @@ export default {
 
         unpinMessage() {
             this.$root.$emit('unpinMessage', { message: this.message });
+        },
+
+        firstWordLength() {
+            return this.message.text ? this.message.text.split(' ')[0].length : 0;
         },
     },
 }
