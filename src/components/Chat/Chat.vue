@@ -271,6 +271,7 @@ export default {
         this.$root.$on('messageThread',this.showMessageThread);
         this.$root.$on('pinMessage',this.pinMessage);
         this.$root.$on('unpinMessage',this.unpinMessage);
+        this.$root.$on('messageUpvote',this.messageUpvote);
     },
     watch: {
         $_messages_count: function () {
@@ -388,14 +389,24 @@ export default {
                     this.channel.on('message.deleted', this.deleteMessage);
                     this.channel.on('reaction.new', this.pushMessageReaction);
                     this.channel.on('reaction.deleted', this.deleteMessageReaction);
+                    this.channel.on('reaction.updated', this.updateMessageReaction);
 
-                    // this.channel.on(event => {
-                    //     console.log('event', event);
-                    // });
+                    this.channel.on(event => {
+                        console.log('event', event);
+                    });
 
                     // this.$nextTick(() => {
-                    //     this.scrollMessages(force);
+                    //     this.scrollMessages(true);
                     // });
+
+                    // this.channel
+                    //     .deleteReaction('f2e48c21-6dfa-4ef3-9e66-a788794f001c', 'upvote')
+                    //     .then(() => {
+                    //         console.log("upvote removed");
+                    //     })
+                    //     .catch(({ response }) => {
+                    //         this.errorHandler(response, 'upvote cleared remove error');
+                    //     });
                 });
         },
 
@@ -463,8 +474,9 @@ export default {
             messageCopy.user = this.getUserCopy(message.user);
 
             messageCopy.reaction_counts = {...message.reaction_counts};
+            messageCopy.reaction_scores = {...message.reaction_scores};
 
-            messageCopy.own_reactions = message.own_reactions.map(({type}) => ({type}));
+            messageCopy.own_reactions = message.own_reactions.map(({ type, score }) => ({ type, score }));
             messageCopy.createdAt = DateTime.fromISO(message.created_at);
 
             const messageReactionsCount = Object.values(message.reaction_counts || {}).reduce((a, b) => a + b, 0);
@@ -514,6 +526,9 @@ export default {
 
             if (message.type == 'regular') {
                 this.messages.push(messageCopy);
+                // if (message.id == 'f2e48c21-6dfa-4ef3-9e66-a788794f001c') {
+                //     console.log("::pushMessage message: %s", JSON.stringify(message));
+                // }
             } else if (message.type == 'reply' && message.parent_id) {
                 this.messages.forEach((parentMessage) => {
                     if (parentMessage.id == message.parent_id) {
@@ -623,11 +638,21 @@ export default {
                 if (message.parent_id && storedMessage.id == message.parent_id) {
                     storedMessage.replies.forEach((storedReplyMessage) => {
                         if (storedReplyMessage.id == message.id) {
-                            this.addMessageReaction(storedReplyMessage, reaction, {...message.reaction_counts});
+                            this.addMessageReaction(
+                                storedReplyMessage,
+                                reaction,
+                                {...message.reaction_counts},
+                                {...message.reaction_scores}
+                            );
                         }
                     });
                 } else if (storedMessage.id == message.id) {
-                    this.addMessageReaction(storedMessage, reaction, {...message.reaction_counts});
+                    this.addMessageReaction(
+                        storedMessage,
+                        reaction,
+                        {...message.reaction_counts},
+                        {...message.reaction_scores}
+                    );
                 }
             });
 
@@ -643,11 +668,12 @@ export default {
         /**
          * Adds a reaction to an internal state message and updates reaction counts
          */
-        addMessageReaction(storedMessage, reaction, messageRectionCounts) {
+        addMessageReaction(storedMessage, reaction, messageRectionCounts, messageRectionScores) {
             storedMessage.reactions.push({ type: reaction.type, user: this.getUserCopy(reaction.user) });
             storedMessage.reaction_counts = messageRectionCounts;
+            storedMessage.reaction_scores = messageRectionScores;
             if (reaction.user.id == this.userId) {
-                storedMessage.own_reactions.push({ type: reaction.type });
+                storedMessage.own_reactions.push({ type: reaction.type, score: reaction.score });
             }
         },
 
@@ -659,11 +685,21 @@ export default {
                 if (message.parent_id && storedMessage.id == message.parent_id) {
                     storedMessage.replies.forEach((storedReplyMessage) => {
                         if (storedReplyMessage.id == message.id) {
-                            this.removeMessageReaction(storedReplyMessage, reaction, {...message.reaction_counts});
+                            this.removeMessageReaction(
+                                storedReplyMessage,
+                                reaction,
+                                {...message.reaction_counts},
+                                {...message.reaction_scores}
+                            );
                         }
                     });
                 } else if (storedMessage.id == message.id) {
-                    this.removeMessageReaction(storedMessage, reaction, {...message.reaction_counts});
+                    this.removeMessageReaction(
+                        storedMessage,
+                        reaction,
+                        {...message.reaction_counts},
+                        {...message.reaction_scores}
+                    );
                 }
             });
         },
@@ -671,7 +707,7 @@ export default {
         /**
          * Removes a reaction from an internal state message and updates reaction counts
          */
-        removeMessageReaction(storedMessage, reaction, messageRectionCounts) {
+        removeMessageReaction(storedMessage, reaction, messageRectionCounts, messageRectionScores) {
             let idx;
             storedMessage.reactions.forEach((storedReaction, index) => {
                 if (
@@ -683,6 +719,7 @@ export default {
             });
             storedMessage.reactions.splice(idx, 1);
             storedMessage.reaction_counts = messageRectionCounts;
+            storedMessage.reaction_scores = messageRectionScores;
             if (reaction.user.id == this.userId) {
                 storedMessage.own_reactions.forEach((ownReaction, index) => {
                     if (ownReaction.type == reaction.type) {
@@ -691,6 +728,22 @@ export default {
                 });
                 storedMessage.own_reactions.splice(idx, 1);
             }
+        },
+
+        updateMessageReaction({ message, reaction }) {
+            this.messages.forEach((storedMessage) => {
+                if (storedMessage.id == message.id) {
+                    storedMessage.reaction_counts = {...message.reaction_counts};
+                    storedMessage.reaction_scores = {...message.reaction_scores};
+                    if (reaction.user.id == this.userId) {
+                        storedMessage.own_reactions.forEach((ownReaction) => {
+                            if (ownReaction.type == reaction.type) {
+                                ownReaction.score = reaction.score;
+                            }
+                        });
+                    }
+                }
+            });
         },
 
         toggleShowMembers() {
@@ -832,6 +885,22 @@ export default {
 
         toggleShowPinned() {
             this.showPinned = !this.showPinned;
+        },
+
+        messageUpvote({ message }) {
+            const increment = 1;
+            const score = message.own_reactions.filter(({ type }) => type == 'upvote').map(({ score }) => score).pop() || 0;
+
+            console.log("::messageUpvote score: %s", JSON.stringify(score));
+
+            this.channel
+                .sendReaction(message.id, { type: 'upvote', score: (score + increment) })
+                .then(() => {
+                    this.messageErrors = [];
+                })
+                .catch(({ response }) => {
+                    this.errorHandler(response, 'Message upvote send error');
+                });
         },
     },
 }

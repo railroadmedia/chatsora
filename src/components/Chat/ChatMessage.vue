@@ -19,11 +19,21 @@
                 <span v-html="getParsedMessage(message.text)" class="tw-whitespace-normal"></span>
 
                 <template v-slot:footer>
-                    <div class="tw-inline-flex tw-mt-1" v-if="$_has_reactions">
-                        <div class="tw-flex tw-flex-row tw-rounded-lg tw-border tw-border-gray-400 tw-divide-x tw-divide-gray-400 tw-text-gray-500 tw-cursor-pointer">
+                    <div class="tw-inline-flex tw-items-center tw-mt-1" v-if="$_has_reactions || $_message_upvote != 0">
+                        <div
+                            class="tw-flex tw-flex-row tw-place-content-center tw-mr-1"
+                            v-if="$_message_upvote != 0"
+                        >
+                            <i class="fad fa-sign-language"></i>
+                            <span class="tw-text-xs tw-text-black cs-reaction-count">{{ $_message_upvote }}</span>
+                        </div>
+                        <div
+                            class="tw-flex tw-flex-row tw-rounded-lg tw-border tw-border-gray-400 tw-divide-x tw-divide-gray-400 tw-text-gray-500 tw-cursor-pointer"
+                            v-if="$_has_reactions"
+                        >
                             <div
                                 class="tw-flex tw-flex-row tw-place-content-center tw-p-1 hover:tw-text-black"
-                                v-for="(count, reaction) in message.reaction_counts"
+                                v-for="(count, reaction) in $_message_reactions"
                                 :key="`message-reaction-${reaction}`"
                                 @click.stop.prevent="toggleMessageReaction(reaction)"
                                 :title="getReactionUsers(reaction)"
@@ -142,10 +152,29 @@ export default {
         };
     },
     computed: {
+        $_message_reactions: {
+            cache: false,
+            get() {
+                let reactionCounts = {...this.message.reaction_counts};
+                delete reactionCounts.upvote;
+
+                return reactionCounts;
+            },
+        },
+
+        $_message_upvote: {
+            cache: false,
+            get() {
+                return this.message.reaction_scores.upvote || 0;
+            },
+        },
+
         $_has_reactions: {
             cache: false,
             get() {
-                return this.message && this.message.reaction_counts && Object.keys(this.message.reaction_counts).length > 0;
+                return this.message
+                        && this.message.reaction_counts
+                        && Object.keys(this.message.reaction_counts).filter((reaction) => reaction != 'upvote').length > 0;
             },
         },
 
