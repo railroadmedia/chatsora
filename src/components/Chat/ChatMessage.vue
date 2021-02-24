@@ -19,10 +19,10 @@
                 <span v-html="getParsedMessage(message.text)" class="tw-whitespace-normal"></span>
 
                 <template v-slot:footer>
-                    <div class="tw-inline-flex tw-items-center tw-mt-1" v-if="$_has_reactions || $_message_upvote != 0">
+                    <div class="tw-inline-flex tw-items-center tw-mt-1" v-if="$_has_reactions || $_show_upvote">
                         <div
                             class="tw-flex tw-flex-row tw-place-content-center tw-mr-1"
-                            v-if="$_message_upvote != 0"
+                            v-if="$_show_upvote"
                         >
                             <i class="fad fa-sign-language"></i>
                             <span class="tw-text-xs tw-text-black cs-reaction-count">{{ $_message_upvote }}</span>
@@ -63,6 +63,8 @@
                 :message-reactions="messageReactions"
                 :user-id="userId"
                 :showThread="showThread"
+                :show-upvote="showUpvote"
+                @addMessageUpvote="addMessageUpvote"
                 v-if="showMenu"
             ></chat-message-menu>
         </div>
@@ -134,6 +136,10 @@ export default {
             type: Boolean,
             default: () => true,
         },
+        showUpvote: {
+            type: Boolean,
+            default: () => true,
+        },
     },
     data() {
         return {
@@ -149,6 +155,8 @@ export default {
                 'sad': 'fal fa-sad-tear',
                 'angry': 'fal fa-angry',
             },
+            upvoteNewScore: null,
+            upvoteTimeout: null,
         };
     },
     computed: {
@@ -165,6 +173,13 @@ export default {
         $_message_upvote: {
             cache: false,
             get() {
+
+                if (this.upvoteNewScore != null) {
+                    let ownScore = this.message.own_reactions.filter(({ type }) => type == 'upvote').map(({ score }) => score).pop() || 0;
+
+                    return (this.message.reaction_scores.upvote || 0) - ownScore + this.upvoteNewScore;
+                }
+
                 return this.message.reaction_scores.upvote || 0;
             },
         },
@@ -184,20 +199,37 @@ export default {
                 return this.message.reply_count + (this.message.reply_count > 1 ? ' replies' : ' reply');
             },
         },
+
+        $_show_upvote: {
+            cache: false,
+            get() {
+                return this.$_message_upvote != 0 && this.showUpvote;
+            },
+        },
     },
     mounted() {
         if (this.message.type != 'system') {
             this.$root
                 .$on(
                     'editMessage',
-                    (payload) => {
-                        if (payload.message.id == this.message.id) {
+                    ({ message }) => {
+                        if (message.id == this.message.id) {
                             this.messageEdit = {
-                                id: payload.message.id,
-                                text: payload.message.text
+                                id: message.id,
+                                text: message.text
                             };
                         } else {
                             this.cancelMessageEdit();
+                        }
+                    }
+                );
+
+            this.$root
+                .$on(
+                    'messageOwnReactionUpdate',
+                    ({ message }) => {
+                        if (message.id == this.message.id) {
+                            this.upvoteNewScore = null;
                         }
                     }
                 );
@@ -358,6 +390,24 @@ export default {
 
         firstWordLength() {
             return this.message.text ? this.message.text.split(' ')[0].length : 0;
+        },
+
+        addMessageUpvote() {
+            const increment = 1;
+
+            let score = this.upvoteNewScore
+                        || this.message.own_reactions.filter(({ type }) => type == 'upvote').map(({ score }) => score).pop()
+                        || 0;
+
+            score = score + increment;
+
+            this.upvoteNewScore = score;
+
+            clearTimeout(this.upvoteTimeout);
+
+            this.upvoteTimeout = setTimeout(() => {
+                this.$root.$emit('messageUpvote', { message: this.message, score });
+            }, 1500);
         },
     },
 }

@@ -46,6 +46,7 @@
                         :is-administrator="isAdministrator"
                         :message="messageThread"
                         :user-id="userId"
+                        :show-upvote="false"
                         :show-menu="false"
                         :show-thread="false"
                     ></chat-message>
@@ -60,6 +61,7 @@
                         :is-administrator="isAdministrator"
                         :message="item"
                         :user-id="userId"
+                        :show-upvote="false"
                         :show-thread="false"
                     ></chat-message>
                 </div>
@@ -391,22 +393,13 @@ export default {
                     this.channel.on('reaction.deleted', this.deleteMessageReaction);
                     this.channel.on('reaction.updated', this.updateMessageReaction);
 
-                    this.channel.on(event => {
-                        console.log('event', event);
-                    });
+                    // this.channel.on(event => {
+                    //     console.log('event', event);
+                    // });
 
                     // this.$nextTick(() => {
                     //     this.scrollMessages(true);
                     // });
-
-                    // this.channel
-                    //     .deleteReaction('f2e48c21-6dfa-4ef3-9e66-a788794f001c', 'upvote')
-                    //     .then(() => {
-                    //         console.log("upvote removed");
-                    //     })
-                    //     .catch(({ response }) => {
-                    //         this.errorHandler(response, 'upvote cleared remove error');
-                    //     });
                 });
         },
 
@@ -526,9 +519,6 @@ export default {
 
             if (message.type == 'regular') {
                 this.messages.push(messageCopy);
-                // if (message.id == 'f2e48c21-6dfa-4ef3-9e66-a788794f001c') {
-                //     console.log("::pushMessage message: %s", JSON.stringify(message));
-                // }
             } else if (message.type == 'reply' && message.parent_id) {
                 this.messages.forEach((parentMessage) => {
                     if (parentMessage.id == message.parent_id) {
@@ -674,6 +664,7 @@ export default {
             storedMessage.reaction_scores = messageRectionScores;
             if (reaction.user.id == this.userId) {
                 storedMessage.own_reactions.push({ type: reaction.type, score: reaction.score });
+                this.$root.$emit('messageOwnReactionUpdate', { message: storedMessage });
             }
         },
 
@@ -741,6 +732,7 @@ export default {
                                 ownReaction.score = reaction.score;
                             }
                         });
+                        this.$root.$emit('messageOwnReactionUpdate', { message });
                     }
                 }
             });
@@ -887,14 +879,9 @@ export default {
             this.showPinned = !this.showPinned;
         },
 
-        messageUpvote({ message }) {
-            const increment = 1;
-            const score = message.own_reactions.filter(({ type }) => type == 'upvote').map(({ score }) => score).pop() || 0;
-
-            console.log("::messageUpvote score: %s", JSON.stringify(score));
-
+        messageUpvote({ message, score }) {
             this.channel
-                .sendReaction(message.id, { type: 'upvote', score: (score + increment) })
+                .sendReaction(message.id, { type: 'upvote', score })
                 .then(() => {
                     this.messageErrors = [];
                 })

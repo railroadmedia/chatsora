@@ -3,7 +3,8 @@
         <div class="tw-flex tw-flex-row tw-bg-white tw-rounded-lg tw-border tw-border-gray-400 tw-divide-x tw-divide-gray-400 tw-text-gray-500 tw-cursor-pointer">
             <div
                 class="tw-px-2 hover:tw-text-black"
-                @click.stop.prevent="messageUpvote()"
+                @click.stop.prevent="addMessageUpvote()"
+                v-if="showUpvote"
             ><i class="fad fa-sign-language"></i></div>
             <div
                 class="tw-px-2 hover:tw-text-black"
@@ -94,6 +95,10 @@ export default {
             default: () => false,
         },
         showThread: {
+            type: Boolean,
+            default: () => true,
+        },
+        showUpvote: {
             type: Boolean,
             default: () => true,
         },
@@ -190,8 +195,8 @@ export default {
             this.$root.$emit('unpinMessage', { message: this.message });
         },
 
-        messageUpvote() {
-            this.$root.$emit('messageUpvote', { message: this.message });
+        addMessageUpvote() {
+            this.$emit('addMessageUpvote', {});
         },
     },
 }
