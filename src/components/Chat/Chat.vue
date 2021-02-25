@@ -1,28 +1,31 @@
 <template>
     <div class="tw-w-full tw-h-full tw-relative vuesora-override">
-        <div class="tw-h-10 tw-w-full tw-border-b tw-border-gray-600 tw-flex tw-flex-row tw-items-center tw-place-content-between">
-            <a
-                href="#"
-                class="tw-no-underline tw-font-semibold tw-ml-4"
-                @click.stop.prevent="toggleShowMembers"
-                v-if="channel"
-            >{{ $_watcher_count }} ONLINE</a>
-            <a
-                href="#"
-                class="tw-no-underline tw-font-semibold tw-mr-4"
-                @click.stop.prevent="toggleShowPinned"
-                v-if="channel"
-            >Pins</a>
+        <div class="">
+            <div class="cs-top tw-w-full tw-flex tw-flex-row tw-items-center tw-place-content-between">
+                <!-- todo: update top content -->
+                <a
+                    href="#"
+                    class="tw-no-underline tw-font-semibold tw-ml-4"
+                    @click.stop.prevent="toggleShowMembers"
+                    v-if="channel"
+                >{{ $_watcher_count }} ONLINE</a>
+                <a
+                    href="#"
+                    class="tw-no-underline tw-font-semibold tw-mr-4"
+                    @click.stop.prevent="toggleShowPinned"
+                    v-if="channel"
+                >Pins</a>
+            </div>
+            <div
+                class="cs-top tw-px-3 tw-absolute tw-top-0 tw-left-0 tw-right-0 tw-flex tw-flex-row tw-place-items-center tw-justify-between tw-z-10"
+                v-if="showThread"
+            >
+                <div><span class="tw-font-bold">Thread</span><span class="tw-ml-1">{{ $_reply_count_label }}</span></div>
+                <div><i class="fal fa-times tw-font-semibold tw-cursor-pointer" @click.stop.prevent="hideMessageThread()"></i></div>
+            </div>
         </div>
         <div
-            class="tw-px-3 tw-h-10 tw-absolute tw-bg-white tw-top-0 tw-left-0 tw-right-0 tw-border-b tw-border-gray-600 tw-flex tw-flex-row tw-place-items-center tw-justify-between tw-z-10"
-            v-if="showThread"
-        >
-            <div><span class="tw-font-bold">Thread</span><span class="tw-ml-1">{{ $_reply_count_label }}</span></div>
-            <div><i class="fal fa-times tw-font-semibold tw-cursor-pointer" @click.stop.prevent="hideMessageThread()"></i></div>
-        </div>
-        <div
-            class="cs-members-container tw-absolute tw-top-10 tw-mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto tw-z-40"
+            class="cs-members-container tw-absolute tw-mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto tw-z-40"
             v-if="showMembers"
         >
             <div class="tw-bg-gray-50 tw-p-3">
@@ -36,7 +39,7 @@
             </div>
         </div>
         <div
-            class="cs-thread-container tw-absolute tw-bg-white tw-top-10 tw-left-0 tw-right-0 tw-overflow-y-auto tw-z-40"
+            class="cs-thread-container tw-absolute tw-bg-white tw-left-0 tw-right-0 tw-overflow-y-auto tw-z-40"
             v-if="showThread"
             ref="threadMessages"
         >
@@ -68,7 +71,7 @@
             </div>
         </div>
         <div
-            class="cs-pinned-container tw-absolute tw-bg-white tw-top-10 tw-left-0 tw-right-0 tw-bottom-0 tw-overflow-y-auto tw-z-40"
+            class="cs-pinned-container tw-absolute tw-bg-white tw-left-0 tw-right-0 tw-bottom-0 tw-overflow-y-auto tw-z-40"
             v-if="showPinned"
             ref="pinnedMessages"
         >
@@ -86,7 +89,7 @@
                 </div>
             </div>
         </div>
-        <div class="cs-messages-container tw-absolute tw-top-10 tw-mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto" ref="messages">
+        <div class="cs-messages-container tw-absolute tw-left-0 tw-right-0 tw-overflow-y-auto" ref="messages">
             <div class="tw-mt-4">
                 <div
                     v-for="item in $_messages"

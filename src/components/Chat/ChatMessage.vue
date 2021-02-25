@@ -1,8 +1,5 @@
 <template>
-    <div
-        class="cs-message tw-p-3 tw-relative"
-        :class="{'hover:tw-bg-gray-100': showMenu, 'tw-bg-yellow-50': message.pinned}"
-    >
+    <div class="cs-message tw-p-3 tw-relative">
         <div class="tw-max-w-full" v-if="message.pinned">
             <div class="tw-ml-16">
                 <a
@@ -14,9 +11,8 @@
         </div>
         <div class="tw-flex tw-flex-col tw-max-w-full" v-if="messageEdit.id != message.id && message.type != 'system'">
             <chat-user :user="message.user">
-                <span class="tw-mr-1 tw-font-semibold tw-text-sm">:</span>
-                <br v-if="message.user.displayName.length > 15 || firstWordLength() > 10">
-                <span v-html="getParsedMessage(message.text)" class="tw-whitespace-normal"></span>
+                <br>
+                <span v-html="getParsedMessage(message.text)" class="tw-whitespace-normal tw-text-sm"></span>
 
                 <template v-slot:footer>
                     <div class="tw-inline-flex tw-items-center tw-mt-1" v-if="$_has_reactions || $_show_upvote">
@@ -28,18 +24,18 @@
                             <span class="tw-text-xs tw-text-black cs-reaction-count">{{ $_message_upvote }}</span>
                         </div>
                         <div
-                            class="tw-flex tw-flex-row tw-rounded-lg tw-border tw-border-gray-400 tw-divide-x tw-divide-gray-400 tw-text-gray-500 tw-cursor-pointer"
+                            class="tw-flex tw-flex-row tw-text-gray-500 tw-cursor-pointer"
                             v-if="$_has_reactions"
                         >
                             <div
-                                class="tw-flex tw-flex-row tw-place-content-center tw-p-1 hover:tw-text-black"
+                                class="tw-flex tw-flex-row tw-place-content-center tw-p-1"
                                 v-for="(count, reaction) in $_message_reactions"
                                 :key="`message-reaction-${reaction}`"
                                 @click.stop.prevent="toggleMessageReaction(reaction)"
                                 :title="getReactionUsers(reaction)"
                             >
                                 <i :class="getReactionClasses(reaction)"></i>
-                                <span class="tw-text-xs tw-text-black cs-reaction-count">{{ count }}</span>
+                                <span class="tw-text-xs tw-text-white tw-ml-1" v-if="count > 1">{{ count }}</span>
                             </div>
                         </div>
                     </div>
@@ -87,7 +83,7 @@
                 </div>
             </div>
         </div>
-        <div v-if="message.type == 'system'" class="tw-py-2 tw-text-gray-500">
+        <div v-if="message.type == 'system'" class="tw-py-2 tw-text-white">
             {{ message.text }}
         </div>
     </div>
@@ -148,12 +144,15 @@ export default {
                 text: ''
             },
             messageReactions: {
-                'thumb': 'fal fa-thumbs-up',
-                'heart': 'fal fa-heart',
-                'laugh': 'fal fa-laugh',
-                'surprised': 'fal fa-surprise',
-                'sad': 'fal fa-sad-tear',
-                'angry': 'fal fa-angry',
+                'thumb': 'fas fa-thumbs-up cs-react-blue',
+                'thumbs-down': 'fas fa-thumbs-down cs-react-blue',
+                'heart': 'fas fa-heart cs-react-red',
+                'fire': 'fas fa-fire cs-react-yellow',
+                'meh-rolling-eyes': 'fas fa-meh-rolling-eyes cs-react-yellow',
+                'grin-hearts': 'fas fa-grin-hearts cs-react-yellow',
+                'sad-cry': 'fas fa-sad-cry cs-react-yellow',
+                'grin-squint': 'fas fa-grin-squint cs-react-yellow',
+                'grin-tears': 'fas fa-grin-tears cs-react-yellow',
             },
             upvoteNewScore: null,
             upvoteTimeout: null,

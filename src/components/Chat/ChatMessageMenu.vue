@@ -1,10 +1,10 @@
 <template>
     <div class="cs-message-menu tw-absolute tw-text-base">
-        <div class="tw-flex tw-flex-row tw-bg-white tw-rounded-lg tw-border tw-border-gray-400 tw-divide-x tw-divide-gray-400 tw-text-gray-500 tw-cursor-pointer">
+        <div class="cs-main-menu tw-flex tw-flex-row tw-bg-white tw-rounded-full tw-divide-x tw-divide-gray-400 tw-cursor-pointer">
             <div
                 class="tw-px-2 hover:tw-text-black"
                 @click.stop.prevent="addMessageUpvote()"
-                v-if="showUpvote"
+                v-if="showUpvote && false"
             ><i class="fad fa-sign-language"></i></div>
             <div
                 class="tw-px-2 hover:tw-text-black"

@@ -12,14 +12,13 @@
                 <img :src="user.avatarUrl" class="tw-max-w-full tw-h-auto" >
             </a>
         </div>
-        <div class="tw-mt-2 tw-text-base tw-flex tw-flex-col">
+        <div class="tw-mt-2 tw-text-base tw-text-white tw-flex tw-flex-col">
             <div class="">
                 <a
                     :href="user.profileUrl"
                     target="_blank"
-                    class="tw-no-underline hover:tw-underline tw-text-black tw-font-semibold tw-text-lg"
+                    class="tw-no-underline hover:tw-underline tw-text-white tw-font-semibold"
                 >{{ user.displayName }}</a>
-                <span class="tw-ml-1 tw-font-semibold tw-text-sm" v-if="user.role == 'admin'">(Moderator)</span>
                 <slot></slot>
             </div>
             <slot name="footer"></slot>

@@ -1,34 +1,55 @@
 @import './variables.scss';
 
+.cs-top {
+  background-color: #141515;
+  height: $topHeight;
+}
+
 .cs-members-container {
-  bottom: 100px;
+  top: $topHeight;
+  bottom: $footerHeight;
 }
 .cs-thread-container {
-  bottom: 100px;
+  top: $topHeight;
+  bottom: $footerHeight;
+}
+.cs-pinned-container {
+  top: $topHeight;
 }
 .cs-messages-container {
-  bottom: 100px;
+  top: $topHeight;
+  bottom: $footerHeight;
   scroll-behavior: smooth;
+  background-color: $bgColor;
 
   p {
     margin: 0;
   }
 
-  .cs-message-menu {
-    top: -12px;
-    right: 10px;
-  }
+  .cs-message {
 
-  .cs-message .cs-message-menu {
-    display: none;
-  }
+    .cs-message-menu {
+      display: none;
+      top: -12px;
+      right: 10px;
 
-  .cs-message:hover .cs-message-menu {
-    display: block;
-  }
+      .cs-main-menu {
+        background-color: $bgMenuColor;
+        text-color: $textMenuColor;
+      }
+    }
 
-  .cs-message .cs-reaction-count {
-    margin-left: 2px;
+    &:hover {
+      background-color: $hoverBgColor;
+
+      .cs-message-menu {
+        display: block;
+      }
+    }
+
+    .cs-reaction-count {
+      margin-left: 3px;
+    }
   }
 
   .cs-message-edit {
@@ -113,6 +134,15 @@
       background-color: $coachColor;
     }
   }
+}
+.cs-react-yellow {
+  color: $reactionYellowColor;
+}
+.cs-react-blue {
+  color: $reactionBlueColor;
+}
+.cs-react-red {
+  color: $reactionRedColor;
 }
 .cs-dialog-window {
   border-radius: 2px;
