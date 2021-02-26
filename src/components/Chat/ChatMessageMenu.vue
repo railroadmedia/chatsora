@@ -1,65 +1,84 @@
 <template>
     <div class="cs-message-menu tw-absolute tw-text-base">
-        <div class="cs-main-menu tw-flex tw-flex-row tw-bg-white tw-rounded-full tw-divide-x tw-divide-gray-400 tw-cursor-pointer">
-            <div
-                class="tw-px-2 hover:tw-text-black"
-                @click.stop.prevent="addMessageUpvote()"
-                v-if="showUpvote && false"
-            ><i class="fad fa-sign-language"></i></div>
-            <div
-                class="tw-px-2 hover:tw-text-black"
-                :class="{'tw-text-black': messageReact}"
-                @click.stop.prevent="toggleMessageReact()"
-            ><i class="fal fa-smile"></i></div>
-            <div
-                class="tw-px-2 hover:tw-text-black"
-                @click.stop.prevent="messageThread()"
-                v-if="showThread"
-            ><i class="fal fa-reply-all"></i></div>
-            <div
-                class="tw-px-2 hover:tw-text-black"
-                :class="{'tw-text-black': messageMenu}"
-                @click.stop.prevent="toggleMessageMenu()"
-                v-if="$_messageMenu"
-            ><i class="fal fa-ellipsis-h"></i></div>
-        </div>
         <div class="tw-relative">
             <div
-                class="tw-mt-1 tw-absolute tw-right-0 tw-flex tw-flex-row tw-bg-white tw-rounded-lg tw-text-gray-500 tw-text-center tw-cursor-pointer tw-text-sm"
+                class="cs-sub-menu tw-absolute tw-right-0 tw-bottom-0 tw-w-44 tw-p-3 tw-flex tw-flex-col tw-bg-black tw-rounded-lg tw-text-white tw-cursor-pointer tw-text-sm"
                 v-if="messageMenu"
             >
                 <div
-                    class="hover:tw-text-black tw-px-2 tw-py-1"
-                    @click.stop.prevent="pinMessage()"
-                    v-if="$_show_pin"
-                >Pin</div>
-                <div
-                    class="hover:tw-text-black tw-px-2 tw-py-1"
-                    @click.stop.prevent="unpinMessage()"
-                    v-if="$_show_unpin"
-                >Unpin</div>
-                <div
-                    class="hover:tw-text-black tw-px-2 tw-py-1"
+                    :class="{'tw-mb-2': isAdministrator}"
                     v-if="message.user.id == userId"
-                    @click.stop.prevent="editMessage()"
-                >Edit</div>
-                <div
-                    class="hover:tw-text-black tw-px-2 tw-py-1"
-                    v-if="isAdministrator"
-                    @click.stop.prevent="removeMessage()"
-                >Remove</div>
+                >
+                    <div
+                        class="tw-mb-1"
+                        @click.stop.prevent="editMessage()"
+                    >Edit Message</div>
+                    <div
+                        class="tw-mb-1"
+                        @click.stop.prevent="editMessage()"
+                    >Delete</div>
+                </div>
+                <div v-if="isAdministrator">
+                    <div class="tw-mb-2 tw-font-semibold tw-cursor-default">Moderation</div>
+                    <div
+                        class="tw-mb-1"
+                        @click.stop.prevent="pinMessage()"
+                        v-if="$_show_pin"
+                    >Pin Message</div>
+                    <div
+                        class="tw-mb-1"
+                        @click.stop.prevent="unpinMessage()"
+                        v-if="$_show_unpin"
+                    >Unpin Message</div>
+                    <div
+                        class="tw-mb-1"
+                        @click.stop.prevent="removeMessage()"
+                        v-if="message.user.id != userId"
+                    >Remove Message</div>
+                    <div
+                        @click.stop.prevent="blockUser()"
+                        v-if="message.user.id != userId"
+                    >Block Student</div>
+                </div>
             </div>
             <div
-                class="tw-mt-1 tw-absolute tw-right-0 tw-flex tw-flex-row tw-bg-white tw-rounded-lg tw-text-gray-500 tw-text-center space-x-1 tw-px-1"
+                class="cs-react-menu tw-absolute tw-right-0  tw-bottom-0 tw-flex tw-flex-row tw-bg-black tw-rounded-full tw-text-center space-x-1 tw-py-2 tw-px-3"
                 v-if="messageReact"
             >
                 <div
-                    class="hover:tw-text-black tw-cursor-pointer tw-p-1"
+                    class="tw-text-2xl tw-cursor-pointer tw-p-1"
                     v-for="(classes, reaction) in messageReactions"
                     :key="`add-reaction-${reaction}`"
                     @click.stop.prevent="reactToMessage(reaction)"
                 ><i :class="classes"></i></div>
             </div>
+        </div>
+        <div class="cs-main-menu tw-flex tw-flex-row tw-rounded-full tw-divide-x tw-divide-gray-400 tw-cursor-pointer tw-px-1">
+            <div
+                class="tw-px-2 tw-text-sm"
+                @click.stop.prevent="addMessageUpvote()"
+                v-if="showUpvote"
+            ><i class="fad fa-sign-language"></i></div>
+            <div class="tw-px-2 tw-text-xs tw-flex tw-flex-row tw-items-center"><span>{{ $_message_time }}</span></div>
+            <div
+                class="cs-tooltip-container tw-px-2 tw-text-sm tw-relative"
+                :class="{'menu-active': messageReact}"
+                @click.stop.prevent="toggleMessageReact()"
+            >
+                <i class="fas fa-smile-plus"></i>
+                <div class="cs-tooltip tw-absolute tw-rounded-md tw-px-2 tw-py-1 tw-text-xs tw-text-white tw-overflow-hidden tw-whitespace-nowrap">Add Reaction</div>
+                <div class="cs-tooltip-arrow tw-absolute tw-transform tw-rotate-45"></div>
+            </div>
+            <div
+                class="tw-px-2 tw-text-sm"
+                @click.stop.prevent="messageThread()"
+                v-if="showThread"
+            ><i class="fal fa-reply-all"></i></div>
+            <div
+                class="tw-px-2 tw-text-sm"
+                @click.stop.prevent="toggleMessageMenu()"
+                v-if="$_message_menu"
+            ><i class="fas fa-ellipsis-h"></i></div>
         </div>
     </div>
 </template>
@@ -110,7 +129,12 @@ export default {
         };
     },
     computed: {
-        $_messageMenu: {
+        $_message_time: {
+            get() {
+                return this.message.createdAt.toFormat('HH:mma');
+            },
+        },
+        $_message_menu: {
             get() {
                 return this.isAdministrator || this.message.user.id == this.userId;
             },

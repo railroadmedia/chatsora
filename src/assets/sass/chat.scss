@@ -35,7 +35,7 @@
 
       .cs-main-menu {
         background-color: $bgMenuColor;
-        text-color: $textMenuColor;
+        color: $textMenuColor;
       }
     }
 
@@ -75,7 +75,7 @@
 
   img {
     border-radius:50%;
-    border:3px solid #fff;
+    border:1px solid #fff;
   }
 
   &.cs-membership-team {
@@ -143,6 +143,28 @@
 }
 .cs-react-red {
   color: $reactionRedColor;
+}
+.cs-tooltip-container {
+  .cs-tooltip {
+    display: none;
+    background-color: $bgMenuTooltip;
+    top: -25px;
+    right: 3px;
+  }
+  .cs-tooltip-arrow {
+    display: none;
+    background-color: $bgMenuTooltip;
+    top: -6px;
+    right: 16px;
+    width: 8px;
+    height: 8px;
+  }
+  &:hover:not(.menu-active) {
+    .cs-tooltip,
+    .cs-tooltip-arrow {
+      display: block;
+    }
+  }
 }
 .cs-dialog-window {
   border-radius: 2px;

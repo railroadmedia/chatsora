@@ -84,12 +84,13 @@
                         :is-administrator="isAdministrator"
                         :message="item"
                         :user-id="userId"
+                        :show-upvote="enableUpvote"
                         :show-thread="false"
                     ></chat-message>
                 </div>
             </div>
         </div>
-        <div class="cs-messages-container tw-absolute tw-left-0 tw-right-0 tw-overflow-y-auto" ref="messages">
+        <div class="cs-messages-container tw-absolute tw-px-3 tw-left-0 tw-right-0 tw-overflow-y-auto" ref="messages">
             <div class="tw-mt-4">
                 <div
                     v-for="item in $_messages"
@@ -99,6 +100,8 @@
                         :is-administrator="isAdministrator"
                         :message="item"
                         :user-id="userId"
+                        :show-upvote="enableUpvote"
+                        :show-thread="enableThread"
                     ></chat-message>
                 </div>
                 <div
@@ -186,6 +189,14 @@ export default {
             type: String,
         },
         isAdministrator: {
+            type: Boolean,
+            default: () => false,
+        },
+        enableThread: {
+            type: Boolean,
+            default: () => false,
+        },
+        enableUpvote: {
             type: Boolean,
             default: () => false,
         },

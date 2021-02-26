@@ -1,5 +1,5 @@
 <template>
-    <div class="cs-message tw-p-3 tw-relative">
+    <div class="cs-message tw-p-3 tw-relative tw-rounded-md">
         <div class="tw-max-w-full" v-if="message.pinned">
             <div class="tw-ml-16">
                 <a
