@@ -15,7 +15,7 @@
                     >Edit Message</div>
                     <div
                         class="tw-mb-1"
-                        @click.stop.prevent="editMessage()"
+                        @click.stop.prevent="removeMessage()"
                     >Delete</div>
                 </div>
                 <div v-if="isAdministrator">
@@ -199,6 +199,10 @@ export default {
 
         removeMessage() {
             this.$root.$emit('removeMessage', { message: this.message });
+        },
+
+        blockUser() {
+            this.$root.$emit('blockUser', { user: this.message.user });
         },
 
         reactToMessage(reaction) {

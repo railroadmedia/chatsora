@@ -114,36 +114,26 @@
 
         <div
             v-if="showDialog"
-            class="cs-dialog-container tw-absolute tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-z-50"
+            class="cs-dialog-container tw-absolute tw-inset-0 tw-z-50"
         >
             <div
                 class="tw-w-full tw-h-full tw-relative"
             >
-                <div class="tw-absolute tw-inset-0 tw-bg-black tw-bg-opacity-25 tw-z-20" @click.stop.prevent="closeDialog()"></div>
+                <div class="cs-dialog-overlay tw-absolute tw-inset-0 tw-opacity-100 tw-z-20" @click.stop.prevent="closeDialog()"></div>
                 <div class="tw-w-full tw-h-full tw-flex tw-flex-col tw-place-content-center tw-place-items-center">
-                    <div class="cs-dialog-window tw-flex-none tw-w-3/4 tw-bg-white tw-z-30">
-                        <div class="tw-bg-gray-200 tw-py-4 tw-px-3 tw-flex tw-items-center tw-place-content-between">
-                            <span class="tw-font-semibold tw-text-gray-700">Delete message?</span>
-                            <i class="fal fa-times tw-font-semibold tw-cursor-pointer" @click.stop.prevent="closeDialog()"></i>
-                        </div>
-                        <div class="tw-p-3">
-                            <p>This message will be permanently removed!</p>
-                            <div class="tw-flex tw-items-center tw-mt-2">
-                                <input type="checkbox" id="block-user" v-model.lazy="messageRemove.blockUser">
-                                <label for="block-user" class="tw-ml-1 tw-select-none">Block {{ messageRemove.userDisplayName }}</label>
-                            </div>
-                        </div>
-                        <div class="tw-flex tw-flex-row tw-justify-center tw-py-4 tw-px-3">
+                    <div class="cs-dialog-window tw-rounded-lg tw-flex-none tw-bg-black tw-z-30 tw-relative">
+                        <div class="tw-absolute tw-top-2 tw-right-3 tw-text-white"><i class="fal fa-times tw-font-semibold tw-cursor-pointer" @click.stop.prevent="closeDialog()"></i></div>
+                        <div class="tw-mt-6 tw-mx-8 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed" v-if="messageRemove != null">Are you sure you want to delete this message from the chat?</div>
+                        <div
+                            class="tw-mt-6 tw-mx-6 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"
+                            :class="{'tw-pb-2': $_short_username}"
+                            v-if="userBlock != null"
+                        >Are you sure you want to block <span class="tw-font-bold">{{ userBlock.displayName }}</span> from this chat?</div>
+                        <div class="tw-mt-3 tw-flex tw-flex-row tw-justify-center">
                             <div
-                                class="tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center tw-mr-2"
-                                title="Cancel message edit"
-                                @click.stop.prevent="closeDialog()"
-                            >Cancel</div>
-                            <div
-                                class="tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-white tw-bg-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center"
-                                title="Save message updates"
+                                class="cs-btn tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-tracking-normal tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-text-white tw-w-28 tw-flex tw-justify-center"
                                 @click.stop.prevent="closeDialog(true)"
-                            >Ok</div>
+                            >confirm</div>
                         </div>
                     </div>
                 </div>
@@ -213,11 +203,8 @@ export default {
             showPinned: false,
             messageThread: null,
             messageErrors: [],
-            messageRemove: {
-                id: null,
-                userId: null,
-                blockUser: false
-            },
+            messageRemove: null,
+            userBlock: null,
             channelWatchers: {},
         };
     },
@@ -277,12 +264,18 @@ export default {
                 return label;
             },
         },
+        $_short_username: {
+            get() {
+                return this.userBlock != null && this.userBlock.displayName.length <= 12;
+            }
+        },
     },
     mounted() {
         this.setupChat();
 
         this.$root.$on('updateMessage', this.updateMessage);
         this.$root.$on('removeMessage', this.removeMessage);
+        this.$root.$on('blockUser', this.blockUser);
         this.$root.$on('toggleMessageReaction', this.toggleMessageReaction);
         this.$root.$on('messageThread',this.showMessageThread);
         this.$root.$on('pinMessage',this.pinMessage);
@@ -771,32 +764,35 @@ export default {
         },
 
         removeMessage({ message }) {
-            this.messageRemove = {
-                id: message.id,
-                userId: message.user.id,
-                userDisplayName: message.user.displayName,
-                allMessages: false,
-                blockUser: false
-            };
+            this.messageRemove = message;
+            this.showDialog = true;
+        },
+
+        blockUser({ user }) {
+            this.userBlock = user;
             this.showDialog = true;
         },
 
         closeDialog(confirmation) {
 
             if (confirmation) {
-                this.streamClient
-                    .deleteMessage(this.messageRemove.id)
-                    .then(() => {
-                        this.messageErrors = [];
-                    })
-                    .catch(({ response }) => {
-                        this.errorHandler(response, 'Message delete error');
-                    });
 
-                if (this.messageRemove.blockUser) {
+                if (this.messageRemove) {
+
+                    this.streamClient
+                        .deleteMessage(this.messageRemove.id)
+                        .then(() => {
+                            this.messageErrors = [];
+                        })
+                        .catch(({ response }) => {
+                            this.errorHandler(response, 'Message delete error');
+                        });
+
+                } else if (this.userBlock) {
+
                     this.channel
                         .banUser(
-                            this.messageRemove.userId,
+                            this.userBlock.id,
                             {
                                 banned_by_id: this.userId,
                                 reason: 'default'
@@ -812,12 +808,8 @@ export default {
             }
 
             this.showDialog = false;
-            this.messageRemove = {
-                id: null,
-                userId: null,
-                userName: null,
-                blockUser: false
-            };
+            this.messageRemove = null;
+            this.userBlock = null;
         },
 
         hasOwnReaction(message, reactionType) {

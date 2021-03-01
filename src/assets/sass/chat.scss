@@ -166,10 +166,22 @@
     }
   }
 }
-.cs-dialog-window {
-  border-radius: 2px;
-  overflow: hidden;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+.cs-dialog-container {
+  .cs-dialog-overlay {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .cs-dialog-window {
+    width: 250px;
+    height: 150px;
+
+    .cs-btn {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      font: normal bold 12px/16px Roboto Condensed;
+      background-color: $btnBgColor;
+    }
+  }
 }
 .cs-new-message-container {
   height: 100px;
