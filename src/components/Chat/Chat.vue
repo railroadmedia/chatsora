@@ -1,81 +1,85 @@
 <template>
-    <div class="tw-w-full tw-h-full tw-relative vuesora-override">
-        <div class="">
-            <div class="cs-top tw-w-full tw-flex tw-flex-row tw-items-center tw-place-content-between">
-                <!-- todo: update top content -->
+    <div class="tw-relative tw-h-full tw-w-full tw-flex tw-flex-col vuesora-override">
+        <div class="cs-top tw-flex-none">
+            <div class="tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center tw-place-content-between">
+                <div class="tw-h-full tw-ml-4 tw-flex tw-flex-row tw-items-end tw-space-x-4">
+                    <a
+                        href="#"
+                        class="tw-no-underline tw-font-semibold tw-px-3 tw-pb-3 tw-text-white tw-border-b-2 tw-border-white"
+                        @click.stop.prevent
+                    >Chat</a>
+                    <a
+                        href="#"
+                        class="tw-no-underline tw-px-3 tw-pb-3 cs-top-gray tw-border-b-2 tw-border-transparent"
+                        @click.stop.prevent
+                    >Questions</a>
+                </div>
                 <a
                     href="#"
-                    class="tw-no-underline tw-font-semibold tw-ml-4"
-                    @click.stop.prevent="toggleShowMembers"
-                    v-if="channel"
-                >{{ $_watcher_count }} ONLINE</a>
-                <a
-                    href="#"
-                    class="tw-no-underline tw-font-semibold tw-mr-4"
-                    @click.stop.prevent="toggleShowPinned"
-                    v-if="channel"
-                >Pins</a>
+                    class="tw-no-underline tw-font-semibold tw-mr-4 cs-top-gray tw-border-b-2 tw-border-transparent"
+                    @click.stop.prevent
+                ><i class="fas fa-ellipsis-v"></i></a>
             </div>
             <div
-                class="cs-top tw-px-3 tw-absolute tw-top-0 tw-left-0 tw-right-0 tw-flex tw-flex-row tw-place-items-center tw-justify-between tw-z-10"
+                class="tw-px-3 tw-absolute tw-top-0 tw-left-0 tw-right-0 tw-flex tw-flex-row tw-place-items-center tw-justify-between tw-z-10"
                 v-if="showThread"
             >
+                <!-- todo: update with non-absolute layout -->
                 <div><span class="tw-font-bold">Thread</span><span class="tw-ml-1">{{ $_reply_count_label }}</span></div>
                 <div><i class="fal fa-times tw-font-semibold tw-cursor-pointer" @click.stop.prevent="hideMessageThread()"></i></div>
             </div>
         </div>
-        <div
-            class="cs-members-container tw-absolute tw-mt-1 tw-left-0 tw-right-0 tw-overflow-y-auto tw-z-40"
-            v-if="showMembers"
-        >
-            <div class="tw-bg-gray-50 tw-p-3">
-                <div
-                    class="tw-py-2"
-                    v-for="item in $_watchers"
-                    :key="item.id"
-                >
-                    <chat-user :user="item"></chat-user>
+
+        <div class="cs-body tw-flex-grow tw-flex tw-flex-col tw-overflow-hidden">
+            <div
+                class="cs-members-container tw-mt-1 tw-overflow-y-auto tw-z-40"
+                v-if="showMembers"
+            >
+                <!-- todo: update with non-absolute layout -->
+                <div class="tw-bg-gray-50 tw-p-3">
+                    <div
+                        class="tw-py-2"
+                        v-for="item in $_watchers"
+                        :key="item.id"
+                    >
+                        <chat-user :user="item"></chat-user>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div
-            class="cs-thread-container tw-absolute tw-bg-white tw-left-0 tw-right-0 tw-overflow-y-auto tw-z-40"
-            v-if="showThread"
-            ref="threadMessages"
-        >
-            <div class="tw-border-b tw-border-gray-600">
-                <div class="tw-my-4">
-                    <chat-message
-                        :is-administrator="isAdministrator"
-                        :message="messageThread"
-                        :user-id="userId"
-                        :show-upvote="false"
-                        :show-menu="false"
-                        :show-thread="false"
-                    ></chat-message>
+            <div
+                class="cs-thread-container tw-bg-white tw-overflow-y-auto tw-z-40"
+                v-if="showThread"
+                ref="threadMessages"
+            >
+                <!-- todo: update with non-absolute layout -->
+                <div class="tw-border-b tw-border-gray-600">
+                    <div class="tw-my-4">
+                        <chat-message
+                            :is-administrator="isAdministrator"
+                            :message="messageThread"
+                            :user-id="userId"
+                            :show-upvote="false"
+                            :show-menu="false"
+                            :show-thread="false"
+                        ></chat-message>
+                    </div>
+                </div>
+                <div class="cs-messages-container tw-mt-4">
+                    <div
+                        v-for="item in $_message_thread_replies"
+                        :key="item.id"
+                    >
+                        <chat-message
+                            :is-administrator="isAdministrator"
+                            :message="item"
+                            :user-id="userId"
+                            :show-upvote="false"
+                            :show-thread="false"
+                        ></chat-message>
+                    </div>
                 </div>
             </div>
-            <div class="cs-messages-container tw-mt-4">
-                <div
-                    v-for="item in $_message_thread_replies"
-                    :key="item.id"
-                >
-                    <chat-message
-                        :is-administrator="isAdministrator"
-                        :message="item"
-                        :user-id="userId"
-                        :show-upvote="false"
-                        :show-thread="false"
-                    ></chat-message>
-                </div>
-            </div>
-        </div>
-        <div
-            class="cs-pinned-container tw-absolute tw-bg-white tw-left-0 tw-right-0 tw-bottom-0 tw-overflow-y-auto tw-z-40"
-            v-if="showPinned"
-            ref="pinnedMessages"
-        >
-            <div class="cs-messages-container tw-mt-4">
+            <div class="cs-messages-container tw-px-3 tw-pt-4 tw-pb-2">
                 <div
                     v-for="item in $_pinned_messages"
                     :key="item.id"
@@ -85,13 +89,11 @@
                         :message="item"
                         :user-id="userId"
                         :show-upvote="enableUpvote"
-                        :show-thread="false"
+                        :show-thread="enableThread"
                     ></chat-message>
                 </div>
             </div>
-        </div>
-        <div class="cs-messages-container tw-absolute tw-px-3 tw-left-0 tw-right-0 tw-overflow-y-auto" ref="messages">
-            <div class="tw-mt-4">
+            <div class="cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-auto" ref="messages">
                 <div
                     v-for="item in $_messages"
                     :key="item.id"
@@ -140,7 +142,7 @@
             </div>
         </div>
 
-        <div class="cs-new-message-container box-border tw-absolute tw-bottom-0 tw-left-0 tw-right-0">
+        <div class="cs-new-message-container tw-flex-none box-border">
             <div class="tw-flex tw-flex-col tw-p-4">
                 <textarea
                     v-model="message"
@@ -212,7 +214,7 @@ export default {
         $_messages: {
             cache: false,
             get() {
-                return this.messages;
+                return this.messages.filter(message => !message.pinned);
             },
         },
         $_messages_count: {

@@ -1,12 +1,12 @@
 <template>
-    <div class="cs-message tw-p-3 tw-relative tw-rounded-md">
+    <div class="cs-message tw-p-3 tw-rounded-md tw-relative tw-top-0">
         <div class="tw-max-w-full" v-if="message.pinned">
             <div class="tw-ml-16">
                 <a
                     href="#"
                     @click.stop.prevent="unpinMessage()"
-                    class="tw-text-gray-600 tw-inline-flex tw-flex-row"
-                ><i class="fal fa-thumbtack tw-transform tw-rotate-45"></i><span class="tw-ml-2 leading-none">pinned</span></a>
+                    class="tw-text-gray-600 tw-flex tw-flex-row tw-items-start"
+                ><i class="fal fa-thumbtack"></i><span class="tw-ml-1 leading-none">Pinned</span></a>
             </div>
         </div>
         <div class="tw-flex tw-flex-col tw-max-w-full" v-if="messageEdit.id != message.id && message.type != 'system'">

@@ -4,23 +4,18 @@
   background-color: #141515;
   height: $topHeight;
 }
-
+.cs-top-gray {
+  color: $topGrayColor;
+}
+.cs-body {
+  background-color: $bgColor;
+}
 .cs-members-container {
-  top: $topHeight;
-  bottom: $footerHeight;
 }
 .cs-thread-container {
-  top: $topHeight;
-  bottom: $footerHeight;
-}
-.cs-pinned-container {
-  top: $topHeight;
 }
 .cs-messages-container {
-  top: $topHeight;
-  bottom: $footerHeight;
   scroll-behavior: smooth;
-  background-color: $bgColor;
 
   p {
     margin: 0;
