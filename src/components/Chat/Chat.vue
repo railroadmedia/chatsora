@@ -143,13 +143,32 @@
         </div>
 
         <div class="cs-new-message-container tw-flex-none box-border">
-            <div class="tw-flex tw-flex-col tw-p-4">
-                <textarea
-                    v-model="message"
-                    placeholder="Type a message and press enter"
-                    v-on:keyup.enter="sendMessage"
-                    class=""
-                ></textarea>
+            <div class="tw-h-full tw-flex tw-flex-col tw-place-content-between tw-py-2 tw-px-4 tw-relative">
+                <div>
+                    <textarea
+                        v-model="message"
+                        placeholder="Say something..."
+                        v-on:keyup.enter="sendMessage"
+                        wrap="off"
+                        rows="1"
+                        class="tw-resize-none tw-whitespace-nowrap tw-overflow-x-auto tw-rounded"
+                    ></textarea>
+                    <div class="cs-new-message-menu tw-absolute tw-text-lg">
+                        <a
+                            href="#"
+                            class="cs-top-gray tw-mr-2"
+                            @click.stop.prevent
+                        ><i class="fal fa-smile"></i></a>
+                        <a
+                            href="#"
+                            class="cs-top-gray"
+                            @click.stop.prevent
+                        ><i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <span class="cs-top-gray tw-text-xs">{{ $_watcher_count }} Online</span>
+                </div>
             </div>
         </div>
     </div>
@@ -444,7 +463,26 @@ export default {
                             this.insertMessage(message);
                         }
                     });
+                    this.unpinMessages();
                 });
+        },
+
+        /**
+         * Creates a list of pinned messages, reversed sorted by pinned_at
+         * Unpins all but last specified value of pinned messages
+         */
+        unpinMessages(keep = 2) {
+            if (this.$_pinned_messages.length > keep) {
+                let revesedSorted = this.$_pinned_messages
+                                        .map(({id, text, pinnedAt}) => ({id, text, pinnedAt}))
+                                        .sort((a, b)=> b.pinnedAt - a.pinnedAt);
+
+                revesedSorted.forEach((message, idx) => {
+                    if (idx > keep - 1) {
+                        this.unpinMessage({ message });
+                    }
+                });
+            }
         },
 
         /**
@@ -480,6 +518,7 @@ export default {
 
             messageCopy.own_reactions = message.own_reactions.map(({ type, score }) => ({ type, score }));
             messageCopy.createdAt = DateTime.fromISO(message.created_at);
+            messageCopy.pinnedAt = DateTime.fromISO(message.pinned_at);
 
             const messageReactionsCount = Object.values(message.reaction_counts || {}).reduce((a, b) => a + b, 0);
 
@@ -866,6 +905,7 @@ export default {
                 .pinMessage({ id: message.id, text: message.text }, null)
                 .then(() => {
                     this.messageErrors = [];
+                    this.unpinMessages(1);
                 })
                 .catch(({ response }) => {
                     this.errorHandler(response, 'Message pin error');

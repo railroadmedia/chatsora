@@ -26458,12 +26458,12 @@ var es_object_keys = __webpack_require__("b64b");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.for-each.js
 var web_dom_collections_for_each = __webpack_require__("159b");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5f6c83c9-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=template&id=189954dc&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-relative tw-h-full tw-w-full tw-flex tw-flex-col vuesora-override"},[_c('div',{staticClass:"cs-top tw-flex-none"},[_c('div',{staticClass:"tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center tw-place-content-between"},[_c('div',{staticClass:"tw-h-full tw-ml-4 tw-flex tw-flex-row tw-items-end tw-space-x-4"},[_c('a',{staticClass:"tw-no-underline tw-font-semibold tw-px-3 tw-pb-3 tw-text-white tw-border-b-2 tw-border-white",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_vm._v("Chat")]),_c('a',{staticClass:"tw-no-underline tw-px-3 tw-pb-3 cs-top-gray tw-border-b-2 tw-border-transparent",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_vm._v("Questions")])]),_c('a',{staticClass:"tw-no-underline tw-font-semibold tw-mr-4 cs-top-gray tw-border-b-2 tw-border-transparent",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_c('i',{staticClass:"fas fa-ellipsis-v"})])]),(_vm.showThread)?_c('div',{staticClass:"tw-px-3 tw-absolute tw-top-0 tw-left-0 tw-right-0 tw-flex tw-flex-row tw-place-items-center tw-justify-between tw-z-10"},[_c('div',[_c('span',{staticClass:"tw-font-bold"},[_vm._v("Thread")]),_c('span',{staticClass:"tw-ml-1"},[_vm._v(_vm._s(_vm.$_reply_count_label))])]),_c('div',[_c('i',{staticClass:"fal fa-times tw-font-semibold tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.hideMessageThread()}}})])]):_vm._e()]),_c('div',{staticClass:"cs-body tw-flex-grow tw-flex tw-flex-col tw-overflow-hidden"},[(_vm.showMembers)?_c('div',{staticClass:"cs-members-container tw-mt-1 tw-overflow-y-auto tw-z-40"},[_c('div',{staticClass:"tw-bg-gray-50 tw-p-3"},_vm._l((_vm.$_watchers),function(item){return _c('div',{key:item.id,staticClass:"tw-py-2"},[_c('chat-user',{attrs:{"user":item}})],1)}),0)]):_vm._e(),(_vm.showThread)?_c('div',{ref:"threadMessages",staticClass:"cs-thread-container tw-bg-white tw-overflow-y-auto tw-z-40"},[_c('div',{staticClass:"tw-border-b tw-border-gray-600"},[_c('div',{staticClass:"tw-my-4"},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":_vm.messageThread,"user-id":_vm.userId,"show-upvote":false,"show-menu":false,"show-thread":false}})],1)]),_c('div',{staticClass:"cs-messages-container tw-mt-4"},_vm._l((_vm.$_message_thread_replies),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":false,"show-thread":false}})],1)}),0)]):_vm._e(),_c('div',{staticClass:"cs-messages-container tw-px-3 tw-pt-4 tw-pb-2"},_vm._l((_vm.$_pinned_messages),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":_vm.enableUpvote,"show-thread":_vm.enableThread}})],1)}),0),_c('div',{ref:"messages",staticClass:"cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-auto"},[_vm._l((_vm.$_messages),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":_vm.enableUpvote,"show-thread":_vm.enableThread}})],1)}),_vm._l((_vm.messageErrors),function(message,index){return _c('div',{key:("error-message-" + index),staticClass:"tw-p-3 tw-text-red-400"},[_vm._v(_vm._s(message))])})],2)]),(_vm.showDialog)?_c('div',{staticClass:"cs-dialog-container tw-absolute tw-inset-0 tw-z-50"},[_c('div',{staticClass:"tw-w-full tw-h-full tw-relative"},[_c('div',{staticClass:"cs-dialog-overlay tw-absolute tw-inset-0 tw-opacity-100 tw-z-20",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}}),_c('div',{staticClass:"tw-w-full tw-h-full tw-flex tw-flex-col tw-place-content-center tw-place-items-center"},[_c('div',{staticClass:"cs-dialog-window tw-rounded-lg tw-flex-none tw-bg-black tw-z-30 tw-relative"},[_c('div',{staticClass:"tw-absolute tw-top-2 tw-right-3 tw-text-white"},[_c('i',{staticClass:"fal fa-times tw-font-semibold tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}})]),(_vm.messageRemove != null)?_c('div',{staticClass:"tw-mt-6 tw-mx-8 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"},[_vm._v("Are you sure you want to delete this message from the chat?")]):_vm._e(),(_vm.userBlock != null)?_c('div',{staticClass:"tw-mt-6 tw-mx-6 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed",class:{'tw-pb-2': _vm.$_short_username}},[_vm._v("Are you sure you want to block "),_c('span',{staticClass:"tw-font-bold"},[_vm._v(_vm._s(_vm.userBlock.displayName))]),_vm._v(" from this chat?")]):_vm._e(),_c('div',{staticClass:"tw-mt-3 tw-flex tw-flex-row tw-justify-center"},[_c('div',{staticClass:"cs-btn tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-tracking-normal tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-text-white tw-w-28 tw-flex tw-justify-center",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog(true)}}},[_vm._v("confirm")])])])])])]):_vm._e(),_c('div',{staticClass:"cs-new-message-container tw-flex-none box-border"},[_c('div',{staticClass:"tw-flex tw-flex-col tw-p-4"},[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.message),expression:"message"}],attrs:{"placeholder":"Type a message and press enter"},domProps:{"value":(_vm.message)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.sendMessage($event)},"input":function($event){if($event.target.composing){ return; }_vm.message=$event.target.value}}})])])])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5f6c83c9-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=template&id=32eecf28&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-relative tw-h-full tw-w-full tw-flex tw-flex-col vuesora-override"},[_c('div',{staticClass:"cs-top tw-flex-none"},[_c('div',{staticClass:"tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center tw-place-content-between"},[_c('div',{staticClass:"tw-h-full tw-ml-4 tw-flex tw-flex-row tw-items-end tw-space-x-4"},[_c('a',{staticClass:"tw-no-underline tw-font-semibold tw-px-3 tw-pb-3 tw-text-white tw-border-b-2 tw-border-white",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_vm._v("Chat")]),_c('a',{staticClass:"tw-no-underline tw-px-3 tw-pb-3 cs-top-gray tw-border-b-2 tw-border-transparent",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_vm._v("Questions")])]),_c('a',{staticClass:"tw-no-underline tw-font-semibold tw-mr-4 cs-top-gray tw-border-b-2 tw-border-transparent",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_c('i',{staticClass:"fas fa-ellipsis-v"})])]),(_vm.showThread)?_c('div',{staticClass:"tw-px-3 tw-absolute tw-top-0 tw-left-0 tw-right-0 tw-flex tw-flex-row tw-place-items-center tw-justify-between tw-z-10"},[_c('div',[_c('span',{staticClass:"tw-font-bold"},[_vm._v("Thread")]),_c('span',{staticClass:"tw-ml-1"},[_vm._v(_vm._s(_vm.$_reply_count_label))])]),_c('div',[_c('i',{staticClass:"fal fa-times tw-font-semibold tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.hideMessageThread()}}})])]):_vm._e()]),_c('div',{staticClass:"cs-body tw-flex-grow tw-flex tw-flex-col tw-overflow-hidden"},[(_vm.showMembers)?_c('div',{staticClass:"cs-members-container tw-mt-1 tw-overflow-y-auto tw-z-40"},[_c('div',{staticClass:"tw-bg-gray-50 tw-p-3"},_vm._l((_vm.$_watchers),function(item){return _c('div',{key:item.id,staticClass:"tw-py-2"},[_c('chat-user',{attrs:{"user":item}})],1)}),0)]):_vm._e(),(_vm.showThread)?_c('div',{ref:"threadMessages",staticClass:"cs-thread-container tw-bg-white tw-overflow-y-auto tw-z-40"},[_c('div',{staticClass:"tw-border-b tw-border-gray-600"},[_c('div',{staticClass:"tw-my-4"},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":_vm.messageThread,"user-id":_vm.userId,"show-upvote":false,"show-menu":false,"show-thread":false}})],1)]),_c('div',{staticClass:"cs-messages-container tw-mt-4"},_vm._l((_vm.$_message_thread_replies),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":false,"show-thread":false}})],1)}),0)]):_vm._e(),_c('div',{staticClass:"cs-messages-container tw-px-3 tw-pt-4 tw-pb-2"},_vm._l((_vm.$_pinned_messages),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":_vm.enableUpvote,"show-thread":_vm.enableThread}})],1)}),0),_c('div',{ref:"messages",staticClass:"cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-auto"},[_vm._l((_vm.$_messages),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":_vm.enableUpvote,"show-thread":_vm.enableThread}})],1)}),_vm._l((_vm.messageErrors),function(message,index){return _c('div',{key:("error-message-" + index),staticClass:"tw-p-3 tw-text-red-400"},[_vm._v(_vm._s(message))])})],2)]),(_vm.showDialog)?_c('div',{staticClass:"cs-dialog-container tw-absolute tw-inset-0 tw-z-50"},[_c('div',{staticClass:"tw-w-full tw-h-full tw-relative"},[_c('div',{staticClass:"cs-dialog-overlay tw-absolute tw-inset-0 tw-opacity-100 tw-z-20",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}}),_c('div',{staticClass:"tw-w-full tw-h-full tw-flex tw-flex-col tw-place-content-center tw-place-items-center"},[_c('div',{staticClass:"cs-dialog-window tw-rounded-lg tw-flex-none tw-bg-black tw-z-30 tw-relative"},[_c('div',{staticClass:"tw-absolute tw-top-2 tw-right-3 tw-text-white"},[_c('i',{staticClass:"fal fa-times tw-font-semibold tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}})]),(_vm.messageRemove != null)?_c('div',{staticClass:"tw-mt-6 tw-mx-8 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"},[_vm._v("Are you sure you want to delete this message from the chat?")]):_vm._e(),(_vm.userBlock != null)?_c('div',{staticClass:"tw-mt-6 tw-mx-6 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed",class:{'tw-pb-2': _vm.$_short_username}},[_vm._v("Are you sure you want to block "),_c('span',{staticClass:"tw-font-bold"},[_vm._v(_vm._s(_vm.userBlock.displayName))]),_vm._v(" from this chat?")]):_vm._e(),_c('div',{staticClass:"tw-mt-3 tw-flex tw-flex-row tw-justify-center"},[_c('div',{staticClass:"cs-btn tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-tracking-normal tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-text-white tw-w-28 tw-flex tw-justify-center",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog(true)}}},[_vm._v("confirm")])])])])])]):_vm._e(),_c('div',{staticClass:"cs-new-message-container tw-flex-none box-border"},[_c('div',{staticClass:"tw-h-full tw-flex tw-flex-col tw-place-content-between tw-py-2 tw-px-4 tw-relative"},[_c('div',[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.message),expression:"message"}],staticClass:"tw-resize-none tw-whitespace-nowrap tw-overflow-x-auto tw-rounded",attrs:{"placeholder":"Say something...","wrap":"off","rows":"1"},domProps:{"value":(_vm.message)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.sendMessage($event)},"input":function($event){if($event.target.composing){ return; }_vm.message=$event.target.value}}}),_c('div',{staticClass:"cs-new-message-menu tw-absolute tw-text-lg"},[_c('a',{staticClass:"cs-top-gray tw-mr-2",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_c('i',{staticClass:"fal fa-smile"})]),_c('a',{staticClass:"cs-top-gray",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_c('i',{staticClass:"fas fa-arrow-right"})])])]),_c('div',[_c('span',{staticClass:"cs-top-gray tw-text-xs"},[_vm._v(_vm._s(_vm.$_watcher_count)+" Online")])])])])])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/Chat/Chat.vue?vue&type=template&id=189954dc&
+// CONCATENATED MODULE: ./src/components/Chat/Chat.vue?vue&type=template&id=32eecf28&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.filter.js
 var es_array_filter = __webpack_require__("4de4");
@@ -27625,6 +27625,25 @@ var ChatMessage_component = normalizeComponent(
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -27938,19 +27957,53 @@ var ChatMessage_component = normalizeComponent(
             _this4.insertMessage(message);
           }
         });
+
+        _this4.unpinMessages();
       });
+    },
+
+    /**
+     * Creates a list of pinned messages, reversed sorted by pinned_at
+     * Unpins all but last specified value of pinned messages
+     */
+    unpinMessages: function unpinMessages() {
+      var _this5 = this;
+
+      var keep = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 2;
+
+      if (this.$_pinned_messages.length > keep) {
+        var revesedSorted = this.$_pinned_messages.map(function (_ref7) {
+          var id = _ref7.id,
+              text = _ref7.text,
+              pinnedAt = _ref7.pinnedAt;
+          return {
+            id: id,
+            text: text,
+            pinnedAt: pinnedAt
+          };
+        }).sort(function (a, b) {
+          return b.pinnedAt - a.pinnedAt;
+        });
+        revesedSorted.forEach(function (message, idx) {
+          if (idx > keep - 1) {
+            _this5.unpinMessage({
+              message: message
+            });
+          }
+        });
+      }
     },
 
     /**
      * Iterate over initial channel messages and call push message only for main channel non-deleted messages
      */
-    processMessages: function processMessages(_ref7) {
-      var _this5 = this;
+    processMessages: function processMessages(_ref8) {
+      var _this6 = this;
 
-      var messages = _ref7.messages;
+      var messages = _ref8.messages;
       messages.forEach(function (message) {
         if (message.type == 'regular') {
-          _this5.pushMessage({
+          _this6.pushMessage({
             message: message
           });
         }
@@ -27960,13 +28013,13 @@ var ChatMessage_component = normalizeComponent(
     /**
      * Create a copy of user object
      */
-    getUserCopy: function getUserCopy(_ref8) {
-      var id = _ref8.id,
-          displayName = _ref8.displayName,
-          avatarUrl = _ref8.avatarUrl,
-          profileUrl = _ref8.profileUrl,
-          role = _ref8.role,
-          accessLevelName = _ref8.accessLevelName;
+    getUserCopy: function getUserCopy(_ref9) {
+      var id = _ref9.id,
+          displayName = _ref9.displayName,
+          avatarUrl = _ref9.avatarUrl,
+          profileUrl = _ref9.profileUrl,
+          role = _ref9.role,
+          accessLevelName = _ref9.accessLevelName;
       return {
         id: id,
         displayName: displayName,
@@ -27983,14 +28036,14 @@ var ChatMessage_component = normalizeComponent(
      * The message replies are not populated in this method
      */
     getMessageCopy: function getMessageCopy(message) {
-      var _this6 = this;
+      var _this7 = this;
 
-      var messageCopy = function (_ref9) {
-        var id = _ref9.id,
-            type = _ref9.type,
-            text = _ref9.text,
-            reply_count = _ref9.reply_count,
-            pinned = _ref9.pinned;
+      var messageCopy = function (_ref10) {
+        var id = _ref10.id,
+            type = _ref10.type,
+            text = _ref10.text,
+            reply_count = _ref10.reply_count,
+            pinned = _ref10.pinned;
         return {
           id: id,
           type: type,
@@ -28003,15 +28056,16 @@ var ChatMessage_component = normalizeComponent(
       messageCopy.user = this.getUserCopy(message.user);
       messageCopy.reaction_counts = _objectSpread2({}, message.reaction_counts);
       messageCopy.reaction_scores = _objectSpread2({}, message.reaction_scores);
-      messageCopy.own_reactions = message.own_reactions.map(function (_ref10) {
-        var type = _ref10.type,
-            score = _ref10.score;
+      messageCopy.own_reactions = message.own_reactions.map(function (_ref11) {
+        var type = _ref11.type,
+            score = _ref11.score;
         return {
           type: type,
           score: score
         };
       });
       messageCopy.createdAt = luxon["DateTime"].fromISO(message.created_at);
+      messageCopy.pinnedAt = luxon["DateTime"].fromISO(message.pinned_at);
       var messageReactionsCount = Object.values(message.reaction_counts || {}).reduce(function (a, b) {
         return a + b;
       }, 0);
@@ -28022,18 +28076,18 @@ var ChatMessage_component = normalizeComponent(
         message.latest_reactions.forEach(function (reaction) {
           messageCopy.reactions.push({
             type: reaction.type,
-            user: _this6.getUserCopy(reaction.user)
+            user: _this7.getUserCopy(reaction.user)
           });
         });
       } else {
         this.channel.getReactions(message.id, {
           limit: 1000
-        }).then(function (_ref11) {
-          var reactions = _ref11.reactions;
+        }).then(function (_ref12) {
+          var reactions = _ref12.reactions;
           reactions.forEach(function (reaction) {
             messageCopy.reactions.push({
               type: reaction.type,
-              user: _this6.getUserCopy(reaction.user)
+              user: _this7.getUserCopy(reaction.user)
             });
           });
         });
@@ -28046,25 +28100,25 @@ var ChatMessage_component = normalizeComponent(
      * Push a message into internal state
      * If the message has replies the method will fetch them from API
      */
-    pushMessage: function pushMessage(_ref12) {
-      var _this7 = this;
+    pushMessage: function pushMessage(_ref13) {
+      var _this8 = this;
 
-      var message = _ref12.message;
+      var message = _ref13.message;
       var messageCopy = this.getMessageCopy(message);
 
       if (message.reply_count) {
         this.channel.getReplies(message.id, {
           limit: 1000
-        }).then(function (_ref13) {
-          var _this7$messageThread;
+        }).then(function (_ref14) {
+          var _this8$messageThread;
 
-          var messages = _ref13.messages;
+          var messages = _ref14.messages;
           messages.forEach(function (reply) {
-            messageCopy.replies.push(_this7.getMessageCopy(reply));
+            messageCopy.replies.push(_this8.getMessageCopy(reply));
           });
 
-          if (((_this7$messageThread = _this7.messageThread) === null || _this7$messageThread === void 0 ? void 0 : _this7$messageThread.id) == messageCopy.id) {
-            _this7.scrollThreadMessages();
+          if (((_this8$messageThread = _this8.messageThread) === null || _this8$messageThread === void 0 ? void 0 : _this8$messageThread.id) == messageCopy.id) {
+            _this8.scrollThreadMessages();
           }
         });
       }
@@ -28087,7 +28141,7 @@ var ChatMessage_component = normalizeComponent(
      * If the message already exists in the internal state, it will not be duplicated
      */
     insertMessage: function insertMessage(message) {
-      var _this8 = this;
+      var _this9 = this;
 
       var exists = false;
       var idx = null;
@@ -28108,10 +28162,10 @@ var ChatMessage_component = normalizeComponent(
         if (message.reply_count) {
           this.channel.getReplies(message.id, {
             limit: 1000
-          }).then(function (_ref14) {
-            var messages = _ref14.messages;
+          }).then(function (_ref15) {
+            var messages = _ref15.messages;
             messages.forEach(function (reply) {
-              messageCopy.replies.push(_this8.getMessageCopy(reply));
+              messageCopy.replies.push(_this9.getMessageCopy(reply));
             });
           });
         }
@@ -28127,8 +28181,8 @@ var ChatMessage_component = normalizeComponent(
     /**
      * Update message text and pinned status
      */
-    updateMessageState: function updateMessageState(_ref15) {
-      var message = _ref15.message;
+    updateMessageState: function updateMessageState(_ref16) {
+      var message = _ref16.message;
       this.messages.forEach(function (storedMessage) {
         if (message.type == 'regular' && storedMessage.id == message.id) {
           storedMessage.text = message.text;
@@ -28146,8 +28200,8 @@ var ChatMessage_component = normalizeComponent(
     /**
      * Delete a message from internal state
      */
-    deleteMessage: function deleteMessage(_ref16) {
-      var message = _ref16.message;
+    deleteMessage: function deleteMessage(_ref17) {
+      var message = _ref17.message;
       var idx = null;
       this.messages.forEach(function (storedMessage, messageIndex) {
         if (message.parent_id && storedMessage.id == message.parent_id) {
@@ -28175,26 +28229,26 @@ var ChatMessage_component = normalizeComponent(
     /**
      * Locates the internal message, main channel message or reply, and calls addMessageReaction
      */
-    pushMessageReaction: function pushMessageReaction(_ref17) {
-      var _this9 = this;
+    pushMessageReaction: function pushMessageReaction(_ref18) {
+      var _this10 = this;
 
-      var message = _ref17.message,
-          reaction = _ref17.reaction;
+      var message = _ref18.message,
+          reaction = _ref18.reaction;
       this.messages.forEach(function (storedMessage) {
         if (message.parent_id && storedMessage.id == message.parent_id) {
           storedMessage.replies.forEach(function (storedReplyMessage) {
             if (storedReplyMessage.id == message.id) {
-              _this9.addMessageReaction(storedReplyMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
+              _this10.addMessageReaction(storedReplyMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
             }
           });
         } else if (storedMessage.id == message.id) {
-          _this9.addMessageReaction(storedMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
+          _this10.addMessageReaction(storedMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
         }
       });
 
       if (this.messageThread && this.messageThread.id == message.id) {
         this.$nextTick(function () {
-          _this9.scrollThreadMessages();
+          _this10.scrollThreadMessages();
         });
       } else if (this.messageThread == null) {
         this.scrollMessages();
@@ -28226,20 +28280,20 @@ var ChatMessage_component = normalizeComponent(
     /**
      * Locates the internal message, main channel message or reply, and calls removeMessageReaction
      */
-    deleteMessageReaction: function deleteMessageReaction(_ref18) {
-      var _this10 = this;
+    deleteMessageReaction: function deleteMessageReaction(_ref19) {
+      var _this11 = this;
 
-      var message = _ref18.message,
-          reaction = _ref18.reaction;
+      var message = _ref19.message,
+          reaction = _ref19.reaction;
       this.messages.forEach(function (storedMessage) {
         if (message.parent_id && storedMessage.id == message.parent_id) {
           storedMessage.replies.forEach(function (storedReplyMessage) {
             if (storedReplyMessage.id == message.id) {
-              _this10.removeMessageReaction(storedReplyMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
+              _this11.removeMessageReaction(storedReplyMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
             }
           });
         } else if (storedMessage.id == message.id) {
-          _this10.removeMessageReaction(storedMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
+          _this11.removeMessageReaction(storedMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
         }
       });
     },
@@ -28267,24 +28321,24 @@ var ChatMessage_component = normalizeComponent(
         storedMessage.own_reactions.splice(idx, 1);
       }
     },
-    updateMessageReaction: function updateMessageReaction(_ref19) {
-      var _this11 = this;
+    updateMessageReaction: function updateMessageReaction(_ref20) {
+      var _this12 = this;
 
-      var message = _ref19.message,
-          reaction = _ref19.reaction;
+      var message = _ref20.message,
+          reaction = _ref20.reaction;
       this.messages.forEach(function (storedMessage) {
         if (storedMessage.id == message.id) {
           storedMessage.reaction_counts = _objectSpread2({}, message.reaction_counts);
           storedMessage.reaction_scores = _objectSpread2({}, message.reaction_scores);
 
-          if (reaction.user.id == _this11.userId) {
+          if (reaction.user.id == _this12.userId) {
             storedMessage.own_reactions.forEach(function (ownReaction) {
               if (ownReaction.type == reaction.type) {
                 ownReaction.score = reaction.score;
               }
             });
 
-            _this11.$root.$emit('messageOwnReactionUpdate', {
+            _this12.$root.$emit('messageOwnReactionUpdate', {
               message: message
             });
           }
@@ -28294,54 +28348,54 @@ var ChatMessage_component = normalizeComponent(
     toggleShowMembers: function toggleShowMembers() {
       this.showMembers = !this.showMembers;
     },
-    updateMessage: function updateMessage(_ref20) {
-      var _this12 = this;
+    updateMessage: function updateMessage(_ref21) {
+      var _this13 = this;
 
-      var message = _ref20.message,
-          text = _ref20.text;
+      var message = _ref21.message,
+          text = _ref21.text;
       this.streamClient.updateMessage({
         id: message.id,
         text: text
       }).then(function () {
-        _this12.messageErrors = [];
-      }).catch(function (_ref21) {
-        var response = _ref21.response;
+        _this13.messageErrors = [];
+      }).catch(function (_ref22) {
+        var response = _ref22.response;
 
-        _this12.errorHandler(response, 'Message update error');
+        _this13.errorHandler(response, 'Message update error');
       });
     },
-    removeMessage: function removeMessage(_ref22) {
-      var message = _ref22.message;
+    removeMessage: function removeMessage(_ref23) {
+      var message = _ref23.message;
       this.messageRemove = message;
       this.showDialog = true;
     },
-    blockUser: function blockUser(_ref23) {
-      var user = _ref23.user;
+    blockUser: function blockUser(_ref24) {
+      var user = _ref24.user;
       this.userBlock = user;
       this.showDialog = true;
     },
     closeDialog: function closeDialog(confirmation) {
-      var _this13 = this;
+      var _this14 = this;
 
       if (confirmation) {
         if (this.messageRemove) {
           this.streamClient.deleteMessage(this.messageRemove.id).then(function () {
-            _this13.messageErrors = [];
-          }).catch(function (_ref24) {
-            var response = _ref24.response;
+            _this14.messageErrors = [];
+          }).catch(function (_ref25) {
+            var response = _ref25.response;
 
-            _this13.errorHandler(response, 'Message delete error');
+            _this14.errorHandler(response, 'Message delete error');
           });
         } else if (this.userBlock) {
           this.channel.banUser(this.userBlock.id, {
             banned_by_id: this.userId,
             reason: 'default'
           }).then(function () {
-            _this13.messageErrors = [];
-          }).catch(function (_ref25) {
-            var response = _ref25.response;
+            _this14.messageErrors = [];
+          }).catch(function (_ref26) {
+            var response = _ref26.response;
 
-            _this13.errorHandler(response, 'User ban error');
+            _this14.errorHandler(response, 'User ban error');
           });
         }
       }
@@ -28357,94 +28411,96 @@ var ChatMessage_component = normalizeComponent(
       });
       return has;
     },
-    toggleMessageReaction: function toggleMessageReaction(_ref26) {
-      var _this14 = this;
+    toggleMessageReaction: function toggleMessageReaction(_ref27) {
+      var _this15 = this;
 
-      var message = _ref26.message,
-          reaction = _ref26.reaction;
+      var message = _ref27.message,
+          reaction = _ref27.reaction;
 
       if (this.hasOwnReaction(message, reaction)) {
         this.channel.deleteReaction(message.id, reaction).then(function () {
-          _this14.messageErrors = [];
-        }).catch(function (_ref27) {
-          var response = _ref27.response;
+          _this15.messageErrors = [];
+        }).catch(function (_ref28) {
+          var response = _ref28.response;
 
-          _this14.errorHandler(response, 'Message reaction remove error');
+          _this15.errorHandler(response, 'Message reaction remove error');
         });
       } else {
         this.channel.sendReaction(message.id, {
           type: reaction
         }).then(function () {
-          _this14.messageErrors = [];
-        }).catch(function (_ref28) {
-          var response = _ref28.response;
+          _this15.messageErrors = [];
+        }).catch(function (_ref29) {
+          var response = _ref29.response;
 
-          _this14.errorHandler(response, 'Message reaction send error');
+          _this15.errorHandler(response, 'Message reaction send error');
         });
       }
     },
-    showMessageThread: function showMessageThread(_ref29) {
-      var _this15 = this;
+    showMessageThread: function showMessageThread(_ref30) {
+      var _this16 = this;
 
-      var message = _ref29.message;
+      var message = _ref30.message;
       this.messageThread = message;
       this.showMembers = false;
       this.showThread = true;
       this.$nextTick(function () {
-        _this15.scrollThreadMessages(true);
+        _this16.scrollThreadMessages(true);
       });
     },
     hideMessageThread: function hideMessageThread() {
       this.showThread = false;
       this.messageThread = null;
     },
-    pinMessage: function pinMessage(_ref30) {
-      var _this16 = this;
+    pinMessage: function pinMessage(_ref31) {
+      var _this17 = this;
 
-      var message = _ref30.message;
+      var message = _ref31.message;
       this.streamClient.pinMessage({
         id: message.id,
         text: message.text
       }, null).then(function () {
-        _this16.messageErrors = [];
-      }).catch(function (_ref31) {
-        var response = _ref31.response;
+        _this17.messageErrors = [];
 
-        _this16.errorHandler(response, 'Message pin error');
+        _this17.unpinMessages(1);
+      }).catch(function (_ref32) {
+        var response = _ref32.response;
+
+        _this17.errorHandler(response, 'Message pin error');
       });
     },
-    unpinMessage: function unpinMessage(_ref32) {
-      var _this17 = this;
+    unpinMessage: function unpinMessage(_ref33) {
+      var _this18 = this;
 
-      var message = _ref32.message;
+      var message = _ref33.message;
       this.streamClient.unpinMessage({
         id: message.id,
         text: message.text
       }, null).then(function () {
-        _this17.messageErrors = [];
-      }).catch(function (_ref33) {
-        var response = _ref33.response;
+        _this18.messageErrors = [];
+      }).catch(function (_ref34) {
+        var response = _ref34.response;
 
-        _this17.errorHandler(response, 'Message unpin error');
+        _this18.errorHandler(response, 'Message unpin error');
       });
     },
     toggleShowPinned: function toggleShowPinned() {
       this.showPinned = !this.showPinned;
     },
-    messageUpvote: function messageUpvote(_ref34) {
-      var _this18 = this;
+    messageUpvote: function messageUpvote(_ref35) {
+      var _this19 = this;
 
-      var message = _ref34.message,
-          score = _ref34.score;
+      var message = _ref35.message,
+          score = _ref35.score;
       this.channel.sendReaction(message.id, {
         type: 'upvote',
         score: score
       }).then(function () {
-        _this18.messageErrors = [];
-      }).catch(function (_ref35) {
-        var response = _ref35.response;
+        _this19.messageErrors = [];
+      }).catch(function (_ref36) {
+        var response = _ref36.response;
 
-        _this18.errorHandler(response, 'Message upvote send error');
+        _this19.errorHandler(response, 'Message upvote send error');
       });
     }
   }

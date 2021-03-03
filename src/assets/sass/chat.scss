@@ -1,7 +1,7 @@
 @import './variables.scss';
 
 .cs-top {
-  background-color: #141515;
+  background-color: $topBgColor;
   height: $topHeight;
 }
 .cs-top-gray {
@@ -179,9 +179,28 @@
   }
 }
 .cs-new-message-container {
-  height: 100px;
+  height: $footerHeight;
+  background-color: $topBgColor;
 
   textarea {
-    height: 68px;
+    height: 40px;
+    padding: 6px 55px 6px 10px;
+    background-color: black;
+    color: $topGrayColor;
+    border: none;
+
+    &::placeholder {
+      color: $topGrayColor;
+    }
+  }
+
+  textarea:-moz-focusring {
+    color: $topGrayColor;
+    text-shadow: none;
+  }
+
+  .cs-new-message-menu {
+    top: 14px;
+    right: 25px;
   }
 }
