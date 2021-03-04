@@ -17,8 +17,19 @@
                 <a
                     href="#"
                     class="tw-no-underline tw-font-semibold tw-mr-4 cs-top-gray tw-border-b-2 tw-border-transparent"
-                    @click.stop.prevent
+                    @click.stop.prevent="toggleChatMenu()"
                 ><i class="fas fa-ellipsis-v"></i></a>
+            </div>
+            <div class="tw-relative">
+                <div
+                    class="cs-top-menu tw-absolute tw-right-4 tw-p-3 tw-flex tw-flex-col tw-bg-black tw-rounded-lg tw-text-white tw-text-sm tw-z-30"
+                    v-if="chatMenu"
+                >
+                    <div class="tw-mb-2 tw-font-semibold tw-cursor-default">Moderation</div>
+                    <div class="tw-mb-1 tw-cursor-pointer" @click.stop.prevent="toggleShowMembers()">Participants</div>
+                    <div class="tw-mb-1 tw-cursor-pointer">Pop Out Chat</div>
+                    <div class="tw-mb-1 tw-cursor-pointer" @click.stop.prevent="toggleShowBannedUsers()">Blocked Students</div>
+                </div>
             </div>
             <div
                 class="tw-px-3 tw-absolute tw-top-0 tw-left-0 tw-right-0 tw-flex tw-flex-row tw-place-items-center tw-justify-between tw-z-10"
@@ -30,13 +41,18 @@
             </div>
         </div>
 
-        <div class="cs-body tw-flex-grow tw-flex tw-flex-col tw-overflow-hidden">
-            <div
-                class="cs-members-container tw-mt-1 tw-overflow-y-auto tw-z-40"
-                v-if="showMembers"
-            >
-                <!-- todo: update with non-absolute layout -->
-                <div class="tw-bg-gray-50 tw-p-3">
+        <div class="tw-absolute tw-inset-0 tw-flex tw-flex-col tw-z-40" v-if="showMembers">
+            <div class="cs-top tw-flex-none">
+                <div class="tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center">
+                    <a
+                        href="#"
+                        class="tw-ml-3 tw-no-underline tw-text-white"
+                        @click.stop.prevent="toggleShowMembers()"
+                    ><i class="fas fa-arrow-left"></i><span class="tw-ml-1">Participants</span></a>
+                </div>
+            </div>
+            <div class="cs-body tw-flex-grow">
+                <div class="cs-members-container tw-mt-1 tw-p-3 tw-overflow-y-auto">
                     <div
                         class="tw-py-2"
                         v-for="item in $_watchers"
@@ -46,6 +62,42 @@
                     </div>
                 </div>
             </div>
+            <div class="cs-footer tw-flex-none tw-h-8">
+                <div class="tw-h-full tw-flex tw-flex-row tw-items-center tw-px-3">
+                    <span class="cs-top-gray tw-text-xs">{{ $_watcher_count }} Online</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="tw-absolute tw-inset-0 tw-flex tw-flex-col tw-z-40" v-if="showBannedUsers">
+            <div class="cs-top tw-flex-none">
+                <div class="tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center">
+                    <a
+                        href="#"
+                        class="tw-ml-3 tw-no-underline tw-text-white"
+                        @click.stop.prevent="toggleShowBannedUsers()"
+                    ><i class="fas fa-arrow-left"></i><span class="tw-ml-1">Blocked Students</span></a>
+                </div>
+            </div>
+            <div class="cs-body tw-flex-grow">
+                <div class="cs-members-container tw-mt-1 tw-p-3 tw-overflow-y-auto">
+                    <div
+                        class="tw-py-2"
+                        v-for="item in $_watchers"
+                        :key="item.id"
+                    >
+                        <chat-user :user="item"></chat-user>
+                    </div>
+                </div>
+            </div>
+            <div class="cs-footer tw-flex-none tw-h-8">
+                <div class="tw-h-full tw-flex tw-flex-row tw-items-center tw-px-3">
+                    <span class="cs-top-gray tw-text-xs">{{ $_watcher_count }} Online</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="cs-body tw-flex-grow tw-flex tw-flex-col tw-overflow-hidden">
             <div
                 class="cs-thread-container tw-bg-white tw-overflow-y-auto tw-z-40"
                 v-if="showThread"
@@ -79,7 +131,10 @@
                     </div>
                 </div>
             </div>
-            <div class="cs-messages-container tw-px-3 tw-pt-4 tw-pb-2">
+            <div
+                class="cs-messages-container tw-px-3 tw-pt-4 tw-pb-2"
+                v-if="$_pinned_messages.length"
+            >
                 <div
                     v-for="item in $_pinned_messages"
                     :key="item.id"
@@ -219,6 +274,7 @@ export default {
             streamClient: null,
             channel: null,
             showMembers: false,
+            showBannedUsers: false,
             showDialog: false,
             showThread: false,
             showPinned: false,
@@ -227,6 +283,7 @@ export default {
             messageRemove: null,
             userBlock: null,
             channelWatchers: {},
+            chatMenu: false,
         };
     },
     computed: {
@@ -394,6 +451,7 @@ export default {
                 })
                 .then((state) => {
                     this.fetchWatchers();
+                    this.fetchBannedUsers();
                     this.fetchPinnedMessages();
 
                     this.processMessages(state);
@@ -446,6 +504,25 @@ export default {
                         });
                     }
                 });
+        },
+
+        fetchBannedUsers() {
+            // const limit = 1000;
+
+            // this.streamClient
+            //     .queryUsers({ banned:true }, {}, { limit, offset:0 })
+            //     .then((response) => {
+            //         console.log("::fetchBannedUsers response: %s", JSON.stringify(response));
+            //     });
+
+            // this.channel
+            //     .queryMembers({banned:true}, {}, {limit:10, offset:0})
+            //     .then((response) => {
+            //         console.log("::fetchBannedUsers response: %s", JSON.stringify(response));
+            //     });
+
+            // this.channel.unbanUser('412482');
+            // this.channel.unbanUser('412483');
         },
 
         fetchPinnedMessages() {
@@ -788,6 +865,12 @@ export default {
 
         toggleShowMembers() {
             this.showMembers = !this.showMembers;
+            this.chatMenu = false;
+        },
+
+        toggleShowBannedUsers() {
+            this.showBannedUsers = !this.showBannedUsers;
+            this.chatMenu = false;
         },
 
         updateMessage({ message, text }) {
@@ -831,7 +914,7 @@ export default {
 
                 } else if (this.userBlock) {
 
-                    this.channel
+                    this.streamClient
                         .banUser(
                             this.userBlock.id,
                             {
@@ -936,6 +1019,10 @@ export default {
                 .catch(({ response }) => {
                     this.errorHandler(response, 'Message upvote send error');
                 });
+        },
+
+        toggleChatMenu() {
+            this.chatMenu = !this.chatMenu;
         },
     },
 }

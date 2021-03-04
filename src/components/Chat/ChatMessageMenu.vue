@@ -2,7 +2,7 @@
     <div class="cs-message-menu tw-absolute tw-text-base">
         <div class="tw-relative">
             <div
-                class="cs-sub-menu tw-absolute tw-right-0 tw-bottom-0 tw-w-44 tw-p-3 tw-flex tw-flex-col tw-bg-black tw-rounded-lg tw-text-white tw-cursor-pointer tw-text-sm"
+                class="cs-sub-menu tw-absolute tw-right-0 tw-bottom-0 tw-w-44 tw-p-3 tw-flex tw-flex-col tw-bg-black tw-rounded-lg tw-text-white tw-text-sm"
                 v-if="messageMenu"
             >
                 <div
@@ -10,32 +10,33 @@
                     v-if="message.user.id == userId"
                 >
                     <div
-                        class="tw-mb-1"
+                        class="tw-mb-1 tw-cursor-pointer"
                         @click.stop.prevent="editMessage()"
                     >Edit Message</div>
                     <div
-                        class="tw-mb-1"
+                        class="tw-mb-1 tw-cursor-pointer"
                         @click.stop.prevent="removeMessage()"
                     >Delete</div>
                 </div>
                 <div v-if="isAdministrator">
                     <div class="tw-mb-2 tw-font-semibold tw-cursor-default">Moderation</div>
                     <div
-                        class="tw-mb-1"
+                        class="tw-mb-1 tw-cursor-pointer"
                         @click.stop.prevent="pinMessage()"
                         v-if="$_show_pin"
                     >Pin Message</div>
                     <div
-                        class="tw-mb-1"
+                        class="tw-mb-1 tw-cursor-pointer"
                         @click.stop.prevent="unpinMessage()"
                         v-if="$_show_unpin"
                     >Unpin Message</div>
                     <div
-                        class="tw-mb-1"
+                        class="tw-mb-1 tw-cursor-pointer"
                         @click.stop.prevent="removeMessage()"
                         v-if="message.user.id != userId"
                     >Remove Message</div>
                     <div
+                        class="tw-cursor-pointer"
                         @click.stop.prevent="blockUser()"
                         v-if="message.user.id != userId"
                     >Block Student</div>
