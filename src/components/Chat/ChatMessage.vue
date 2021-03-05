@@ -11,10 +11,8 @@
         </div>
         <div class="tw-flex tw-flex-col tw-max-w-full" v-if="messageEdit.id != message.id && message.type != 'system'">
             <chat-user :user="message.user">
-                <br>
-                <span v-html="getParsedMessage(message.text)" class="tw-whitespace-normal tw-text-sm"></span>
-
                 <template v-slot:footer>
+                    <div v-html="getParsedMessage(message.text)" class="tw-whitespace-normal tw-text-sm"></div>
                     <div class="tw-inline-flex tw-items-center tw-mt-1" v-if="$_has_reactions || $_show_upvote">
                         <div
                             class="tw-flex tw-flex-row tw-place-content-center tw-mr-1"

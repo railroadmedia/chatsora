@@ -51,8 +51,8 @@
                     ><i class="fas fa-arrow-left"></i><span class="tw-ml-1">Participants</span></a>
                 </div>
             </div>
-            <div class="cs-body tw-flex-grow">
-                <div class="cs-members-container tw-mt-1 tw-p-3 tw-overflow-y-auto">
+            <div class="cs-body tw-flex-grow tw-overflow-y-auto">
+                <div class="cs-members-container tw-mt-1 tw-p-3">
                     <div
                         class="tw-py-2"
                         v-for="item in $_watchers"
@@ -79,14 +79,28 @@
                     ><i class="fas fa-arrow-left"></i><span class="tw-ml-1">Blocked Students</span></a>
                 </div>
             </div>
-            <div class="cs-body tw-flex-grow">
-                <div class="cs-members-container tw-mt-1 tw-p-3 tw-overflow-y-auto">
+            <div class="cs-body tw-flex-grow tw-overflow-y-auto">
+                <div class="tw-mt-1 tw-p-3 cs-top-gray" v-if="fetchingBannedUsers || $_banned_users_count == 0">
+                    <span v-if="fetchingBannedUsers">Fetching blocked students information...</span>
+                    <span v-if="!fetchingBannedUsers && $_banned_users_count == 0">There are no students blocked from this chat.</span>
+                </div>
+                <div class="cs-members-container tw-mt-1 tw-p-3" v-if="!fetchingBannedUsers && $_banned_users_count > 0">
                     <div
                         class="tw-py-2"
-                        v-for="item in $_watchers"
+                        v-for="item in bannedUsers"
                         :key="item.id"
                     >
-                        <chat-user :user="item"></chat-user>
+                        <div class="cs-user tw-p-3 tw-rounded-md">
+                            <chat-user :user="item">
+                                <div class="tw-flex-grow tw-text-right">
+                                    <a
+                                        href="#"
+                                        @click.stop.prevent
+                                        class="cs-user-unblock tw-text-sm"
+                                    ><span>Unblock</span><i class="tw-ml-1 fas fa-times-circle"></i></a>
+                                </div>
+                            </chat-user>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -283,6 +297,8 @@ export default {
             messageRemove: null,
             userBlock: null,
             channelWatchers: {},
+            fetchingBannedUsers: false,
+            bannedUsers: {},
             chatMenu: false,
         };
     },
@@ -315,6 +331,12 @@ export default {
             cache: false,
             get() {
                 return Object.keys(this.channelWatchers).length;
+            },
+        },
+        $_banned_users_count: {
+            cache: false,
+            get() {
+                return Object.keys(this.bannedUsers).length;
             },
         },
         $_errors_count: {
@@ -451,7 +473,6 @@ export default {
                 })
                 .then((state) => {
                     this.fetchWatchers();
-                    this.fetchBannedUsers();
                     this.fetchPinnedMessages();
 
                     this.processMessages(state);
@@ -479,9 +500,9 @@ export default {
                     this.channel.on('reaction.deleted', this.deleteMessageReaction);
                     this.channel.on('reaction.updated', this.updateMessageReaction);
 
-                    // this.channel.on(event => {
-                    //     console.log('event', event);
-                    // });
+                    this.channel.on(event => {
+                        console.log('event', event);
+                    });
 
                     // this.$nextTick(() => {
                     //     this.scrollMessages(true);
@@ -507,22 +528,19 @@ export default {
         },
 
         fetchBannedUsers() {
-            // const limit = 1000;
+            this.fetchingBannedUsers = true;
+            this.bannedUsers = {};
 
-            // this.streamClient
-            //     .queryUsers({ banned:true }, {}, { limit, offset:0 })
-            //     .then((response) => {
-            //         console.log("::fetchBannedUsers response: %s", JSON.stringify(response));
-            //     });
+            const limit = 1000;
 
-            // this.channel
-            //     .queryMembers({banned:true}, {}, {limit:10, offset:0})
-            //     .then((response) => {
-            //         console.log("::fetchBannedUsers response: %s", JSON.stringify(response));
-            //     });
-
-            // this.channel.unbanUser('412482');
-            // this.channel.unbanUser('412483');
+            this.streamClient
+                .queryUsers({ banned:true }, {}, { limit, offset:0 })
+                .then(({ users }) => {
+                    users.forEach(user => {
+                        this.$set(this.bannedUsers, user.id, user);
+                    });
+                    this.fetchingBannedUsers = false;
+                });
         },
 
         fetchPinnedMessages() {
@@ -871,6 +889,10 @@ export default {
         toggleShowBannedUsers() {
             this.showBannedUsers = !this.showBannedUsers;
             this.chatMenu = false;
+
+            if (this.showBannedUsers) {
+                this.fetchBannedUsers();
+            }
         },
 
         updateMessage({ message, text }) {

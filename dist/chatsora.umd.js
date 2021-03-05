@@ -26467,12 +26467,12 @@ var es_object_keys = __webpack_require__("b64b");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.for-each.js
 var web_dom_collections_for_each = __webpack_require__("159b");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5f6c83c9-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=template&id=dbe9a0aa&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-relative tw-h-full tw-w-full tw-flex tw-flex-col vuesora-override"},[_c('div',{staticClass:"cs-top tw-flex-none"},[_c('div',{staticClass:"tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center tw-place-content-between"},[_c('div',{staticClass:"tw-h-full tw-ml-4 tw-flex tw-flex-row tw-items-end tw-space-x-4"},[_c('a',{staticClass:"tw-no-underline tw-font-semibold tw-px-3 tw-pb-3 tw-text-white tw-border-b-2 tw-border-white",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_vm._v("Chat")]),_c('a',{staticClass:"tw-no-underline tw-px-3 tw-pb-3 cs-top-gray tw-border-b-2 tw-border-transparent",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_vm._v("Questions")])]),_c('a',{staticClass:"tw-no-underline tw-font-semibold tw-mr-4 cs-top-gray tw-border-b-2 tw-border-transparent",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleChatMenu()}}},[_c('i',{staticClass:"fas fa-ellipsis-v"})])]),_c('div',{staticClass:"tw-relative"},[(_vm.chatMenu)?_c('div',{staticClass:"cs-top-menu tw-absolute tw-right-4 tw-p-3 tw-flex tw-flex-col tw-bg-black tw-rounded-lg tw-text-white tw-text-sm tw-z-30"},[_c('div',{staticClass:"tw-mb-2 tw-font-semibold tw-cursor-default"},[_vm._v("Moderation")]),_c('div',{staticClass:"tw-mb-1 tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowMembers()}}},[_vm._v("Participants")]),_c('div',{staticClass:"tw-mb-1 tw-cursor-pointer"},[_vm._v("Pop Out Chat")]),_c('div',{staticClass:"tw-mb-1 tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowBannedUsers()}}},[_vm._v("Blocked Students")])]):_vm._e()]),(_vm.showThread)?_c('div',{staticClass:"tw-px-3 tw-absolute tw-top-0 tw-left-0 tw-right-0 tw-flex tw-flex-row tw-place-items-center tw-justify-between tw-z-10"},[_c('div',[_c('span',{staticClass:"tw-font-bold"},[_vm._v("Thread")]),_c('span',{staticClass:"tw-ml-1"},[_vm._v(_vm._s(_vm.$_reply_count_label))])]),_c('div',[_c('i',{staticClass:"fal fa-times tw-font-semibold tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.hideMessageThread()}}})])]):_vm._e()]),(_vm.showMembers)?_c('div',{staticClass:"tw-absolute tw-inset-0 tw-flex tw-flex-col tw-z-40"},[_c('div',{staticClass:"cs-top tw-flex-none"},[_c('div',{staticClass:"tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center"},[_c('a',{staticClass:"tw-ml-3 tw-no-underline tw-text-white",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowMembers()}}},[_c('i',{staticClass:"fas fa-arrow-left"}),_c('span',{staticClass:"tw-ml-1"},[_vm._v("Participants")])])])]),_c('div',{staticClass:"cs-body tw-flex-grow"},[_c('div',{staticClass:"cs-members-container tw-mt-1 tw-p-3 tw-overflow-y-auto"},_vm._l((_vm.$_watchers),function(item){return _c('div',{key:item.id,staticClass:"tw-py-2"},[_c('chat-user',{attrs:{"user":item}})],1)}),0)]),_c('div',{staticClass:"cs-footer tw-flex-none tw-h-8"},[_c('div',{staticClass:"tw-h-full tw-flex tw-flex-row tw-items-center tw-px-3"},[_c('span',{staticClass:"cs-top-gray tw-text-xs"},[_vm._v(_vm._s(_vm.$_watcher_count)+" Online")])])])]):_vm._e(),(_vm.showBannedUsers)?_c('div',{staticClass:"tw-absolute tw-inset-0 tw-flex tw-flex-col tw-z-40"},[_c('div',{staticClass:"cs-top tw-flex-none"},[_c('div',{staticClass:"tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center"},[_c('a',{staticClass:"tw-ml-3 tw-no-underline tw-text-white",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowBannedUsers()}}},[_c('i',{staticClass:"fas fa-arrow-left"}),_c('span',{staticClass:"tw-ml-1"},[_vm._v("Blocked Students")])])])]),_c('div',{staticClass:"cs-body tw-flex-grow"},[_c('div',{staticClass:"cs-members-container tw-mt-1 tw-p-3 tw-overflow-y-auto"},_vm._l((_vm.$_watchers),function(item){return _c('div',{key:item.id,staticClass:"tw-py-2"},[_c('chat-user',{attrs:{"user":item}})],1)}),0)]),_c('div',{staticClass:"cs-footer tw-flex-none tw-h-8"},[_c('div',{staticClass:"tw-h-full tw-flex tw-flex-row tw-items-center tw-px-3"},[_c('span',{staticClass:"cs-top-gray tw-text-xs"},[_vm._v(_vm._s(_vm.$_watcher_count)+" Online")])])])]):_vm._e(),_c('div',{staticClass:"cs-body tw-flex-grow tw-flex tw-flex-col tw-overflow-hidden"},[(_vm.showThread)?_c('div',{ref:"threadMessages",staticClass:"cs-thread-container tw-bg-white tw-overflow-y-auto tw-z-40"},[_c('div',{staticClass:"tw-border-b tw-border-gray-600"},[_c('div',{staticClass:"tw-my-4"},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":_vm.messageThread,"user-id":_vm.userId,"show-upvote":false,"show-menu":false,"show-thread":false}})],1)]),_c('div',{staticClass:"cs-messages-container tw-mt-4"},_vm._l((_vm.$_message_thread_replies),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":false,"show-thread":false}})],1)}),0)]):_vm._e(),(_vm.$_pinned_messages.length)?_c('div',{staticClass:"cs-messages-container tw-px-3 tw-pt-4 tw-pb-2"},_vm._l((_vm.$_pinned_messages),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":_vm.enableUpvote,"show-thread":_vm.enableThread}})],1)}),0):_vm._e(),_c('div',{ref:"messages",staticClass:"cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-auto"},[_vm._l((_vm.$_messages),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":_vm.enableUpvote,"show-thread":_vm.enableThread}})],1)}),_vm._l((_vm.messageErrors),function(message,index){return _c('div',{key:("error-message-" + index),staticClass:"tw-p-3 tw-text-red-400"},[_vm._v(_vm._s(message))])})],2)]),(_vm.showDialog)?_c('div',{staticClass:"cs-dialog-container tw-absolute tw-inset-0 tw-z-50"},[_c('div',{staticClass:"tw-w-full tw-h-full tw-relative"},[_c('div',{staticClass:"cs-dialog-overlay tw-absolute tw-inset-0 tw-opacity-100 tw-z-20",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}}),_c('div',{staticClass:"tw-w-full tw-h-full tw-flex tw-flex-col tw-place-content-center tw-place-items-center"},[_c('div',{staticClass:"cs-dialog-window tw-rounded-lg tw-flex-none tw-bg-black tw-z-30 tw-relative"},[_c('div',{staticClass:"tw-absolute tw-top-2 tw-right-3 tw-text-white"},[_c('i',{staticClass:"fal fa-times tw-font-semibold tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}})]),(_vm.messageRemove != null)?_c('div',{staticClass:"tw-mt-6 tw-mx-8 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"},[_vm._v("Are you sure you want to delete this message from the chat?")]):_vm._e(),(_vm.userBlock != null)?_c('div',{staticClass:"tw-mt-6 tw-mx-6 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed",class:{'tw-pb-2': _vm.$_short_username}},[_vm._v("Are you sure you want to block "),_c('span',{staticClass:"tw-font-bold"},[_vm._v(_vm._s(_vm.userBlock.displayName))]),_vm._v(" from this chat?")]):_vm._e(),_c('div',{staticClass:"tw-mt-3 tw-flex tw-flex-row tw-justify-center"},[_c('div',{staticClass:"cs-btn tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-tracking-normal tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-text-white tw-w-28 tw-flex tw-justify-center",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog(true)}}},[_vm._v("confirm")])])])])])]):_vm._e(),_c('div',{staticClass:"cs-new-message-container tw-flex-none box-border"},[_c('div',{staticClass:"tw-h-full tw-flex tw-flex-col tw-place-content-between tw-py-2 tw-px-4 tw-relative"},[_c('div',[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.message),expression:"message"}],staticClass:"tw-resize-none tw-whitespace-nowrap tw-overflow-x-auto tw-rounded",attrs:{"placeholder":"Say something...","wrap":"off","rows":"1"},domProps:{"value":(_vm.message)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.sendMessage($event)},"input":function($event){if($event.target.composing){ return; }_vm.message=$event.target.value}}}),_c('div',{staticClass:"cs-new-message-menu tw-absolute tw-text-lg"},[_c('a',{staticClass:"cs-top-gray tw-mr-2",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_c('i',{staticClass:"fal fa-smile"})]),_c('a',{staticClass:"cs-top-gray",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_c('i',{staticClass:"fas fa-arrow-right"})])])]),_c('div',[_c('span',{staticClass:"cs-top-gray tw-text-xs"},[_vm._v(_vm._s(_vm.$_watcher_count)+" Online")])])])])])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5f6c83c9-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=template&id=3c2a7297&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-relative tw-h-full tw-w-full tw-flex tw-flex-col vuesora-override"},[_c('div',{staticClass:"cs-top tw-flex-none"},[_c('div',{staticClass:"tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center tw-place-content-between"},[_c('div',{staticClass:"tw-h-full tw-ml-4 tw-flex tw-flex-row tw-items-end tw-space-x-4"},[_c('a',{staticClass:"tw-no-underline tw-font-semibold tw-px-3 tw-pb-3 tw-text-white tw-border-b-2 tw-border-white",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_vm._v("Chat")]),_c('a',{staticClass:"tw-no-underline tw-px-3 tw-pb-3 cs-top-gray tw-border-b-2 tw-border-transparent",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_vm._v("Questions")])]),_c('a',{staticClass:"tw-no-underline tw-font-semibold tw-mr-4 cs-top-gray tw-border-b-2 tw-border-transparent",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleChatMenu()}}},[_c('i',{staticClass:"fas fa-ellipsis-v"})])]),_c('div',{staticClass:"tw-relative"},[(_vm.chatMenu)?_c('div',{staticClass:"cs-top-menu tw-absolute tw-right-4 tw-p-3 tw-flex tw-flex-col tw-bg-black tw-rounded-lg tw-text-white tw-text-sm tw-z-30"},[_c('div',{staticClass:"tw-mb-2 tw-font-semibold tw-cursor-default"},[_vm._v("Moderation")]),_c('div',{staticClass:"tw-mb-1 tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowMembers()}}},[_vm._v("Participants")]),_c('div',{staticClass:"tw-mb-1 tw-cursor-pointer"},[_vm._v("Pop Out Chat")]),_c('div',{staticClass:"tw-mb-1 tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowBannedUsers()}}},[_vm._v("Blocked Students")])]):_vm._e()]),(_vm.showThread)?_c('div',{staticClass:"tw-px-3 tw-absolute tw-top-0 tw-left-0 tw-right-0 tw-flex tw-flex-row tw-place-items-center tw-justify-between tw-z-10"},[_c('div',[_c('span',{staticClass:"tw-font-bold"},[_vm._v("Thread")]),_c('span',{staticClass:"tw-ml-1"},[_vm._v(_vm._s(_vm.$_reply_count_label))])]),_c('div',[_c('i',{staticClass:"fal fa-times tw-font-semibold tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.hideMessageThread()}}})])]):_vm._e()]),(_vm.showMembers)?_c('div',{staticClass:"tw-absolute tw-inset-0 tw-flex tw-flex-col tw-z-40"},[_c('div',{staticClass:"cs-top tw-flex-none"},[_c('div',{staticClass:"tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center"},[_c('a',{staticClass:"tw-ml-3 tw-no-underline tw-text-white",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowMembers()}}},[_c('i',{staticClass:"fas fa-arrow-left"}),_c('span',{staticClass:"tw-ml-1"},[_vm._v("Participants")])])])]),_c('div',{staticClass:"cs-body tw-flex-grow tw-overflow-y-auto"},[_c('div',{staticClass:"cs-members-container tw-mt-1 tw-p-3"},_vm._l((_vm.$_watchers),function(item){return _c('div',{key:item.id,staticClass:"tw-py-2"},[_c('chat-user',{attrs:{"user":item}})],1)}),0)]),_c('div',{staticClass:"cs-footer tw-flex-none tw-h-8"},[_c('div',{staticClass:"tw-h-full tw-flex tw-flex-row tw-items-center tw-px-3"},[_c('span',{staticClass:"cs-top-gray tw-text-xs"},[_vm._v(_vm._s(_vm.$_watcher_count)+" Online")])])])]):_vm._e(),(_vm.showBannedUsers)?_c('div',{staticClass:"tw-absolute tw-inset-0 tw-flex tw-flex-col tw-z-40"},[_c('div',{staticClass:"cs-top tw-flex-none"},[_c('div',{staticClass:"tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center"},[_c('a',{staticClass:"tw-ml-3 tw-no-underline tw-text-white",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowBannedUsers()}}},[_c('i',{staticClass:"fas fa-arrow-left"}),_c('span',{staticClass:"tw-ml-1"},[_vm._v("Blocked Students")])])])]),_c('div',{staticClass:"cs-body tw-flex-grow tw-overflow-y-auto"},[(_vm.fetchingBannedUsers || _vm.$_banned_users_count == 0)?_c('div',{staticClass:"tw-mt-1 tw-p-3 cs-top-gray"},[(_vm.fetchingBannedUsers)?_c('span',[_vm._v("Fetching blocked students information...")]):_vm._e(),(!_vm.fetchingBannedUsers && _vm.$_banned_users_count == 0)?_c('span',[_vm._v("There are no students blocked from this chat.")]):_vm._e()]):_vm._e(),(!_vm.fetchingBannedUsers && _vm.$_banned_users_count > 0)?_c('div',{staticClass:"cs-members-container tw-mt-1 tw-p-3"},_vm._l((_vm.bannedUsers),function(item){return _c('div',{key:item.id,staticClass:"tw-py-2"},[_c('div',{staticClass:"cs-user tw-p-3 tw-rounded-md"},[_c('chat-user',{attrs:{"user":item}},[_c('div',{staticClass:"tw-flex-grow tw-text-right"},[_c('a',{staticClass:"cs-user-unblock tw-text-sm",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_c('span',[_vm._v("Unblock")]),_c('i',{staticClass:"tw-ml-1 fas fa-times-circle"})])])])],1)])}),0):_vm._e()]),_c('div',{staticClass:"cs-footer tw-flex-none tw-h-8"},[_c('div',{staticClass:"tw-h-full tw-flex tw-flex-row tw-items-center tw-px-3"},[_c('span',{staticClass:"cs-top-gray tw-text-xs"},[_vm._v(_vm._s(_vm.$_watcher_count)+" Online")])])])]):_vm._e(),_c('div',{staticClass:"cs-body tw-flex-grow tw-flex tw-flex-col tw-overflow-hidden"},[(_vm.showThread)?_c('div',{ref:"threadMessages",staticClass:"cs-thread-container tw-bg-white tw-overflow-y-auto tw-z-40"},[_c('div',{staticClass:"tw-border-b tw-border-gray-600"},[_c('div',{staticClass:"tw-my-4"},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":_vm.messageThread,"user-id":_vm.userId,"show-upvote":false,"show-menu":false,"show-thread":false}})],1)]),_c('div',{staticClass:"cs-messages-container tw-mt-4"},_vm._l((_vm.$_message_thread_replies),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":false,"show-thread":false}})],1)}),0)]):_vm._e(),(_vm.$_pinned_messages.length)?_c('div',{staticClass:"cs-messages-container tw-px-3 tw-pt-4 tw-pb-2"},_vm._l((_vm.$_pinned_messages),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":_vm.enableUpvote,"show-thread":_vm.enableThread}})],1)}),0):_vm._e(),_c('div',{ref:"messages",staticClass:"cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-auto"},[_vm._l((_vm.$_messages),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":_vm.enableUpvote,"show-thread":_vm.enableThread}})],1)}),_vm._l((_vm.messageErrors),function(message,index){return _c('div',{key:("error-message-" + index),staticClass:"tw-p-3 tw-text-red-400"},[_vm._v(_vm._s(message))])})],2)]),(_vm.showDialog)?_c('div',{staticClass:"cs-dialog-container tw-absolute tw-inset-0 tw-z-50"},[_c('div',{staticClass:"tw-w-full tw-h-full tw-relative"},[_c('div',{staticClass:"cs-dialog-overlay tw-absolute tw-inset-0 tw-opacity-100 tw-z-20",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}}),_c('div',{staticClass:"tw-w-full tw-h-full tw-flex tw-flex-col tw-place-content-center tw-place-items-center"},[_c('div',{staticClass:"cs-dialog-window tw-rounded-lg tw-flex-none tw-bg-black tw-z-30 tw-relative"},[_c('div',{staticClass:"tw-absolute tw-top-2 tw-right-3 tw-text-white"},[_c('i',{staticClass:"fal fa-times tw-font-semibold tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}})]),(_vm.messageRemove != null)?_c('div',{staticClass:"tw-mt-6 tw-mx-8 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"},[_vm._v("Are you sure you want to delete this message from the chat?")]):_vm._e(),(_vm.userBlock != null)?_c('div',{staticClass:"tw-mt-6 tw-mx-6 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed",class:{'tw-pb-2': _vm.$_short_username}},[_vm._v("Are you sure you want to block "),_c('span',{staticClass:"tw-font-bold"},[_vm._v(_vm._s(_vm.userBlock.displayName))]),_vm._v(" from this chat?")]):_vm._e(),_c('div',{staticClass:"tw-mt-3 tw-flex tw-flex-row tw-justify-center"},[_c('div',{staticClass:"cs-btn tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-tracking-normal tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-text-white tw-w-28 tw-flex tw-justify-center",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog(true)}}},[_vm._v("confirm")])])])])])]):_vm._e(),_c('div',{staticClass:"cs-new-message-container tw-flex-none box-border"},[_c('div',{staticClass:"tw-h-full tw-flex tw-flex-col tw-place-content-between tw-py-2 tw-px-4 tw-relative"},[_c('div',[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.message),expression:"message"}],staticClass:"tw-resize-none tw-whitespace-nowrap tw-overflow-x-auto tw-rounded",attrs:{"placeholder":"Say something...","wrap":"off","rows":"1"},domProps:{"value":(_vm.message)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.sendMessage($event)},"input":function($event){if($event.target.composing){ return; }_vm.message=$event.target.value}}}),_c('div',{staticClass:"cs-new-message-menu tw-absolute tw-text-lg"},[_c('a',{staticClass:"cs-top-gray tw-mr-2",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_c('i',{staticClass:"fal fa-smile"})]),_c('a',{staticClass:"cs-top-gray",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_c('i',{staticClass:"fas fa-arrow-right"})])])]),_c('div',[_c('span',{staticClass:"cs-top-gray tw-text-xs"},[_vm._v(_vm._s(_vm.$_watcher_count)+" Online")])])])])])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/Chat/Chat.vue?vue&type=template&id=dbe9a0aa&
+// CONCATENATED MODULE: ./src/components/Chat/Chat.vue?vue&type=template&id=3c2a7297&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.filter.js
 var es_array_filter = __webpack_require__("4de4");
@@ -26571,12 +26571,12 @@ var luxon = __webpack_require__("1315");
 // EXTERNAL MODULE: ./node_modules/stream-chat/dist/browser.es.js
 var browser_es = __webpack_require__("36c4");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5f6c83c9-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatMessage.vue?vue&type=template&id=65d99182&
-var ChatMessagevue_type_template_id_65d99182_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cs-message tw-p-3 tw-rounded-md tw-relative tw-top-0"},[(_vm.message.pinned)?_c('div',{staticClass:"tw-max-w-full"},[_c('div',{staticClass:"tw-ml-16"},[_c('a',{staticClass:"tw-text-gray-600 tw-flex tw-flex-row tw-items-start",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.unpinMessage()}}},[_c('i',{staticClass:"fal fa-thumbtack"}),_c('span',{staticClass:"tw-ml-1 leading-none"},[_vm._v("Pinned")])])])]):_vm._e(),(_vm.messageEdit.id != _vm.message.id && _vm.message.type != 'system')?_c('div',{staticClass:"tw-flex tw-flex-col tw-max-w-full"},[_c('chat-user',{attrs:{"user":_vm.message.user},scopedSlots:_vm._u([{key:"footer",fn:function(){return [(_vm.$_has_reactions || _vm.$_show_upvote)?_c('div',{staticClass:"tw-inline-flex tw-items-center tw-mt-1"},[(_vm.$_show_upvote)?_c('div',{staticClass:"tw-flex tw-flex-row tw-place-content-center tw-mr-1"},[_c('i',{staticClass:"fad fa-sign-language"}),_c('span',{staticClass:"tw-text-xs tw-text-black cs-reaction-count"},[_vm._v(_vm._s(_vm.$_message_upvote))])]):_vm._e(),(_vm.$_has_reactions)?_c('div',{staticClass:"tw-flex tw-flex-row tw-text-gray-500 tw-cursor-pointer"},_vm._l((_vm.$_message_reactions),function(count,reaction){return _c('div',{key:("message-reaction-" + reaction),staticClass:"tw-flex tw-flex-row tw-place-content-center tw-p-1",attrs:{"title":_vm.getReactionUsers(reaction)},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleMessageReaction(reaction)}}},[_c('i',{class:_vm.getReactionClasses(reaction)}),(count > 1)?_c('span',{staticClass:"tw-text-xs tw-text-white tw-ml-1"},[_vm._v(_vm._s(count))]):_vm._e()])}),0):_vm._e()]):_vm._e(),(_vm.message.reply_count && _vm.showThread)?_c('div',{staticClass:"tw-inline-flex"},[_c('a',{staticClass:"tw-flex tw-flex-row tw-content-end",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.messageThread()}}},[_c('div',{staticClass:"tw-transform tw--rotate-180"},[_c('i',{staticClass:"fal fa-reply"})]),_c('span',{staticClass:"tw-ml-1 tw-text-sm"},[_vm._v(_vm._s(_vm.$_reply_count_label))])])]):_vm._e()]},proxy:true}],null,false,494313837)},[_c('br'),_c('span',{staticClass:"tw-whitespace-normal tw-text-sm",domProps:{"innerHTML":_vm._s(_vm.getParsedMessage(_vm.message.text))}})]),(_vm.showMenu)?_c('chat-message-menu',{attrs:{"is-administrator":_vm.isAdministrator,"message":_vm.message,"message-reactions":_vm.messageReactions,"user-id":_vm.userId,"showThread":_vm.showThread,"show-upvote":_vm.showUpvote},on:{"addMessageUpvote":_vm.addMessageUpvote}}):_vm._e()],1):_vm._e(),(_vm.messageEdit.id == _vm.message.id)?_c('div',[_c('div',{staticClass:"cs-message-edit"},[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.messageEdit.text),expression:"messageEdit.text"}],domProps:{"value":(_vm.messageEdit.text)},on:{"input":function($event){if($event.target.composing){ return; }_vm.$set(_vm.messageEdit, "text", $event.target.value)}}}),_c('div',{staticClass:"tw-flex tw-flex-row tw-justify-end tw-mt-2"},[_c('div',{staticClass:"tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center tw-mr-2",attrs:{"title":"Cancel message edit"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.cancelMessageEdit()}}},[_vm._v("Cancel")]),_c('div',{staticClass:"tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-white tw-bg-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center",attrs:{"title":"Save message updates"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.saveMessageEdit()}}},[_vm._v("Save")])])])]):_vm._e(),(_vm.message.type == 'system')?_c('div',{staticClass:"tw-py-2 tw-text-white"},[_vm._v(" "+_vm._s(_vm.message.text)+" ")]):_vm._e()])}
-var ChatMessagevue_type_template_id_65d99182_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5f6c83c9-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatMessage.vue?vue&type=template&id=be11f5c8&
+var ChatMessagevue_type_template_id_be11f5c8_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cs-message tw-p-3 tw-rounded-md tw-relative tw-top-0"},[(_vm.message.pinned)?_c('div',{staticClass:"tw-max-w-full"},[_c('div',{staticClass:"tw-ml-16"},[_c('a',{staticClass:"tw-text-gray-600 tw-flex tw-flex-row tw-items-start",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.unpinMessage()}}},[_c('i',{staticClass:"fal fa-thumbtack"}),_c('span',{staticClass:"tw-ml-1 leading-none"},[_vm._v("Pinned")])])])]):_vm._e(),(_vm.messageEdit.id != _vm.message.id && _vm.message.type != 'system')?_c('div',{staticClass:"tw-flex tw-flex-col tw-max-w-full"},[_c('chat-user',{attrs:{"user":_vm.message.user},scopedSlots:_vm._u([{key:"footer",fn:function(){return [_c('div',{staticClass:"tw-whitespace-normal tw-text-sm",domProps:{"innerHTML":_vm._s(_vm.getParsedMessage(_vm.message.text))}}),(_vm.$_has_reactions || _vm.$_show_upvote)?_c('div',{staticClass:"tw-inline-flex tw-items-center tw-mt-1"},[(_vm.$_show_upvote)?_c('div',{staticClass:"tw-flex tw-flex-row tw-place-content-center tw-mr-1"},[_c('i',{staticClass:"fad fa-sign-language"}),_c('span',{staticClass:"tw-text-xs tw-text-black cs-reaction-count"},[_vm._v(_vm._s(_vm.$_message_upvote))])]):_vm._e(),(_vm.$_has_reactions)?_c('div',{staticClass:"tw-flex tw-flex-row tw-text-gray-500 tw-cursor-pointer"},_vm._l((_vm.$_message_reactions),function(count,reaction){return _c('div',{key:("message-reaction-" + reaction),staticClass:"tw-flex tw-flex-row tw-place-content-center tw-p-1",attrs:{"title":_vm.getReactionUsers(reaction)},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleMessageReaction(reaction)}}},[_c('i',{class:_vm.getReactionClasses(reaction)}),(count > 1)?_c('span',{staticClass:"tw-text-xs tw-text-white tw-ml-1"},[_vm._v(_vm._s(count))]):_vm._e()])}),0):_vm._e()]):_vm._e(),(_vm.message.reply_count && _vm.showThread)?_c('div',{staticClass:"tw-inline-flex"},[_c('a',{staticClass:"tw-flex tw-flex-row tw-content-end",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.messageThread()}}},[_c('div',{staticClass:"tw-transform tw--rotate-180"},[_c('i',{staticClass:"fal fa-reply"})]),_c('span',{staticClass:"tw-ml-1 tw-text-sm"},[_vm._v(_vm._s(_vm.$_reply_count_label))])])]):_vm._e()]},proxy:true}],null,false,2100118283)}),(_vm.showMenu)?_c('chat-message-menu',{attrs:{"is-administrator":_vm.isAdministrator,"message":_vm.message,"message-reactions":_vm.messageReactions,"user-id":_vm.userId,"showThread":_vm.showThread,"show-upvote":_vm.showUpvote},on:{"addMessageUpvote":_vm.addMessageUpvote}}):_vm._e()],1):_vm._e(),(_vm.messageEdit.id == _vm.message.id)?_c('div',[_c('div',{staticClass:"cs-message-edit"},[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.messageEdit.text),expression:"messageEdit.text"}],domProps:{"value":(_vm.messageEdit.text)},on:{"input":function($event){if($event.target.composing){ return; }_vm.$set(_vm.messageEdit, "text", $event.target.value)}}}),_c('div',{staticClass:"tw-flex tw-flex-row tw-justify-end tw-mt-2"},[_c('div',{staticClass:"tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center tw-mr-2",attrs:{"title":"Cancel message edit"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.cancelMessageEdit()}}},[_vm._v("Cancel")]),_c('div',{staticClass:"tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-white tw-bg-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center",attrs:{"title":"Save message updates"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.saveMessageEdit()}}},[_vm._v("Save")])])])]):_vm._e(),(_vm.message.type == 'system')?_c('div',{staticClass:"tw-py-2 tw-text-white"},[_vm._v(" "+_vm._s(_vm.message.text)+" ")]):_vm._e()])}
+var ChatMessagevue_type_template_id_be11f5c8_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/Chat/ChatMessage.vue?vue&type=template&id=65d99182&
+// CONCATENATED MODULE: ./src/components/Chat/ChatMessage.vue?vue&type=template&id=be11f5c8&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.join.js
 var es_array_join = __webpack_require__("a15b");
@@ -26959,12 +26959,12 @@ var component = normalizeComponent(
 )
 
 /* harmony default export */ var ChatMessageMenu = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5f6c83c9-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatUser.vue?vue&type=template&id=bb229480&
-var ChatUservue_type_template_id_bb229480_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-flex tw-flex-row"},[_c('div',{staticClass:"tw-flex-none tw-mr-1 tw-w-12 tw-h-12 tw-relative tw-overflow-hidden cs-user-avatar",class:_vm.getUserMembershipClass()},[_c('a',{staticClass:"tw-no-underline",attrs:{"href":_vm.user.profileUrl,"target":"_blank"}},[_c('img',{staticClass:"tw-max-w-full tw-h-auto",attrs:{"src":_vm.user.avatarUrl}})])]),_c('div',{staticClass:"tw-mt-2 tw-text-base tw-text-white tw-flex tw-flex-col"},[_c('div',{},[_c('a',{staticClass:"tw-no-underline hover:tw-underline tw-text-white tw-font-semibold",attrs:{"href":_vm.user.profileUrl,"target":"_blank"}},[_vm._v(_vm._s(_vm.user.displayName))]),_vm._t("default")],2),_vm._t("footer")],2)])}
-var ChatUservue_type_template_id_bb229480_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5f6c83c9-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatUser.vue?vue&type=template&id=456da292&
+var ChatUservue_type_template_id_456da292_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-flex tw-flex-row"},[_c('div',{staticClass:"tw-flex-none tw-mr-1 tw-w-12 tw-h-12 tw-relative tw-overflow-hidden cs-user-avatar",class:_vm.getUserMembershipClass()},[_c('a',{staticClass:"tw-no-underline",attrs:{"href":_vm.user.profileUrl,"target":"_blank"}},[_c('img',{staticClass:"tw-max-w-full tw-h-auto",attrs:{"src":_vm.user.avatarUrl}})])]),_c('div',{staticClass:"tw-flex-grow tw-mt-2 tw-text-base tw-text-white tw-flex tw-flex-col"},[_c('div',{staticClass:"tw-flex tw-flex-row"},[_c('a',{staticClass:"tw-flex-none tw-no-underline hover:tw-underline tw-text-white tw-font-semibold",attrs:{"href":_vm.user.profileUrl,"target":"_blank"}},[_vm._v(_vm._s(_vm.user.displayName))]),_vm._t("default")],2),_vm._t("footer")],2)])}
+var ChatUservue_type_template_id_456da292_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/Chat/ChatUser.vue?vue&type=template&id=bb229480&
+// CONCATENATED MODULE: ./src/components/Chat/ChatUser.vue?vue&type=template&id=456da292&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatUser.vue?vue&type=script&lang=js&
 //
@@ -27029,8 +27029,8 @@ var ChatUservue_type_template_id_bb229480_staticRenderFns = []
 
 var ChatUser_component = normalizeComponent(
   Chat_ChatUservue_type_script_lang_js_,
-  ChatUservue_type_template_id_bb229480_render,
-  ChatUservue_type_template_id_bb229480_staticRenderFns,
+  ChatUservue_type_template_id_456da292_render,
+  ChatUservue_type_template_id_456da292_staticRenderFns,
   false,
   null,
   null,
@@ -27052,8 +27052,6 @@ var ChatUser_component = normalizeComponent(
 
 
 
-//
-//
 //
 //
 //
@@ -27455,8 +27453,8 @@ var ChatUser_component = normalizeComponent(
 
 var ChatMessage_component = normalizeComponent(
   Chat_ChatMessagevue_type_script_lang_js_,
-  ChatMessagevue_type_template_id_65d99182_render,
-  ChatMessagevue_type_template_id_65d99182_staticRenderFns,
+  ChatMessagevue_type_template_id_be11f5c8_render,
+  ChatMessagevue_type_template_id_be11f5c8_staticRenderFns,
   false,
   null,
   null,
@@ -27478,6 +27476,20 @@ var ChatMessage_component = normalizeComponent(
 
 
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -27767,6 +27779,8 @@ var ChatMessage_component = normalizeComponent(
       messageRemove: null,
       userBlock: null,
       channelWatchers: {},
+      fetchingBannedUsers: false,
+      bannedUsers: {},
       chatMenu: false
     };
   },
@@ -27803,6 +27817,12 @@ var ChatMessage_component = normalizeComponent(
       cache: false,
       get: function get() {
         return Object.keys(this.channelWatchers).length;
+      }
+    },
+    $_banned_users_count: {
+      cache: false,
+      get: function get() {
+        return Object.keys(this.bannedUsers).length;
       }
     },
     $_errors_count: {
@@ -27942,8 +27962,6 @@ var ChatMessage_component = normalizeComponent(
       }).then(function (state) {
         _this2.fetchWatchers();
 
-        _this2.fetchBannedUsers();
-
         _this2.fetchPinnedMessages();
 
         _this2.processMessages(state);
@@ -27980,10 +27998,11 @@ var ChatMessage_component = normalizeComponent(
 
         _this2.channel.on('reaction.deleted', _this2.deleteMessageReaction);
 
-        _this2.channel.on('reaction.updated', _this2.updateMessageReaction); // this.channel.on(event => {
-        //     console.log('event', event);
-        // });
-        // this.$nextTick(() => {
+        _this2.channel.on('reaction.updated', _this2.updateMessageReaction);
+
+        _this2.channel.on(function (event) {
+          console.log('event', event);
+        }); // this.$nextTick(() => {
         //     this.scrollMessages(true);
         // });
 
@@ -28008,22 +28027,27 @@ var ChatMessage_component = normalizeComponent(
         }
       });
     },
-    fetchBannedUsers: function fetchBannedUsers() {// const limit = 1000;
-      // this.streamClient
-      //     .queryUsers({ banned:true }, {}, { limit, offset:0 })
-      //     .then((response) => {
-      //         console.log("::fetchBannedUsers response: %s", JSON.stringify(response));
-      //     });
-      // this.channel
-      //     .queryMembers({banned:true}, {}, {limit:10, offset:0})
-      //     .then((response) => {
-      //         console.log("::fetchBannedUsers response: %s", JSON.stringify(response));
-      //     });
-      // this.channel.unbanUser('412482');
-      // this.channel.unbanUser('412483');
+    fetchBannedUsers: function fetchBannedUsers() {
+      var _this4 = this;
+
+      this.fetchingBannedUsers = true;
+      this.bannedUsers = {};
+      var limit = 1000;
+      this.streamClient.queryUsers({
+        banned: true
+      }, {}, {
+        limit: limit,
+        offset: 0
+      }).then(function (_ref5) {
+        var users = _ref5.users;
+        users.forEach(function (user) {
+          _this4.$set(_this4.bannedUsers, user.id, user);
+        });
+        _this4.fetchingBannedUsers = false;
+      });
     },
     fetchPinnedMessages: function fetchPinnedMessages() {
-      var _this4 = this;
+      var _this5 = this;
 
       var limit = 1000;
       this.channel.search({
@@ -28031,17 +28055,17 @@ var ChatMessage_component = normalizeComponent(
       }, null, {
         limit: limit,
         offset: 0
-      }).then(function (_ref5) {
-        var results = _ref5.results;
-        results.forEach(function (_ref6) {
-          var message = _ref6.message;
+      }).then(function (_ref6) {
+        var results = _ref6.results;
+        results.forEach(function (_ref7) {
+          var message = _ref7.message;
 
           if (message.type == 'regular') {
-            _this4.insertMessage(message);
+            _this5.insertMessage(message);
           }
         });
 
-        _this4.unpinMessages();
+        _this5.unpinMessages();
       });
     },
 
@@ -28050,15 +28074,15 @@ var ChatMessage_component = normalizeComponent(
      * Unpins all but last specified value of pinned messages
      */
     unpinMessages: function unpinMessages() {
-      var _this5 = this;
+      var _this6 = this;
 
       var keep = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 2;
 
       if (this.$_pinned_messages.length > keep) {
-        var revesedSorted = this.$_pinned_messages.map(function (_ref7) {
-          var id = _ref7.id,
-              text = _ref7.text,
-              pinnedAt = _ref7.pinnedAt;
+        var revesedSorted = this.$_pinned_messages.map(function (_ref8) {
+          var id = _ref8.id,
+              text = _ref8.text,
+              pinnedAt = _ref8.pinnedAt;
           return {
             id: id,
             text: text,
@@ -28069,7 +28093,7 @@ var ChatMessage_component = normalizeComponent(
         });
         revesedSorted.forEach(function (message, idx) {
           if (idx > keep - 1) {
-            _this5.unpinMessage({
+            _this6.unpinMessage({
               message: message
             });
           }
@@ -28080,13 +28104,13 @@ var ChatMessage_component = normalizeComponent(
     /**
      * Iterate over initial channel messages and call push message only for main channel non-deleted messages
      */
-    processMessages: function processMessages(_ref8) {
-      var _this6 = this;
+    processMessages: function processMessages(_ref9) {
+      var _this7 = this;
 
-      var messages = _ref8.messages;
+      var messages = _ref9.messages;
       messages.forEach(function (message) {
         if (message.type == 'regular') {
-          _this6.pushMessage({
+          _this7.pushMessage({
             message: message
           });
         }
@@ -28096,13 +28120,13 @@ var ChatMessage_component = normalizeComponent(
     /**
      * Create a copy of user object
      */
-    getUserCopy: function getUserCopy(_ref9) {
-      var id = _ref9.id,
-          displayName = _ref9.displayName,
-          avatarUrl = _ref9.avatarUrl,
-          profileUrl = _ref9.profileUrl,
-          role = _ref9.role,
-          accessLevelName = _ref9.accessLevelName;
+    getUserCopy: function getUserCopy(_ref10) {
+      var id = _ref10.id,
+          displayName = _ref10.displayName,
+          avatarUrl = _ref10.avatarUrl,
+          profileUrl = _ref10.profileUrl,
+          role = _ref10.role,
+          accessLevelName = _ref10.accessLevelName;
       return {
         id: id,
         displayName: displayName,
@@ -28119,14 +28143,14 @@ var ChatMessage_component = normalizeComponent(
      * The message replies are not populated in this method
      */
     getMessageCopy: function getMessageCopy(message) {
-      var _this7 = this;
+      var _this8 = this;
 
-      var messageCopy = function (_ref10) {
-        var id = _ref10.id,
-            type = _ref10.type,
-            text = _ref10.text,
-            reply_count = _ref10.reply_count,
-            pinned = _ref10.pinned;
+      var messageCopy = function (_ref11) {
+        var id = _ref11.id,
+            type = _ref11.type,
+            text = _ref11.text,
+            reply_count = _ref11.reply_count,
+            pinned = _ref11.pinned;
         return {
           id: id,
           type: type,
@@ -28139,9 +28163,9 @@ var ChatMessage_component = normalizeComponent(
       messageCopy.user = this.getUserCopy(message.user);
       messageCopy.reaction_counts = _objectSpread2({}, message.reaction_counts);
       messageCopy.reaction_scores = _objectSpread2({}, message.reaction_scores);
-      messageCopy.own_reactions = message.own_reactions.map(function (_ref11) {
-        var type = _ref11.type,
-            score = _ref11.score;
+      messageCopy.own_reactions = message.own_reactions.map(function (_ref12) {
+        var type = _ref12.type,
+            score = _ref12.score;
         return {
           type: type,
           score: score
@@ -28159,18 +28183,18 @@ var ChatMessage_component = normalizeComponent(
         message.latest_reactions.forEach(function (reaction) {
           messageCopy.reactions.push({
             type: reaction.type,
-            user: _this7.getUserCopy(reaction.user)
+            user: _this8.getUserCopy(reaction.user)
           });
         });
       } else {
         this.channel.getReactions(message.id, {
           limit: 1000
-        }).then(function (_ref12) {
-          var reactions = _ref12.reactions;
+        }).then(function (_ref13) {
+          var reactions = _ref13.reactions;
           reactions.forEach(function (reaction) {
             messageCopy.reactions.push({
               type: reaction.type,
-              user: _this7.getUserCopy(reaction.user)
+              user: _this8.getUserCopy(reaction.user)
             });
           });
         });
@@ -28183,25 +28207,25 @@ var ChatMessage_component = normalizeComponent(
      * Push a message into internal state
      * If the message has replies the method will fetch them from API
      */
-    pushMessage: function pushMessage(_ref13) {
-      var _this8 = this;
+    pushMessage: function pushMessage(_ref14) {
+      var _this9 = this;
 
-      var message = _ref13.message;
+      var message = _ref14.message;
       var messageCopy = this.getMessageCopy(message);
 
       if (message.reply_count) {
         this.channel.getReplies(message.id, {
           limit: 1000
-        }).then(function (_ref14) {
-          var _this8$messageThread;
+        }).then(function (_ref15) {
+          var _this9$messageThread;
 
-          var messages = _ref14.messages;
+          var messages = _ref15.messages;
           messages.forEach(function (reply) {
-            messageCopy.replies.push(_this8.getMessageCopy(reply));
+            messageCopy.replies.push(_this9.getMessageCopy(reply));
           });
 
-          if (((_this8$messageThread = _this8.messageThread) === null || _this8$messageThread === void 0 ? void 0 : _this8$messageThread.id) == messageCopy.id) {
-            _this8.scrollThreadMessages();
+          if (((_this9$messageThread = _this9.messageThread) === null || _this9$messageThread === void 0 ? void 0 : _this9$messageThread.id) == messageCopy.id) {
+            _this9.scrollThreadMessages();
           }
         });
       }
@@ -28224,7 +28248,7 @@ var ChatMessage_component = normalizeComponent(
      * If the message already exists in the internal state, it will not be duplicated
      */
     insertMessage: function insertMessage(message) {
-      var _this9 = this;
+      var _this10 = this;
 
       var exists = false;
       var idx = null;
@@ -28245,10 +28269,10 @@ var ChatMessage_component = normalizeComponent(
         if (message.reply_count) {
           this.channel.getReplies(message.id, {
             limit: 1000
-          }).then(function (_ref15) {
-            var messages = _ref15.messages;
+          }).then(function (_ref16) {
+            var messages = _ref16.messages;
             messages.forEach(function (reply) {
-              messageCopy.replies.push(_this9.getMessageCopy(reply));
+              messageCopy.replies.push(_this10.getMessageCopy(reply));
             });
           });
         }
@@ -28264,8 +28288,8 @@ var ChatMessage_component = normalizeComponent(
     /**
      * Update message text and pinned status
      */
-    updateMessageState: function updateMessageState(_ref16) {
-      var message = _ref16.message;
+    updateMessageState: function updateMessageState(_ref17) {
+      var message = _ref17.message;
       this.messages.forEach(function (storedMessage) {
         if (message.type == 'regular' && storedMessage.id == message.id) {
           storedMessage.text = message.text;
@@ -28283,8 +28307,8 @@ var ChatMessage_component = normalizeComponent(
     /**
      * Delete a message from internal state
      */
-    deleteMessage: function deleteMessage(_ref17) {
-      var message = _ref17.message;
+    deleteMessage: function deleteMessage(_ref18) {
+      var message = _ref18.message;
       var idx = null;
       this.messages.forEach(function (storedMessage, messageIndex) {
         if (message.parent_id && storedMessage.id == message.parent_id) {
@@ -28312,26 +28336,26 @@ var ChatMessage_component = normalizeComponent(
     /**
      * Locates the internal message, main channel message or reply, and calls addMessageReaction
      */
-    pushMessageReaction: function pushMessageReaction(_ref18) {
-      var _this10 = this;
+    pushMessageReaction: function pushMessageReaction(_ref19) {
+      var _this11 = this;
 
-      var message = _ref18.message,
-          reaction = _ref18.reaction;
+      var message = _ref19.message,
+          reaction = _ref19.reaction;
       this.messages.forEach(function (storedMessage) {
         if (message.parent_id && storedMessage.id == message.parent_id) {
           storedMessage.replies.forEach(function (storedReplyMessage) {
             if (storedReplyMessage.id == message.id) {
-              _this10.addMessageReaction(storedReplyMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
+              _this11.addMessageReaction(storedReplyMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
             }
           });
         } else if (storedMessage.id == message.id) {
-          _this10.addMessageReaction(storedMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
+          _this11.addMessageReaction(storedMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
         }
       });
 
       if (this.messageThread && this.messageThread.id == message.id) {
         this.$nextTick(function () {
-          _this10.scrollThreadMessages();
+          _this11.scrollThreadMessages();
         });
       } else if (this.messageThread == null) {
         this.scrollMessages();
@@ -28363,20 +28387,20 @@ var ChatMessage_component = normalizeComponent(
     /**
      * Locates the internal message, main channel message or reply, and calls removeMessageReaction
      */
-    deleteMessageReaction: function deleteMessageReaction(_ref19) {
-      var _this11 = this;
+    deleteMessageReaction: function deleteMessageReaction(_ref20) {
+      var _this12 = this;
 
-      var message = _ref19.message,
-          reaction = _ref19.reaction;
+      var message = _ref20.message,
+          reaction = _ref20.reaction;
       this.messages.forEach(function (storedMessage) {
         if (message.parent_id && storedMessage.id == message.parent_id) {
           storedMessage.replies.forEach(function (storedReplyMessage) {
             if (storedReplyMessage.id == message.id) {
-              _this11.removeMessageReaction(storedReplyMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
+              _this12.removeMessageReaction(storedReplyMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
             }
           });
         } else if (storedMessage.id == message.id) {
-          _this11.removeMessageReaction(storedMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
+          _this12.removeMessageReaction(storedMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
         }
       });
     },
@@ -28404,24 +28428,24 @@ var ChatMessage_component = normalizeComponent(
         storedMessage.own_reactions.splice(idx, 1);
       }
     },
-    updateMessageReaction: function updateMessageReaction(_ref20) {
-      var _this12 = this;
+    updateMessageReaction: function updateMessageReaction(_ref21) {
+      var _this13 = this;
 
-      var message = _ref20.message,
-          reaction = _ref20.reaction;
+      var message = _ref21.message,
+          reaction = _ref21.reaction;
       this.messages.forEach(function (storedMessage) {
         if (storedMessage.id == message.id) {
           storedMessage.reaction_counts = _objectSpread2({}, message.reaction_counts);
           storedMessage.reaction_scores = _objectSpread2({}, message.reaction_scores);
 
-          if (reaction.user.id == _this12.userId) {
+          if (reaction.user.id == _this13.userId) {
             storedMessage.own_reactions.forEach(function (ownReaction) {
               if (ownReaction.type == reaction.type) {
                 ownReaction.score = reaction.score;
               }
             });
 
-            _this12.$root.$emit('messageOwnReactionUpdate', {
+            _this13.$root.$emit('messageOwnReactionUpdate', {
               message: message
             });
           }
@@ -28435,55 +28459,59 @@ var ChatMessage_component = normalizeComponent(
     toggleShowBannedUsers: function toggleShowBannedUsers() {
       this.showBannedUsers = !this.showBannedUsers;
       this.chatMenu = false;
-    },
-    updateMessage: function updateMessage(_ref21) {
-      var _this13 = this;
 
-      var message = _ref21.message,
-          text = _ref21.text;
+      if (this.showBannedUsers) {
+        this.fetchBannedUsers();
+      }
+    },
+    updateMessage: function updateMessage(_ref22) {
+      var _this14 = this;
+
+      var message = _ref22.message,
+          text = _ref22.text;
       this.streamClient.updateMessage({
         id: message.id,
         text: text
       }).then(function () {
-        _this13.messageErrors = [];
-      }).catch(function (_ref22) {
-        var response = _ref22.response;
+        _this14.messageErrors = [];
+      }).catch(function (_ref23) {
+        var response = _ref23.response;
 
-        _this13.errorHandler(response, 'Message update error');
+        _this14.errorHandler(response, 'Message update error');
       });
     },
-    removeMessage: function removeMessage(_ref23) {
-      var message = _ref23.message;
+    removeMessage: function removeMessage(_ref24) {
+      var message = _ref24.message;
       this.messageRemove = message;
       this.showDialog = true;
     },
-    blockUser: function blockUser(_ref24) {
-      var user = _ref24.user;
+    blockUser: function blockUser(_ref25) {
+      var user = _ref25.user;
       this.userBlock = user;
       this.showDialog = true;
     },
     closeDialog: function closeDialog(confirmation) {
-      var _this14 = this;
+      var _this15 = this;
 
       if (confirmation) {
         if (this.messageRemove) {
           this.streamClient.deleteMessage(this.messageRemove.id).then(function () {
-            _this14.messageErrors = [];
-          }).catch(function (_ref25) {
-            var response = _ref25.response;
+            _this15.messageErrors = [];
+          }).catch(function (_ref26) {
+            var response = _ref26.response;
 
-            _this14.errorHandler(response, 'Message delete error');
+            _this15.errorHandler(response, 'Message delete error');
           });
         } else if (this.userBlock) {
           this.streamClient.banUser(this.userBlock.id, {
             banned_by_id: this.userId,
             reason: 'default'
           }).then(function () {
-            _this14.messageErrors = [];
-          }).catch(function (_ref26) {
-            var response = _ref26.response;
+            _this15.messageErrors = [];
+          }).catch(function (_ref27) {
+            var response = _ref27.response;
 
-            _this14.errorHandler(response, 'User ban error');
+            _this15.errorHandler(response, 'User ban error');
           });
         }
       }
@@ -28499,96 +28527,96 @@ var ChatMessage_component = normalizeComponent(
       });
       return has;
     },
-    toggleMessageReaction: function toggleMessageReaction(_ref27) {
-      var _this15 = this;
+    toggleMessageReaction: function toggleMessageReaction(_ref28) {
+      var _this16 = this;
 
-      var message = _ref27.message,
-          reaction = _ref27.reaction;
+      var message = _ref28.message,
+          reaction = _ref28.reaction;
 
       if (this.hasOwnReaction(message, reaction)) {
         this.channel.deleteReaction(message.id, reaction).then(function () {
-          _this15.messageErrors = [];
-        }).catch(function (_ref28) {
-          var response = _ref28.response;
+          _this16.messageErrors = [];
+        }).catch(function (_ref29) {
+          var response = _ref29.response;
 
-          _this15.errorHandler(response, 'Message reaction remove error');
+          _this16.errorHandler(response, 'Message reaction remove error');
         });
       } else {
         this.channel.sendReaction(message.id, {
           type: reaction
         }).then(function () {
-          _this15.messageErrors = [];
-        }).catch(function (_ref29) {
-          var response = _ref29.response;
+          _this16.messageErrors = [];
+        }).catch(function (_ref30) {
+          var response = _ref30.response;
 
-          _this15.errorHandler(response, 'Message reaction send error');
+          _this16.errorHandler(response, 'Message reaction send error');
         });
       }
     },
-    showMessageThread: function showMessageThread(_ref30) {
-      var _this16 = this;
+    showMessageThread: function showMessageThread(_ref31) {
+      var _this17 = this;
 
-      var message = _ref30.message;
+      var message = _ref31.message;
       this.messageThread = message;
       this.showMembers = false;
       this.showThread = true;
       this.$nextTick(function () {
-        _this16.scrollThreadMessages(true);
+        _this17.scrollThreadMessages(true);
       });
     },
     hideMessageThread: function hideMessageThread() {
       this.showThread = false;
       this.messageThread = null;
     },
-    pinMessage: function pinMessage(_ref31) {
-      var _this17 = this;
+    pinMessage: function pinMessage(_ref32) {
+      var _this18 = this;
 
-      var message = _ref31.message;
+      var message = _ref32.message;
       this.streamClient.pinMessage({
         id: message.id,
         text: message.text
       }, null).then(function () {
-        _this17.messageErrors = [];
+        _this18.messageErrors = [];
 
-        _this17.unpinMessages(1);
-      }).catch(function (_ref32) {
-        var response = _ref32.response;
+        _this18.unpinMessages(1);
+      }).catch(function (_ref33) {
+        var response = _ref33.response;
 
-        _this17.errorHandler(response, 'Message pin error');
+        _this18.errorHandler(response, 'Message pin error');
       });
     },
-    unpinMessage: function unpinMessage(_ref33) {
-      var _this18 = this;
+    unpinMessage: function unpinMessage(_ref34) {
+      var _this19 = this;
 
-      var message = _ref33.message;
+      var message = _ref34.message;
       this.streamClient.unpinMessage({
         id: message.id,
         text: message.text
       }, null).then(function () {
-        _this18.messageErrors = [];
-      }).catch(function (_ref34) {
-        var response = _ref34.response;
+        _this19.messageErrors = [];
+      }).catch(function (_ref35) {
+        var response = _ref35.response;
 
-        _this18.errorHandler(response, 'Message unpin error');
+        _this19.errorHandler(response, 'Message unpin error');
       });
     },
     toggleShowPinned: function toggleShowPinned() {
       this.showPinned = !this.showPinned;
     },
-    messageUpvote: function messageUpvote(_ref35) {
-      var _this19 = this;
+    messageUpvote: function messageUpvote(_ref36) {
+      var _this20 = this;
 
-      var message = _ref35.message,
-          score = _ref35.score;
+      var message = _ref36.message,
+          score = _ref36.score;
       this.channel.sendReaction(message.id, {
         type: 'upvote',
         score: score
       }).then(function () {
-        _this19.messageErrors = [];
-      }).catch(function (_ref36) {
-        var response = _ref36.response;
+        _this20.messageErrors = [];
+      }).catch(function (_ref37) {
+        var response = _ref37.response;
 
-        _this19.errorHandler(response, 'Message upvote send error');
+        _this20.errorHandler(response, 'Message upvote send error');
       });
     },
     toggleChatMenu: function toggleChatMenu() {

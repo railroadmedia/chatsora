@@ -19,6 +19,18 @@
 }
 .cs-thread-container {
 }
+.cs-user {
+  .cs-user-unblock {
+    color: $topGrayColor;
+    display: none;
+  }
+  &:hover {
+    background-color: $hoverBgColor;
+    .cs-user-unblock {
+      display: inline;
+    }
+  }
+}
 .cs-messages-container {
   scroll-behavior: smooth;
 
