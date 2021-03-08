@@ -17,6 +17,7 @@
   "dependencies": {
     "ansi-styles": "^5.1.0",
     "autoprefixer": "^9.8.6",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "luxon": "^1.26.0",
     "postcss": "^7.0.35",

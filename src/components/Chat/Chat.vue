@@ -95,7 +95,7 @@
                                 <div class="tw-flex-grow tw-text-right">
                                     <a
                                         href="#"
-                                        @click.stop.prevent
+                                        @click.stop.prevent="unblockUser(item)"
                                         class="cs-user-unblock tw-text-sm"
                                     ><span>Unblock</span><i class="tw-ml-1 fas fa-times-circle"></i></a>
                                 </div>
@@ -246,6 +246,7 @@
 <script>
 import { DateTime } from 'luxon';
 import { StreamChat } from 'stream-chat';
+import RailchatService from '../../assets/js/services/railchat.js';
 import ChatMessage from './ChatMessage.vue';
 import ChatUser from './ChatUser.vue';
 
@@ -500,9 +501,9 @@ export default {
                     this.channel.on('reaction.deleted', this.deleteMessageReaction);
                     this.channel.on('reaction.updated', this.updateMessageReaction);
 
-                    this.channel.on(event => {
-                        console.log('event', event);
-                    });
+                    // this.channel.on(event => {
+                    //     console.log('event', event);
+                    // });
 
                     // this.$nextTick(() => {
                     //     this.scrollMessages(true);
@@ -936,19 +937,13 @@ export default {
 
                 } else if (this.userBlock) {
 
-                    this.streamClient
-                        .banUser(
-                            this.userBlock.id,
-                            {
-                                banned_by_id: this.userId,
-                                reason: 'default'
-                            }
-                        )
+                    RailchatService
+                        .banUser(this.userBlock.id)
                         .then(() => {
                             this.messageErrors = [];
                         })
                         .catch(({ response }) => {
-                            this.errorHandler(response, 'User ban error');
+                            this.railErrorHandler(response, 'User ban error');
                         });
                 }
             }
@@ -1045,6 +1040,36 @@ export default {
 
         toggleChatMenu() {
             this.chatMenu = !this.chatMenu;
+        },
+
+        unblockUser({ id }) {
+            RailchatService
+                .unbanUser(id)
+                .then(() => {
+                    this.messageErrors = [];
+                    this.fetchBannedUsers();
+                })
+                .catch(({ response }) => {
+                    this.railErrorHandler(response, 'User unban error');
+                });
+        },
+
+        railErrorHandler(response, action) {
+            let message = `${action}, please try again, if the error persists contact support.`;
+
+            if (response && response.data?.errors && Array.isArray(response.data.errors)) {
+                response.data.errors.forEach(error => {
+                    if (error.detail) {
+                        message = `${action}: ${error.detail}`;
+                    } else {
+                        console.log("Chat::railErrorHandler unknown error message format: %s", JSON.stringify(error));
+                    }
+                });
+            } else {
+                console.log("Chat::railErrorHandler unknown error response format: %s", JSON.stringify(response));
+            }
+
+            this.messageErrors.push(message);
         },
     },
 }
