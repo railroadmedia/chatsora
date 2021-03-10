@@ -159,12 +159,13 @@
                         :user-id="userId"
                         :show-upvote="enableUpvote"
                         :show-thread="enableThread"
+                        :popup-menu="true"
                     ></chat-message>
                 </div>
             </div>
             <div class="cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-auto" ref="messages">
                 <div
-                    v-for="item in $_messages"
+                    v-for="(item, index) in $_messages"
                     :key="item.id"
                 >
                     <chat-message
@@ -173,6 +174,7 @@
                         :user-id="userId"
                         :show-upvote="enableUpvote"
                         :show-thread="enableThread"
+                        :dropdown-menu="index <= 1"
                     ></chat-message>
                 </div>
                 <div

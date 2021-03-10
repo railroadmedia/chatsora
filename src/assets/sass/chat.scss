@@ -49,6 +49,15 @@
         background-color: $bgMenuColor;
         color: $textMenuColor;
       }
+
+      .cs-react-menu.cs-downdown {
+        bottom: -80px;
+      }
+
+      .cs-sub-menu.cs-downdown {
+        display: inline-table;
+        top: 25px;
+      }
     }
 
     &:hover {

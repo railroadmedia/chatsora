@@ -58,6 +58,7 @@
                 :user-id="userId"
                 :showThread="showThread"
                 :show-upvote="showUpvote"
+                :dropdown-menu="dropdownMenu"
                 @addMessageUpvote="addMessageUpvote"
                 v-if="showMenu"
             ></chat-message-menu>
@@ -133,6 +134,10 @@ export default {
         showUpvote: {
             type: Boolean,
             default: () => true,
+        },
+        dropdownMenu: {
+            type: Boolean,
+            default: () => false,
         },
     },
     data() {

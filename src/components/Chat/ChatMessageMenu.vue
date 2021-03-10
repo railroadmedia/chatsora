@@ -3,6 +3,7 @@
         <div class="tw-relative">
             <div
                 class="cs-sub-menu tw-absolute tw-right-0 tw-bottom-0 tw-w-44 tw-p-3 tw-flex tw-flex-col tw-bg-black tw-rounded-lg tw-text-white tw-text-sm"
+                :class="{'cs-downdown':dropdownMenu}"
                 v-if="messageMenu"
             >
                 <div
@@ -44,6 +45,7 @@
             </div>
             <div
                 class="cs-react-menu tw-absolute tw-right-0  tw-bottom-0 tw-flex tw-flex-row tw-bg-black tw-rounded-full tw-text-center space-x-1 tw-py-2 tw-px-3"
+                :class="{'cs-downdown':dropdownMenu}"
                 v-if="messageReact"
             >
                 <div
@@ -121,6 +123,10 @@ export default {
         showUpvote: {
             type: Boolean,
             default: () => true,
+        },
+        dropdownMenu: {
+            type: Boolean,
+            default: () => false,
         },
     },
     data() {
