@@ -213,6 +213,9 @@
             </div>
         </div>
 
+        <chat-emoji
+            :show-window="showEmoji"
+        ></chat-emoji>
         <div class="cs-new-message-container tw-flex-none box-border">
             <div class="tw-h-full tw-flex tw-flex-col tw-place-content-between tw-py-2 tw-px-4 tw-relative">
                 <div>
@@ -228,7 +231,7 @@
                         <a
                             href="#"
                             class="cs-top-gray tw-mr-2"
-                            @click.stop.prevent
+                            @click.stop.prevent="toggleShowEmoji()"
                         ><i class="fal fa-smile"></i></a>
                         <a
                             href="#"
@@ -249,12 +252,14 @@
 import { DateTime } from 'luxon';
 import { StreamChat } from 'stream-chat';
 import RailchatService from '../../assets/js/services/railchat.js';
+import ChatEmoji from './ChatEmoji.vue';
 import ChatMessage from './ChatMessage.vue';
 import ChatUser from './ChatUser.vue';
 
 export default {
     name: 'Chat',
     components: {
+        ChatEmoji,
         ChatMessage,
         ChatUser,
     },
@@ -295,6 +300,7 @@ export default {
             showDialog: false,
             showThread: false,
             showPinned: false,
+            showEmoji: false,
             messageThread: null,
             messageErrors: [],
             messageRemove: null,
@@ -896,6 +902,10 @@ export default {
             if (this.showBannedUsers) {
                 this.fetchBannedUsers();
             }
+        },
+
+        toggleShowEmoji() {
+            this.showEmoji = !this.showEmoji;
         },
 
         updateMessage({ message, text }) {

@@ -26526,12 +26526,12 @@ var es_object_keys = __webpack_require__("b64b");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.for-each.js
 var web_dom_collections_for_each = __webpack_require__("159b");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5f6c83c9-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=template&id=021ca9f2&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-relative tw-h-full tw-w-full tw-flex tw-flex-col vuesora-override"},[_c('div',{staticClass:"cs-top tw-flex-none"},[_c('div',{staticClass:"tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center tw-place-content-between"},[_c('div',{staticClass:"tw-h-full tw-ml-4 tw-flex tw-flex-row tw-items-end tw-space-x-4"},[_c('a',{staticClass:"tw-no-underline tw-font-semibold tw-px-3 tw-pb-3 tw-text-white tw-border-b-2 tw-border-white",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_vm._v("Chat")]),_c('a',{staticClass:"tw-no-underline tw-px-3 tw-pb-3 cs-top-gray tw-border-b-2 tw-border-transparent",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_vm._v("Questions")])]),_c('a',{staticClass:"tw-no-underline tw-font-semibold tw-mr-4 cs-top-gray tw-border-b-2 tw-border-transparent",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleChatMenu()}}},[_c('i',{staticClass:"fas fa-ellipsis-v"})])]),_c('div',{staticClass:"tw-relative"},[(_vm.chatMenu)?_c('div',{staticClass:"cs-top-menu tw-absolute tw-right-4 tw-p-3 tw-flex tw-flex-col tw-bg-black tw-rounded-lg tw-text-white tw-text-sm tw-z-30"},[_c('div',{staticClass:"tw-mb-2 tw-font-semibold tw-cursor-default"},[_vm._v("Moderation")]),_c('div',{staticClass:"tw-mb-1 tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowMembers()}}},[_vm._v("Participants")]),_c('div',{staticClass:"tw-mb-1 tw-cursor-pointer"},[_vm._v("Pop Out Chat")]),_c('div',{staticClass:"tw-mb-1 tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowBannedUsers()}}},[_vm._v("Blocked Students")])]):_vm._e()]),(_vm.showThread)?_c('div',{staticClass:"tw-px-3 tw-absolute tw-top-0 tw-left-0 tw-right-0 tw-flex tw-flex-row tw-place-items-center tw-justify-between tw-z-10"},[_c('div',[_c('span',{staticClass:"tw-font-bold"},[_vm._v("Thread")]),_c('span',{staticClass:"tw-ml-1"},[_vm._v(_vm._s(_vm.$_reply_count_label))])]),_c('div',[_c('i',{staticClass:"fal fa-times tw-font-semibold tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.hideMessageThread()}}})])]):_vm._e()]),(_vm.showMembers)?_c('div',{staticClass:"tw-absolute tw-inset-0 tw-flex tw-flex-col tw-z-40"},[_c('div',{staticClass:"cs-top tw-flex-none"},[_c('div',{staticClass:"tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center"},[_c('a',{staticClass:"tw-ml-3 tw-no-underline tw-text-white",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowMembers()}}},[_c('i',{staticClass:"fas fa-arrow-left"}),_c('span',{staticClass:"tw-ml-1"},[_vm._v("Participants")])])])]),_c('div',{staticClass:"cs-body tw-flex-grow tw-overflow-y-auto"},[_c('div',{staticClass:"cs-members-container tw-mt-1 tw-p-3"},_vm._l((_vm.$_watchers),function(item){return _c('div',{key:item.id,staticClass:"tw-py-2"},[_c('chat-user',{attrs:{"user":item}})],1)}),0)]),_c('div',{staticClass:"cs-footer tw-flex-none tw-h-8"},[_c('div',{staticClass:"tw-h-full tw-flex tw-flex-row tw-items-center tw-px-3"},[_c('span',{staticClass:"cs-top-gray tw-text-xs"},[_vm._v(_vm._s(_vm.$_watcher_count)+" Online")])])])]):_vm._e(),(_vm.showBannedUsers)?_c('div',{staticClass:"tw-absolute tw-inset-0 tw-flex tw-flex-col tw-z-40"},[_c('div',{staticClass:"cs-top tw-flex-none"},[_c('div',{staticClass:"tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center"},[_c('a',{staticClass:"tw-ml-3 tw-no-underline tw-text-white",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowBannedUsers()}}},[_c('i',{staticClass:"fas fa-arrow-left"}),_c('span',{staticClass:"tw-ml-1"},[_vm._v("Blocked Students")])])])]),_c('div',{staticClass:"cs-body tw-flex-grow tw-overflow-y-auto"},[(_vm.fetchingBannedUsers || _vm.$_banned_users_count == 0)?_c('div',{staticClass:"tw-mt-1 tw-p-3 cs-top-gray"},[(_vm.fetchingBannedUsers)?_c('span',[_vm._v("Fetching blocked students information...")]):_vm._e(),(!_vm.fetchingBannedUsers && _vm.$_banned_users_count == 0)?_c('span',[_vm._v("There are no students blocked from this chat.")]):_vm._e()]):_vm._e(),(!_vm.fetchingBannedUsers && _vm.$_banned_users_count > 0)?_c('div',{staticClass:"cs-members-container tw-mt-1 tw-p-3"},_vm._l((_vm.bannedUsers),function(item){return _c('div',{key:item.id,staticClass:"tw-py-2"},[_c('div',{staticClass:"cs-user tw-p-3 tw-rounded-md"},[_c('chat-user',{attrs:{"user":item}},[_c('div',{staticClass:"tw-flex-grow tw-text-right"},[_c('a',{staticClass:"cs-user-unblock tw-text-sm",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.unblockUser(item)}}},[_c('span',[_vm._v("Unblock")]),_c('i',{staticClass:"tw-ml-1 fas fa-times-circle"})])])])],1)])}),0):_vm._e()]),_c('div',{staticClass:"cs-footer tw-flex-none tw-h-8"},[_c('div',{staticClass:"tw-h-full tw-flex tw-flex-row tw-items-center tw-px-3"},[_c('span',{staticClass:"cs-top-gray tw-text-xs"},[_vm._v(_vm._s(_vm.$_watcher_count)+" Online")])])])]):_vm._e(),_c('div',{staticClass:"cs-body tw-flex-grow tw-flex tw-flex-col tw-overflow-hidden"},[(_vm.showThread)?_c('div',{ref:"threadMessages",staticClass:"cs-thread-container tw-bg-white tw-overflow-y-auto tw-z-40"},[_c('div',{staticClass:"tw-border-b tw-border-gray-600"},[_c('div',{staticClass:"tw-my-4"},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":_vm.messageThread,"user-id":_vm.userId,"show-upvote":false,"show-menu":false,"show-thread":false}})],1)]),_c('div',{staticClass:"cs-messages-container tw-mt-4"},_vm._l((_vm.$_message_thread_replies),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":false,"show-thread":false}})],1)}),0)]):_vm._e(),(_vm.$_pinned_messages.length)?_c('div',{staticClass:"cs-messages-container tw-px-3 tw-pt-4 tw-pb-2"},_vm._l((_vm.$_pinned_messages),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":_vm.enableUpvote,"show-thread":_vm.enableThread,"popup-menu":true}})],1)}),0):_vm._e(),_c('div',{ref:"messages",staticClass:"cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-auto"},[_vm._l((_vm.$_messages),function(item,index){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":_vm.enableUpvote,"show-thread":_vm.enableThread,"dropdown-menu":index <= 1}})],1)}),_vm._l((_vm.messageErrors),function(message,index){return _c('div',{key:("error-message-" + index),staticClass:"tw-p-3 tw-text-red-400"},[_vm._v(_vm._s(message))])})],2)]),(_vm.showDialog)?_c('div',{staticClass:"cs-dialog-container tw-absolute tw-inset-0 tw-z-50"},[_c('div',{staticClass:"tw-w-full tw-h-full tw-relative"},[_c('div',{staticClass:"cs-dialog-overlay tw-absolute tw-inset-0 tw-opacity-100 tw-z-20",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}}),_c('div',{staticClass:"tw-w-full tw-h-full tw-flex tw-flex-col tw-place-content-center tw-place-items-center"},[_c('div',{staticClass:"cs-dialog-window tw-rounded-lg tw-flex-none tw-bg-black tw-z-30 tw-relative"},[_c('div',{staticClass:"tw-absolute tw-top-2 tw-right-3 tw-text-white"},[_c('i',{staticClass:"fal fa-times tw-font-semibold tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}})]),(_vm.messageRemove != null)?_c('div',{staticClass:"tw-mt-6 tw-mx-8 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"},[_vm._v("Are you sure you want to delete this message from the chat?")]):_vm._e(),(_vm.userBlock != null)?_c('div',{staticClass:"tw-mt-6 tw-mx-6 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed",class:{'tw-pb-2': _vm.$_short_username}},[_vm._v("Are you sure you want to block "),_c('span',{staticClass:"tw-font-bold"},[_vm._v(_vm._s(_vm.userBlock.displayName))]),_vm._v(" from this chat?")]):_vm._e(),_c('div',{staticClass:"tw-mt-3 tw-flex tw-flex-row tw-justify-center"},[_c('div',{staticClass:"cs-btn tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-tracking-normal tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-text-white tw-w-28 tw-flex tw-justify-center",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog(true)}}},[_vm._v("confirm")])])])])])]):_vm._e(),_c('div',{staticClass:"cs-new-message-container tw-flex-none box-border"},[_c('div',{staticClass:"tw-h-full tw-flex tw-flex-col tw-place-content-between tw-py-2 tw-px-4 tw-relative"},[_c('div',[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.message),expression:"message"}],staticClass:"tw-resize-none tw-whitespace-nowrap tw-overflow-x-auto tw-rounded",attrs:{"placeholder":"Say something...","wrap":"off","rows":"1"},domProps:{"value":(_vm.message)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.sendMessage($event)},"input":function($event){if($event.target.composing){ return; }_vm.message=$event.target.value}}}),_c('div',{staticClass:"cs-new-message-menu tw-absolute tw-text-lg"},[_c('a',{staticClass:"cs-top-gray tw-mr-2",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_c('i',{staticClass:"fal fa-smile"})]),_c('a',{staticClass:"cs-top-gray",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_c('i',{staticClass:"fas fa-arrow-right"})])])]),_c('div',[_c('span',{staticClass:"cs-top-gray tw-text-xs"},[_vm._v(_vm._s(_vm.$_watcher_count)+" Online")])])])])])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5f6c83c9-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=template&id=6c1ad5d4&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-relative tw-h-full tw-w-full tw-flex tw-flex-col vuesora-override"},[_c('div',{staticClass:"cs-top tw-flex-none"},[_c('div',{staticClass:"tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center tw-place-content-between"},[_c('div',{staticClass:"tw-h-full tw-ml-4 tw-flex tw-flex-row tw-items-end tw-space-x-4"},[_c('a',{staticClass:"tw-no-underline tw-font-semibold tw-px-3 tw-pb-3 tw-text-white tw-border-b-2 tw-border-white",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_vm._v("Chat")]),_c('a',{staticClass:"tw-no-underline tw-px-3 tw-pb-3 cs-top-gray tw-border-b-2 tw-border-transparent",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_vm._v("Questions")])]),_c('a',{staticClass:"tw-no-underline tw-font-semibold tw-mr-4 cs-top-gray tw-border-b-2 tw-border-transparent",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleChatMenu()}}},[_c('i',{staticClass:"fas fa-ellipsis-v"})])]),_c('div',{staticClass:"tw-relative"},[(_vm.chatMenu)?_c('div',{staticClass:"cs-top-menu tw-absolute tw-right-4 tw-p-3 tw-flex tw-flex-col tw-bg-black tw-rounded-lg tw-text-white tw-text-sm tw-z-30"},[_c('div',{staticClass:"tw-mb-2 tw-font-semibold tw-cursor-default"},[_vm._v("Moderation")]),_c('div',{staticClass:"tw-mb-1 tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowMembers()}}},[_vm._v("Participants")]),_c('div',{staticClass:"tw-mb-1 tw-cursor-pointer"},[_vm._v("Pop Out Chat")]),_c('div',{staticClass:"tw-mb-1 tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowBannedUsers()}}},[_vm._v("Blocked Students")])]):_vm._e()]),(_vm.showThread)?_c('div',{staticClass:"tw-px-3 tw-absolute tw-top-0 tw-left-0 tw-right-0 tw-flex tw-flex-row tw-place-items-center tw-justify-between tw-z-10"},[_c('div',[_c('span',{staticClass:"tw-font-bold"},[_vm._v("Thread")]),_c('span',{staticClass:"tw-ml-1"},[_vm._v(_vm._s(_vm.$_reply_count_label))])]),_c('div',[_c('i',{staticClass:"fal fa-times tw-font-semibold tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.hideMessageThread()}}})])]):_vm._e()]),(_vm.showMembers)?_c('div',{staticClass:"tw-absolute tw-inset-0 tw-flex tw-flex-col tw-z-40"},[_c('div',{staticClass:"cs-top tw-flex-none"},[_c('div',{staticClass:"tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center"},[_c('a',{staticClass:"tw-ml-3 tw-no-underline tw-text-white",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowMembers()}}},[_c('i',{staticClass:"fas fa-arrow-left"}),_c('span',{staticClass:"tw-ml-1"},[_vm._v("Participants")])])])]),_c('div',{staticClass:"cs-body tw-flex-grow tw-overflow-y-auto"},[_c('div',{staticClass:"cs-members-container tw-mt-1 tw-p-3"},_vm._l((_vm.$_watchers),function(item){return _c('div',{key:item.id,staticClass:"tw-py-2"},[_c('chat-user',{attrs:{"user":item}})],1)}),0)]),_c('div',{staticClass:"cs-footer tw-flex-none tw-h-8"},[_c('div',{staticClass:"tw-h-full tw-flex tw-flex-row tw-items-center tw-px-3"},[_c('span',{staticClass:"cs-top-gray tw-text-xs"},[_vm._v(_vm._s(_vm.$_watcher_count)+" Online")])])])]):_vm._e(),(_vm.showBannedUsers)?_c('div',{staticClass:"tw-absolute tw-inset-0 tw-flex tw-flex-col tw-z-40"},[_c('div',{staticClass:"cs-top tw-flex-none"},[_c('div',{staticClass:"tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center"},[_c('a',{staticClass:"tw-ml-3 tw-no-underline tw-text-white",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowBannedUsers()}}},[_c('i',{staticClass:"fas fa-arrow-left"}),_c('span',{staticClass:"tw-ml-1"},[_vm._v("Blocked Students")])])])]),_c('div',{staticClass:"cs-body tw-flex-grow tw-overflow-y-auto"},[(_vm.fetchingBannedUsers || _vm.$_banned_users_count == 0)?_c('div',{staticClass:"tw-mt-1 tw-p-3 cs-top-gray"},[(_vm.fetchingBannedUsers)?_c('span',[_vm._v("Fetching blocked students information...")]):_vm._e(),(!_vm.fetchingBannedUsers && _vm.$_banned_users_count == 0)?_c('span',[_vm._v("There are no students blocked from this chat.")]):_vm._e()]):_vm._e(),(!_vm.fetchingBannedUsers && _vm.$_banned_users_count > 0)?_c('div',{staticClass:"cs-members-container tw-mt-1 tw-p-3"},_vm._l((_vm.bannedUsers),function(item){return _c('div',{key:item.id,staticClass:"tw-py-2"},[_c('div',{staticClass:"cs-user tw-p-3 tw-rounded-md"},[_c('chat-user',{attrs:{"user":item}},[_c('div',{staticClass:"tw-flex-grow tw-text-right"},[_c('a',{staticClass:"cs-user-unblock tw-text-sm",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.unblockUser(item)}}},[_c('span',[_vm._v("Unblock")]),_c('i',{staticClass:"tw-ml-1 fas fa-times-circle"})])])])],1)])}),0):_vm._e()]),_c('div',{staticClass:"cs-footer tw-flex-none tw-h-8"},[_c('div',{staticClass:"tw-h-full tw-flex tw-flex-row tw-items-center tw-px-3"},[_c('span',{staticClass:"cs-top-gray tw-text-xs"},[_vm._v(_vm._s(_vm.$_watcher_count)+" Online")])])])]):_vm._e(),_c('div',{staticClass:"cs-body tw-flex-grow tw-flex tw-flex-col tw-overflow-hidden"},[(_vm.showThread)?_c('div',{ref:"threadMessages",staticClass:"cs-thread-container tw-bg-white tw-overflow-y-auto tw-z-40"},[_c('div',{staticClass:"tw-border-b tw-border-gray-600"},[_c('div',{staticClass:"tw-my-4"},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":_vm.messageThread,"user-id":_vm.userId,"show-upvote":false,"show-menu":false,"show-thread":false}})],1)]),_c('div',{staticClass:"cs-messages-container tw-mt-4"},_vm._l((_vm.$_message_thread_replies),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":false,"show-thread":false}})],1)}),0)]):_vm._e(),(_vm.$_pinned_messages.length)?_c('div',{staticClass:"cs-messages-container tw-px-3 tw-pt-4 tw-pb-2"},_vm._l((_vm.$_pinned_messages),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":_vm.enableUpvote,"show-thread":_vm.enableThread,"popup-menu":true}})],1)}),0):_vm._e(),_c('div',{ref:"messages",staticClass:"cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-auto"},[_vm._l((_vm.$_messages),function(item,index){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":_vm.enableUpvote,"show-thread":_vm.enableThread,"dropdown-menu":index <= 1}})],1)}),_vm._l((_vm.messageErrors),function(message,index){return _c('div',{key:("error-message-" + index),staticClass:"tw-p-3 tw-text-red-400"},[_vm._v(_vm._s(message))])})],2)]),(_vm.showDialog)?_c('div',{staticClass:"cs-dialog-container tw-absolute tw-inset-0 tw-z-50"},[_c('div',{staticClass:"tw-w-full tw-h-full tw-relative"},[_c('div',{staticClass:"cs-dialog-overlay tw-absolute tw-inset-0 tw-opacity-100 tw-z-20",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}}),_c('div',{staticClass:"tw-w-full tw-h-full tw-flex tw-flex-col tw-place-content-center tw-place-items-center"},[_c('div',{staticClass:"cs-dialog-window tw-rounded-lg tw-flex-none tw-bg-black tw-z-30 tw-relative"},[_c('div',{staticClass:"tw-absolute tw-top-2 tw-right-3 tw-text-white"},[_c('i',{staticClass:"fal fa-times tw-font-semibold tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}})]),(_vm.messageRemove != null)?_c('div',{staticClass:"tw-mt-6 tw-mx-8 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"},[_vm._v("Are you sure you want to delete this message from the chat?")]):_vm._e(),(_vm.userBlock != null)?_c('div',{staticClass:"tw-mt-6 tw-mx-6 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed",class:{'tw-pb-2': _vm.$_short_username}},[_vm._v("Are you sure you want to block "),_c('span',{staticClass:"tw-font-bold"},[_vm._v(_vm._s(_vm.userBlock.displayName))]),_vm._v(" from this chat?")]):_vm._e(),_c('div',{staticClass:"tw-mt-3 tw-flex tw-flex-row tw-justify-center"},[_c('div',{staticClass:"cs-btn tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-tracking-normal tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-text-white tw-w-28 tw-flex tw-justify-center",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog(true)}}},[_vm._v("confirm")])])])])])]):_vm._e(),_c('chat-emoji',{attrs:{"show-window":_vm.showEmoji}}),_c('div',{staticClass:"cs-new-message-container tw-flex-none box-border"},[_c('div',{staticClass:"tw-h-full tw-flex tw-flex-col tw-place-content-between tw-py-2 tw-px-4 tw-relative"},[_c('div',[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.message),expression:"message"}],staticClass:"tw-resize-none tw-whitespace-nowrap tw-overflow-x-auto tw-rounded",attrs:{"placeholder":"Say something...","wrap":"off","rows":"1"},domProps:{"value":(_vm.message)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.sendMessage($event)},"input":function($event){if($event.target.composing){ return; }_vm.message=$event.target.value}}}),_c('div',{staticClass:"cs-new-message-menu tw-absolute tw-text-lg"},[_c('a',{staticClass:"cs-top-gray tw-mr-2",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowEmoji()}}},[_c('i',{staticClass:"fal fa-smile"})]),_c('a',{staticClass:"cs-top-gray",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();}}},[_c('i',{staticClass:"fas fa-arrow-right"})])])]),_c('div',[_c('span',{staticClass:"cs-top-gray tw-text-xs"},[_vm._v(_vm._s(_vm.$_watcher_count)+" Online")])])])])],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/Chat/Chat.vue?vue&type=template&id=021ca9f2&
+// CONCATENATED MODULE: ./src/components/Chat/Chat.vue?vue&type=template&id=6c1ad5d4&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("99af");
@@ -26666,6 +26666,226 @@ var axios_default = /*#__PURE__*/__webpack_require__.n(axios);
     });
   }
 });
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5f6c83c9-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatEmoji.vue?vue&type=template&id=99942c8c&
+var ChatEmojivue_type_template_id_99942c8c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-relative"},[_c('div',{staticClass:"cs-emoji tw-absolute tw-right-0 tw-bottom-4 tw-rounded-md"},[_vm._m(0),_c('div',{staticClass:"tw-p-3"},[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.message),expression:"message"}],staticClass:"tw-resize-none tw-whitespace-nowrap tw-overflow-x-auto tw-rounded-full tw-text-sm",attrs:{"placeholder":"Seach emoji","wrap":"off","rows":"1"},domProps:{"value":(_vm.message)},on:{"input":function($event){if($event.target.composing){ return; }_vm.message=$event.target.value}}})]),_vm._m(1)])])}
+var ChatEmojivue_type_template_id_99942c8c_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cs-emoji-tabs tw-flex tw-flex-row tw-items-center tw-justify-between tw-border-b tw-border-gray-800 tw-text-lg"},[_c('div',[_c('a',{staticClass:"tw-p-3"},[_c('i',{staticClass:"fal fa-clock"})]),_c('a',{staticClass:"tw-p-3 cs-top-gray"},[_c('i',{staticClass:"fal fa-smile"})]),_c('a',{staticClass:"tw-p-3 cs-top-gray"},[_c('i',{staticClass:"fal fa-music"})]),_c('a',{staticClass:"tw-p-3 cs-top-gray"},[_c('i',{staticClass:"fal fa-hexagon"})])]),_c('a',{staticClass:"tw-p-2 cs-top-gray"},[_c('i',{staticClass:"fal fa-backspace"})])])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"tw-px-3 tw-text-white tw-font-semibold"},[_vm._v("Frequently Used")]),_c('div',{staticClass:"tw-py-3 tw-px-2 tw-grid tw-grid-cols-10 tw-gap-y-3 tw-text-lg"},[_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-smile tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-smile-wink tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-smile-beam tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin-alt tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin-beam tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin-wink tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-laugh tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin-squint tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin-beam-sweat tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-smile tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-smile-wink tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-smile-beam tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin-alt tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin-beam tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin-wink tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-laugh tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin-squint tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin-beam-sweat tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-smile tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-smile-wink tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-smile-beam tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin-alt tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin-beam tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin-wink tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-laugh tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin-squint tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin-beam-sweat tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-smile tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-smile-wink tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-smile-beam tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin-alt tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin-beam tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin-wink tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-laugh tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin-squint tw-text-yellow-400"})]),_c('a',{staticClass:"tw-text-center"},[_c('i',{staticClass:"fas fa-grin-beam-sweat tw-text-yellow-400"})])])])}]
+
+
+// CONCATENATED MODULE: ./src/components/Chat/ChatEmoji.vue?vue&type=template&id=99942c8c&
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatEmoji.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ var ChatEmojivue_type_script_lang_js_ = ({
+  name: 'ChatEmoji',
+  props: {
+    showWindow: {
+      type: Boolean,
+      default: function _default() {
+        return false;
+      }
+    }
+  },
+  data: function data() {
+    return {};
+  },
+  computed: {},
+  mounted: function mounted() {},
+  methods: {}
+});
+// CONCATENATED MODULE: ./src/components/Chat/ChatEmoji.vue?vue&type=script&lang=js&
+ /* harmony default export */ var Chat_ChatEmojivue_type_script_lang_js_ = (ChatEmojivue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () {
+        injectStyles.call(
+          this,
+          (options.functional ? this.parent : this).$root.$options.shadowRoot
+        )
+      }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functional component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+// CONCATENATED MODULE: ./src/components/Chat/ChatEmoji.vue
+
+
+
+
+
+/* normalize component */
+
+var component = normalizeComponent(
+  Chat_ChatEmojivue_type_script_lang_js_,
+  ChatEmojivue_type_template_id_99942c8c_render,
+  ChatEmojivue_type_template_id_99942c8c_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var ChatEmoji = (component.exports);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5f6c83c9-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatMessage.vue?vue&type=template&id=b424578c&
 var ChatMessagevue_type_template_id_b424578c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cs-message tw-p-3 tw-rounded-md tw-relative tw-top-0"},[(_vm.message.pinned)?_c('div',{staticClass:"tw-max-w-full"},[_c('div',{staticClass:"tw-ml-16"},[_c('a',{staticClass:"tw-text-gray-600 tw-flex tw-flex-row tw-items-start",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.unpinMessage()}}},[_c('i',{staticClass:"fal fa-thumbtack"}),_c('span',{staticClass:"tw-ml-1 leading-none"},[_vm._v("Pinned")])])])]):_vm._e(),(_vm.messageEdit.id != _vm.message.id && _vm.message.type != 'system')?_c('div',{staticClass:"tw-flex tw-flex-col tw-max-w-full"},[_c('chat-user',{attrs:{"user":_vm.message.user},scopedSlots:_vm._u([{key:"footer",fn:function(){return [_c('div',{staticClass:"tw-whitespace-normal tw-text-sm",domProps:{"innerHTML":_vm._s(_vm.getParsedMessage(_vm.message.text))}}),(_vm.$_has_reactions || _vm.$_show_upvote)?_c('div',{staticClass:"tw-inline-flex tw-items-center tw-mt-1"},[(_vm.$_show_upvote)?_c('div',{staticClass:"tw-flex tw-flex-row tw-place-content-center tw-mr-1"},[_c('i',{staticClass:"fad fa-sign-language"}),_c('span',{staticClass:"tw-text-xs tw-text-black cs-reaction-count"},[_vm._v(_vm._s(_vm.$_message_upvote))])]):_vm._e(),(_vm.$_has_reactions)?_c('div',{staticClass:"tw-flex tw-flex-row tw-text-gray-500 tw-cursor-pointer"},_vm._l((_vm.$_message_reactions),function(count,reaction){return _c('div',{key:("message-reaction-" + reaction),staticClass:"tw-flex tw-flex-row tw-place-content-center tw-p-1",attrs:{"title":_vm.getReactionUsers(reaction)},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleMessageReaction(reaction)}}},[_c('i',{class:_vm.getReactionClasses(reaction)}),(count > 1)?_c('span',{staticClass:"tw-text-xs tw-text-white tw-ml-1"},[_vm._v(_vm._s(count))]):_vm._e()])}),0):_vm._e()]):_vm._e(),(_vm.message.reply_count && _vm.showThread)?_c('div',{staticClass:"tw-inline-flex"},[_c('a',{staticClass:"tw-flex tw-flex-row tw-content-end",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.messageThread()}}},[_c('div',{staticClass:"tw-transform tw--rotate-180"},[_c('i',{staticClass:"fal fa-reply"})]),_c('span',{staticClass:"tw-ml-1 tw-text-sm"},[_vm._v(_vm._s(_vm.$_reply_count_label))])])]):_vm._e()]},proxy:true}],null,false,2100118283)}),(_vm.showMenu)?_c('chat-message-menu',{attrs:{"is-administrator":_vm.isAdministrator,"message":_vm.message,"message-reactions":_vm.messageReactions,"user-id":_vm.userId,"showThread":_vm.showThread,"show-upvote":_vm.showUpvote,"dropdown-menu":_vm.dropdownMenu},on:{"addMessageUpvote":_vm.addMessageUpvote}}):_vm._e()],1):_vm._e(),(_vm.messageEdit.id == _vm.message.id)?_c('div',[_c('div',{staticClass:"cs-message-edit"},[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.messageEdit.text),expression:"messageEdit.text"}],domProps:{"value":(_vm.messageEdit.text)},on:{"input":function($event){if($event.target.composing){ return; }_vm.$set(_vm.messageEdit, "text", $event.target.value)}}}),_c('div',{staticClass:"tw-flex tw-flex-row tw-justify-end tw-mt-2"},[_c('div',{staticClass:"tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center tw-mr-2",attrs:{"title":"Cancel message edit"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.cancelMessageEdit()}}},[_vm._v("Cancel")]),_c('div',{staticClass:"tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-white tw-bg-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center",attrs:{"title":"Save message updates"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.saveMessageEdit()}}},[_vm._v("Save")])])])]):_vm._e(),(_vm.message.type == 'system')?_c('div',{staticClass:"tw-py-2 tw-text-white"},[_vm._v(" "+_vm._s(_vm.message.text)+" ")]):_vm._e()])}
 var ChatMessagevue_type_template_id_b424578c_staticRenderFns = []
@@ -26942,106 +27162,6 @@ var ChatMessageMenuvue_type_template_id_b81db096_staticRenderFns = []
 });
 // CONCATENATED MODULE: ./src/components/Chat/ChatMessageMenu.vue?vue&type=script&lang=js&
  /* harmony default export */ var Chat_ChatMessageMenuvue_type_script_lang_js_ = (ChatMessageMenuvue_type_script_lang_js_); 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode /* vue-cli only */
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () {
-        injectStyles.call(
-          this,
-          (options.functional ? this.parent : this).$root.$options.shadowRoot
-        )
-      }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functional component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    }
-  }
-
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
-
 // CONCATENATED MODULE: ./src/components/Chat/ChatMessageMenu.vue
 
 
@@ -27050,7 +27170,7 @@ function normalizeComponent (
 
 /* normalize component */
 
-var component = normalizeComponent(
+var ChatMessageMenu_component = normalizeComponent(
   Chat_ChatMessageMenuvue_type_script_lang_js_,
   ChatMessageMenuvue_type_template_id_b81db096_render,
   ChatMessageMenuvue_type_template_id_b81db096_staticRenderFns,
@@ -27061,7 +27181,7 @@ var component = normalizeComponent(
   
 )
 
-/* harmony default export */ var ChatMessageMenu = (component.exports);
+/* harmony default export */ var ChatMessageMenu = (ChatMessageMenu_component.exports);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5f6c83c9-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatUser.vue?vue&type=template&id=456da292&
 var ChatUservue_type_template_id_456da292_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-flex tw-flex-row"},[_c('div',{staticClass:"tw-flex-none tw-mr-1 tw-w-12 tw-h-12 tw-relative tw-overflow-hidden cs-user-avatar",class:_vm.getUserMembershipClass()},[_c('a',{staticClass:"tw-no-underline",attrs:{"href":_vm.user.profileUrl,"target":"_blank"}},[_c('img',{staticClass:"tw-max-w-full tw-h-auto",attrs:{"src":_vm.user.avatarUrl}})])]),_c('div',{staticClass:"tw-flex-grow tw-mt-2 tw-text-base tw-text-white tw-flex tw-flex-col"},[_c('div',{staticClass:"tw-flex tw-flex-row"},[_c('a',{staticClass:"tw-flex-none tw-no-underline hover:tw-underline tw-text-white tw-font-semibold",attrs:{"href":_vm.user.profileUrl,"target":"_blank"}},[_vm._v(_vm._s(_vm.user.displayName))]),_vm._t("default")],2),_vm._t("footer")],2)])}
 var ChatUservue_type_template_id_456da292_staticRenderFns = []
@@ -27834,6 +27954,10 @@ var ChatMessage_component = normalizeComponent(
 //
 //
 //
+//
+//
+//
+
 
 
 
@@ -27842,6 +27966,7 @@ var ChatMessage_component = normalizeComponent(
 /* harmony default export */ var Chatvue_type_script_lang_js_ = ({
   name: 'Chat',
   components: {
+    ChatEmoji: ChatEmoji,
     ChatMessage: ChatMessage,
     ChatUser: ChatUser
   },
@@ -27888,6 +28013,7 @@ var ChatMessage_component = normalizeComponent(
       showDialog: false,
       showThread: false,
       showPinned: false,
+      showEmoji: false,
       messageThread: null,
       messageErrors: [],
       messageRemove: null,
@@ -28576,6 +28702,9 @@ var ChatMessage_component = normalizeComponent(
       if (this.showBannedUsers) {
         this.fetchBannedUsers();
       }
+    },
+    toggleShowEmoji: function toggleShowEmoji() {
+      this.showEmoji = !this.showEmoji;
     },
     updateMessage: function updateMessage(_ref22) {
       var _this14 = this;

@@ -156,6 +156,29 @@
     }
   }
 }
+.cs-emoji {
+    width: 350px;
+    height: 335px;
+    background-color: $hoverBgColor; // todo - rename variable
+    .cs-emoji-tabs {
+        height: 45px;
+    }
+    textarea {
+      height: 35px;
+      padding: 6px 18px;
+      background-color: black;
+      color: $topGrayColor;
+      border: none;
+
+      &::placeholder {
+        color: $topGrayColor;
+      }
+    }
+    textarea:-moz-focusring {
+      color: $topGrayColor;
+      text-shadow: none;
+    }
+}
 .cs-react-yellow {
   color: $reactionYellowColor;
 }
