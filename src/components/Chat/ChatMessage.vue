@@ -91,6 +91,7 @@
 <script>
 import ChatMessageMenu from './ChatMessageMenu.vue';
 import ChatUser from './ChatUser.vue';
+import TextParserService from '../../assets/js/services/text-parser.js';
 
 export default {
     name: 'ChatMessage',
@@ -275,9 +276,15 @@ export default {
         },
 
         getParsedMessage(text) {
+            /*
             let urlParsed = this.getUrlsParsedText(text);
 
             return this.getEmoticonsParsedText(urlParsed);
+            */
+
+            let urlParsed = TextParserService.parseUrls(text);
+
+            return TextParserService.parseEmoji(urlParsed);
         },
 
         cancelMessageEdit() {

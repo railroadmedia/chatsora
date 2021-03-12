@@ -225,7 +225,8 @@
                         v-on:keyup.enter="sendMessage"
                         wrap="off"
                         rows="1"
-                        class="tw-resize-none tw-whitespace-nowrap tw-overflow-x-auto tw-rounded"
+                        class="tw-resize-none tw-overflow-x-auto tw-rounded"
+                        ref="newMessage"
                     ></textarea>
                     <div class="cs-new-message-menu tw-absolute tw-text-lg">
                         <a
@@ -390,6 +391,7 @@ export default {
         this.$root.$on('pinMessage',this.pinMessage);
         this.$root.$on('unpinMessage',this.unpinMessage);
         this.$root.$on('messageUpvote',this.messageUpvote);
+        this.$root.$on('insertEmoji',this.insertEmoji);
     },
     watch: {
         $_messages_count: function () {
@@ -1082,6 +1084,13 @@ export default {
             }
 
             this.messageErrors.push(message);
+        },
+
+        insertEmoji({ emoji }) {
+            const textarea = this.$refs.newMessage;
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            textarea.setRangeText(`:${emoji}:`, start, end, 'end');
         },
     },
 }

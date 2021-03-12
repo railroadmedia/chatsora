@@ -1,18 +1,37 @@
 <template>
     <div class="tw-relative">
-        <div class="cs-emoji tw-absolute tw-right-0 tw-bottom-4 tw-rounded-md">
+        <div
+            class="cs-emoji tw-absolute tw-right-0 tw-bottom-4 tw-rounded-md"
+            v-if="showWindow"
+        >
             <div class="cs-emoji-tabs tw-flex tw-flex-row tw-items-center tw-justify-between tw-border-b tw-border-gray-800 tw-text-lg">
                 <div>
-                    <a class="tw-p-3"><i class="fal fa-clock"></i></a>
-                    <a class="tw-p-3 cs-top-gray"><i class="fal fa-smile"></i></a>
-                    <a class="tw-p-3 cs-top-gray"><i class="fal fa-music"></i></a>
-                    <a class="tw-p-3 cs-top-gray"><i class="fal fa-hexagon"></i></a>
+                    <a
+                        class="tw-p-3"
+                        :class="{'cs-top-gray': currentTab != 'frequent'}"
+                        @click.stop.prevent="setCurrentTab('frequent')"
+                    ><i class="fal fa-clock"></i></a>
+                    <a
+                        class="tw-p-3"
+                        :class="{'cs-top-gray': currentTab != 'people'}"
+                        @click.stop.prevent="setCurrentTab('people')"
+                    ><i class="fal fa-smile"></i></a>
+                    <a
+                        class="tw-p-3"
+                        :class="{'cs-top-gray': currentTab != 'music'}"
+                        @click.stop.prevent="setCurrentTab('music')"
+                    ><i class="fal fa-music"></i></a>
+                    <a
+                        class="tw-p-3"
+                        :class="{'cs-top-gray': currentTab != 'symbols'}"
+                        @click.stop.prevent="setCurrentTab('symbols')"
+                    ><i class="fal fa-hexagon"></i></a>
                 </div>
                 <a class="tw-p-2 cs-top-gray"><i class="fal fa-backspace"></i></a>
             </div>
             <div class="tw-p-3">
                 <textarea
-                    v-model="message"
+                    v-model="search"
                     placeholder="Seach emoji"
                     wrap="off"
                     rows="1"
@@ -20,51 +39,14 @@
                 ></textarea>
             </div>
             <div>
-                <div class="tw-px-3 tw-text-white tw-font-semibold">Frequently Used</div>
+                <div class="tw-px-3 tw-text-white tw-font-semibold">{{ $_current_tab_label }}</div>
                 <div class="tw-py-3 tw-px-2 tw-grid tw-grid-cols-10 tw-gap-y-3 tw-text-lg">
-                    <a class="tw-text-center"><i class="fas fa-smile tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-smile-wink tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-smile-beam tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin-alt tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin-beam tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin-wink tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-laugh tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin-squint tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin-beam-sweat tw-text-yellow-400"></i></a>
-
-                    <a class="tw-text-center"><i class="fas fa-smile tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-smile-wink tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-smile-beam tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin-alt tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin-beam tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin-wink tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-laugh tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin-squint tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin-beam-sweat tw-text-yellow-400"></i></a>
-
-                    <a class="tw-text-center"><i class="fas fa-smile tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-smile-wink tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-smile-beam tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin-alt tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin-beam tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin-wink tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-laugh tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin-squint tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin-beam-sweat tw-text-yellow-400"></i></a>
-
-                    <a class="tw-text-center"><i class="fas fa-smile tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-smile-wink tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-smile-beam tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin-alt tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin-beam tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin-wink tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-laugh tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin-squint tw-text-yellow-400"></i></a>
-                    <a class="tw-text-center"><i class="fas fa-grin-beam-sweat tw-text-yellow-400"></i></a>
+                    <a
+                        class="tw-text-center"
+                        v-for="item in $_emoji"
+                        :key="item.id"
+                        @click.stop.prevent="insertEmoji(item)"
+                    ><i :class="item.class"></i></a>
                 </div>
             </div>
         </div>
@@ -72,6 +54,8 @@
 </template>
 
 <script>
+import EmojiData from '../../assets/js/data/emoji.json';
+
 export default {
     name: 'ChatEmoji',
     props: {
@@ -82,13 +66,42 @@ export default {
     },
     data() {
         return {
+            emojiData: {},
+            tabs: {
+                frequent: 'Frequently Used',
+                people: 'People',
+                music: 'Music',
+                symbols: 'Symbols'
+            },
+            currentTab: 'frequent',
+            search: '',
         }
     },
     computed: {
+        $_emoji: {
+            cache: false,
+            get() {
+                return this.emojiData[this.currentTab];
+            },
+        },
+        $_current_tab_label: {
+            cache: false,
+            get() {
+                return this.tabs[this.currentTab];
+            },
+        },
     },
     mounted() {
+        this.emojiData = EmojiData;
     },
     methods: {
+        setCurrentTab(tab) {
+            this.currentTab = tab;
+        },
+
+        insertEmoji({ id }) {
+            this.$root.$emit('insertEmoji', { emoji: id });
+        },
     }
 }
 </script>
