@@ -2,7 +2,7 @@
     <div class="tw-relative tw-h-full tw-w-full tw-flex tw-flex-col vuesora-override">
         <div class="cs-top tw-flex-none">
             <div class="tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center tw-place-content-between">
-                <div class="tw-h-full tw-ml-4 tw-flex tw-flex-row tw-items-end tw-space-x-4">
+                <div class="tw-h-full tw-ml-4 tw-flex tw-flex-row tw-items-end tw-space-x-4 cs-text-sm">
                     <a
                         href="#"
                         class="tw-no-underline tw-font-semibold tw-px-3 tw-pb-3 tw-text-white tw-border-b-2 tw-border-white"
@@ -10,25 +10,29 @@
                     >Chat</a>
                     <a
                         href="#"
-                        class="tw-no-underline tw-px-3 tw-pb-3 cs-top-gray tw-border-b-2 tw-border-transparent"
+                        class="tw-no-underline tw-px-3 tw-pb-3 cs-text-gray tw-border-b-2 tw-border-transparent"
                         @click.stop.prevent
                     >Questions</a>
                 </div>
                 <a
                     href="#"
-                    class="tw-no-underline tw-font-semibold tw-mr-4 cs-top-gray tw-border-b-2 tw-border-transparent"
+                    class="tw-no-underline tw-font-semibold tw-mr-4 cs-text-gray tw-border-b-2 tw-border-transparent"
                     @click.stop.prevent="toggleChatMenu()"
                 ><i class="fas fa-ellipsis-v"></i></a>
             </div>
             <div class="tw-relative">
                 <div
-                    class="cs-top-menu tw-absolute tw-right-4 tw-p-3 tw-flex tw-flex-col tw-bg-black tw-rounded-lg tw-text-white tw-text-sm tw-z-30"
+                    class="cs-top-menu cs-text-sm tw-leading-relaxed tw-absolute tw-right-4 tw-p-3 tw-flex tw-flex-col tw-bg-black tw-rounded-lg tw-text-white tw-z-30"
                     v-if="chatMenu"
                 >
-                    <div class="tw-mb-2 tw-font-semibold tw-cursor-default">Moderation</div>
+                    <div class="tw-mb-2 tw-font-semibold tw-cursor-default" v-if="isAdministrator">Moderation</div>
                     <div class="tw-mb-1 tw-cursor-pointer" @click.stop.prevent="toggleShowMembers()">Participants</div>
                     <div class="tw-mb-1 tw-cursor-pointer">Pop Out Chat</div>
-                    <div class="tw-mb-1 tw-cursor-pointer" @click.stop.prevent="toggleShowBannedUsers()">Blocked Students</div>
+                    <div
+                        class="tw-mb-1 tw-cursor-pointer"
+                        @click.stop.prevent="toggleShowBannedUsers()"
+                        v-if="isAdministrator"
+                    >Blocked Students</div>
                 </div>
             </div>
             <div
@@ -64,7 +68,7 @@
             </div>
             <div class="cs-footer tw-flex-none tw-h-8">
                 <div class="tw-h-full tw-flex tw-flex-row tw-items-center tw-px-3">
-                    <span class="cs-top-gray tw-text-xs">{{ $_watcher_count }} Online</span>
+                    <span class="cs-text-gray tw-text-xs">{{ $_watcher_count }} Online</span>
                 </div>
             </div>
         </div>
@@ -80,7 +84,7 @@
                 </div>
             </div>
             <div class="cs-body tw-flex-grow tw-overflow-y-auto">
-                <div class="tw-mt-1 tw-p-3 cs-top-gray" v-if="fetchingBannedUsers || $_banned_users_count == 0">
+                <div class="tw-mt-1 tw-p-3 cs-text-gray" v-if="fetchingBannedUsers || $_banned_users_count == 0">
                     <span v-if="fetchingBannedUsers">Fetching blocked students information...</span>
                     <span v-if="!fetchingBannedUsers && $_banned_users_count == 0">There are no students blocked from this chat.</span>
                 </div>
@@ -106,7 +110,7 @@
             </div>
             <div class="cs-footer tw-flex-none tw-h-8">
                 <div class="tw-h-full tw-flex tw-flex-row tw-items-center tw-px-3">
-                    <span class="cs-top-gray tw-text-xs">{{ $_watcher_count }} Online</span>
+                    <span class="cs-text-gray tw-text-xs">{{ $_watcher_count }} Online</span>
                 </div>
             </div>
         </div>
@@ -222,27 +226,27 @@
                     <textarea
                         v-model="message"
                         placeholder="Say something..."
-                        v-on:keyup.enter="sendMessage"
+                        v-on:keyup.enter="sendMessage()"
                         wrap="off"
                         rows="1"
-                        class="tw-resize-none tw-overflow-x-auto tw-rounded"
+                        class="tw-resize-none tw-text-sm tw-rounded"
                         ref="newMessage"
                     ></textarea>
                     <div class="cs-new-message-menu tw-absolute tw-text-lg">
                         <a
                             href="#"
-                            class="cs-top-gray tw-mr-2"
+                            class="cs-text-gray tw-mr-2"
                             @click.stop.prevent="toggleShowEmoji()"
                         ><i class="fal fa-smile"></i></a>
                         <a
                             href="#"
-                            class="cs-top-gray"
-                            @click.stop.prevent
+                            class="cs-text-gray"
+                            @click.stop.prevent="sendMessage()"
                         ><i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
                 <div>
-                    <span class="cs-top-gray tw-text-xs">{{ $_watcher_count }} Online</span>
+                    <span class="cs-text-gray tw-text-xs">{{ $_watcher_count }} Online</span>
                 </div>
             </div>
         </div>
@@ -253,6 +257,7 @@
 import { DateTime } from 'luxon';
 import { StreamChat } from 'stream-chat';
 import RailchatService from '../../assets/js/services/railchat.js';
+import TextParserService from '../../assets/js/services/text-parser.js';
 import ChatEmoji from './ChatEmoji.vue';
 import ChatMessage from './ChatMessage.vue';
 import ChatUser from './ChatUser.vue';
@@ -602,6 +607,13 @@ export default {
             });
         },
 
+        getParsedMessage(text) {
+
+            let urlParsed = TextParserService.parseUrls(text);
+
+            return TextParserService.parseEmoji(urlParsed);
+        },
+
         /**
          * Create a copy of user object
          */
@@ -618,6 +630,8 @@ export default {
             let messageCopy = (({ id, type, text, reply_count, pinned }) => ({ id, type, text, reply_count, pinned }))(message);
 
             messageCopy.user = this.getUserCopy(message.user);
+
+            messageCopy.text = this.getParsedMessage(messageCopy.text);
 
             messageCopy.reaction_counts = {...message.reaction_counts};
             messageCopy.reaction_scores = {...message.reaction_scores};
@@ -731,12 +745,12 @@ export default {
         updateMessageState({ message }) {
             this.messages.forEach((storedMessage) => {
                 if (message.type == 'regular' && storedMessage.id == message.id) {
-                    storedMessage.text = message.text;
+                    storedMessage.text = this.getParsedMessage(message.text);
                     storedMessage.pinned = message.pinned;
                 } else if (message.type == 'reply' && message.parent_id && storedMessage.id == message.parent_id) {
                     storedMessage.replies.forEach((storedReplyMessage) => {
                         if (storedReplyMessage.id == message.id) {
-                            storedReplyMessage.text = message.text;
+                            storedReplyMessage.text = this.getParsedMessage(message.text);
                         }
                     });
                 }

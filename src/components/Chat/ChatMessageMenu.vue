@@ -2,10 +2,13 @@
     <div class="cs-message-menu tw-absolute tw-text-base">
         <div class="tw-relative">
             <div
-                class="cs-sub-menu tw-absolute tw-right-0 tw-bottom-0 tw-w-44 tw-p-3 tw-flex tw-flex-col tw-bg-black tw-rounded-lg tw-text-white tw-text-sm"
+                class="cs-sub-menu tw-absolute tw-right-0 tw-bottom-0 tw-w-44 tw-p-3 tw-flex tw-flex-col tw-bg-black tw-rounded-lg tw-text-white cs-text-sm"
                 :class="{'cs-downdown':dropdownMenu}"
                 v-if="messageMenu"
             >
+                <div v-if="message.user.id != userId && !isAdministrator">
+                    <a :href="message.user.profileUrl" target="_blank" class="tw-no-underline tw-text-white">View Profile</a>
+                </div>
                 <div
                     :class="{'tw-mb-2': isAdministrator}"
                     v-if="message.user.id == userId"
@@ -62,7 +65,7 @@
                 @click.stop.prevent="addMessageUpvote()"
                 v-if="showUpvote"
             ><i class="fad fa-sign-language"></i></div>
-            <div class="tw-px-2 tw-text-xs tw-flex tw-flex-row tw-items-center"><span>{{ $_message_time }}</span></div>
+            <div class="tw-px-2 cs-text-xs tw-flex tw-flex-row tw-items-center"><span>{{ $_message_time }}</span></div>
             <div
                 class="cs-tooltip-container tw-px-2 tw-text-sm tw-relative"
                 :class="{'menu-active': messageReact}"
@@ -80,7 +83,6 @@
             <div
                 class="tw-px-2 tw-text-sm"
                 @click.stop.prevent="toggleMessageMenu()"
-                v-if="$_message_menu"
             ><i class="fas fa-ellipsis-h"></i></div>
         </div>
     </div>
@@ -139,11 +141,6 @@ export default {
         $_message_time: {
             get() {
                 return this.message.createdAt.toFormat('HH:mma');
-            },
-        },
-        $_message_menu: {
-            get() {
-                return this.isAdministrator || this.message.user.id == this.userId;
             },
         },
         $_show_pin: {

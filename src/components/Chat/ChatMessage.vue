@@ -12,7 +12,7 @@
         <div class="tw-flex tw-flex-col tw-max-w-full" v-if="messageEdit.id != message.id && message.type != 'system'">
             <chat-user :user="message.user">
                 <template v-slot:footer>
-                    <div v-html="getParsedMessage(message.text)" class="tw-whitespace-normal tw-text-sm"></div>
+                    <div v-html="message.text" class="tw-whitespace-normal tw-text-sm"></div>
                     <div class="tw-inline-flex tw-items-center tw-mt-1" v-if="$_has_reactions || $_show_upvote">
                         <div
                             class="tw-flex tw-flex-row tw-place-content-center tw-mr-1"
@@ -91,7 +91,6 @@
 <script>
 import ChatMessageMenu from './ChatMessageMenu.vue';
 import ChatUser from './ChatUser.vue';
-import TextParserService from '../../assets/js/services/text-parser.js';
 
 export default {
     name: 'ChatMessage',
@@ -239,53 +238,6 @@ export default {
         }
     },
     methods: {
-        getUrlsParsedText(text) {
-            return text.replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z09+&@#/%=~_|])/img, '<a href="$1">$1</a>');
-        },
-
-        getEmoticonsParsedText(text) {
-
-            let emoticons = {
-                ':)': 'fal fa-smile',
-                ':-)': 'fal fa-laugh',
-                ':D': 'fal fa-grin-beam',
-                ':-|': 'fal fa-grin',
-                ':|': 'fal fa-grin',
-                ':P': 'fal fa-grin-tongue',
-                ':p': 'fal fa-grin-tongue',
-                ':(': 'fal fa-frown',
-            }
-
-            let patterns = [];
-
-            let metachars = /[[\]{}()*+?.\\|^$\-,&#\s]/g;
-
-            for (let i in emoticons) {
-                if (emoticons[i]){
-                    patterns.push('('+i.replace(metachars, "\\$&")+')');
-                }
-            }
-
-            return text.replace(
-                new RegExp(patterns.join('|'),'g'),
-                function (match) {
-                    return typeof emoticons[match] != 'undefined' ?
-                        `<i class="${emoticons[match]}"></i>` : match;
-                }
-            );
-        },
-
-        getParsedMessage(text) {
-            /*
-            let urlParsed = this.getUrlsParsedText(text);
-
-            return this.getEmoticonsParsedText(urlParsed);
-            */
-
-            let urlParsed = TextParserService.parseUrls(text);
-
-            return TextParserService.parseEmoji(urlParsed);
-        },
 
         cancelMessageEdit() {
             this.messageEdit = {

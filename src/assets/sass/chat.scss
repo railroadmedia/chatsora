@@ -4,8 +4,8 @@
   background-color: $topBgColor;
   height: $topHeight;
 }
-.cs-top-gray {
-  color: $topGrayColor;
+.cs-text-gray {
+  color: $textGrayColor;
 }
 .cs-top-menu {
   top: -18px;
@@ -15,13 +15,15 @@
 .cs-body {
   background-color: $bgColor;
 }
-.cs-members-container {
+.cs-text-xs {
+  font-size: 10px;
 }
-.cs-thread-container {
+.cs-text-sm {
+  font-size: 13px;
 }
 .cs-user {
   .cs-user-unblock {
-    color: $topGrayColor;
+    color: $textGrayColor;
     display: none;
   }
   &:hover {
@@ -167,15 +169,15 @@
       height: 35px;
       padding: 6px 18px;
       background-color: black;
-      color: $topGrayColor;
+      color: $textGrayColor;
       border: none;
 
       &::placeholder {
-        color: $topGrayColor;
+        color: $textGrayColor;
       }
     }
     textarea:-moz-focusring {
-      color: $topGrayColor;
+      color: $textGrayColor;
       text-shadow: none;
     }
 }
@@ -242,18 +244,22 @@
 
   textarea {
     height: 40px;
-    padding: 6px 55px 6px 10px;
+    padding: 8px 55px 8px 10px;
     background-color: black;
-    color: $topGrayColor;
+    color: $textGrayColor;
     border: none;
 
     &::placeholder {
-      color: $topGrayColor;
+      color: $textGrayColor;
     }
   }
 
+  textarea::-webkit-scrollbar {
+    display: none;
+  }
+
   textarea:-moz-focusring {
-    color: $topGrayColor;
+    color: $textGrayColor;
     text-shadow: none;
   }
 

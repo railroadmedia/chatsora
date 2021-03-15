@@ -8,26 +8,26 @@
                 <div>
                     <a
                         class="tw-p-3"
-                        :class="{'cs-top-gray': currentTab != 'frequent'}"
+                        :class="{'cs-text-gray': currentTab != 'frequent'}"
                         @click.stop.prevent="setCurrentTab('frequent')"
                     ><i class="fal fa-clock"></i></a>
                     <a
                         class="tw-p-3"
-                        :class="{'cs-top-gray': currentTab != 'people'}"
+                        :class="{'cs-text-gray': currentTab != 'people'}"
                         @click.stop.prevent="setCurrentTab('people')"
                     ><i class="fal fa-smile"></i></a>
                     <a
                         class="tw-p-3"
-                        :class="{'cs-top-gray': currentTab != 'music'}"
+                        :class="{'cs-text-gray': currentTab != 'music'}"
                         @click.stop.prevent="setCurrentTab('music')"
                     ><i class="fal fa-music"></i></a>
                     <a
                         class="tw-p-3"
-                        :class="{'cs-top-gray': currentTab != 'symbols'}"
+                        :class="{'cs-text-gray': currentTab != 'symbols'}"
                         @click.stop.prevent="setCurrentTab('symbols')"
                     ><i class="fal fa-hexagon"></i></a>
                 </div>
-                <a class="tw-p-2 cs-top-gray"><i class="fal fa-backspace"></i></a>
+                <a class="tw-p-2 cs-text-gray"><i class="fal fa-backspace"></i></a>
             </div>
             <div class="tw-p-3">
                 <textarea
@@ -81,7 +81,8 @@ export default {
         $_emoji: {
             cache: false,
             get() {
-                return this.emojiData[this.currentTab];
+                return this.emojiData[this.currentTab]
+                            .filter(item => !this.search || item.id.includes(this.search));
             },
         },
         $_current_tab_label: {
