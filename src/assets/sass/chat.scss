@@ -249,13 +249,16 @@
     color: $textGrayColor;
     border: none;
 
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
     &::placeholder {
       color: $textGrayColor;
     }
-  }
-
-  textarea::-webkit-scrollbar {
-    display: none;
   }
 
   textarea:-moz-focusring {

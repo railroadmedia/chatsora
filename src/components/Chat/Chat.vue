@@ -5,13 +5,15 @@
                 <div class="tw-h-full tw-ml-4 tw-flex tw-flex-row tw-items-end tw-space-x-4 cs-text-sm">
                     <a
                         href="#"
-                        class="tw-no-underline tw-font-semibold tw-px-3 tw-pb-3 tw-text-white tw-border-b-2 tw-border-white"
-                        @click.stop.prevent
+                        class="tw-no-underline tw-px-3 tw-pb-3 tw-border-b-2"
+                        :class="getTabClasses('chat')"
+                        @click.stop.prevent="setCurrentTab('chat')"
                     >Chat</a>
                     <a
                         href="#"
-                        class="tw-no-underline tw-px-3 tw-pb-3 cs-text-gray tw-border-b-2 tw-border-transparent"
-                        @click.stop.prevent
+                        class="tw-no-underline tw-px-3 tw-pb-3 tw-border-b-2"
+                        :class="getTabClasses('questions')"
+                        @click.stop.prevent="setCurrentTab('questions')"
                     >Questions</a>
                 </div>
                 <a
@@ -45,7 +47,7 @@
             </div>
         </div>
 
-        <div class="tw-absolute tw-inset-0 tw-flex tw-flex-col tw-z-40" v-if="showMembers">
+        <div class="tw-absolute tw-inset-0 tw-flex tw-flex-col tw-z-40" v-show="showMembers">
             <div class="cs-top tw-flex-none">
                 <div class="tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center">
                     <a
@@ -73,7 +75,7 @@
             </div>
         </div>
 
-        <div class="tw-absolute tw-inset-0 tw-flex tw-flex-col tw-z-40" v-if="showBannedUsers">
+        <div class="tw-absolute tw-inset-0 tw-flex tw-flex-col tw-z-40" v-show="showBannedUsers">
             <div class="cs-top tw-flex-none">
                 <div class="tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center">
                     <a
@@ -150,8 +152,8 @@
                 </div>
             </div>
             <div
-                class="cs-messages-container tw-px-3 tw-pt-4 tw-pb-2"
-                v-if="$_pinned_messages.length"
+                class="cs-messages-container tw-px-3 tw-pt-4 tw-pb-2 tw-z-20"
+                v-show="$_pinned_messages.length && currentTab == 'chat'"
             >
                 <div
                     v-for="item in $_pinned_messages"
@@ -163,11 +165,15 @@
                         :user-id="userId"
                         :show-upvote="enableUpvote"
                         :show-thread="enableThread"
-                        :popup-menu="true"
+                        :dropdown-menu="true"
                     ></chat-message>
                 </div>
             </div>
-            <div class="cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-auto" ref="messages">
+            <div
+                class="cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-auto"
+                ref="messages"
+                v-show="currentTab == 'chat'"
+            >
                 <div
                     v-for="(item, index) in $_messages"
                     :key="item.id"
@@ -185,6 +191,30 @@
                     class="tw-p-3 tw-text-red-400"
                     v-for="(message, index) in messageErrors"
                     :key="`error-message-${index}`"
+                >{{ message }}</div>
+            </div>
+            <div
+                class="cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-auto"
+                ref="questions"
+                v-show="currentTab == 'questions'"
+            >
+                <div
+                    v-for="(item, index) in $_questions"
+                    :key="item.id"
+                >
+                    <chat-message
+                        :is-administrator="isAdministrator"
+                        :message="item"
+                        :user-id="userId"
+                        :show-upvote="enableUpvote"
+                        :show-thread="enableThread"
+                        :dropdown-menu="index <= 1"
+                    ></chat-message>
+                </div>
+                <div
+                    class="tw-p-3 tw-text-red-400"
+                    v-for="(message, index) in questionErrors"
+                    :key="`error-question-${index}`"
                 >{{ message }}</div>
             </div>
         </div>
@@ -231,12 +261,23 @@
                         rows="1"
                         class="tw-resize-none tw-text-sm tw-rounded"
                         ref="newMessage"
+                        v-if="currentTab == 'chat'"
+                    ></textarea>
+                    <textarea
+                        v-model="question"
+                        placeholder="Ask a question..."
+                        v-on:keyup.enter="sendQuestion()"
+                        wrap="off"
+                        rows="1"
+                        class="tw-resize-none tw-text-sm tw-rounded"
+                        v-if="currentTab == 'questions'"
                     ></textarea>
                     <div class="cs-new-message-menu tw-absolute tw-text-lg">
                         <a
                             href="#"
                             class="cs-text-gray tw-mr-2"
                             @click.stop.prevent="toggleShowEmoji()"
+                            v-if="currentTab == 'chat'"
                         ><i class="fal fa-smile"></i></a>
                         <a
                             href="#"
@@ -279,7 +320,10 @@ export default {
         userId: {
             type: String,
         },
-        channelName: {
+        chatChannelName: {
+            type: String,
+        },
+        questionsChannelName: {
             type: String,
         },
         isAdministrator: {
@@ -299,17 +343,22 @@ export default {
         return {
             message: '',
             messages: [],
+            question: '',
+            questions: [],
             streamClient: null,
-            channel: null,
+            chatChannel: null,
+            questionsChannel: null,
             showMembers: false,
             showBannedUsers: false,
             showDialog: false,
             showThread: false,
             showPinned: false,
             showEmoji: false,
+            currentTab: 'chat',
             messageThread: null,
             messageErrors: [],
             messageRemove: null,
+            questionErrors: [],
             userBlock: null,
             channelWatchers: {},
             fetchingBannedUsers: false,
@@ -334,6 +383,12 @@ export default {
             cache: false,
             get() {
                 return this.messages.filter(message => message.pinned);
+            },
+        },
+        $_questions: {
+            cache: false,
+            get() {
+                return this.questions;
             },
         },
         $_watchers: {
@@ -449,7 +504,7 @@ export default {
                     payload.show_in_channel = false;
                 }
 
-                this.channel
+                this.chatChannel
                     .sendMessage(payload)
                     .then(() => {
                         this.messageErrors = [];
@@ -458,6 +513,12 @@ export default {
                         this.errorHandler(response, 'Message send error');
                     });
             }
+        },
+
+        sendQuestion() {
+            let payload = { text:  this.question.trim() };
+
+            console.log("Chat::sendQuestion payload: %s", JSON.stringify(payload));
         },
 
         errorHandler(response, action) {
@@ -484,8 +545,8 @@ export default {
             this.streamClient
                 .connectUser({ id: this.userId }, this.token)
                 .then(() => {
-                    this.channel = this.streamClient.channel('messaging', this.channelName, {})
-                    return this.channel.watch();
+                    this.chatChannel = this.streamClient.channel('messaging', this.chatChannelName, {})
+                    return this.chatChannel.watch();
                 })
                 .then((state) => {
                     this.fetchWatchers();
@@ -497,32 +558,44 @@ export default {
 
                     this.messages.push(greeting);
 
-                    this.channel
+                    this.chatChannel
                         .on('user.watching.start', ({ user }) => {
                             this.$set(this.channelWatchers, user.id, user);
                         });
 
-                    this.channel
+                    this.chatChannel
                         .on('user.watching.stop', ({ user }) => {
                             if (this.channelWatchers[user.id]) {
                                 this.$delete(this.channelWatchers, user.id);
                             }
                         });
 
-                    this.channel.on('message.new', this.pushMessage);
-                    this.channel.on('message.updated', this.updateMessageState);
-                    this.channel.on('message.deleted', this.deleteMessage);
-                    this.channel.on('reaction.new', this.pushMessageReaction);
-                    this.channel.on('reaction.deleted', this.deleteMessageReaction);
-                    this.channel.on('reaction.updated', this.updateMessageReaction);
+                    this.chatChannel.on('message.new', this.pushMessage);
+                    this.chatChannel.on('message.updated', this.updateMessageState);
+                    this.chatChannel.on('message.deleted', this.deleteMessage);
+                    this.chatChannel.on('reaction.new', this.pushMessageReaction);
+                    this.chatChannel.on('reaction.deleted', this.deleteMessageReaction);
+                    this.chatChannel.on('reaction.updated', this.updateMessageReaction);
 
-                    // this.channel.on(event => {
+                    // this.chatChannel.on(event => {
                     //     console.log('event', event);
                     // });
 
                     // this.$nextTick(() => {
                     //     this.scrollMessages(true);
                     // });
+
+                    this.setupQuestionsChannel();
+                });
+        },
+
+        setupQuestionsChannel() {
+            this.chatChannel = this.streamClient.channel('messaging', this.chatChannelName, {})
+            this.chatChannel
+                .watch()
+                .then(() => {
+                    // add param state and process it
+                    // setup event listeners
                 });
         },
 
@@ -530,7 +603,7 @@ export default {
 
             const limit = 1000;
 
-            this.channel
+            this.chatChannel
                 .query({
                     watchers: { limit, offset: 0 },
                 })
@@ -562,7 +635,7 @@ export default {
         fetchPinnedMessages() {
             const limit = 1000;
 
-            this.channel
+            this.chatChannel
                 .search(
                     { pinned: true },
                     null,
@@ -652,7 +725,7 @@ export default {
                 });
 
             } else {
-                this.channel
+                this.chatChannel
                     .getReactions(message.id, { limit: 1000 })
                     .then(({ reactions }) => {
                         reactions.forEach((reaction) => {
@@ -672,7 +745,7 @@ export default {
             let messageCopy = this.getMessageCopy(message);
 
             if (message.reply_count) {
-                this.channel
+                this.chatChannel
                     .getReplies(message.id, { limit: 1000 })
                     .then(({ messages }) => {
                         messages.forEach((reply) => {
@@ -722,7 +795,7 @@ export default {
                 let messageCopy = this.getMessageCopy(message);
 
                 if (message.reply_count) {
-                    this.channel
+                    this.chatChannel
                         .getReplies(message.id, { limit: 1000 })
                         .then(({ messages }) => {
                             messages.forEach((reply) => {
@@ -993,7 +1066,7 @@ export default {
 
         toggleMessageReaction({ message, reaction }) {
             if (this.hasOwnReaction(message, reaction)) {
-                this.channel
+                this.chatChannel
                     .deleteReaction(message.id, reaction)
                     .then(() => {
                         this.messageErrors = [];
@@ -1002,7 +1075,7 @@ export default {
                         this.errorHandler(response, 'Message reaction remove error');
                     });
             } else {
-                this.channel
+                this.chatChannel
                     .sendReaction(message.id, { type: reaction })
                     .then(() => {
                         this.messageErrors = [];
@@ -1056,7 +1129,7 @@ export default {
         },
 
         messageUpvote({ message, score }) {
-            this.channel
+            this.chatChannel
                 .sendReaction(message.id, { type: 'upvote', score })
                 .then(() => {
                     this.messageErrors = [];
@@ -1105,6 +1178,19 @@ export default {
             const start = textarea.selectionStart;
             const end = textarea.selectionEnd;
             textarea.setRangeText(`:${emoji}:`, start, end, 'end');
+        },
+
+        setCurrentTab(tab) {
+            if (tab == 'chat' || tab == 'questions') {
+                this.currentTab = tab;
+            }
+        },
+
+        getTabClasses(tab) {
+            let active = ['tw-font-semibold', 'tw-text-white', 'tw-border-white'];
+            let inactive = ['cs-text-gray', 'tw-border-transparent'];
+
+            return this.currentTab == tab ? active : inactive;
         },
     },
 }
