@@ -516,9 +516,23 @@ export default {
         },
 
         sendQuestion() {
-            let payload = { text:  this.question.trim() };
+            let text = this.question.trim();
 
-            console.log("Chat::sendQuestion payload: %s", JSON.stringify(payload));
+            console.log("Chat::sendQuestion text: %s", JSON.stringify(text));
+
+            this.question = '';
+
+            if (text) {
+
+                this.questionsChannel
+                    .sendMessage({ text })
+                    .then(() => {
+                        this.questionErrors = [];
+                    })
+                    .catch(({ response }) => {
+                        this.errorHandler(response, 'Question send error');
+                    });
+            }
         },
 
         errorHandler(response, action) {
@@ -552,7 +566,7 @@ export default {
                     this.fetchWatchers();
                     this.fetchPinnedMessages();
 
-                    this.processMessages(state);
+                    this.processMessages(state, this.messages);
 
                     let greeting = {id: 'greeting', type: 'system', text: 'Welcome to chat!'};
 
@@ -590,11 +604,11 @@ export default {
         },
 
         setupQuestionsChannel() {
-            this.chatChannel = this.streamClient.channel('messaging', this.chatChannelName, {})
-            this.chatChannel
+            this.questionsChannel = this.streamClient.channel('messaging', this.questionsChannelName, {})
+            this.questionsChannel
                 .watch()
-                .then(() => {
-                    // add param state and process it
+                .then((state) => {
+                    this.processMessages(state, this.questions);
                     // setup event listeners
                 });
         },
@@ -672,10 +686,10 @@ export default {
         /**
          * Iterate over initial channel messages and call push message only for main channel non-deleted messages
          */
-        processMessages({ messages }) {
+        processMessages({ messages }, collection) {
             messages.forEach((message) => {
                 if (message.type == 'regular') {
-                    this.pushMessage({ message });
+                    this.pushMessage({ message }, collection);
                 }
             });
         },
@@ -741,7 +755,7 @@ export default {
          * Push a message into internal state
          * If the message has replies the method will fetch them from API
          */
-        pushMessage({ message }) {
+        pushMessage({ message }, collection) {
             let messageCopy = this.getMessageCopy(message);
 
             if (message.reply_count) {
@@ -759,9 +773,9 @@ export default {
             }
 
             if (message.type == 'regular') {
-                this.messages.push(messageCopy);
+                collection.push(messageCopy);
             } else if (message.type == 'reply' && message.parent_id) {
-                this.messages.forEach((parentMessage) => {
+                collection.forEach((parentMessage) => {
                     if (parentMessage.id == message.parent_id) {
                         parentMessage.replies.push(messageCopy);
                         parentMessage.reply_count = parentMessage.reply_count + 1;
