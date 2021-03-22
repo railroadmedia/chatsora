@@ -208,7 +208,7 @@
                         :user-id="userId"
                         :show-upvote="enableUpvote"
                         :show-thread="enableThread"
-                        :dropdown-menu="index <= 1"
+                        :dropdown-menu="index < 1"
                     ></chat-message>
                 </div>
                 <div
@@ -553,6 +553,49 @@ export default {
             this.messageErrors.push(message);
         },
 
+        attachChatEventHandlers(channel, collection) {
+            channel.on(
+                'message.new',
+                ({ message }) => {
+                    this.pushMessage({ message, collection });
+                }
+            );
+            channel.on(
+                'message.updated',
+                ({ message }) => {
+                    this.updateMessageState({ message, collection });
+                }
+            );
+            channel.on(
+                'message.deleted',
+                ({ message }) => {
+                    this.deleteMessage({ message, collection });
+                }
+            );
+            channel.on(
+                'reaction.new',
+                ({ message, reaction }) => {
+                    this.pushMessageReaction({ message, reaction, collection });
+                }
+            );
+            channel.on(
+                'reaction.deleted',
+                ({ message, reaction }) => {
+                    this.deleteMessageReaction({ message, reaction, collection });
+                }
+            );
+            channel.on(
+                'reaction.updated',
+                ({ message, reaction }) => {
+                    this.updateMessageReaction({ message, reaction, collection });
+                }
+            );
+
+            // channel.on(event => {
+            //     console.log('event', event);
+            // });
+        },
+
         setupChat() {
             this.streamClient = new StreamChat(this.apiKey, { timeout: 6000 });
 
@@ -584,20 +627,7 @@ export default {
                             }
                         });
 
-                    this.chatChannel.on('message.new', this.pushMessage);
-                    this.chatChannel.on('message.updated', this.updateMessageState);
-                    this.chatChannel.on('message.deleted', this.deleteMessage);
-                    this.chatChannel.on('reaction.new', this.pushMessageReaction);
-                    this.chatChannel.on('reaction.deleted', this.deleteMessageReaction);
-                    this.chatChannel.on('reaction.updated', this.updateMessageReaction);
-
-                    // this.chatChannel.on(event => {
-                    //     console.log('event', event);
-                    // });
-
-                    // this.$nextTick(() => {
-                    //     this.scrollMessages(true);
-                    // });
+                    this.attachChatEventHandlers(this.chatChannel, this.messages);
 
                     this.setupQuestionsChannel();
                 });
@@ -609,7 +639,7 @@ export default {
                 .watch()
                 .then((state) => {
                     this.processMessages(state, this.questions);
-                    // setup event listeners
+                    this.attachChatEventHandlers(this.questionsChannel, this.questions);
                 });
         },
 
@@ -689,7 +719,7 @@ export default {
         processMessages({ messages }, collection) {
             messages.forEach((message) => {
                 if (message.type == 'regular') {
-                    this.pushMessage({ message }, collection);
+                    this.pushMessage({ message, collection });
                 }
             });
         },
@@ -755,7 +785,7 @@ export default {
          * Push a message into internal state
          * If the message has replies the method will fetch them from API
          */
-        pushMessage({ message }, collection) {
+        pushMessage({ message, collection }) {
             let messageCopy = this.getMessageCopy(message);
 
             if (message.reply_count) {
@@ -829,8 +859,8 @@ export default {
         /**
          * Update message text and pinned status
          */
-        updateMessageState({ message }) {
-            this.messages.forEach((storedMessage) => {
+        updateMessageState({ message, collection }) {
+            collection.forEach((storedMessage) => {
                 if (message.type == 'regular' && storedMessage.id == message.id) {
                     storedMessage.text = this.getParsedMessage(message.text);
                     storedMessage.pinned = message.pinned;
@@ -847,10 +877,10 @@ export default {
         /**
          * Delete a message from internal state
          */
-        deleteMessage({ message }) {
+        deleteMessage({ message, collection }) {
             let idx = null;
 
-            this.messages.forEach((storedMessage, messageIndex) => {
+            collection.forEach((storedMessage, messageIndex) => {
                 if (message.parent_id && storedMessage.id == message.parent_id) {
 
                     storedMessage.replies.forEach((storedReplyMessage, replyIndex) => {
@@ -871,15 +901,15 @@ export default {
             });
 
             if (idx != null && !message.parent_id) {
-                this.messages.splice(idx, 1);
+                collection.splice(idx, 1);
             }
         },
 
         /**
          * Locates the internal message, main channel message or reply, and calls addMessageReaction
          */
-        pushMessageReaction({ message, reaction }) {
-            this.messages.forEach((storedMessage) => {
+        pushMessageReaction({ message, reaction, collection }) {
+            collection.forEach((storedMessage) => {
                 if (message.parent_id && storedMessage.id == message.parent_id) {
                     storedMessage.replies.forEach((storedReplyMessage) => {
                         if (storedReplyMessage.id == message.id) {
@@ -926,8 +956,8 @@ export default {
         /**
          * Locates the internal message, main channel message or reply, and calls removeMessageReaction
          */
-        deleteMessageReaction({ message, reaction }) {
-            this.messages.forEach((storedMessage) => {
+        deleteMessageReaction({ message, reaction, collection }) {
+            collection.forEach((storedMessage) => {
                 if (message.parent_id && storedMessage.id == message.parent_id) {
                     storedMessage.replies.forEach((storedReplyMessage) => {
                         if (storedReplyMessage.id == message.id) {
@@ -976,8 +1006,8 @@ export default {
             }
         },
 
-        updateMessageReaction({ message, reaction }) {
-            this.messages.forEach((storedMessage) => {
+        updateMessageReaction({ message, reaction, collection }) {
+            collection.forEach((storedMessage) => {
                 if (storedMessage.id == message.id) {
                     storedMessage.reaction_counts = {...message.reaction_counts};
                     storedMessage.reaction_scores = {...message.reaction_scores};

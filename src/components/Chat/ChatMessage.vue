@@ -56,7 +56,7 @@
                 :message="message"
                 :message-reactions="messageReactions"
                 :user-id="userId"
-                :showThread="showThread"
+                :show-thread="showThread"
                 :show-upvote="showUpvote"
                 :dropdown-menu="dropdownMenu"
                 @addMessageUpvote="addMessageUpvote"
