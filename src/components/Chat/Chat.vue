@@ -35,6 +35,11 @@
                         @click.stop.prevent="toggleShowBannedUsers()"
                         v-if="isAdministrator"
                     >Blocked Students</div>
+                    <div
+                        class="tw-mb-1 tw-cursor-pointer"
+                        @click.stop.prevent
+                        v-if="currentTab == 'questions' && isAdministrator"
+                    >Clear All Questions</div>
                 </div>
             </div>
             <div
@@ -152,7 +157,7 @@
                 </div>
             </div>
             <div
-                class="cs-messages-container tw-px-3 tw-pt-4 tw-pb-2 tw-z-20"
+                class="cs-messages-container cs-fit tw-px-3 tw-pt-4 tw-pb-2 tw-z-20"
                 v-show="$_pinned_messages.length && currentTab == 'chat'"
             >
                 <div
@@ -163,7 +168,7 @@
                         :is-administrator="isAdministrator"
                         :message="item"
                         :user-id="userId"
-                        :show-upvote="enableUpvote"
+                        :show-upvote="false"
                         :show-thread="enableThread"
                         :dropdown-menu="true"
                     ></chat-message>
@@ -182,7 +187,7 @@
                         :is-administrator="isAdministrator"
                         :message="item"
                         :user-id="userId"
-                        :show-upvote="enableUpvote"
+                        :show-upvote="false"
                         :show-thread="enableThread"
                         :dropdown-menu="index <= 1"
                     ></chat-message>
@@ -206,7 +211,7 @@
                         :is-administrator="isAdministrator"
                         :message="item"
                         :user-id="userId"
-                        :show-upvote="enableUpvote"
+                        :show-upvote="true"
                         :show-thread="enableThread"
                         :dropdown-menu="index < 1"
                     ></chat-message>
@@ -230,7 +235,16 @@
                 <div class="tw-w-full tw-h-full tw-flex tw-flex-col tw-place-content-center tw-place-items-center">
                     <div class="cs-dialog-window tw-rounded-lg tw-flex-none tw-bg-black tw-z-30 tw-relative">
                         <div class="tw-absolute tw-top-2 tw-right-3 tw-text-white"><i class="fal fa-times tw-font-semibold tw-cursor-pointer" @click.stop.prevent="closeDialog()"></i></div>
-                        <div class="tw-mt-6 tw-mx-8 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed" v-if="messageRemove != null">Are you sure you want to delete this message from the chat?</div>
+                        <div
+                            class="tw-mt-6 tw-mx-8 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"
+                            v-if="messageRemove != null"
+                        >Are you sure you want to delete this message from the chat?</div>
+
+                        <div
+                            class="tw-mt-6 tw-mx-8 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"
+                            v-if="questionRemove != null"
+                        >Are you sure you want to mark this question as answered?</div>
+
                         <div
                             class="tw-mt-6 tw-mx-6 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"
                             :class="{'tw-pb-2': $_short_username}"
@@ -331,10 +345,6 @@ export default {
             default: () => false,
         },
         enableThread: {
-            type: Boolean,
-            default: () => false,
-        },
-        enableUpvote: {
             type: Boolean,
             default: () => false,
         },
@@ -450,8 +460,8 @@ export default {
         this.$root.$on('messageThread',this.showMessageThread);
         this.$root.$on('pinMessage',this.pinMessage);
         this.$root.$on('unpinMessage',this.unpinMessage);
-        this.$root.$on('messageUpvote',this.messageUpvote);
         this.$root.$on('insertEmoji',this.insertEmoji);
+        this.$root.$on('markAsAnswered',this.markAsAnswered);
     },
     watch: {
         $_messages_count: function () {
@@ -517,8 +527,6 @@ export default {
 
         sendQuestion() {
             let text = this.question.trim();
-
-            console.log("Chat::sendQuestion text: %s", JSON.stringify(text));
 
             this.question = '';
 
@@ -1065,6 +1073,11 @@ export default {
             this.showDialog = true;
         },
 
+        markAsAnswered({ message }) {
+            this.questionRemove = message;
+            this.showDialog = true;
+        },
+
         closeDialog(confirmation) {
 
             if (confirmation) {
@@ -1090,11 +1103,21 @@ export default {
                         .catch(({ response }) => {
                             this.railErrorHandler(response, 'User ban error');
                         });
+                } else if (this.questionRemove) {
+                    this.streamClient
+                        .deleteMessage(this.questionRemove.id)
+                        .then(() => {
+                            this.questionErrors = [];
+                        })
+                        .catch(({ response }) => {
+                            this.errorHandler(response, 'Mark question as answered error');
+                        });
                 }
             }
 
             this.showDialog = false;
             this.messageRemove = null;
+            this.questionRemove = null;
             this.userBlock = null;
         },
 
@@ -1170,17 +1193,6 @@ export default {
 
         toggleShowPinned() {
             this.showPinned = !this.showPinned;
-        },
-
-        messageUpvote({ message, score }) {
-            this.chatChannel
-                .sendReaction(message.id, { type: 'upvote', score })
-                .then(() => {
-                    this.messageErrors = [];
-                })
-                .catch(({ response }) => {
-                    this.errorHandler(response, 'Message upvote send error');
-                });
         },
 
         toggleChatMenu() {

@@ -60,16 +60,17 @@
             </div>
         </div>
         <div class="cs-main-menu tw-flex tw-flex-row tw-rounded-full tw-divide-x tw-divide-gray-400 tw-cursor-pointer tw-px-1">
+            <div class="tw-px-2 cs-text-xs tw-flex tw-flex-row tw-items-center"><span>{{ $_message_time }}</span></div>
             <div
                 class="tw-px-2 tw-text-sm"
-                @click.stop.prevent="addMessageUpvote()"
-                v-if="showUpvote"
-            ><i class="fad fa-sign-language"></i></div>
-            <div class="tw-px-2 cs-text-xs tw-flex tw-flex-row tw-items-center"><span>{{ $_message_time }}</span></div>
+                @click.stop.prevent="markAsAnswered()"
+                v-if="showUpvote && isAdministrator"
+            ><i class="fas fa-check"></i></div>
             <div
                 class="cs-tooltip-container tw-px-2 tw-text-sm tw-relative"
                 :class="{'menu-active': messageReact}"
                 @click.stop.prevent="toggleMessageReact()"
+                v-if="!showUpvote"
             >
                 <i class="fas fa-smile-plus"></i>
                 <div class="cs-tooltip tw-absolute tw-rounded-md tw-px-2 tw-py-1 tw-text-xs tw-text-white tw-overflow-hidden tw-whitespace-nowrap">Add Reaction</div>
@@ -122,13 +123,13 @@ export default {
             type: Boolean,
             default: () => true,
         },
-        showUpvote: {
-            type: Boolean,
-            default: () => true,
-        },
         dropdownMenu: {
             type: Boolean,
             default: () => false,
+        },
+        showUpvote: {
+            type: Boolean,
+            default: () => true,
         },
     },
     data() {
@@ -227,8 +228,8 @@ export default {
             this.$root.$emit('unpinMessage', { message: this.message });
         },
 
-        addMessageUpvote() {
-            this.$emit('addMessageUpvote', {});
+        markAsAnswered() {
+            this.$root.$emit('markAsAnswered', { message: this.message });
         },
     },
 }

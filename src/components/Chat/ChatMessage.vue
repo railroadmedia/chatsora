@@ -13,13 +13,15 @@
             <chat-user :user="message.user">
                 <template v-slot:footer>
                     <div v-html="message.text" class="tw-whitespace-normal tw-text-sm"></div>
-                    <div class="tw-inline-flex tw-items-center tw-mt-1" v-if="$_has_reactions || $_show_upvote">
+                    <div class="tw-inline-flex tw-items-center tw-mt-1" v-if="$_has_reactions || showUpvote">
                         <div
-                            class="tw-flex tw-flex-row tw-place-content-center tw-mr-1"
-                            v-if="$_show_upvote"
+                            class="cs-upvote tw-cursor-pointer tw-flex tw-flex-row tw-items-center tw-px-3 tw-rounded-full cs-text-xs"
+                            :class="$_message_upvote_class"
+                            @click.stop.prevent="toggleMessageReaction('upvote')"
+                            v-if="showUpvote"
                         >
-                            <i class="fad fa-sign-language"></i>
-                            <span class="tw-text-xs tw-text-black cs-reaction-count">{{ $_message_upvote }}</span>
+                            <i class="cs-icon fas fa-arrow-up"></i>
+                            <span class="cs-reaction-count">{{ $_message_upvote }}</span>
                         </div>
                         <div
                             class="tw-flex tw-flex-row tw-text-gray-500 tw-cursor-pointer"
@@ -157,8 +159,6 @@ export default {
                 'grin-squint': 'fas fa-grin-squint cs-react-yellow',
                 'grin-tears': 'fas fa-grin-tears cs-react-yellow',
             },
-            upvoteNewScore: null,
-            upvoteTimeout: null,
         };
     },
     computed: {
@@ -175,14 +175,14 @@ export default {
         $_message_upvote: {
             cache: false,
             get() {
+                return this.message.reaction_counts.upvote || 0;
+            },
+        },
 
-                if (this.upvoteNewScore != null) {
-                    let ownScore = this.message.own_reactions.filter(({ type }) => type == 'upvote').map(({ score }) => score).pop() || 0;
-
-                    return (this.message.reaction_scores.upvote || 0) - ownScore + this.upvoteNewScore;
-                }
-
-                return this.message.reaction_scores.upvote || 0;
+        $_message_upvote_class: {
+            cache: false,
+            get() {
+                return { 'active': this.hasOwnReaction('upvote') };
             },
         },
 
@@ -199,13 +199,6 @@ export default {
             cache: false,
             get() {
                 return this.message.reply_count + (this.message.reply_count > 1 ? ' replies' : ' reply');
-            },
-        },
-
-        $_show_upvote: {
-            cache: false,
-            get() {
-                return this.$_message_upvote != 0 && this.showUpvote;
             },
         },
     },
@@ -354,6 +347,7 @@ export default {
         },
 
         addMessageUpvote() {
+            // todo - update
             const increment = 1;
 
             let score = this.upvoteNewScore
