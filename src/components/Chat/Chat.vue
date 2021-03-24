@@ -37,18 +37,23 @@
                     >Blocked Students</div>
                     <div
                         class="tw-mb-1 tw-cursor-pointer"
-                        @click.stop.prevent
+                        @click.stop.prevent="removeAllQuestions()"
                         v-if="currentTab == 'questions' && isAdministrator"
                     >Clear All Questions</div>
                 </div>
             </div>
-            <div
-                class="tw-px-3 tw-absolute tw-top-0 tw-left-0 tw-right-0 tw-flex tw-flex-row tw-place-items-center tw-justify-between tw-z-10"
-                v-if="showThread"
-            >
-                <!-- todo: update with non-absolute layout -->
-                <div><span class="tw-font-bold">Thread</span><span class="tw-ml-1">{{ $_reply_count_label }}</span></div>
-                <div><i class="fal fa-times tw-font-semibold tw-cursor-pointer" @click.stop.prevent="hideMessageThread()"></i></div>
+        </div>
+
+        <div class="tw-absolute tw-top-0 tw-right-0 tw-left-0 tw-flex tw-flex-col tw-z-40" v-show="showThread">
+            <div class="cs-top tw-flex-none">
+                <div class="tw-h-full tw-w-full tw-flex tw-flex-row tw-place-items-center tw-justify-between">
+                    <a
+                        href="#"
+                        class="tw-ml-3 tw-no-underline tw-text-white"
+                        @click.stop.prevent="hideMessageThread()"
+                    ><i class="fas fa-arrow-left"></i><span class="tw-ml-1">Thread</span><span class="tw-ml-3">{{ $_reply_count_label }}</span></a>
+                    <div class="tw-mr-3"><i class="fal fa-times tw-text-white tw-font-semibold tw-cursor-pointer" @click.stop.prevent="hideMessageThread()"></i></div>
+                </div>
             </div>
         </div>
 
@@ -124,11 +129,10 @@
 
         <div class="cs-body tw-flex-grow tw-flex tw-flex-col tw-overflow-hidden">
             <div
-                class="cs-thread-container tw-bg-white tw-overflow-y-auto tw-z-40"
+                class="cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-auto tw-z-40"
                 v-if="showThread"
                 ref="threadMessages"
             >
-                <!-- todo: update with non-absolute layout -->
                 <div class="tw-border-b tw-border-gray-600">
                     <div class="tw-my-4">
                         <chat-message
@@ -158,7 +162,7 @@
             </div>
             <div
                 class="cs-messages-container cs-fit tw-px-3 tw-pt-4 tw-pb-2 tw-z-20"
-                v-show="$_pinned_messages.length && currentTab == 'chat'"
+                v-show="$_pinned_messages.length && currentTab == 'chat' && !showThread"
             >
                 <div
                     v-for="item in $_pinned_messages"
@@ -177,7 +181,7 @@
             <div
                 class="cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-auto"
                 ref="messages"
-                v-show="currentTab == 'chat'"
+                v-show="currentTab == 'chat' && !showThread"
             >
                 <div
                     v-for="(item, index) in $_messages"
@@ -201,7 +205,7 @@
             <div
                 class="cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-auto"
                 ref="questions"
-                v-show="currentTab == 'questions'"
+                v-show="currentTab == 'questions' && !showThread"
             >
                 <div
                     v-for="(item, index) in $_questions"
@@ -436,7 +440,6 @@ export default {
             get() {
                 let label = '';
 
-                // todo - delete message reply and check reply_count
                 if (this.messageThread && this.messageThread.reply_count) {
                     label = this.messageThread.reply_count + (this.messageThread.reply_count > 1 ? ' replies' : ' reply')
                 }
@@ -499,6 +502,22 @@ export default {
                         behavior: 'smooth'
                     });
                 });
+            }
+        },
+
+        removeAllQuestions() {
+            if (this.questions.length) {
+                this.chatMenu = false;
+                let questionRemove = this.questions[0];
+
+                 this.streamClient
+                    .deleteMessage(questionRemove.id)
+                    .then(() => {
+                        this.removeAllQuestions();
+                    })
+                    .catch(({ response }) => {
+                        this.errorHandler(response, 'Mark question as answered error');
+                    });
             }
         },
 

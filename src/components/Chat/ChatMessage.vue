@@ -61,7 +61,6 @@
                 :show-thread="showThread"
                 :show-upvote="showUpvote"
                 :dropdown-menu="dropdownMenu"
-                @addMessageUpvote="addMessageUpvote"
                 v-if="showMenu"
             ></chat-message-menu>
         </div>
@@ -344,25 +343,6 @@ export default {
 
         firstWordLength() {
             return this.message.text ? this.message.text.split(' ')[0].length : 0;
-        },
-
-        addMessageUpvote() {
-            // todo - update
-            const increment = 1;
-
-            let score = this.upvoteNewScore
-                        || this.message.own_reactions.filter(({ type }) => type == 'upvote').map(({ score }) => score).pop()
-                        || 0;
-
-            score = score + increment;
-
-            this.upvoteNewScore = score;
-
-            clearTimeout(this.upvoteTimeout);
-
-            this.upvoteTimeout = setTimeout(() => {
-                this.$root.$emit('messageUpvote', { message: this.message, score });
-            }, 1500);
         },
     },
 }
