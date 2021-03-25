@@ -166,7 +166,7 @@
             >
                 <div
                     v-for="item in $_pinned_messages"
-                    :key="item.id"
+                    :key="item.key"
                 >
                     <chat-message
                         :is-administrator="isAdministrator"
@@ -185,7 +185,7 @@
             >
                 <div
                     v-for="(item, index) in $_messages"
-                    :key="item.id"
+                    :key="item.key"
                 >
                     <chat-message
                         :is-administrator="isAdministrator"
@@ -209,7 +209,7 @@
             >
                 <div
                     v-for="(item, index) in $_questions"
-                    :key="item.id"
+                    :key="item.key"
                 >
                     <chat-message
                         :is-administrator="isAdministrator"
@@ -352,6 +352,16 @@ export default {
             type: Boolean,
             default: () => false,
         },
+        userData: {
+            type: Object,
+            default: () => ({
+                displayName: '',
+                avatarUrl: '',
+                profileUrl: '',
+                role: '',
+                accessLevelName: '',
+            }),
+        },
     },
     data() {
         return {
@@ -378,6 +388,7 @@ export default {
             fetchingBannedUsers: false,
             bannedUsers: {},
             chatMenu: false,
+            userMessageId: 0,
         };
     },
     computed: {
@@ -542,6 +553,25 @@ export default {
                         this.errorHandler(response, 'Message send error');
                     });
             }
+
+            let message = {
+                'id': '',
+                'type': 'regular',
+                'text': payload.text,
+                'reply_count': 0,
+                'pinned': false,
+                'user': this.userData,
+                'reaction_counts': {},
+                'reaction_scores': {},
+                'own_reactions': [],
+                'createdAt': DateTime.now(),
+                'pinnedAt': null,
+                'reactions': [],
+                'replies': [],
+                'key': 'user-' + this.userId + this.userMessageId++
+            };
+
+            this.messages.push(message);
         },
 
         sendQuestion() {
@@ -580,11 +610,11 @@ export default {
             this.messageErrors.push(message);
         },
 
-        attachChatEventHandlers(channel, collection) {
+        attachChatEventHandlers(channel, collection, category) {
             channel.on(
                 'message.new',
                 ({ message }) => {
-                    this.pushMessage({ message, collection });
+                    this.pushMessage({ message, collection, category });
                 }
             );
             channel.on(
@@ -636,7 +666,7 @@ export default {
                     this.fetchWatchers();
                     this.fetchPinnedMessages();
 
-                    this.processMessages(state, this.messages);
+                    this.processMessages(state, this.messages, 'message');
 
                     let greeting = {id: 'greeting', type: 'system', text: 'Welcome to chat!'};
 
@@ -654,7 +684,7 @@ export default {
                             }
                         });
 
-                    this.attachChatEventHandlers(this.chatChannel, this.messages);
+                    this.attachChatEventHandlers(this.chatChannel, this.messages, 'message');
 
                     this.setupQuestionsChannel();
                 });
@@ -665,8 +695,8 @@ export default {
             this.questionsChannel
                 .watch()
                 .then((state) => {
-                    this.processMessages(state, this.questions);
-                    this.attachChatEventHandlers(this.questionsChannel, this.questions);
+                    this.processMessages(state, this.questions, 'question');
+                    this.attachChatEventHandlers(this.questionsChannel, this.questions, 'question');
                 });
         },
 
@@ -743,10 +773,10 @@ export default {
         /**
          * Iterate over initial channel messages and call push message only for main channel non-deleted messages
          */
-        processMessages({ messages }, collection) {
+        processMessages({ messages }, collection, category) {
             messages.forEach((message) => {
                 if (message.type == 'regular') {
-                    this.pushMessage({ message, collection });
+                    this.pushMessage({ message, collection, category });
                 }
             });
         },
@@ -812,8 +842,11 @@ export default {
          * Push a message into internal state
          * If the message has replies the method will fetch them from API
          */
-        pushMessage({ message, collection }) {
+        pushMessage({ message, collection, category }) {
             let messageCopy = this.getMessageCopy(message);
+
+            messageCopy.category = category;
+            messageCopy.key = messageCopy.id;
 
             if (message.reply_count) {
                 this.chatChannel
@@ -829,15 +862,56 @@ export default {
                     });
             }
 
-            if (message.type == 'regular') {
-                collection.push(messageCopy);
-            } else if (message.type == 'reply' && message.parent_id) {
-                collection.forEach((parentMessage) => {
-                    if (parentMessage.id == message.parent_id) {
-                        parentMessage.replies.push(messageCopy);
-                        parentMessage.reply_count = parentMessage.reply_count + 1;
+            let found = false;
+
+            if (message.user.id == this.userId) {
+                if (message.type == 'regular') {
+                    let messageIdx;
+
+                    collection.forEach((msg, idx) => {
+                        if (!msg.id && msg.user.id == this.userId && msg.text == messageCopy.text) {
+                            messageIdx = idx;
+                            found = true;
+                        }
+                    });
+
+                    if (messageIdx) {
+                        messageCopy.key = collection[messageIdx].key
+
+                        collection.splice(messageIdx, 1, messageCopy);
                     }
-                });
+
+                } else if (message.type == 'reply' && message.parent_id) {
+                    collection.forEach((parentMessage, parrentIdx) => {
+                        if (parentMessage.id == message.parent_id) {
+                            let messageIdx;
+                            parentMessage.replies.forEach((msg, idx) => {
+                                if (!msg.id && msg.user.id == this.userId && msg.text == messageCopy.text) {
+                                    messageIdx = idx;
+                                    found = true;
+                                }
+                            });
+                            if (messageIdx) {
+                                messageCopy.key = collection[parrentIdx].replies[messageIdx].key
+
+                                collection[parrentIdx].replies.splice(messageIdx, 1, messageCopy);
+                            }
+                        }
+                    });
+                }
+            }
+
+            if (!found) {
+                if (message.type == 'regular') {
+                    collection.push(messageCopy);
+                } else if (message.type == 'reply' && message.parent_id) {
+                    collection.forEach((parentMessage) => {
+                        if (parentMessage.id == message.parent_id) {
+                            parentMessage.replies.push(messageCopy);
+                            parentMessage.reply_count = parentMessage.reply_count + 1;
+                        }
+                    });
+                }
             }
         },
 
@@ -1150,8 +1224,39 @@ export default {
             return has;
         },
 
+        removeOwnReaction({ message, reaction }) {
+            let collection = message.category == 'message' ? this.messages : this.questions;
+            let selectedMessage;
+
+            collection.forEach((msg) => {
+                if (msg.id == message.id) {
+                    selectedMessage = msg;
+                }
+            });
+
+            if (selectedMessage.reaction_counts[reaction] > 1) {
+                selectedMessage.reaction_counts[reaction] = selectedMessage.reaction_counts[reaction] - 1;
+            } else {
+                delete selectedMessage.reaction_counts[reaction];
+            }
+
+            let reactionIndex;
+
+            selectedMessage.own_reactions.forEach(({ type }, idx) => {
+                if (type == reaction) {
+                    reactionIndex = idx;
+                }
+            });
+
+            if (reactionIndex) {
+                selectedMessage.own_reactions.splice(reactionIndex, 1);
+            }
+        },
+
         toggleMessageReaction({ message, reaction }) {
             if (this.hasOwnReaction(message, reaction)) {
+                this.removeOwnReaction({ message, reaction });
+
                 this.chatChannel
                     .deleteReaction(message.id, reaction)
                     .then(() => {
@@ -1161,6 +1266,7 @@ export default {
                         this.errorHandler(response, 'Message reaction remove error');
                     });
             } else {
+                // todo - add reaction to local stored message
                 this.chatChannel
                     .sendReaction(message.id, { type: reaction })
                     .then(() => {

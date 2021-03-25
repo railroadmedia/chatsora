@@ -26617,12 +26617,12 @@ var es_object_keys = __webpack_require__("b64b");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.for-each.js
 var web_dom_collections_for_each = __webpack_require__("159b");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5f6c83c9-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=template&id=34446f09&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-relative tw-h-full tw-w-full tw-flex tw-flex-col vuesora-override"},[_c('div',{staticClass:"cs-top tw-flex-none"},[_c('div',{staticClass:"tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center tw-place-content-between"},[_c('div',{staticClass:"tw-h-full tw-ml-4 tw-flex tw-flex-row tw-items-end tw-space-x-4 cs-text-sm"},[_c('a',{staticClass:"tw-no-underline tw-px-3 tw-pb-3 tw-border-b-2",class:_vm.getTabClasses('chat'),attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.setCurrentTab('chat')}}},[_vm._v("Chat")]),_c('a',{staticClass:"tw-no-underline tw-px-3 tw-pb-3 tw-border-b-2",class:_vm.getTabClasses('questions'),attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.setCurrentTab('questions')}}},[_vm._v("Questions")])]),_c('a',{staticClass:"tw-no-underline tw-font-semibold tw-mr-4 cs-text-gray tw-border-b-2 tw-border-transparent",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleChatMenu()}}},[_c('i',{staticClass:"fas fa-ellipsis-v"})])]),_c('div',{staticClass:"tw-relative"},[(_vm.chatMenu)?_c('div',{staticClass:"cs-top-menu cs-text-sm tw-leading-relaxed tw-absolute tw-right-4 tw-p-3 tw-flex tw-flex-col tw-bg-black tw-rounded-lg tw-text-white tw-z-30"},[(_vm.isAdministrator)?_c('div',{staticClass:"tw-mb-2 tw-font-semibold tw-cursor-default"},[_vm._v("Moderation")]):_vm._e(),_c('div',{staticClass:"tw-mb-1 tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowMembers()}}},[_vm._v("Participants")]),_c('div',{staticClass:"tw-mb-1 tw-cursor-pointer"},[_vm._v("Pop Out Chat")]),(_vm.isAdministrator)?_c('div',{staticClass:"tw-mb-1 tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowBannedUsers()}}},[_vm._v("Blocked Students")]):_vm._e(),(_vm.currentTab == 'questions' && _vm.isAdministrator)?_c('div',{staticClass:"tw-mb-1 tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.removeAllQuestions()}}},[_vm._v("Clear All Questions")]):_vm._e()]):_vm._e()])]),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.showThread),expression:"showThread"}],staticClass:"tw-absolute tw-top-0 tw-right-0 tw-left-0 tw-flex tw-flex-col tw-z-40"},[_c('div',{staticClass:"cs-top tw-flex-none"},[_c('div',{staticClass:"tw-h-full tw-w-full tw-flex tw-flex-row tw-place-items-center tw-justify-between"},[_c('a',{staticClass:"tw-ml-3 tw-no-underline tw-text-white",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.hideMessageThread()}}},[_c('i',{staticClass:"fas fa-arrow-left"}),_c('span',{staticClass:"tw-ml-1"},[_vm._v("Thread")]),_c('span',{staticClass:"tw-ml-3"},[_vm._v(_vm._s(_vm.$_reply_count_label))])]),_c('div',{staticClass:"tw-mr-3"},[_c('i',{staticClass:"fal fa-times tw-text-white tw-font-semibold tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.hideMessageThread()}}})])])])]),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.showMembers),expression:"showMembers"}],staticClass:"tw-absolute tw-inset-0 tw-flex tw-flex-col tw-z-40"},[_c('div',{staticClass:"cs-top tw-flex-none"},[_c('div',{staticClass:"tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center"},[_c('a',{staticClass:"tw-ml-3 tw-no-underline tw-text-white",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowMembers()}}},[_c('i',{staticClass:"fas fa-arrow-left"}),_c('span',{staticClass:"tw-ml-1"},[_vm._v("Participants")])])])]),_c('div',{staticClass:"cs-body tw-flex-grow tw-overflow-y-auto"},[_c('div',{staticClass:"cs-members-container tw-mt-1 tw-p-3"},_vm._l((_vm.$_watchers),function(item){return _c('div',{key:item.id,staticClass:"tw-py-2"},[_c('chat-user',{attrs:{"user":item}})],1)}),0)]),_c('div',{staticClass:"cs-footer tw-flex-none tw-h-8"},[_c('div',{staticClass:"tw-h-full tw-flex tw-flex-row tw-items-center tw-px-3"},[_c('span',{staticClass:"cs-text-gray tw-text-xs"},[_vm._v(_vm._s(_vm.$_watcher_count)+" Online")])])])]),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.showBannedUsers),expression:"showBannedUsers"}],staticClass:"tw-absolute tw-inset-0 tw-flex tw-flex-col tw-z-40"},[_c('div',{staticClass:"cs-top tw-flex-none"},[_c('div',{staticClass:"tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center"},[_c('a',{staticClass:"tw-ml-3 tw-no-underline tw-text-white",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowBannedUsers()}}},[_c('i',{staticClass:"fas fa-arrow-left"}),_c('span',{staticClass:"tw-ml-1"},[_vm._v("Blocked Students")])])])]),_c('div',{staticClass:"cs-body tw-flex-grow tw-overflow-y-auto"},[(_vm.fetchingBannedUsers || _vm.$_banned_users_count == 0)?_c('div',{staticClass:"tw-mt-1 tw-p-3 cs-text-gray"},[(_vm.fetchingBannedUsers)?_c('span',[_vm._v("Fetching blocked students information...")]):_vm._e(),(!_vm.fetchingBannedUsers && _vm.$_banned_users_count == 0)?_c('span',[_vm._v("There are no students blocked from this chat.")]):_vm._e()]):_vm._e(),(!_vm.fetchingBannedUsers && _vm.$_banned_users_count > 0)?_c('div',{staticClass:"cs-members-container tw-mt-1 tw-p-3"},_vm._l((_vm.bannedUsers),function(item){return _c('div',{key:item.id,staticClass:"tw-py-2"},[_c('div',{staticClass:"cs-user tw-p-3 tw-rounded-md"},[_c('chat-user',{attrs:{"user":item}},[_c('div',{staticClass:"tw-flex-grow tw-text-right"},[_c('a',{staticClass:"cs-user-unblock tw-text-sm",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.unblockUser(item)}}},[_c('span',[_vm._v("Unblock")]),_c('i',{staticClass:"tw-ml-1 fas fa-times-circle"})])])])],1)])}),0):_vm._e()]),_c('div',{staticClass:"cs-footer tw-flex-none tw-h-8"},[_c('div',{staticClass:"tw-h-full tw-flex tw-flex-row tw-items-center tw-px-3"},[_c('span',{staticClass:"cs-text-gray tw-text-xs"},[_vm._v(_vm._s(_vm.$_watcher_count)+" Online")])])])]),_c('div',{staticClass:"cs-body tw-flex-grow tw-flex tw-flex-col tw-overflow-hidden"},[(_vm.showThread)?_c('div',{ref:"threadMessages",staticClass:"cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-auto tw-z-40"},[_c('div',{staticClass:"tw-border-b tw-border-gray-600"},[_c('div',{staticClass:"tw-my-4"},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":_vm.messageThread,"user-id":_vm.userId,"show-upvote":false,"show-menu":false,"show-thread":false}})],1)]),_c('div',{staticClass:"cs-messages-container tw-mt-4"},_vm._l((_vm.$_message_thread_replies),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":false,"show-thread":false}})],1)}),0)]):_vm._e(),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.$_pinned_messages.length && _vm.currentTab == 'chat' && !_vm.showThread),expression:"$_pinned_messages.length && currentTab == 'chat' && !showThread"}],staticClass:"cs-messages-container cs-fit tw-px-3 tw-pt-4 tw-pb-2 tw-z-20"},_vm._l((_vm.$_pinned_messages),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":false,"show-thread":_vm.enableThread,"dropdown-menu":true}})],1)}),0),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.currentTab == 'chat' && !_vm.showThread),expression:"currentTab == 'chat' && !showThread"}],ref:"messages",staticClass:"cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-auto"},[_vm._l((_vm.$_messages),function(item,index){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":false,"show-thread":_vm.enableThread,"dropdown-menu":index <= 1}})],1)}),_vm._l((_vm.messageErrors),function(message,index){return _c('div',{key:("error-message-" + index),staticClass:"tw-p-3 tw-text-red-400"},[_vm._v(_vm._s(message))])})],2),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.currentTab == 'questions' && !_vm.showThread),expression:"currentTab == 'questions' && !showThread"}],ref:"questions",staticClass:"cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-auto"},[_vm._l((_vm.$_questions),function(item,index){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":true,"show-thread":_vm.enableThread,"dropdown-menu":index < 1}})],1)}),_vm._l((_vm.questionErrors),function(message,index){return _c('div',{key:("error-question-" + index),staticClass:"tw-p-3 tw-text-red-400"},[_vm._v(_vm._s(message))])})],2)]),(_vm.showDialog)?_c('div',{staticClass:"cs-dialog-container tw-absolute tw-inset-0 tw-z-50"},[_c('div',{staticClass:"tw-w-full tw-h-full tw-relative"},[_c('div',{staticClass:"cs-dialog-overlay tw-absolute tw-inset-0 tw-opacity-100 tw-z-20",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}}),_c('div',{staticClass:"tw-w-full tw-h-full tw-flex tw-flex-col tw-place-content-center tw-place-items-center"},[_c('div',{staticClass:"cs-dialog-window tw-rounded-lg tw-flex-none tw-bg-black tw-z-30 tw-relative"},[_c('div',{staticClass:"tw-absolute tw-top-2 tw-right-3 tw-text-white"},[_c('i',{staticClass:"fal fa-times tw-font-semibold tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}})]),(_vm.messageRemove != null)?_c('div',{staticClass:"tw-mt-6 tw-mx-8 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"},[_vm._v("Are you sure you want to delete this message from the chat?")]):_vm._e(),(_vm.questionRemove != null)?_c('div',{staticClass:"tw-mt-6 tw-mx-8 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"},[_vm._v("Are you sure you want to mark this question as answered?")]):_vm._e(),(_vm.userBlock != null)?_c('div',{staticClass:"tw-mt-6 tw-mx-6 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed",class:{'tw-pb-2': _vm.$_short_username}},[_vm._v("Are you sure you want to block "),_c('span',{staticClass:"tw-font-bold"},[_vm._v(_vm._s(_vm.userBlock.displayName))]),_vm._v(" from this chat?")]):_vm._e(),_c('div',{staticClass:"tw-mt-3 tw-flex tw-flex-row tw-justify-center"},[_c('div',{staticClass:"cs-btn tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-tracking-normal tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-text-white tw-w-28 tw-flex tw-justify-center",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog(true)}}},[_vm._v("confirm")])])])])])]):_vm._e(),_c('chat-emoji',{attrs:{"show-window":_vm.showEmoji}}),_c('div',{staticClass:"cs-new-message-container tw-flex-none box-border"},[_c('div',{staticClass:"tw-h-full tw-flex tw-flex-col tw-place-content-between tw-py-2 tw-px-4 tw-relative"},[_c('div',[(_vm.currentTab == 'chat')?_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.message),expression:"message"}],ref:"newMessage",staticClass:"tw-resize-none tw-text-sm tw-rounded",attrs:{"placeholder":"Say something...","wrap":"off","rows":"1"},domProps:{"value":(_vm.message)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.sendMessage()},"input":function($event){if($event.target.composing){ return; }_vm.message=$event.target.value}}}):_vm._e(),(_vm.currentTab == 'questions')?_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.question),expression:"question"}],staticClass:"tw-resize-none tw-text-sm tw-rounded",attrs:{"placeholder":"Ask a question...","wrap":"off","rows":"1"},domProps:{"value":(_vm.question)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.sendQuestion()},"input":function($event){if($event.target.composing){ return; }_vm.question=$event.target.value}}}):_vm._e(),_c('div',{staticClass:"cs-new-message-menu tw-absolute tw-text-lg"},[(_vm.currentTab == 'chat')?_c('a',{staticClass:"cs-text-gray tw-mr-2",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowEmoji()}}},[_c('i',{staticClass:"fal fa-smile"})]):_vm._e(),_c('a',{staticClass:"cs-text-gray",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.sendMessage()}}},[_c('i',{staticClass:"fas fa-arrow-right"})])])]),_c('div',[_c('span',{staticClass:"cs-text-gray tw-text-xs"},[_vm._v(_vm._s(_vm.$_watcher_count)+" Online")])])])])],1)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5f6c83c9-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=template&id=e8f3e202&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tw-relative tw-h-full tw-w-full tw-flex tw-flex-col vuesora-override"},[_c('div',{staticClass:"cs-top tw-flex-none"},[_c('div',{staticClass:"tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center tw-place-content-between"},[_c('div',{staticClass:"tw-h-full tw-ml-4 tw-flex tw-flex-row tw-items-end tw-space-x-4 cs-text-sm"},[_c('a',{staticClass:"tw-no-underline tw-px-3 tw-pb-3 tw-border-b-2",class:_vm.getTabClasses('chat'),attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.setCurrentTab('chat')}}},[_vm._v("Chat")]),_c('a',{staticClass:"tw-no-underline tw-px-3 tw-pb-3 tw-border-b-2",class:_vm.getTabClasses('questions'),attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.setCurrentTab('questions')}}},[_vm._v("Questions")])]),_c('a',{staticClass:"tw-no-underline tw-font-semibold tw-mr-4 cs-text-gray tw-border-b-2 tw-border-transparent",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleChatMenu()}}},[_c('i',{staticClass:"fas fa-ellipsis-v"})])]),_c('div',{staticClass:"tw-relative"},[(_vm.chatMenu)?_c('div',{staticClass:"cs-top-menu cs-text-sm tw-leading-relaxed tw-absolute tw-right-4 tw-p-3 tw-flex tw-flex-col tw-bg-black tw-rounded-lg tw-text-white tw-z-30"},[(_vm.isAdministrator)?_c('div',{staticClass:"tw-mb-2 tw-font-semibold tw-cursor-default"},[_vm._v("Moderation")]):_vm._e(),_c('div',{staticClass:"tw-mb-1 tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowMembers()}}},[_vm._v("Participants")]),_c('div',{staticClass:"tw-mb-1 tw-cursor-pointer"},[_vm._v("Pop Out Chat")]),(_vm.isAdministrator)?_c('div',{staticClass:"tw-mb-1 tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowBannedUsers()}}},[_vm._v("Blocked Students")]):_vm._e(),(_vm.currentTab == 'questions' && _vm.isAdministrator)?_c('div',{staticClass:"tw-mb-1 tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.removeAllQuestions()}}},[_vm._v("Clear All Questions")]):_vm._e()]):_vm._e()])]),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.showThread),expression:"showThread"}],staticClass:"tw-absolute tw-top-0 tw-right-0 tw-left-0 tw-flex tw-flex-col tw-z-40"},[_c('div',{staticClass:"cs-top tw-flex-none"},[_c('div',{staticClass:"tw-h-full tw-w-full tw-flex tw-flex-row tw-place-items-center tw-justify-between"},[_c('a',{staticClass:"tw-ml-3 tw-no-underline tw-text-white",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.hideMessageThread()}}},[_c('i',{staticClass:"fas fa-arrow-left"}),_c('span',{staticClass:"tw-ml-1"},[_vm._v("Thread")]),_c('span',{staticClass:"tw-ml-3"},[_vm._v(_vm._s(_vm.$_reply_count_label))])]),_c('div',{staticClass:"tw-mr-3"},[_c('i',{staticClass:"fal fa-times tw-text-white tw-font-semibold tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.hideMessageThread()}}})])])])]),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.showMembers),expression:"showMembers"}],staticClass:"tw-absolute tw-inset-0 tw-flex tw-flex-col tw-z-40"},[_c('div',{staticClass:"cs-top tw-flex-none"},[_c('div',{staticClass:"tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center"},[_c('a',{staticClass:"tw-ml-3 tw-no-underline tw-text-white",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowMembers()}}},[_c('i',{staticClass:"fas fa-arrow-left"}),_c('span',{staticClass:"tw-ml-1"},[_vm._v("Participants")])])])]),_c('div',{staticClass:"cs-body tw-flex-grow tw-overflow-y-auto"},[_c('div',{staticClass:"cs-members-container tw-mt-1 tw-p-3"},_vm._l((_vm.$_watchers),function(item){return _c('div',{key:item.id,staticClass:"tw-py-2"},[_c('chat-user',{attrs:{"user":item}})],1)}),0)]),_c('div',{staticClass:"cs-footer tw-flex-none tw-h-8"},[_c('div',{staticClass:"tw-h-full tw-flex tw-flex-row tw-items-center tw-px-3"},[_c('span',{staticClass:"cs-text-gray tw-text-xs"},[_vm._v(_vm._s(_vm.$_watcher_count)+" Online")])])])]),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.showBannedUsers),expression:"showBannedUsers"}],staticClass:"tw-absolute tw-inset-0 tw-flex tw-flex-col tw-z-40"},[_c('div',{staticClass:"cs-top tw-flex-none"},[_c('div',{staticClass:"tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center"},[_c('a',{staticClass:"tw-ml-3 tw-no-underline tw-text-white",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowBannedUsers()}}},[_c('i',{staticClass:"fas fa-arrow-left"}),_c('span',{staticClass:"tw-ml-1"},[_vm._v("Blocked Students")])])])]),_c('div',{staticClass:"cs-body tw-flex-grow tw-overflow-y-auto"},[(_vm.fetchingBannedUsers || _vm.$_banned_users_count == 0)?_c('div',{staticClass:"tw-mt-1 tw-p-3 cs-text-gray"},[(_vm.fetchingBannedUsers)?_c('span',[_vm._v("Fetching blocked students information...")]):_vm._e(),(!_vm.fetchingBannedUsers && _vm.$_banned_users_count == 0)?_c('span',[_vm._v("There are no students blocked from this chat.")]):_vm._e()]):_vm._e(),(!_vm.fetchingBannedUsers && _vm.$_banned_users_count > 0)?_c('div',{staticClass:"cs-members-container tw-mt-1 tw-p-3"},_vm._l((_vm.bannedUsers),function(item){return _c('div',{key:item.id,staticClass:"tw-py-2"},[_c('div',{staticClass:"cs-user tw-p-3 tw-rounded-md"},[_c('chat-user',{attrs:{"user":item}},[_c('div',{staticClass:"tw-flex-grow tw-text-right"},[_c('a',{staticClass:"cs-user-unblock tw-text-sm",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.unblockUser(item)}}},[_c('span',[_vm._v("Unblock")]),_c('i',{staticClass:"tw-ml-1 fas fa-times-circle"})])])])],1)])}),0):_vm._e()]),_c('div',{staticClass:"cs-footer tw-flex-none tw-h-8"},[_c('div',{staticClass:"tw-h-full tw-flex tw-flex-row tw-items-center tw-px-3"},[_c('span',{staticClass:"cs-text-gray tw-text-xs"},[_vm._v(_vm._s(_vm.$_watcher_count)+" Online")])])])]),_c('div',{staticClass:"cs-body tw-flex-grow tw-flex tw-flex-col tw-overflow-hidden"},[(_vm.showThread)?_c('div',{ref:"threadMessages",staticClass:"cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-auto tw-z-40"},[_c('div',{staticClass:"tw-border-b tw-border-gray-600"},[_c('div',{staticClass:"tw-my-4"},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":_vm.messageThread,"user-id":_vm.userId,"show-upvote":false,"show-menu":false,"show-thread":false}})],1)]),_c('div',{staticClass:"cs-messages-container tw-mt-4"},_vm._l((_vm.$_message_thread_replies),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":false,"show-thread":false}})],1)}),0)]):_vm._e(),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.$_pinned_messages.length && _vm.currentTab == 'chat' && !_vm.showThread),expression:"$_pinned_messages.length && currentTab == 'chat' && !showThread"}],staticClass:"cs-messages-container cs-fit tw-px-3 tw-pt-4 tw-pb-2 tw-z-20"},_vm._l((_vm.$_pinned_messages),function(item){return _c('div',{key:item.key},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":false,"show-thread":_vm.enableThread,"dropdown-menu":true}})],1)}),0),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.currentTab == 'chat' && !_vm.showThread),expression:"currentTab == 'chat' && !showThread"}],ref:"messages",staticClass:"cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-auto"},[_vm._l((_vm.$_messages),function(item,index){return _c('div',{key:item.key},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":false,"show-thread":_vm.enableThread,"dropdown-menu":index <= 1}})],1)}),_vm._l((_vm.messageErrors),function(message,index){return _c('div',{key:("error-message-" + index),staticClass:"tw-p-3 tw-text-red-400"},[_vm._v(_vm._s(message))])})],2),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.currentTab == 'questions' && !_vm.showThread),expression:"currentTab == 'questions' && !showThread"}],ref:"questions",staticClass:"cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-auto"},[_vm._l((_vm.$_questions),function(item,index){return _c('div',{key:item.key},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":true,"show-thread":_vm.enableThread,"dropdown-menu":index < 1}})],1)}),_vm._l((_vm.questionErrors),function(message,index){return _c('div',{key:("error-question-" + index),staticClass:"tw-p-3 tw-text-red-400"},[_vm._v(_vm._s(message))])})],2)]),(_vm.showDialog)?_c('div',{staticClass:"cs-dialog-container tw-absolute tw-inset-0 tw-z-50"},[_c('div',{staticClass:"tw-w-full tw-h-full tw-relative"},[_c('div',{staticClass:"cs-dialog-overlay tw-absolute tw-inset-0 tw-opacity-100 tw-z-20",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}}),_c('div',{staticClass:"tw-w-full tw-h-full tw-flex tw-flex-col tw-place-content-center tw-place-items-center"},[_c('div',{staticClass:"cs-dialog-window tw-rounded-lg tw-flex-none tw-bg-black tw-z-30 tw-relative"},[_c('div',{staticClass:"tw-absolute tw-top-2 tw-right-3 tw-text-white"},[_c('i',{staticClass:"fal fa-times tw-font-semibold tw-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}})]),(_vm.messageRemove != null)?_c('div',{staticClass:"tw-mt-6 tw-mx-8 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"},[_vm._v("Are you sure you want to delete this message from the chat?")]):_vm._e(),(_vm.questionRemove != null)?_c('div',{staticClass:"tw-mt-6 tw-mx-8 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"},[_vm._v("Are you sure you want to mark this question as answered?")]):_vm._e(),(_vm.userBlock != null)?_c('div',{staticClass:"tw-mt-6 tw-mx-6 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed",class:{'tw-pb-2': _vm.$_short_username}},[_vm._v("Are you sure you want to block "),_c('span',{staticClass:"tw-font-bold"},[_vm._v(_vm._s(_vm.userBlock.displayName))]),_vm._v(" from this chat?")]):_vm._e(),_c('div',{staticClass:"tw-mt-3 tw-flex tw-flex-row tw-justify-center"},[_c('div',{staticClass:"cs-btn tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-tracking-normal tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-text-white tw-w-28 tw-flex tw-justify-center",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog(true)}}},[_vm._v("confirm")])])])])])]):_vm._e(),_c('chat-emoji',{attrs:{"show-window":_vm.showEmoji}}),_c('div',{staticClass:"cs-new-message-container tw-flex-none box-border"},[_c('div',{staticClass:"tw-h-full tw-flex tw-flex-col tw-place-content-between tw-py-2 tw-px-4 tw-relative"},[_c('div',[(_vm.currentTab == 'chat')?_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.message),expression:"message"}],ref:"newMessage",staticClass:"tw-resize-none tw-text-sm tw-rounded",attrs:{"placeholder":"Say something...","wrap":"off","rows":"1"},domProps:{"value":(_vm.message)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.sendMessage()},"input":function($event){if($event.target.composing){ return; }_vm.message=$event.target.value}}}):_vm._e(),(_vm.currentTab == 'questions')?_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.question),expression:"question"}],staticClass:"tw-resize-none tw-text-sm tw-rounded",attrs:{"placeholder":"Ask a question...","wrap":"off","rows":"1"},domProps:{"value":(_vm.question)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.sendQuestion()},"input":function($event){if($event.target.composing){ return; }_vm.question=$event.target.value}}}):_vm._e(),_c('div',{staticClass:"cs-new-message-menu tw-absolute tw-text-lg"},[(_vm.currentTab == 'chat')?_c('a',{staticClass:"cs-text-gray tw-mr-2",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowEmoji()}}},[_c('i',{staticClass:"fal fa-smile"})]):_vm._e(),_c('a',{staticClass:"cs-text-gray",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.sendMessage()}}},[_c('i',{staticClass:"fas fa-arrow-right"})])])]),_c('div',[_c('span',{staticClass:"cs-text-gray tw-text-xs"},[_vm._v(_vm._s(_vm.$_watcher_count)+" Online")])])])])],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/Chat/Chat.vue?vue&type=template&id=34446f09&
+// CONCATENATED MODULE: ./src/components/Chat/Chat.vue?vue&type=template&id=e8f3e202&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("99af");
@@ -28167,6 +28167,18 @@ var ChatMessage_component = normalizeComponent(
       default: function _default() {
         return false;
       }
+    },
+    userData: {
+      type: Object,
+      default: function _default() {
+        return {
+          displayName: '',
+          avatarUrl: '',
+          profileUrl: '',
+          role: '',
+          accessLevelName: ''
+        };
+      }
     }
   },
   data: function data() {
@@ -28193,7 +28205,8 @@ var ChatMessage_component = normalizeComponent(
       channelWatchers: {},
       fetchingBannedUsers: false,
       bannedUsers: {},
-      chatMenu: false
+      chatMenu: false,
+      userMessageId: 0
     };
   },
   computed: {
@@ -28362,6 +28375,24 @@ var ChatMessage_component = normalizeComponent(
           _this2.errorHandler(response, 'Message send error');
         });
       }
+
+      var message = {
+        'id': '',
+        'type': 'regular',
+        'text': payload.text,
+        'reply_count': 0,
+        'pinned': false,
+        'user': this.userData,
+        'reaction_counts': {},
+        'reaction_scores': {},
+        'own_reactions': [],
+        'createdAt': luxon["DateTime"].now(),
+        'pinnedAt': null,
+        'reactions': [],
+        'replies': [],
+        'key': 'user-' + this.userId + this.userMessageId++
+      };
+      this.messages.push(message);
     },
     sendQuestion: function sendQuestion() {
       var _this3 = this;
@@ -28400,7 +28431,7 @@ var ChatMessage_component = normalizeComponent(
 
       this.messageErrors.push(message);
     },
-    attachChatEventHandlers: function attachChatEventHandlers(channel, collection) {
+    attachChatEventHandlers: function attachChatEventHandlers(channel, collection, category) {
       var _this4 = this;
 
       channel.on('message.new', function (_ref4) {
@@ -28408,7 +28439,8 @@ var ChatMessage_component = normalizeComponent(
 
         _this4.pushMessage({
           message: message,
-          collection: collection
+          collection: collection,
+          category: category
         });
       });
       channel.on('message.updated', function (_ref5) {
@@ -28476,7 +28508,7 @@ var ChatMessage_component = normalizeComponent(
 
         _this5.fetchPinnedMessages();
 
-        _this5.processMessages(state, _this5.messages);
+        _this5.processMessages(state, _this5.messages, 'message');
 
         var greeting = {
           id: 'greeting',
@@ -28500,7 +28532,7 @@ var ChatMessage_component = normalizeComponent(
           }
         });
 
-        _this5.attachChatEventHandlers(_this5.chatChannel, _this5.messages);
+        _this5.attachChatEventHandlers(_this5.chatChannel, _this5.messages, 'message');
 
         _this5.setupQuestionsChannel();
       });
@@ -28510,9 +28542,9 @@ var ChatMessage_component = normalizeComponent(
 
       this.questionsChannel = this.streamClient.channel('messaging', this.questionsChannelName, {});
       this.questionsChannel.watch().then(function (state) {
-        _this6.processMessages(state, _this6.questions);
+        _this6.processMessages(state, _this6.questions, 'question');
 
-        _this6.attachChatEventHandlers(_this6.questionsChannel, _this6.questions);
+        _this6.attachChatEventHandlers(_this6.questionsChannel, _this6.questions, 'question');
       });
     },
     fetchWatchers: function fetchWatchers() {
@@ -28611,7 +28643,7 @@ var ChatMessage_component = normalizeComponent(
     /**
      * Iterate over initial channel messages and call push message only for main channel non-deleted messages
      */
-    processMessages: function processMessages(_ref17, collection) {
+    processMessages: function processMessages(_ref17, collection, category) {
       var _this11 = this;
 
       var messages = _ref17.messages;
@@ -28619,7 +28651,8 @@ var ChatMessage_component = normalizeComponent(
         if (message.type == 'regular') {
           _this11.pushMessage({
             message: message,
-            collection: collection
+            collection: collection,
+            category: category
           });
         }
       });
@@ -28724,8 +28757,11 @@ var ChatMessage_component = normalizeComponent(
       var _this13 = this;
 
       var message = _ref22.message,
-          collection = _ref22.collection;
+          collection = _ref22.collection,
+          category = _ref22.category;
       var messageCopy = this.getMessageCopy(message);
+      messageCopy.category = category;
+      messageCopy.key = messageCopy.id;
 
       if (message.reply_count) {
         this.chatChannel.getReplies(message.id, {
@@ -28744,15 +28780,54 @@ var ChatMessage_component = normalizeComponent(
         });
       }
 
-      if (message.type == 'regular') {
-        collection.push(messageCopy);
-      } else if (message.type == 'reply' && message.parent_id) {
-        collection.forEach(function (parentMessage) {
-          if (parentMessage.id == message.parent_id) {
-            parentMessage.replies.push(messageCopy);
-            parentMessage.reply_count = parentMessage.reply_count + 1;
+      var found = false;
+
+      if (message.user.id == this.userId) {
+        if (message.type == 'regular') {
+          var messageIdx;
+          collection.forEach(function (msg, idx) {
+            if (!msg.id && msg.user.id == _this13.userId && msg.text == messageCopy.text) {
+              messageIdx = idx;
+              found = true;
+            }
+          });
+
+          if (messageIdx) {
+            messageCopy.key = collection[messageIdx].key;
+            collection.splice(messageIdx, 1, messageCopy);
           }
-        });
+        } else if (message.type == 'reply' && message.parent_id) {
+          collection.forEach(function (parentMessage, parrentIdx) {
+            if (parentMessage.id == message.parent_id) {
+              var _messageIdx;
+
+              parentMessage.replies.forEach(function (msg, idx) {
+                if (!msg.id && msg.user.id == _this13.userId && msg.text == messageCopy.text) {
+                  _messageIdx = idx;
+                  found = true;
+                }
+              });
+
+              if (_messageIdx) {
+                messageCopy.key = collection[parrentIdx].replies[_messageIdx].key;
+                collection[parrentIdx].replies.splice(_messageIdx, 1, messageCopy);
+              }
+            }
+          });
+        }
+      }
+
+      if (!found) {
+        if (message.type == 'regular') {
+          collection.push(messageCopy);
+        } else if (message.type == 'reply' && message.parent_id) {
+          collection.forEach(function (parentMessage) {
+            if (parentMessage.id == message.parent_id) {
+              parentMessage.replies.push(messageCopy);
+              parentMessage.reply_count = parentMessage.reply_count + 1;
+            }
+          });
+        }
       }
     },
 
@@ -29062,36 +29137,71 @@ var ChatMessage_component = normalizeComponent(
       });
       return has;
     },
-    toggleMessageReaction: function toggleMessageReaction(_ref38) {
-      var _this21 = this;
-
+    removeOwnReaction: function removeOwnReaction(_ref38) {
       var message = _ref38.message,
           reaction = _ref38.reaction;
+      var collection = message.category == 'message' ? this.messages : this.questions;
+      var selectedMessage;
+      collection.forEach(function (msg) {
+        if (msg.id == message.id) {
+          selectedMessage = msg;
+        }
+      });
+
+      if (selectedMessage.reaction_counts[reaction] > 1) {
+        selectedMessage.reaction_counts[reaction] = selectedMessage.reaction_counts[reaction] - 1;
+      } else {
+        delete selectedMessage.reaction_counts[reaction];
+      }
+
+      var reactionIndex;
+      selectedMessage.own_reactions.forEach(function (_ref39, idx) {
+        var type = _ref39.type;
+
+        if (type == reaction) {
+          reactionIndex = idx;
+        }
+      });
+
+      if (reactionIndex) {
+        selectedMessage.own_reactions.splice(reactionIndex, 1);
+      }
+    },
+    toggleMessageReaction: function toggleMessageReaction(_ref40) {
+      var _this21 = this;
+
+      var message = _ref40.message,
+          reaction = _ref40.reaction;
 
       if (this.hasOwnReaction(message, reaction)) {
+        this.removeOwnReaction({
+          message: message,
+          reaction: reaction
+        });
         this.chatChannel.deleteReaction(message.id, reaction).then(function () {
           _this21.messageErrors = [];
-        }).catch(function (_ref39) {
-          var response = _ref39.response;
+        }).catch(function (_ref41) {
+          var response = _ref41.response;
 
           _this21.errorHandler(response, 'Message reaction remove error');
         });
       } else {
+        // todo - add reaction to local stored message
         this.chatChannel.sendReaction(message.id, {
           type: reaction
         }).then(function () {
           _this21.messageErrors = [];
-        }).catch(function (_ref40) {
-          var response = _ref40.response;
+        }).catch(function (_ref42) {
+          var response = _ref42.response;
 
           _this21.errorHandler(response, 'Message reaction send error');
         });
       }
     },
-    showMessageThread: function showMessageThread(_ref41) {
+    showMessageThread: function showMessageThread(_ref43) {
       var _this22 = this;
 
-      var message = _ref41.message;
+      var message = _ref43.message;
       this.messageThread = message;
       this.showMembers = false;
       this.showThread = true;
@@ -29103,10 +29213,10 @@ var ChatMessage_component = normalizeComponent(
       this.showThread = false;
       this.messageThread = null;
     },
-    pinMessage: function pinMessage(_ref42) {
+    pinMessage: function pinMessage(_ref44) {
       var _this23 = this;
 
-      var message = _ref42.message;
+      var message = _ref44.message;
       this.streamClient.pinMessage({
         id: message.id,
         text: message.text
@@ -29114,23 +29224,23 @@ var ChatMessage_component = normalizeComponent(
         _this23.messageErrors = [];
 
         _this23.unpinMessages(1);
-      }).catch(function (_ref43) {
-        var response = _ref43.response;
+      }).catch(function (_ref45) {
+        var response = _ref45.response;
 
         _this23.errorHandler(response, 'Message pin error');
       });
     },
-    unpinMessage: function unpinMessage(_ref44) {
+    unpinMessage: function unpinMessage(_ref46) {
       var _this24 = this;
 
-      var message = _ref44.message;
+      var message = _ref46.message;
       this.streamClient.unpinMessage({
         id: message.id,
         text: message.text
       }, null).then(function () {
         _this24.messageErrors = [];
-      }).catch(function (_ref45) {
-        var response = _ref45.response;
+      }).catch(function (_ref47) {
+        var response = _ref47.response;
 
         _this24.errorHandler(response, 'Message unpin error');
       });
@@ -29141,16 +29251,16 @@ var ChatMessage_component = normalizeComponent(
     toggleChatMenu: function toggleChatMenu() {
       this.chatMenu = !this.chatMenu;
     },
-    unblockUser: function unblockUser(_ref46) {
+    unblockUser: function unblockUser(_ref48) {
       var _this25 = this;
 
-      var id = _ref46.id;
+      var id = _ref48.id;
       railchat.unbanUser(id).then(function () {
         _this25.messageErrors = [];
 
         _this25.fetchBannedUsers();
-      }).catch(function (_ref47) {
-        var response = _ref47.response;
+      }).catch(function (_ref49) {
+        var response = _ref49.response;
 
         _this25.railErrorHandler(response, 'User unban error');
       });
@@ -29174,8 +29284,8 @@ var ChatMessage_component = normalizeComponent(
 
       this.messageErrors.push(message);
     },
-    insertEmoji: function insertEmoji(_ref48) {
-      var emoji = _ref48.emoji;
+    insertEmoji: function insertEmoji(_ref50) {
+      var emoji = _ref50.emoji;
       var textarea = this.$refs.newMessage;
       var start = textarea.selectionStart;
       var end = textarea.selectionEnd;
