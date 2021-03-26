@@ -1253,6 +1253,21 @@ export default {
             }
         },
 
+        addOwnReaction({ message, reaction }) {
+            let collection = message.category == 'message' ? this.messages : this.questions;
+            let selectedMessage;
+
+            collection.forEach((msg) => {
+                if (msg.id == message.id) {
+                    selectedMessage = msg;
+                }
+            });
+
+            selectedMessage.reaction_counts[reaction] = (selectedMessage.reaction_counts[reaction] || 0) + 1;
+
+            selectedMessage.own_reactions.push({type: reaction, score: 1});
+        },
+
         toggleMessageReaction({ message, reaction }) {
             if (this.hasOwnReaction(message, reaction)) {
                 this.removeOwnReaction({ message, reaction });
@@ -1266,7 +1281,8 @@ export default {
                         this.errorHandler(response, 'Message reaction remove error');
                     });
             } else {
-                // todo - add reaction to local stored message
+                this.addOwnReaction({ message, reaction });
+
                 this.chatChannel
                     .sendReaction(message.id, { type: reaction })
                     .then(() => {
