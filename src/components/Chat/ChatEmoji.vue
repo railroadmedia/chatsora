@@ -7,23 +7,23 @@
             <div class="cs-emoji-tabs tw-flex tw-flex-row tw-items-center tw-justify-between tw-border-b tw-border-gray-800 tw-text-lg">
                 <div>
                     <a
-                        class="tw-p-3"
-                        :class="{'cs-text-gray': currentTab != 'frequent'}"
+                        class="tw-p-3 tw-cursor-pointer"
+                        :class="{'cs-text-gray': currentTab != 'frequent', 'cs-text-blue': currentTab == 'frequent'}"
                         @click.stop.prevent="setCurrentTab('frequent')"
                     ><i class="fal fa-clock"></i></a>
                     <a
-                        class="tw-p-3"
-                        :class="{'cs-text-gray': currentTab != 'people'}"
+                        class="tw-p-3 tw-cursor-pointer"
+                        :class="{'cs-text-gray': currentTab != 'people', 'cs-text-blue': currentTab == 'people'}"
                         @click.stop.prevent="setCurrentTab('people')"
                     ><i class="fal fa-smile"></i></a>
                     <a
-                        class="tw-p-3"
-                        :class="{'cs-text-gray': currentTab != 'music'}"
+                        class="tw-p-3 tw-cursor-pointer"
+                        :class="{'cs-text-gray': currentTab != 'music', 'cs-text-blue': currentTab == 'music'}"
                         @click.stop.prevent="setCurrentTab('music')"
                     ><i class="fal fa-music"></i></a>
                     <a
-                        class="tw-p-3"
-                        :class="{'cs-text-gray': currentTab != 'symbols'}"
+                        class="tw-p-3 tw-cursor-pointer"
+                        :class="{'cs-text-gray': currentTab != 'symbols', 'cs-text-blue': currentTab == 'symbols'}"
                         @click.stop.prevent="setCurrentTab('symbols')"
                     ><i class="fal fa-hexagon"></i></a>
                 </div>

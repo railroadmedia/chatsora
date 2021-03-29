@@ -29,7 +29,11 @@
                 >
                     <div class="tw-mb-2 tw-font-semibold tw-cursor-default" v-if="isAdministrator">Moderation</div>
                     <div class="tw-mb-1 tw-cursor-pointer" @click.stop.prevent="toggleShowMembers()">Participants</div>
-                    <div class="tw-mb-1 tw-cursor-pointer">Pop Out Chat</div>
+                    <a
+                        class="tw-mb-1 tw-text-white tw-no-underline"
+                        target="_blank"
+                        :href="embedUrl"
+                    >Pop Out Chat</a>
                     <div
                         class="tw-mb-1 tw-cursor-pointer"
                         @click.stop.prevent="toggleShowBannedUsers()"
@@ -361,6 +365,10 @@ export default {
                 role: '',
                 accessLevelName: '',
             }),
+        },
+        embedUrl: {
+            type: String,
+            default: () => '',
         },
     },
     data() {
@@ -1381,6 +1389,7 @@ export default {
             if (tab == 'chat' || tab == 'questions') {
                 this.currentTab = tab;
             }
+            this.chatMenu = false;
         },
 
         getTabClasses(tab) {
