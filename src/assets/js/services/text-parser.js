@@ -22,9 +22,9 @@ for (let i in emoticons) {
 export default {
 
     /**
-     * Parses message text and replaces emoji codes with font awesome icons and urls with anchors
+     * Parses message text and replaces emoji codes with font awesome icons
      *
-     * @param String userId
+     * @param String text
      *
      * @returns String
      */
@@ -38,6 +38,13 @@ export default {
         );
     },
 
+    /**
+     * Parses message text and replaces urls with anchors
+     *
+     * @param String text
+     *
+     * @returns String
+     */
     parseUrls(text) {
         return text.replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z09+&@#/%=~_|])/img, '<a href="$1">$1</a>');
     }

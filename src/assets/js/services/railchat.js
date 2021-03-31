@@ -23,4 +23,15 @@ export default {
     unbanUser(userId) {
         return axios.post('/chat/unban-user', { user_id: userId });
     },
+
+    /**
+     * Request to delete all user messages by user id
+     *
+     * @param String userId
+     *
+     * @returns {Promise}
+     */
+    deleteUserMessages(userId) {
+        return axios.post('/chat/delete-user-messages', { user_id: userId });
+    },
 }

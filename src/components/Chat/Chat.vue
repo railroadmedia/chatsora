@@ -250,6 +250,11 @@
 
                         <div
                             class="tw-mt-6 tw-mx-8 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"
+                            v-if="userDeleteMessages != null"
+                        >Are you sure you want to delete all user's messages from the chat?</div>
+
+                        <div
+                            class="tw-mt-6 tw-mx-8 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"
                             v-if="questionRemove != null"
                         >Are you sure you want to mark this question as answered?</div>
 
@@ -390,8 +395,10 @@ export default {
             messageThread: null,
             messageErrors: [],
             messageRemove: null,
+            questionRemove: null,
             questionErrors: [],
             userBlock: null,
+            userDeleteMessages: null,
             channelWatchers: {},
             fetchingBannedUsers: false,
             bannedUsers: {},
@@ -477,6 +484,7 @@ export default {
 
         this.$root.$on('updateMessage', this.updateMessage);
         this.$root.$on('removeMessage', this.removeMessage);
+        this.$root.$on('removeAllMessages', this.removeAllMessages);
         this.$root.$on('blockUser', this.blockUser);
         this.$root.$on('toggleMessageReaction', this.toggleMessageReaction);
         this.$root.$on('messageThread',this.showMessageThread);
@@ -655,10 +663,15 @@ export default {
                     this.updateMessageReaction({ message, reaction, collection });
                 }
             );
-
-            // channel.on(event => {
-            //     console.log('event', event);
-            // });
+            channel.on(({ type, channel_id, user }) => {
+                if (type == 'delete_user_messages') {
+                    if (channel_id == this.chatChannelName) {
+                        this.deleteUserMessages(user);
+                    } else if (channel_id == this.questionsChannelName) {
+                        this.deleteUserQuestions(user);
+                    }
+                }
+            });
         },
 
         setupChat() {
@@ -758,6 +771,22 @@ export default {
                     });
                     this.unpinMessages();
                 });
+        },
+
+        deleteUserMessages(user) {
+            this.messages.forEach((message, index) => {
+                if (message.user?.id == user.id) {
+                    this.messages.splice(index, 1);
+                }
+            });
+        },
+
+        deleteUserQuestions(user) {
+            this.questions.forEach((message, index) => {
+                if (message.user?.id == user.id) {
+                    this.questions.splice(index, 1);
+                }
+            });
         },
 
         /**
@@ -1174,6 +1203,11 @@ export default {
             this.showDialog = true;
         },
 
+        removeAllMessages({ user }) {
+            this.userDeleteMessages = user;
+            this.showDialog = true;
+        },
+
         markAsAnswered({ message }) {
             this.questionRemove = message;
             this.showDialog = true;
@@ -1213,6 +1247,16 @@ export default {
                         .catch(({ response }) => {
                             this.errorHandler(response, 'Mark question as answered error');
                         });
+                } else if (this.userDeleteMessages) {
+
+                    RailchatService
+                        .deleteUserMessages(this.userDeleteMessages.id)
+                        .then(() => {
+                            this.messageErrors = [];
+                        })
+                        .catch(({ response }) => {
+                            this.railErrorHandler(response, 'Delete user messages error');
+                        });
                 }
             }
 
@@ -1220,6 +1264,7 @@ export default {
             this.messageRemove = null;
             this.questionRemove = null;
             this.userBlock = null;
+            this.userDeleteMessages = null;
         },
 
         hasOwnReaction(message, reactionType) {

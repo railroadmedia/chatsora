@@ -40,6 +40,11 @@
                         v-if="message.user.id != userId"
                     >Remove Message</div>
                     <div
+                        class="tw-mb-1 tw-cursor-pointer"
+                        @click.stop.prevent="removeAllMessages()"
+                        v-if="message.user.id != userId"
+                    >Remove All Messages</div>
+                    <div
                         class="tw-cursor-pointer"
                         @click.stop.prevent="blockUser()"
                         v-if="message.user.id != userId"
@@ -204,6 +209,10 @@ export default {
 
         removeMessage() {
             this.$root.$emit('removeMessage', { message: this.message });
+        },
+
+        removeAllMessages() {
+            this.$root.$emit('removeAllMessages', { user: this.message.user });
         },
 
         blockUser() {
