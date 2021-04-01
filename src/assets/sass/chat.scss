@@ -1,90 +1,31 @@
 @import './variables.scss';
 
-.cs-top {
-  background-color: $topBgColor;
-  height: $topHeight;
-}
+/* text colors */
 .cs-text-gray {
-  color: $textGrayColor;
+  color: $gray2Color;
 }
 .cs-text-blue {
   color: $edgeColor;
 }
-.cs-top-menu {
-  top: -18px;
-  width: 190px;
-}
-.cs-body {
-  background-color: $bgColor;
-}
+
+/* text size */
 .cs-text-xs {
   font-size: 10px;
 }
 .cs-text-sm {
   font-size: 13px;
 }
+
+/* user related elements */
 .cs-user {
   .cs-user-unblock {
-    color: $textGrayColor;
+    color: $gray2Color;
     display: none;
   }
   &:hover {
-    background-color: $hoverBgColor;
+    background-color: $gray3Color;
     .cs-user-unblock {
       display: inline;
-    }
-  }
-}
-.cs-messages-container {
-  scroll-behavior: smooth;
-
-  &:not(.cs-fit) {
-    min-height: 300px;
-  }
-
-  p {
-    margin: 0;
-  }
-
-  .cs-message {
-
-    .cs-message-menu {
-      display: none;
-      top: -12px;
-      right: 10px;
-
-      .cs-main-menu {
-        background-color: $bgMenuColor;
-        color: $textMenuColor;
-      }
-
-      .cs-react-menu.cs-downdown {
-        bottom: -80px;
-      }
-
-      .cs-sub-menu.cs-downdown {
-        display: inline-table;
-        top: 25px;
-      }
-    }
-
-    &:hover {
-      background-color: $hoverBgColor;
-
-      .cs-message-menu {
-        display: block;
-      }
-    }
-  }
-
-  .cs-reaction-count {
-    margin-left: 3px;
-  }
-
-  .cs-message-edit {
-    textarea {
-      width: 100%;
-      height: 100px;
     }
   }
 }
@@ -165,10 +106,12 @@
     }
   }
 }
+
+/* emoji and reactions elements */
 .cs-emoji {
     width: 350px;
     height: 335px;
-    background-color: $hoverBgColor; // todo - rename variable
+    background-color: $gray3Color;
     .cs-emoji-tabs {
         height: 45px;
     }
@@ -177,15 +120,15 @@
       height: 35px;
       padding: 6px 18px;
       background-color: black;
-      color: $textGrayColor;
+      color: $gray2Color;
       border: none;
 
       &::placeholder {
-        color: $textGrayColor;
+        color: $gray2Color;
       }
     }
     textarea:-moz-focusring {
-      color: $textGrayColor;
+      color: $gray2Color;
       text-shadow: none;
     }
 }
@@ -225,16 +168,85 @@
 .cs-react-blue {
   color: $reactionBlueColor;
 }
+
+
+/* top elements */
+.cs-top {
+  background-color: $gray3Color;
+  height: 60px;
+}
+.cs-top-menu {
+  top: -18px;
+  width: 190px;
+}
+
+/* body and containers */
+.cs-body {
+  background-color: $gray4Color;
+}
+.cs-messages-container {
+  scroll-behavior: smooth;
+
+  &:not(.cs-fit) {
+    min-height: 300px;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .cs-message {
+
+    .cs-message-menu {
+      display: none;
+      top: -12px;
+      right: 10px;
+
+      .cs-main-menu {
+        background-color: $gray3Color;
+        color: $gray1Color;
+      }
+
+      .cs-react-menu.cs-downdown {
+        bottom: -80px;
+      }
+
+      .cs-sub-menu.cs-downdown {
+        display: inline-table;
+        top: 25px;
+      }
+    }
+
+    &:hover {
+      background-color: $gray3Color;
+
+      .cs-message-menu {
+        display: block;
+      }
+    }
+  }
+
+  .cs-reaction-count {
+    margin-left: 3px;
+  }
+
+  .cs-message-edit {
+    textarea {
+      width: 100%;
+      height: 100px;
+    }
+  }
+}
 .cs-tooltip-container {
   .cs-tooltip {
     display: none;
-    background-color: $bgMenuTooltip;
+    background-color: $edgeColor;
     top: -25px;
     right: 3px;
   }
   .cs-tooltip-arrow {
     display: none;
-    background-color: $bgMenuTooltip;
+    background-color: $edgeColor;
     top: -6px;
     right: 16px;
     width: 8px;
@@ -260,23 +272,25 @@
       padding-top: 5px;
       padding-bottom: 5px;
       font: normal bold 12px/16px Roboto Condensed;
-      background-color: $btnBgColor;
+      background-color: $edgeColor;
     }
   }
 }
+
+/* bottom elements */
 .cs-footer {
-  background-color: $topBgColor;
+  background-color: $gray3Color;
 }
 .cs-new-message-container {
-  height: $footerHeight;
-  background-color: $topBgColor;
+  height: 85px;
+  background-color: $gray3Color;
 
   textarea {
     width: 100%;
     height: 40px;
     padding: 8px 55px 8px 10px;
     background-color: black;
-    color: $textGrayColor;
+    color: $gray2Color;
     border: none;
 
     -ms-overflow-style: none;
@@ -287,12 +301,12 @@
     }
 
     &::placeholder {
-      color: $textGrayColor;
+      color: $gray2Color;
     }
   }
 
   textarea:-moz-focusring {
-    color: $textGrayColor;
+    color: $gray2Color;
     text-shadow: none;
   }
 

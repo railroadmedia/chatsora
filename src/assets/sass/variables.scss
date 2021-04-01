@@ -1,23 +1,18 @@
-$topHeight: 60px;
-$footerHeight: 85px;
+/* gray colors */
+$gray1Color: #9EA1A6; // lightest
+$gray2Color: #4D5356; // light
+$gray3Color: #141616;
+$gray4Color: #0D0E0E; // dark
 
-$topBgColor: #141616;
-$textGrayColor: #4D5356;
-$bgColor: #0D0E0E;
-$hoverBgColor: #141616;
-$bgMenuColor: #141616;
-$textMenuColor: #9EA1A6;
-$bgMenuTooltip: #0B76DB;
-
-$btnBgColor: #0B76DB;
-
+/* reaction colors */
 $reactionYellowColor: #FFC841;
 $reactionOrangeColor: #E25822;
 $reactionRedColor: #F71B26;
 $reactionGreenColor: #00BC75;
 $reactionBlueColor: #0B76DB;
 
-$teamColor: #000;
-$edgeColor: #0B76DB;
-$lifetimeColor: #07B3FF;
-$coachColor: #FAA300;
+/* avatar colors */
+$teamColor: #000; // black
+$edgeColor: #0B76DB; // edge blue
+$lifetimeColor: #07B3FF; // light blue
+$coachColor: #FAA300; // yellow
