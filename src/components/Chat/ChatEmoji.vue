@@ -27,7 +27,10 @@
                         @click.stop.prevent="setCurrentTab('symbols')"
                     ><i class="fal fa-hexagon"></i></a>
                 </div>
-                <a class="tw-p-2 cs-text-gray"><i class="fal fa-backspace"></i></a>
+                <a
+                    class="tw-p-2 cs-text-gray tw-cursor-pointer"
+                    @click.stop.prevent="removeEmoji()"
+                ><i class="fal fa-backspace"></i></a>
             </div>
             <div class="tw-p-3">
                 <textarea
@@ -42,7 +45,7 @@
                 <div class="tw-px-3 tw-text-white tw-font-semibold">{{ $_current_tab_label }}</div>
                 <div class="tw-py-3 tw-px-2 tw-grid tw-grid-cols-10 tw-gap-y-3 tw-text-lg">
                     <a
-                        class="tw-text-center"
+                        class="tw-text-center tw-cursor-pointer"
                         v-for="item in $_emoji"
                         :key="item.id"
                         @click.stop.prevent="insertEmoji(item)"
@@ -102,6 +105,10 @@ export default {
 
         insertEmoji({ id }) {
             this.$root.$emit('insertEmoji', { emoji: id });
+        },
+
+        removeEmoji() {
+            this.$root.$emit('removeEmoji', { });
         },
     }
 }

@@ -404,6 +404,7 @@ export default {
             bannedUsers: {},
             chatMenu: false,
             userMessageId: 0,
+            insertedEmoji: [],
         };
     },
     computed: {
@@ -491,6 +492,7 @@ export default {
         this.$root.$on('pinMessage',this.pinMessage);
         this.$root.$on('unpinMessage',this.unpinMessage);
         this.$root.$on('insertEmoji',this.insertEmoji);
+        this.$root.$on('removeEmoji',this.removeEmoji);
         this.$root.$on('markAsAnswered',this.markAsAnswered);
     },
     watch: {
@@ -588,6 +590,7 @@ export default {
             };
 
             this.messages.push(message);
+            this.insertedEmoji = [];
         },
 
         sendQuestion() {
@@ -842,6 +845,7 @@ export default {
 
             messageCopy.user = this.getUserCopy(message.user);
 
+            messageCopy.originalText = messageCopy.text;
             messageCopy.text = this.getParsedMessage(messageCopy.text);
 
             messageCopy.reaction_counts = {...message.reaction_counts};
@@ -1364,7 +1368,7 @@ export default {
 
         pinMessage({ message }) {
             this.streamClient
-                .pinMessage({ id: message.id, text: message.text }, null)
+                .pinMessage({ id: message.id, text: message.originalText }, null)
                 .then(() => {
                     this.messageErrors = [];
                     this.unpinMessages(1);
@@ -1376,7 +1380,7 @@ export default {
 
         unpinMessage({ message }) {
             this.streamClient
-                .unpinMessage({id: message.id, text: message.text }, null)
+                .unpinMessage({id: message.id, text: message.originalText }, null)
                 .then(() => {
                     this.messageErrors = [];
                 })
@@ -1391,6 +1395,7 @@ export default {
 
         toggleChatMenu() {
             this.chatMenu = !this.chatMenu;
+            this.showEmoji = false;
         },
 
         unblockUser({ id }) {
@@ -1429,6 +1434,15 @@ export default {
             const end = textarea.selectionEnd;
             textarea.setRangeText(`:${emoji}:`, start, end, 'end');
             this.message = textarea.value;
+            this.insertedEmoji.push(`:${emoji}:`);
+        },
+
+        removeEmoji() {
+            if (this.insertedEmoji.length) {
+                const emoji = this.insertedEmoji.pop();
+
+                this.message = this.message.replace(emoji, '');
+            }
         },
 
         setCurrentTab(tab) {
@@ -1436,6 +1450,7 @@ export default {
                 this.currentTab = tab;
             }
             this.chatMenu = false;
+            this.showEmoji = false;
         },
 
         getTabClasses(tab) {
