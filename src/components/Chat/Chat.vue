@@ -279,14 +279,14 @@
         ></chat-emoji>
         <div class="cs-new-message-container tw-flex-none box-border">
             <div class="tw-h-full tw-flex tw-flex-col tw-place-content-between tw-py-2 tw-px-4 tw-relative">
-                <div>
+                <div class="cs-new-message-wrapper tw-rounded">
                     <textarea
                         v-model="message"
                         placeholder="Say something..."
                         v-on:keyup.enter="sendMessage()"
                         wrap="off"
                         rows="1"
-                        class="tw-resize-none tw-text-sm tw-rounded"
+                        class="tw-resize-none tw-text-sm "
                         ref="newMessage"
                         v-if="currentTab == 'chat'"
                     ></textarea>
@@ -296,22 +296,22 @@
                         v-on:keyup.enter="sendQuestion()"
                         wrap="off"
                         rows="1"
-                        class="tw-resize-none tw-text-sm tw-rounded"
+                        class="tw-resize-none tw-text-sm"
                         v-if="currentTab == 'questions'"
                     ></textarea>
-                    <div class="cs-new-message-menu tw-absolute tw-text-lg">
-                        <a
-                            href="#"
-                            class="cs-text-gray tw-mr-2"
-                            @click.stop.prevent="toggleShowEmoji()"
-                            v-if="currentTab == 'chat'"
-                        ><i class="fal fa-smile"></i></a>
-                        <a
-                            href="#"
-                            class="cs-text-gray"
-                            @click.stop.prevent="sendMessage()"
-                        ><i class="fas fa-arrow-right"></i></a>
-                    </div>
+                </div>
+                <div class="cs-new-message-menu tw-absolute tw-text-lg">
+                    <a
+                        href="#"
+                        class="cs-text-gray tw-mr-2"
+                        @click.stop.prevent="toggleShowEmoji()"
+                        v-if="currentTab == 'chat'"
+                    ><i class="fal fa-smile"></i></a>
+                    <a
+                        href="#"
+                        class="cs-text-gray"
+                        @click.stop.prevent="sendMessage()"
+                    ><i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div>
                     <span class="cs-text-gray tw-text-xs">{{ $_watcher_count }} Online</span>
@@ -573,7 +573,7 @@ export default {
             let message = {
                 'id': '',
                 'type': 'regular',
-                'text': payload.text,
+                'text': this.getParsedMessage(payload.text),
                 'reply_count': 0,
                 'pinned': false,
                 'user': this.userData,
@@ -1428,6 +1428,7 @@ export default {
             const start = textarea.selectionStart;
             const end = textarea.selectionEnd;
             textarea.setRangeText(`:${emoji}:`, start, end, 'end');
+            this.message = textarea.value;
         },
 
         setCurrentTab(tab) {
