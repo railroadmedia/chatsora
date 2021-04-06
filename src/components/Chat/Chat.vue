@@ -404,6 +404,7 @@ export default {
             bannedUsers: {},
             chatMenu: false,
             userMessageId: 0,
+            userQuestionId: 0,
             insertedEmoji: [],
         };
     },
@@ -488,12 +489,13 @@ export default {
         this.$root.$on('removeAllMessages', this.removeAllMessages);
         this.$root.$on('blockUser', this.blockUser);
         this.$root.$on('toggleMessageReaction', this.toggleMessageReaction);
-        this.$root.$on('messageThread',this.showMessageThread);
-        this.$root.$on('pinMessage',this.pinMessage);
-        this.$root.$on('unpinMessage',this.unpinMessage);
-        this.$root.$on('insertEmoji',this.insertEmoji);
-        this.$root.$on('removeEmoji',this.removeEmoji);
-        this.$root.$on('markAsAnswered',this.markAsAnswered);
+        this.$root.$on('messageThread', this.showMessageThread);
+        this.$root.$on('pinMessage', this.pinMessage);
+        this.$root.$on('unpinMessage', this.unpinMessage);
+        this.$root.$on('insertEmoji', this.insertEmoji);
+        this.$root.$on('removeEmoji', this.removeEmoji);
+        this.$root.$on('markAsAnswered', this.markAsAnswered);
+        this.$root.$on('postQuestion', this.postQuestion);
     },
     watch: {
         $_messages_count: function () {
@@ -609,6 +611,31 @@ export default {
                         this.errorHandler(response, 'Question send error');
                     });
             }
+
+            let message = {
+                'id': '',
+                'type': 'regular',
+                'text': this.getParsedMessage(text),
+                'reply_count': 0,
+                'pinned': false,
+                'user': this.userData,
+                'reaction_counts': {},
+                'reaction_scores': {},
+                'own_reactions': [],
+                'createdAt': DateTime.now(),
+                'pinnedAt': null,
+                'reactions': [],
+                'replies': [],
+                'key': 'user-' + this.userId + this.userQuestionId++
+            };
+
+            this.questions.push(message);
+        },
+
+        postQuestion({ text }) {
+            this.question = text;
+
+            this.sendQuestion();
         },
 
         errorHandler(response, action) {
