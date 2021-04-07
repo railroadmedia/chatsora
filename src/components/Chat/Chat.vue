@@ -1,5 +1,5 @@
 <template>
-    <div class="tw-relative tw-h-full tw-w-full tw-flex tw-flex-col vuesora-override">
+    <div class="cs-container tw-relative tw-h-full tw-w-full tw-flex tw-flex-col vuesora-override">
         <div class="cs-top tw-flex-none">
             <div class="tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center tw-place-content-between">
                 <div class="tw-h-full tw-ml-4 tw-flex tw-flex-row tw-items-end tw-space-x-4 cs-text-sm">
