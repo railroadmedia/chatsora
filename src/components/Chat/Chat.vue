@@ -133,7 +133,7 @@
 
         <div class="cs-body tw-flex-grow tw-flex tw-flex-col tw-overflow-hidden">
             <div
-                class="cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-auto tw-z-40"
+                class="cs-messages-container tw-pt-4 tw-overflow-y-scroll tw-z-40"
                 v-if="showThread"
                 ref="threadMessages"
             >
@@ -165,7 +165,7 @@
                 </div>
             </div>
             <div
-                class="cs-messages-container cs-fit tw-px-3 tw-pt-4 tw-pb-2 tw-z-20"
+                class="cs-messages-container cs-fit tw-pt-4 tw-pb-2 tw-z-20"
                 v-show="$_pinned_messages.length && currentTab == 'chat' && !showThread"
             >
                 <div
@@ -183,7 +183,7 @@
                 </div>
             </div>
             <div
-                class="cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-auto"
+                class="cs-messages-container tw-pt-4 tw-overflow-y-scroll"
                 ref="messages"
                 v-show="currentTab == 'chat' && !showThread"
             >
@@ -207,7 +207,7 @@
                 >{{ message }}</div>
             </div>
             <div
-                class="cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-auto"
+                class="cs-messages-container tw-pt-4 tw-overflow-y-scroll"
                 ref="questions"
                 v-show="currentTab == 'questions' && !showThread"
             >
@@ -311,6 +311,13 @@
                         href="#"
                         class="cs-text-gray"
                         @click.stop.prevent="sendMessage()"
+                        v-if="currentTab == 'chat'"
+                    ><i class="fas fa-arrow-right"></i></a>
+                    <a
+                        href="#"
+                        class="cs-text-gray"
+                        @click.stop.prevent="sendQuestion()"
+                        v-if="currentTab == 'questions'"
                     ><i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div>
@@ -430,7 +437,20 @@ export default {
         $_questions: {
             cache: false,
             get() {
-                return this.questions;
+                let questions = [...this.questions];
+
+                return questions.sort((a, b) => {
+                    let aUpVotes = a?.reaction_counts?.upvote || 0;
+                    let bUpVotes = b?.reaction_counts?.upvote || 0;
+
+                    return bUpVotes - aUpVotes;
+                });
+            },
+        },
+        $_questions_count: {
+            cache: false,
+            get() {
+                return  this.questions.length;
             },
         },
         $_watchers: {
@@ -507,11 +527,27 @@ export default {
         $_reply_count_label: function () {
             this.scrollThreadMessages();
         },
+        $_questions_count: function () {
+            this.scrollQuestions();
+        },
     },
     methods: {
 
         scrollMessages(force = false) {
             let container = this.$refs.messages;
+
+            if (force || Math.ceil(container.scrollHeight - container.scrollTop) === container.clientHeight) {
+                this.$nextTick(() => {
+                    container.scroll({
+                        top: container.scrollHeight,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        },
+
+        scrollQuestions(force = false) {
+            let container = this.$refs.questions;
 
             if (force || Math.ceil(container.scrollHeight - container.scrollTop) === container.clientHeight) {
                 this.$nextTick(() => {
@@ -541,9 +577,10 @@ export default {
                 this.chatMenu = false;
                 let questionRemove = this.questions[0];
 
-                 this.streamClient
+                this.streamClient
                     .deleteMessage(questionRemove.id)
                     .then(() => {
+                        this.deleteMessage({ message: questionRemove, collection: this.questions });
                         this.removeAllQuestions();
                     })
                     .catch(({ response }) => {
@@ -1106,6 +1143,7 @@ export default {
                 });
             } else if (this.messageThread == null) {
                 this.scrollMessages();
+                this.scrollQuestions();
             }
         },
 

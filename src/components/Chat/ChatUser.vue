@@ -1,7 +1,7 @@
 <template>
     <div class="tw-flex tw-flex-row tw-items-center">
         <div
-            class="tw-flex-none tw-mr-1 tw-w-12 tw-h-12 tw-relative tw-overflow-hidden cs-user-avatar"
+            class="tw-flex-none tw-mr-1 tw-relative tw-overflow-hidden cs-user-avatar"
             :class="getUserMembershipClass()"
         >
             <a

@@ -65,7 +65,7 @@
             </div>
         </div>
         <div class="cs-main-menu tw-flex tw-flex-row tw-rounded-full tw-divide-x tw-divide-gray-400 tw-cursor-pointer tw-px-1">
-            <div class="tw-px-2 cs-text-xs tw-flex tw-flex-row tw-items-center"><span>{{ $_message_time }}</span></div>
+            <div class="tw-px-2 cs-text-xs tw-flex tw-flex-row tw-items-center tw-cursor-default"><span>{{ $_message_time }}</span></div>
             <div
                 class="tw-px-2 tw-text-sm"
                 @click.stop.prevent="markAsAnswered()"
