@@ -52,16 +52,18 @@
                 </div>
             </div>
             <div
-                class="cs-react-menu tw-absolute tw-right-0  tw-bottom-0 tw-flex tw-flex-row tw-bg-black tw-rounded-full tw-text-center space-x-1 tw-py-2 tw-px-3"
+                class="cs-react-menu tw-absolute tw-right-0"
                 :class="{'cs-downdown':dropdownMenu}"
                 v-if="messageReact"
             >
-                <div
-                    class="tw-text-2xl tw-cursor-pointer tw-p-1"
-                    v-for="(classes, reaction) in messageReactions"
-                    :key="`add-reaction-${reaction}`"
-                    @click.stop.prevent="reactToMessage(reaction)"
-                ><i :class="classes"></i></div>
+                <div class="tw-flex tw-flex-row tw-bg-black tw-rounded-full tw-text-center space-x-1 tw-py-2 tw-px-3 tw-mb-4">
+                    <div
+                        class="tw-text-2xl tw-cursor-pointer tw-p-1"
+                        v-for="(classes, reaction) in messageReactions"
+                        :key="`add-reaction-${reaction}`"
+                        @click.stop.prevent="reactToMessage(reaction)"
+                    ><i :class="classes"></i></div>
+                </div>
             </div>
         </div>
         <div class="cs-main-menu tw-flex tw-flex-row tw-rounded-full tw-divide-x tw-divide-gray-400 tw-cursor-pointer tw-px-1">
@@ -175,6 +177,15 @@ export default {
         this.$root
             .$on(
                 'messageThread',
+                () => {
+                    this.messageReact = false;
+                    this.messageMenu = false;
+                }
+            );
+
+        this.$root
+            .$on(
+                'closeMessageMenus',
                 () => {
                     this.messageReact = false;
                     this.messageMenu = false;

@@ -212,8 +212,12 @@
         color: $gray1Color;
       }
 
-      .cs-react-menu.cs-downdown {
-        bottom: -80px;
+      .cs-react-menu {
+        z-index: 30;
+        bottom: -16px;
+        &.cs-downdown {
+          bottom: -80px;
+        }
       }
 
       .cs-sub-menu.cs-downdown {

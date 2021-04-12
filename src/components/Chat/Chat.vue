@@ -5,20 +5,20 @@
                 <div class="tw-h-full tw-ml-4 tw-flex tw-flex-row tw-items-end tw-space-x-4 cs-text-sm">
                     <a
                         href="#"
-                        class="tw-no-underline tw-px-3 tw-pb-3 tw-border-b-2"
+                        class="tw-no-underline tw-px-3 tw-border-b-2 tw-h-full tw-flex tw-flex-row tw-items-center"
                         :class="getTabClasses('chat')"
                         @click.stop.prevent="setCurrentTab('chat')"
                     >Chat</a>
                     <a
                         href="#"
-                        class="tw-no-underline tw-px-3 tw-pb-3 tw-border-b-2"
+                        class="tw-no-underline tw-px-3 tw-border-b-2 tw-h-full tw-flex tw-flex-row tw-items-center"
                         :class="getTabClasses('questions')"
                         @click.stop.prevent="setCurrentTab('questions')"
                     >Questions</a>
                 </div>
                 <a
                     href="#"
-                    class="tw-no-underline tw-font-semibold tw-mr-4 cs-text-gray tw-border-b-2 tw-border-transparent"
+                    class="tw-no-underline tw-font-semibold tw-px-4 cs-text-gray tw-border-b-2 tw-border-transparent tw-h-full tw-flex tw-flex-row tw-items-center"
                     @click.stop.prevent="toggleChatMenu()"
                 ><i class="fas fa-ellipsis-v"></i></a>
             </div>

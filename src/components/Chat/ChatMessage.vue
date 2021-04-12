@@ -1,5 +1,8 @@
 <template>
-    <div class="cs-message tw-p-3 tw-rounded-md tw-relative tw-top-0">
+    <div
+        class="cs-message tw-p-3 tw-rounded-md tw-relative tw-top-0"
+        @mouseleave="closeMessageMenus()"
+    >
         <div class="tw-max-w-full" v-if="message.pinned">
             <div class="tw-ml-16">
                 <a
@@ -343,6 +346,10 @@ export default {
 
         firstWordLength() {
             return this.message.text ? this.message.text.split(' ')[0].length : 0;
+        },
+
+        closeMessageMenus() {
+            this.$root.$emit('closeMessageMenus', {});
         },
     },
 }
