@@ -148,7 +148,7 @@ export default {
     computed: {
         $_message_time: {
             get() {
-                return this.message.createdAt.toFormat('HH:mma');
+                return this.message.createdAt.toFormat('hh:mma');
             },
         },
         $_show_pin: {

@@ -4,11 +4,11 @@
         @mouseleave="closeMessageMenus()"
     >
         <div class="tw-max-w-full" v-if="message.pinned">
-            <div class="tw-ml-16">
+            <div class="cs-pin-container">
                 <a
                     href="#"
                     @click.stop.prevent="unpinMessage()"
-                    class="tw-text-gray-600 tw-flex tw-flex-row tw-items-start"
+                    class="cs-text-sm cs-text-gray tw-flex tw-flex-row tw-items-center"
                 ><i class="fal fa-thumbtack"></i><span class="tw-ml-1 leading-none">Pinned</span></a>
             </div>
         </div>

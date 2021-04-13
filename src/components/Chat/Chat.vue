@@ -630,6 +630,10 @@ export default {
 
             this.messages.push(message);
             this.insertedEmoji = [];
+
+            this.$nextTick(() => {
+                this.scrollMessages(true);
+            });
         },
 
         sendQuestion() {
@@ -667,10 +671,15 @@ export default {
             };
 
             this.questions.push(message);
+
+            this.$nextTick(() => {
+                this.scrollQuestions(true);
+            });
         },
 
         postQuestion({ text }) {
             this.question = text;
+            this.currentTab = 'questions';
 
             this.sendQuestion();
         },
