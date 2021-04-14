@@ -185,6 +185,17 @@
 /* body and containers */
 .cs-container {
   font-family: "Open Sans", sans-serif;
+  height: 690px;
+  max-width: 100vw;
+  &.guitareo {
+    height: 730px;
+    @media screen and (max-width: 1023px) {
+      height: 90vh;
+    }
+  }
+  @media screen and (max-width: 1023px) {
+    height: 90vh;
+  }
 }
 .cs-body {
   background-color: $gray4Color;
@@ -220,7 +231,7 @@
         z-index: 30;
         bottom: -16px;
         &.cs-downdown {
-          bottom: -80px;
+          bottom: -97px;
         }
       }
 

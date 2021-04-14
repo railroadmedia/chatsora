@@ -1,5 +1,8 @@
 <template>
-    <div class="cs-container tw-relative tw-h-full tw-w-full tw-flex tw-flex-col vuesora-override">
+    <div
+        class="cs-container tw-relative tw-h-full tw-w-full tw-flex tw-flex-col vuesora-override"
+        :class="brand"
+    >
         <div class="cs-top tw-flex-none">
             <div class="tw-h-full tw-w-full tw-flex tw-flex-row tw-items-center tw-place-content-between">
                 <div class="tw-h-full tw-ml-4 tw-flex tw-flex-row tw-items-end tw-space-x-4 cs-text-sm">
@@ -345,6 +348,10 @@ export default {
         ChatUser,
     },
     props: {
+        brand: {
+            type: String,
+            default: () => 'drumeo',
+        },
         apiKey: {
             type: String,
         },
@@ -1509,6 +1516,7 @@ export default {
             textarea.setRangeText(`:${emoji}:`, start, end, 'end');
             this.message = textarea.value;
             this.insertedEmoji.push(`:${emoji}:`);
+            this.showEmoji = false;
         },
 
         removeEmoji() {

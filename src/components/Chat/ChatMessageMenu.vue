@@ -153,12 +153,12 @@ export default {
         },
         $_show_pin: {
             get() {
-                return this.isAdministrator && !this.message.pinned && this.message.type != 'reply';
+                return this.isAdministrator && !this.message.pinned && this.message.type != 'reply' && !this.showUpvote;
             },
         },
         $_show_unpin: {
             get() {
-                return this.isAdministrator && this.message.pinned && this.message.type != 'reply';
+                return this.isAdministrator && this.message.pinned && this.message.type != 'reply' && !this.showUpvote;
             },
         },
     },
@@ -238,6 +238,7 @@ export default {
                     reaction: reaction
                 }
             );
+            this.messageReact = false;
         },
 
         pinMessage() {
