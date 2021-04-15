@@ -30,8 +30,8 @@
   }
 }
 .cs-user-avatar {
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   border-radius:50%;
 
   &:after {
@@ -201,6 +201,8 @@
   background-color: $gray4Color;
 }
 .cs-messages-container {
+  padding-left: 5px;
+  padding-right: 5px;
   scroll-behavior: smooth;
 
   &:not(.cs-fit) {
@@ -214,7 +216,7 @@
   .cs-message {
 
     .cs-pin-container {
-      margin-left: 73px;
+      margin-left: 53px;
     }
 
     .cs-message-menu {
@@ -225,6 +227,13 @@
       .cs-main-menu {
         background-color: $gray3Color;
         color: $gray1Color;
+
+        .cs-divide-right {
+          border-right: 2px solid rgb(158, 161, 166);
+          border-right: 2px solid rgba(158, 161, 166, .2);
+          -webkit-background-clip: padding-box;
+          background-clip: padding-box;
+        }
       }
 
       .cs-react-menu {
@@ -324,6 +333,10 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
 
+      &.cs-typing {
+        color: #ffffff;
+      }
+
       &::-webkit-scrollbar {
         display: none;
       }
@@ -332,15 +345,23 @@
         color: $gray2Color;
       }
 
+      &.cs-typing::placeholder {
+        color: #ffffff;
+      }
+
       &:focus {
-          outline-color: transparent;
-          outline-style: none;
+        outline-color: transparent;
+        outline-style: none;
       }
     }
 
     textarea:-moz-focusring {
       color: $gray2Color;
       text-shadow: none;
+    }
+
+    textarea.cs-typing:-moz-focusring {
+      color: #ffffff;
     }
   }
 

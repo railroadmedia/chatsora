@@ -38,7 +38,7 @@
                     placeholder="Seach emoji"
                     wrap="off"
                     rows="1"
-                    class="tw-resize-none tw-whitespace-nowrap tw-overflow-x-auto tw-rounded-full tw-text-sm"
+                    class="tw-resize-none tw-whitespace-nowrap tw-overflow-x-auto tw-rounded-full cs-text-sm"
                 ></textarea>
             </div>
             <div>

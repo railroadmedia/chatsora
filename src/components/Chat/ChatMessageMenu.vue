@@ -2,7 +2,7 @@
     <div class="cs-message-menu tw-absolute tw-text-base">
         <div class="tw-relative">
             <div
-                class="cs-sub-menu tw-absolute tw-right-0 tw-bottom-0 tw-w-44 tw-p-3 tw-flex tw-flex-col tw-bg-black tw-rounded-lg tw-text-white cs-text-sm"
+                class="cs-sub-menu tw-absolute tw-right-0 tw-bottom-0 tw-w-44 tw-p-3 tw-flex tw-flex-col tw-bg-black tw-rounded-lg tw-text-white cs-text-sm tw-z-50"
                 :class="{'cs-downdown':dropdownMenu}"
                 v-if="messageMenu"
             >
@@ -66,15 +66,17 @@
                 </div>
             </div>
         </div>
-        <div class="cs-main-menu tw-flex tw-flex-row tw-rounded-full tw-divide-x tw-divide-gray-400 tw-cursor-pointer tw-px-1">
-            <div class="tw-px-2 cs-text-xs tw-flex tw-flex-row tw-items-center tw-cursor-default"><span>{{ $_message_time }}</span></div>
+        <div class="cs-main-menu tw-flex tw-flex-row tw-rounded-full tw-cursor-pointer tw-px-1">
+            <div class="cs-divide-right tw-px-2 cs-text-xs tw-flex tw-flex-row tw-items-center tw-cursor-default">
+                <span>{{ $_message_time }}</span>
+            </div>
             <div
-                class="tw-px-2 tw-text-sm"
+                class="cs-divide-right tw-px-2 cs-text-sm"
                 @click.stop.prevent="markAsAnswered()"
                 v-if="showUpvote && isAdministrator"
             ><i class="fas fa-check"></i></div>
             <div
-                class="cs-tooltip-container tw-px-2 tw-text-sm tw-relative"
+                class="cs-divide-right cs-tooltip-container tw-px-2 cs-text-sm tw-relative"
                 :class="{'menu-active': messageReact}"
                 @click.stop.prevent="toggleMessageReact()"
                 v-if="!showUpvote"
@@ -84,12 +86,12 @@
                 <div class="cs-tooltip-arrow tw-absolute tw-transform tw-rotate-45"></div>
             </div>
             <div
-                class="tw-px-2 tw-text-sm"
+                class="cs-divide-right tw-px-2 cs-text-sm"
                 @click.stop.prevent="messageThread()"
                 v-if="showThread"
             ><i class="fal fa-reply-all"></i></div>
             <div
-                class="tw-px-2 tw-text-sm"
+                class="tw-px-2 cs-text-sm"
                 @click.stop.prevent="toggleMessageMenu()"
             ><i class="fas fa-ellipsis-h"></i></div>
         </div>
@@ -183,14 +185,14 @@ export default {
                 }
             );
 
-        this.$root
-            .$on(
-                'closeMessageMenus',
-                () => {
-                    this.messageReact = false;
-                    this.messageMenu = false;
-                }
-            );
+        // this.$root
+        //     .$on(
+        //         'closeMessageMenus',
+        //         () => {
+        //             this.messageReact = false;
+        //             this.messageMenu = false;
+        //         }
+        //     );
     },
     methods: {
         toggleMessageMenu() {

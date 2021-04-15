@@ -15,7 +15,7 @@
         <div class="tw-flex tw-flex-col tw-max-w-full" v-if="messageEdit.id != message.id && message.type != 'system'">
             <chat-user :user="message.user">
                 <template v-slot:footer>
-                    <div v-html="message.text" class="tw-whitespace-normal tw-text-sm"></div>
+                    <div v-html="message.text" class="tw-whitespace-normal cs-text-sm"></div>
                     <div class="tw-inline-flex tw-items-center tw-mt-1" v-if="$_has_reactions || showUpvote">
                         <div
                             class="cs-upvote tw-cursor-pointer tw-flex tw-flex-row tw-items-center tw-px-3 tw-rounded-full cs-text-xs"
@@ -50,7 +50,7 @@
                             <div class="tw-transform tw--rotate-180">
                                 <i class="fal fa-reply"></i>
                             </div>
-                            <span class="tw-ml-1 tw-text-sm">{{ $_reply_count_label }}</span>
+                            <span class="tw-ml-1 cs-text-sm">{{ $_reply_count_label }}</span>
                         </a>
                     </div>
                 </template>

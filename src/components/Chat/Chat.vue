@@ -58,7 +58,7 @@
                         href="#"
                         class="tw-ml-3 tw-no-underline tw-text-white"
                         @click.stop.prevent="hideMessageThread()"
-                    ><i class="fas fa-arrow-left"></i><span class="tw-ml-1">Thread</span><span class="tw-ml-3">{{ $_reply_count_label }}</span></a>
+                    ><i class="fas fa-arrow-left"></i><span class="tw-ml-2">Thread</span><span class="tw-ml-3">{{ $_reply_count_label }}</span></a>
                     <div class="tw-mr-3"><i class="fal fa-times tw-text-white tw-font-semibold tw-cursor-pointer" @click.stop.prevent="hideMessageThread()"></i></div>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                         href="#"
                         class="tw-ml-3 tw-no-underline tw-text-white"
                         @click.stop.prevent="toggleShowMembers()"
-                    ><i class="fas fa-arrow-left"></i><span class="tw-ml-1">Participants</span></a>
+                    ><i class="fas fa-arrow-left"></i><span class="tw-ml-2">Participants</span></a>
                 </div>
             </div>
             <div class="cs-body tw-flex-grow tw-overflow-y-auto">
@@ -99,7 +99,7 @@
                         href="#"
                         class="tw-ml-3 tw-no-underline tw-text-white"
                         @click.stop.prevent="toggleShowBannedUsers()"
-                    ><i class="fas fa-arrow-left"></i><span class="tw-ml-1">Blocked Students</span></a>
+                    ><i class="fas fa-arrow-left"></i><span class="tw-ml-2">Blocked Students</span></a>
                 </div>
             </div>
             <div class="cs-body tw-flex-grow tw-overflow-y-auto">
@@ -119,7 +119,7 @@
                                     <a
                                         href="#"
                                         @click.stop.prevent="unblockUser(item)"
-                                        class="cs-user-unblock tw-text-sm"
+                                        class="cs-user-unblock cs-text-sm"
                                     ><span>Unblock</span><i class="tw-ml-1 fas fa-times-circle"></i></a>
                                 </div>
                             </chat-user>
@@ -186,7 +186,7 @@
                 </div>
             </div>
             <div
-                class="cs-messages-container tw-pt-4 tw-overflow-y-scroll"
+                class="cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-scroll"
                 ref="messages"
                 v-show="currentTab == 'chat' && !showThread"
             >
@@ -227,6 +227,10 @@
                         :dropdown-menu="index < 1"
                     ></chat-message>
                 </div>
+                <div
+                    class="cs-text-gray tw-px-3 tw-py-1"
+                    v-if="$_questions.length == 0"
+                >There are no questions in this chat</div>
                 <div
                     class="tw-p-3 tw-text-red-400"
                     v-for="(message, index) in questionErrors"
@@ -289,7 +293,8 @@
                         v-on:keyup.enter="sendMessage()"
                         wrap="off"
                         rows="1"
-                        class="tw-resize-none tw-text-sm "
+                        class="tw-resize-none cs-text-sm"
+                        :class="{'cs-typing': message != ''}"
                         ref="newMessage"
                         v-if="currentTab == 'chat'"
                     ></textarea>
@@ -299,7 +304,8 @@
                         v-on:keyup.enter="sendQuestion()"
                         wrap="off"
                         rows="1"
-                        class="tw-resize-none tw-text-sm"
+                        class="tw-resize-none cs-text-sm"
+                        :class="{'cs-typing': message != ''}"
                         v-if="currentTab == 'questions'"
                     ></textarea>
                 </div>
