@@ -228,7 +228,7 @@
                     ></chat-message>
                 </div>
                 <div
-                    class="cs-text-gray tw-px-3 tw-py-1"
+                    class="cs-text-gray tw-px-3 tw-py-1 cs-text-sm"
                     v-if="$_questions.length == 0"
                 >There are no questions in this chat</div>
                 <div
@@ -321,13 +321,13 @@
                         class="cs-text-gray"
                         @click.stop.prevent="sendMessage()"
                         v-if="currentTab == 'chat'"
-                    ><i class="fas fa-arrow-right"></i></a>
+                    ><div class="send-icon"></div></a>
                     <a
                         href="#"
                         class="cs-text-gray"
                         @click.stop.prevent="sendQuestion()"
                         v-if="currentTab == 'questions'"
-                    ><i class="fas fa-arrow-right"></i></a>
+                    ><div class="send-icon"></div></a>
                 </div>
                 <div>
                     <span class="cs-text-gray tw-text-xs">{{ $_watcher_count }} Online</span>
