@@ -149,6 +149,7 @@
                             :show-upvote="false"
                             :show-menu="false"
                             :show-thread="false"
+                            :brand="brand"
                         ></chat-message>
                     </div>
                 </div>
@@ -163,6 +164,7 @@
                             :user-id="userId"
                             :show-upvote="false"
                             :show-thread="false"
+                            :brand="brand"
                         ></chat-message>
                     </div>
                 </div>
@@ -182,6 +184,7 @@
                         :show-upvote="false"
                         :show-thread="enableThread"
                         :dropdown-menu="true"
+                        :brand="brand"
                     ></chat-message>
                 </div>
             </div>
@@ -201,6 +204,7 @@
                         :show-upvote="false"
                         :show-thread="enableThread"
                         :dropdown-menu="index <= 1"
+                        :brand="brand"
                     ></chat-message>
                 </div>
                 <div
@@ -225,6 +229,7 @@
                         :show-upvote="true"
                         :show-thread="enableThread"
                         :dropdown-menu="index < 1"
+                        :brand="brand"
                     ></chat-message>
                 </div>
                 <div
@@ -293,7 +298,7 @@
                         v-on:keyup.enter="sendMessage()"
                         wrap="off"
                         rows="1"
-                        class="tw-resize-none cs-text-sm"
+                        class="tw-resize-none cs-text-sm tw-bg-black"
                         :class="{'cs-typing': message != ''}"
                         ref="newMessage"
                         v-if="currentTab == 'chat'"
@@ -304,7 +309,7 @@
                         v-on:keyup.enter="sendQuestion()"
                         wrap="off"
                         rows="1"
-                        class="tw-resize-none cs-text-sm"
+                        class="tw-resize-none cs-text-sm tw-bg-black"
                         :class="{'cs-typing': message != ''}"
                         v-if="currentTab == 'questions'"
                     ></textarea>

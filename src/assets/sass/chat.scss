@@ -309,7 +309,18 @@
     }
   }
 }
-
+.cs-btn-outline-white {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font: normal bold 13px/16px Roboto Condensed;
+}
+.cs-btn-save {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font: normal bold 13px/16px Roboto Condensed;
+  background-color: $edgeColor;
+  border-color: $edgeColor;
+}
 /* bottom elements */
 .cs-footer {
   background-color: $gray3Color;
@@ -327,7 +338,6 @@
       padding: 0;
       width: 100%;
       height: 100%;
-      background-color: black;
       color: $gray2Color;
       border: none;
       -ms-overflow-style: none;

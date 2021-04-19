@@ -71,15 +71,17 @@
             <div class="cs-message-edit">
                 <textarea
                     v-model="messageEdit.text"
+                    class="cs-text-sm tw-p-2 tw-bg-black tw-text-white tw-resize-none tw-rounded-md"
                 ></textarea>
                 <div class="tw-flex tw-flex-row tw-justify-end tw-mt-2">
                     <div
-                        class="tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center tw-mr-2"
+                        class="cs-btn-outline-white tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-white tw-text-white tw-w-28 tw-flex tw-items-center tw-justify-center tw-mr-2"
                         title="Cancel message edit"
                         @click.stop.prevent="cancelMessageEdit()"
                     >Cancel</div>
                     <div
-                        class="tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-border-blue-600 tw-text-white tw-bg-blue-600 tw-py-2 tw-w-24 tw-flex tw-justify-center"
+                        class="cs-btn-save tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-border-2 tw-text-white tw-w-28 tw-flex tw-items-center tw-justify-center"
+                        :class="brand"
                         title="Save message updates"
                         @click.stop.prevent="saveMessageEdit()"
                     >Save</div>
@@ -103,6 +105,10 @@ export default {
         ChatUser,
     },
     props: {
+        brand: {
+            type: String,
+            default: () => 'drumeo',
+        },
         message: {
             type: Object,
             default: () => ({
