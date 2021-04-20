@@ -185,14 +185,14 @@ export default {
                 }
             );
 
-        // this.$root
-        //     .$on(
-        //         'closeMessageMenus',
-        //         () => {
-        //             this.messageReact = false;
-        //             this.messageMenu = false;
-        //         }
-        //     );
+        this.$root
+            .$on(
+                'closeMessageMenus',
+                () => {
+                    this.messageReact = false;
+                    this.messageMenu = false;
+                }
+            );
     },
     methods: {
         toggleMessageMenu() {

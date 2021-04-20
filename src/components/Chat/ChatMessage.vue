@@ -2,8 +2,9 @@
     <div
         class="cs-message tw-p-3 tw-rounded-md tw-relative tw-top-0"
         @mouseleave="closeMessageMenus()"
+        ref="msg"
     >
-        <div class="tw-max-w-full" v-if="message.pinned">
+        <div class="tw-max-w-full" v-if="message.pinned && showPin">
             <div class="cs-pin-container">
                 <a
                     href="#"
@@ -148,6 +149,10 @@ export default {
         dropdownMenu: {
             type: Boolean,
             default: () => false,
+        },
+        showPin: {
+            type: Boolean,
+            default: () => true,
         },
     },
     data() {

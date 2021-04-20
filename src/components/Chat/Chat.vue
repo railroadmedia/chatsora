@@ -203,6 +203,7 @@
                         :user-id="userId"
                         :show-upvote="false"
                         :show-thread="enableThread"
+                        :show-pin="false"
                         :dropdown-menu="index <= 1"
                         :brand="brand"
                     ></chat-message>
@@ -256,28 +257,28 @@
                     <div class="cs-dialog-window tw-rounded-lg tw-flex-none tw-bg-black tw-z-30 tw-relative">
                         <div class="tw-absolute tw-top-2 tw-right-3 tw-text-white"><i class="fal fa-times tw-font-semibold tw-cursor-pointer" @click.stop.prevent="closeDialog()"></i></div>
                         <div
-                            class="tw-mt-6 tw-mx-8 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"
+                            class="tw-mt-6 tw-mx-8 cs-text-sm tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"
                             v-if="messageRemove != null"
                         >Are you sure you want to delete this message from the chat?</div>
 
                         <div
-                            class="tw-mt-6 tw-mx-8 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"
+                            class="tw-mt-6 tw-mx-8 cs-text-sm tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"
                             v-if="userDeleteMessages != null"
                         >Are you sure you want to delete all user's messages from the chat?</div>
 
                         <div
-                            class="tw-mt-6 tw-mx-8 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"
+                            class="tw-mt-6 tw-mx-8 cs-text-sm tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"
                             v-if="questionRemove != null"
                         >Are you sure you want to mark this question as answered?</div>
 
                         <div
-                            class="tw-mt-6 tw-mx-6 tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"
+                            class="tw-mt-6 tw-mx-6 cs-text-sm tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"
                             :class="{'tw-pb-2': $_short_username}"
                             v-if="userBlock != null"
                         >Are you sure you want to block <span class="tw-font-bold">{{ userBlock.displayName }}</span> from this chat?</div>
                         <div class="tw-mt-3 tw-flex tw-flex-row tw-justify-center">
                             <div
-                                class="cs-btn tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-tracking-normal tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-text-white tw-w-28 tw-flex tw-justify-center"
+                                class="cs-btn cs-text-sm tw-cursor-pointer tw-cursor-pointer tw-rounded-full tw-leading-none tw-tracking-normal tw-font-bold focus:tw-outline-none focus:tw-shadow-outline tw-uppercase tw-text-white tw-w-28 tw-flex tw-justify-center"
                                 @click.stop.prevent="closeDialog(true)"
                             >confirm</div>
                         </div>
@@ -437,7 +438,7 @@ export default {
         $_messages: {
             cache: false,
             get() {
-                return this.messages.filter(message => !message.pinned);
+                return this.messages;
             },
         },
         $_messages_count: {
@@ -449,7 +450,10 @@ export default {
         $_pinned_messages: {
             cache: false,
             get() {
-                return this.messages.filter(message => message.pinned);
+                return this.messages
+                        .filter(message => message.pinned)
+                        .map(message => message)
+                        .sort((a, b)=> b.pinnedAt - a.pinnedAt);
             },
         },
         $_questions: {
@@ -602,7 +606,7 @@ export default {
                         this.removeAllQuestions();
                     })
                     .catch(({ response }) => {
-                        this.errorHandler(response, 'Mark question as answered error');
+                        this.errorHandler(response, 'Mark question as answered error', this.questionErrors);
                     });
             }
         },
@@ -625,33 +629,33 @@ export default {
                         this.messageErrors = [];
                     })
                     .catch(({ response }) => {
-                        this.errorHandler(response, 'Message send error');
+                        this.errorHandler(response, 'Message send error', this.messageErrors);
                     });
+
+                let message = {
+                    'id': '',
+                    'type': 'regular',
+                    'text': this.getParsedMessage(payload.text),
+                    'reply_count': 0,
+                    'pinned': false,
+                    'user': this.userData,
+                    'reaction_counts': {},
+                    'reaction_scores': {},
+                    'own_reactions': [],
+                    'createdAt': DateTime.now(),
+                    'pinnedAt': null,
+                    'reactions': [],
+                    'replies': [],
+                    'key': 'user-' + this.userId + this.userMessageId++
+                };
+
+                this.messages.push(message);
+                this.insertedEmoji = [];
+
+                this.$nextTick(() => {
+                    this.scrollMessages(true);
+                });
             }
-
-            let message = {
-                'id': '',
-                'type': 'regular',
-                'text': this.getParsedMessage(payload.text),
-                'reply_count': 0,
-                'pinned': false,
-                'user': this.userData,
-                'reaction_counts': {},
-                'reaction_scores': {},
-                'own_reactions': [],
-                'createdAt': DateTime.now(),
-                'pinnedAt': null,
-                'reactions': [],
-                'replies': [],
-                'key': 'user-' + this.userId + this.userMessageId++
-            };
-
-            this.messages.push(message);
-            this.insertedEmoji = [];
-
-            this.$nextTick(() => {
-                this.scrollMessages(true);
-            });
         },
 
         sendQuestion() {
@@ -667,32 +671,32 @@ export default {
                         this.questionErrors = [];
                     })
                     .catch(({ response }) => {
-                        this.errorHandler(response, 'Question send error');
+                        this.errorHandler(response, 'Question send error', this.questionErrors);
                     });
+
+                let message = {
+                    'id': '',
+                    'type': 'regular',
+                    'text': this.getParsedMessage(text),
+                    'reply_count': 0,
+                    'pinned': false,
+                    'user': this.userData,
+                    'reaction_counts': {},
+                    'reaction_scores': {},
+                    'own_reactions': [],
+                    'createdAt': DateTime.now(),
+                    'pinnedAt': null,
+                    'reactions': [],
+                    'replies': [],
+                    'key': 'user-' + this.userId + this.userQuestionId++
+                };
+
+                this.questions.push(message);
+
+                this.$nextTick(() => {
+                    this.scrollQuestions(true);
+                });
             }
-
-            let message = {
-                'id': '',
-                'type': 'regular',
-                'text': this.getParsedMessage(text),
-                'reply_count': 0,
-                'pinned': false,
-                'user': this.userData,
-                'reaction_counts': {},
-                'reaction_scores': {},
-                'own_reactions': [],
-                'createdAt': DateTime.now(),
-                'pinnedAt': null,
-                'reactions': [],
-                'replies': [],
-                'key': 'user-' + this.userId + this.userQuestionId++
-            };
-
-            this.questions.push(message);
-
-            this.$nextTick(() => {
-                this.scrollQuestions(true);
-            });
         },
 
         postQuestion({ text }) {
@@ -702,7 +706,7 @@ export default {
             this.sendQuestion();
         },
 
-        errorHandler(response, action) {
+        errorHandler(response, action, errors) {
             let message = `${action}, please try again, if the error persists contact support.`;
 
             if (response) {
@@ -717,7 +721,7 @@ export default {
                 }
             }
 
-            this.messageErrors.push(message);
+            errors.push(message);
         },
 
         attachChatEventHandlers(channel, collection, category) {
@@ -890,7 +894,7 @@ export default {
         unpinMessages(keep = 2) {
             if (this.$_pinned_messages.length > keep) {
                 let revesedSorted = this.$_pinned_messages
-                                        .map(({id, text, pinnedAt}) => ({id, text, pinnedAt}))
+                                        .map(({id, originalText, pinnedAt}) => ({id, originalText, pinnedAt}))
                                         .sort((a, b)=> b.pinnedAt - a.pinnedAt);
 
                 revesedSorted.forEach((message, idx) => {
@@ -944,7 +948,7 @@ export default {
 
             messageCopy.own_reactions = message.own_reactions.map(({ type, score }) => ({ type, score }));
             messageCopy.createdAt = DateTime.fromISO(message.created_at);
-            messageCopy.pinnedAt = DateTime.fromISO(message.pinned_at);
+            messageCopy.pinnedAt = message.pinned_at ? DateTime.fromISO(message.pinned_at) : null;
 
             const messageReactionsCount = Object.values(message.reaction_counts || {}).reduce((a, b) => a + b, 0);
 
@@ -1095,11 +1099,15 @@ export default {
         updateMessageState({ message, collection }) {
             collection.forEach((storedMessage) => {
                 if (message.type == 'regular' && storedMessage.id == message.id) {
+                    storedMessage.originalText = message.text;
                     storedMessage.text = this.getParsedMessage(message.text);
                     storedMessage.pinned = message.pinned;
+                    storedMessage.pinnedAt = message.pinned_at ? DateTime.fromISO(message.pinned_at) : null;
+                    this.unpinMessages();
                 } else if (message.type == 'reply' && message.parent_id && storedMessage.id == message.parent_id) {
                     storedMessage.replies.forEach((storedReplyMessage) => {
                         if (storedReplyMessage.id == message.id) {
+                            storedMessage.originalText = message.text;
                             storedReplyMessage.text = this.getParsedMessage(message.text);
                         }
                     });
@@ -1276,6 +1284,8 @@ export default {
         },
 
         updateMessage({ message, text }) {
+            let errors = this.currentTab == 'chat' ? this.messageErrors : this.questionErrors;
+
             this.streamClient
                 .updateMessage({
                     id: message.id,
@@ -1285,7 +1295,7 @@ export default {
                     this.messageErrors = [];
                 })
                 .catch(({ response }) => {
-                    this.errorHandler(response, 'Message update error');
+                    this.errorHandler(response, 'Message update error', errors);
                 });
         },
 
@@ -1311,6 +1321,8 @@ export default {
 
         closeDialog(confirmation) {
 
+            let errors = this.currentTab == 'chat' ? this.messageErrors : this.questionErrors;
+
             if (confirmation) {
 
                 if (this.messageRemove) {
@@ -1321,7 +1333,7 @@ export default {
                             this.messageErrors = [];
                         })
                         .catch(({ response }) => {
-                            this.errorHandler(response, 'Message delete error');
+                            this.errorHandler(response, 'Message delete error', this.messageErrors);
                         });
 
                 } else if (this.userBlock) {
@@ -1329,10 +1341,10 @@ export default {
                     RailchatService
                         .banUser(this.userBlock.id)
                         .then(() => {
-                            this.messageErrors = [];
+                            errors = [];
                         })
                         .catch(({ response }) => {
-                            this.railErrorHandler(response, 'User ban error');
+                            this.railErrorHandler(response, 'User ban error', errors);
                         });
                 } else if (this.questionRemove) {
                     this.streamClient
@@ -1341,7 +1353,7 @@ export default {
                             this.questionErrors = [];
                         })
                         .catch(({ response }) => {
-                            this.errorHandler(response, 'Mark question as answered error');
+                            this.errorHandler(response, 'Mark question as answered error', this.questionErrors);
                         });
                 } else if (this.userDeleteMessages) {
 
@@ -1349,9 +1361,10 @@ export default {
                         .deleteUserMessages(this.userDeleteMessages.id)
                         .then(() => {
                             this.messageErrors = [];
+                            this.questionErrors = [];
                         })
                         .catch(({ response }) => {
-                            this.railErrorHandler(response, 'Delete user messages error');
+                            this.railErrorHandler(response, 'Delete user messages error', errors);
                         });
                 }
             }
@@ -1418,6 +1431,8 @@ export default {
         },
 
         toggleMessageReaction({ message, reaction }) {
+            let errors = this.currentTab == 'chat' ? this.messageErrors : this.questionErrors;
+
             if (this.hasOwnReaction(message, reaction)) {
                 this.removeOwnReaction({ message, reaction });
 
@@ -1427,7 +1442,7 @@ export default {
                         this.messageErrors = [];
                     })
                     .catch(({ response }) => {
-                        this.errorHandler(response, 'Message reaction remove error');
+                        this.errorHandler(response, 'Message reaction remove error', errors);
                     });
             } else {
                 this.addOwnReaction({ message, reaction });
@@ -1438,7 +1453,7 @@ export default {
                         this.messageErrors = [];
                     })
                     .catch(({ response }) => {
-                        this.errorHandler(response, 'Message reaction send error');
+                        this.errorHandler(response, 'Message reaction send error', errors);
                     });
             }
         },
@@ -1463,10 +1478,9 @@ export default {
                 .pinMessage({ id: message.id, text: message.originalText }, null)
                 .then(() => {
                     this.messageErrors = [];
-                    this.unpinMessages(1);
                 })
                 .catch(({ response }) => {
-                    this.errorHandler(response, 'Message pin error');
+                    this.errorHandler(response, 'Message pin error', this.messageErrors);
                 });
         },
 
@@ -1477,7 +1491,7 @@ export default {
                     this.messageErrors = [];
                 })
                 .catch(({ response }) => {
-                    this.errorHandler(response, 'Message unpin error');
+                    this.errorHandler(response, 'Message unpin error', this.messageErrors);
                 });
         },
 
@@ -1502,7 +1516,7 @@ export default {
                 });
         },
 
-        railErrorHandler(response, action) {
+        railErrorHandler(response, action, errors) {
             let message = `${action}, please try again, if the error persists contact support.`;
 
             if (response && response.data?.errors && Array.isArray(response.data.errors)) {
@@ -1517,7 +1531,7 @@ export default {
                 console.log("Chat::railErrorHandler unknown error response format: %s", JSON.stringify(response));
             }
 
-            this.messageErrors.push(message);
+            errors.push(message);
         },
 
         insertEmoji({ emoji }) {
