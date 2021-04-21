@@ -71,7 +71,7 @@
                         href="#"
                         class="tw-ml-3 tw-no-underline tw-text-white"
                         @click.stop.prevent="toggleShowMembers()"
-                    ><i class="fas fa-arrow-left"></i><span class="tw-ml-2">Participants</span></a>
+                    ><i class="fas fa-arrow-left"></i><span class="tw-ml-2 cs-text-sm">Participants</span></a>
                 </div>
             </div>
             <div class="cs-body tw-flex-grow tw-overflow-y-auto">
@@ -99,7 +99,7 @@
                         href="#"
                         class="tw-ml-3 tw-no-underline tw-text-white"
                         @click.stop.prevent="toggleShowBannedUsers()"
-                    ><i class="fas fa-arrow-left"></i><span class="tw-ml-2">Blocked Students</span></a>
+                    ><i class="fas fa-arrow-left"></i><span class="tw-ml-2 cs-text-sm">Blocked Students</span></a>
                 </div>
             </div>
             <div class="cs-body tw-flex-grow tw-overflow-y-auto">
@@ -311,14 +311,14 @@
                         wrap="off"
                         rows="1"
                         class="tw-resize-none cs-text-sm tw-bg-black"
-                        :class="{'cs-typing': message != ''}"
+                        :class="{'cs-typing': question != ''}"
                         v-if="currentTab == 'questions'"
                     ></textarea>
                 </div>
                 <div class="cs-new-message-menu tw-absolute tw-text-lg">
                     <a
                         href="#"
-                        class="cs-text-gray tw-mr-2"
+                        class="cs-text-gray tw-mr-3"
                         @click.stop.prevent="toggleShowEmoji()"
                         v-if="currentTab == 'chat'"
                     ><i class="fal fa-smile"></i></a>
@@ -327,16 +327,19 @@
                         class="cs-text-gray"
                         @click.stop.prevent="sendMessage()"
                         v-if="currentTab == 'chat'"
-                    ><div class="send-icon"></div></a>
+                    ><div class="send-icon" :class="{'blue': message != ''}"></div></a>
                     <a
                         href="#"
                         class="cs-text-gray"
                         @click.stop.prevent="sendQuestion()"
                         v-if="currentTab == 'questions'"
-                    ><div class="send-icon"></div></a>
+                    ><div class="send-icon" :class="{'blue': question != ''}"></div></a>
                 </div>
                 <div>
-                    <span class="cs-text-gray tw-text-xs">{{ $_watcher_count }} Online</span>
+                    <span
+                        class="cs-text-gray tw-text-xs tw-cursor-pointer"
+                        @click.stop.prevent="toggleShowMembers()"
+                    >{{ $_watcher_count }} Online</span>
                 </div>
             </div>
         </div>

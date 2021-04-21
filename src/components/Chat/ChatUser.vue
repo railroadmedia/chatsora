@@ -1,5 +1,5 @@
 <template>
-    <div class="tw-flex tw-flex-row tw-items-center">
+    <div class="tw-flex tw-flex-row">
         <div
             class="tw-flex-none tw-mr-3 tw-relative tw-overflow-hidden cs-user-avatar"
             :class="getUserMembershipClass()"

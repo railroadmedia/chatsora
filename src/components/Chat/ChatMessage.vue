@@ -1,6 +1,7 @@
 <template>
     <div
         class="cs-message tw-p-3 tw-rounded-md tw-relative tw-top-0"
+        :class="{'system': message.type == 'system'}"
         @mouseleave="closeMessageMenus()"
         ref="msg"
     >
@@ -16,8 +17,8 @@
         <div class="tw-flex tw-flex-col tw-max-w-full" v-if="messageEdit.id != message.id && message.type != 'system'">
             <chat-user :user="message.user">
                 <template v-slot:footer>
-                    <div v-html="message.text" class="tw-whitespace-normal cs-text-sm"></div>
-                    <div class="tw-inline-flex tw-items-center tw-mt-1" v-if="$_has_reactions || showUpvote">
+                    <div v-html="message.text" class="cs-message-text tw-whitespace-normal cs-text-sm"></div>
+                    <div class="tw-inline-flex tw-items-center" v-if="$_has_reactions || showUpvote">
                         <div
                             class="cs-upvote tw-cursor-pointer tw-flex tw-flex-row tw-items-center tw-px-3 tw-rounded-full cs-text-xs"
                             :class="$_message_upvote_class"
@@ -89,7 +90,7 @@
                 </div>
             </div>
         </div>
-        <div v-if="message.type == 'system'" class="tw-py-2 tw-text-white">
+        <div v-if="message.type == 'system'" class="tw-py-2 tw-text-white cs-text-sm">
             {{ message.text }}
         </div>
     </div>
@@ -238,6 +239,17 @@ export default {
                     ({ message }) => {
                         if (message.id == this.message.id) {
                             this.upvoteNewScore = null;
+                        }
+                    }
+                );
+
+            this.$root
+                .$on(
+                    'messageMenuToggled',
+                    ({ message }) => {
+                        if (message.id == this.message.id) {
+                            let domRect = this.$refs.msg.getBoundingClientRect();
+                            this.$root.$emit('toggleChatPopup', { message: this.message, domRect });
                         }
                     }
                 );

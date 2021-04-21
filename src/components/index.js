@@ -1,7 +1,9 @@
 import Chat from './Chat/Chat.vue';
+import ChatPopup from './Chat/ChatPopup.vue';
 
 const Components = {
-    Chat
+    Chat,
+    ChatPopup
 };
 
 export default Components;
