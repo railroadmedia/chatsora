@@ -1537,13 +1537,13 @@ export default {
             errors.push(message);
         },
 
-        insertEmoji({ emoji }) {
+        insertEmoji(emoji) {
             const textarea = this.$refs.newMessage;
             const start = textarea.selectionStart;
             const end = textarea.selectionEnd;
-            textarea.setRangeText(`:${emoji}:`, start, end, 'end');
+            textarea.setRangeText(`${emoji.emoji}`, start, end, 'end');
             this.message = textarea.value;
-            this.insertedEmoji.push(`:${emoji}:`);
+            // this.insertedEmoji.push(`:${emoji}:`);
             this.showEmoji = false;
         },
 

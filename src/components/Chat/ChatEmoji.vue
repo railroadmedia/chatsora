@@ -9,23 +9,10 @@
                     <a
                         class="tw-p-3 tw-cursor-pointer"
                         :class="{'cs-text-gray': currentTab != 'frequent', 'cs-text-blue': currentTab == 'frequent'}"
-                        @click.stop.prevent="setCurrentTab('frequent')"
-                    ><i class="fal fa-clock"></i></a>
-                    <a
-                        class="tw-p-3 tw-cursor-pointer"
-                        :class="{'cs-text-gray': currentTab != 'people', 'cs-text-blue': currentTab == 'people'}"
-                        @click.stop.prevent="setCurrentTab('people')"
-                    ><i class="fal fa-smile"></i></a>
-                    <a
-                        class="tw-p-3 tw-cursor-pointer"
-                        :class="{'cs-text-gray': currentTab != 'music', 'cs-text-blue': currentTab == 'music'}"
-                        @click.stop.prevent="setCurrentTab('music')"
-                    ><i class="fal fa-music"></i></a>
-                    <a
-                        class="tw-p-3 tw-cursor-pointer"
-                        :class="{'cs-text-gray': currentTab != 'symbols', 'cs-text-blue': currentTab == 'symbols'}"
-                        @click.stop.prevent="setCurrentTab('symbols')"
-                    ><i class="fal fa-hexagon"></i></a>
+                        v-for="(emojiArray, category) in this.emojiData"
+                        :key="category"
+                        @click.stop.prevent="setCurrentTab(category)"
+                    ><i class="fal" :class="tabIcons[category]"></i></a>
                 </div>
                 <a
                     class="tw-p-2 cs-text-gray tw-cursor-pointer"
@@ -43,13 +30,13 @@
             </div>
             <div>
                 <div class="tw-px-3 tw-text-white tw-font-semibold">{{ $_current_tab_label }}</div>
-                <div class="tw-py-3 tw-px-2 tw-grid tw-grid-cols-10 tw-gap-y-3 tw-text-lg">
+                <div class="tw-py-3 tw-px-2 tw-grid tw-grid-cols-10 tw-gap-y-3 tw-text-lg tw-overflow-auto">
                     <a
                         class="tw-text-center tw-cursor-pointer"
                         v-for="item in $_emoji"
-                        :key="item.id"
+                        :key="item.no"
                         @click.stop.prevent="insertEmoji(item)"
-                    ><i :class="item.class"></i></a>
+                    >{{ item.emoji }}</a>
                 </div>
             </div>
         </div>
@@ -70,13 +57,17 @@ export default {
     data() {
         return {
             emojiData: {},
-            tabs: {
-                frequent: 'Frequently Used',
-                people: 'People',
-                music: 'Music',
-                symbols: 'Symbols'
+            tabIcons: {
+              "Smileys & People": "fa-smile",
+              "Animals & Nature": "fa-smile",
+              "Food & Drink": "fa-smile",
+              "Travel & Places": "fa-smile",
+              "Activities": "fa-smile",
+              "Objects": "fa-smile",
+              "Symbols": "fa-smile",
+              "Flags": "fa-smile",
             },
-            currentTab: 'frequent',
+            currentTab: 'Smileys & People',
             search: '',
         }
     },
@@ -85,26 +76,28 @@ export default {
             cache: false,
             get() {
                 return this.emojiData[this.currentTab]
-                            .filter(item => !this.search || item.id.includes(this.search));
+                            .filter(item => !this.search ||
+                                item.keywords.filter(keyword => keyword.includes(this.search)).length > 0);
             },
         },
         $_current_tab_label: {
             cache: false,
             get() {
-                return this.tabs[this.currentTab];
+                return this.currentTab;
             },
         },
     },
     mounted() {
         this.emojiData = EmojiData;
     },
-    methods: {
+
+  methods: {
         setCurrentTab(tab) {
             this.currentTab = tab;
         },
 
-        insertEmoji({ id }) {
-            this.$root.$emit('insertEmoji', { emoji: id });
+        insertEmoji(emoji) {
+            this.$root.$emit('insertEmoji', emoji);
         },
 
         removeEmoji() {
