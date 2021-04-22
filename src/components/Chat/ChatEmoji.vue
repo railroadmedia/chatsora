@@ -8,7 +8,7 @@
                 <div>
                     <a
                         class="tw-p-3 tw-cursor-pointer"
-                        :class="{'cs-text-gray': currentTab != 'frequent', 'cs-text-blue': currentTab == 'frequent'}"
+                        :class="{'cs-text-gray': currentTab != category, 'cs-text-blue': currentTab == category}"
                         v-for="(emojiArray, category) in this.emojiData"
                         :key="category"
                         @click.stop.prevent="setCurrentTab(category)"
@@ -28,15 +28,18 @@
                     class="tw-resize-none tw-whitespace-nowrap tw-overflow-x-auto tw-rounded-full cs-text-sm"
                 ></textarea>
             </div>
-            <div>
-                <div class="tw-px-3 tw-text-white tw-font-semibold">{{ $_current_tab_label }}</div>
-                <div class="tw-py-3 tw-px-2 tw-grid tw-grid-cols-10 tw-gap-y-3 tw-text-lg tw-overflow-auto">
-                    <a
-                        class="tw-text-center tw-cursor-pointer"
-                        v-for="item in $_emoji"
-                        :key="item.no"
-                        @click.stop.prevent="insertEmoji(item)"
-                    >{{ item.emoji }}</a>
+            <div class="tw-px-3 tw-text-white tw-font-semibold">{{ $_current_tab_label }}</div>
+            <div class="tw-py-2 tw-overflow-hidden">
+                <div class="cs-emoji-list" ref="simplebar">
+                    <div class="tw-py-3 tw-px-2 tw-grid tw-grid-cols-10 tw-gap-y-3 tw-text-lg tw-overflow-auto">
+                        <a
+                            class="tw-text-center tw-cursor-pointer"
+                            v-for="item in $_emoji"
+                            :key="item.no"
+                            @click.stop.prevent="insertEmoji(item)"
+                            :data-item-no="item.no"
+                        >{{ item.emoji }}</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -45,6 +48,8 @@
 
 <script>
 import EmojiData from '../../assets/js/data/emoji.json';
+import SimpleBar from 'simplebar';
+import 'simplebar/dist/simplebar.min.css';
 
 export default {
     name: 'ChatEmoji',
@@ -59,16 +64,26 @@ export default {
             emojiData: {},
             tabIcons: {
               "Smileys & People": "fa-smile",
-              "Animals & Nature": "fa-smile",
-              "Food & Drink": "fa-smile",
-              "Travel & Places": "fa-smile",
-              "Activities": "fa-smile",
-              "Objects": "fa-smile",
-              "Symbols": "fa-smile",
-              "Flags": "fa-smile",
+              "Animals & Nature": "fa-cat",
+              "Food & Drink": "fa-burger-soda",
+              "Travel & Places": "fa-route",
+              "Activities": "fa-hiking",
+              "Objects": "fa-object-group",
+              "Symbols": "fa-icons",
+              "Flags": "fa-flag",
             },
             currentTab: 'Smileys & People',
             search: '',
+            simpleBar: null,
+        }
+    },
+    watch: {
+        showWindow: function(val) {
+            if (val) {
+                this.$nextTick(() => {
+                    this.simpleBar = new SimpleBar(this.$refs.simplebar, {autoHide: false});
+                });
+            }
         }
     },
     computed: {
@@ -94,6 +109,9 @@ export default {
   methods: {
         setCurrentTab(tab) {
             this.currentTab = tab;
+            this.$nextTick(() => {
+                this.simpleBar.recalculate();
+            });
         },
 
         insertEmoji(emoji) {

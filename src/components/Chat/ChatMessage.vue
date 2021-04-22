@@ -20,9 +20,9 @@
                     <div v-html="message.text" class="cs-message-text tw-whitespace-normal cs-text-sm"></div>
                     <div class="tw-inline-flex tw-items-center" v-if="$_has_reactions || showUpvote">
                         <div
-                            class="cs-upvote tw-cursor-pointer tw-flex tw-flex-row tw-items-center tw-px-3 tw-rounded-full cs-text-xs"
+                            class="cs-upvote tw-flex tw-flex-row tw-items-center tw-px-3 tw-rounded-full cs-text-xs"
                             :class="$_message_upvote_class"
-                            @click.stop.prevent="toggleMessageReaction('upvote')"
+                            @click.stop.prevent="toggleUpvote()"
                             v-if="showUpvote"
                         >
                             <i class="cs-icon fas fa-arrow-up"></i>
@@ -196,7 +196,7 @@ export default {
         $_message_upvote_class: {
             cache: false,
             get() {
-                return { 'active': this.hasOwnReaction('upvote') };
+                return { 'active': this.hasOwnReaction('upvote'), 'tw-cursor-pointer': this.message.user.id != this.userId };
             },
         },
 
@@ -247,7 +247,7 @@ export default {
                 .$on(
                     'messageMenuToggled',
                     ({ message }) => {
-                        if (message.id == this.message.id) {
+                        if (message.id == this.message.id && this.$refs.msg) {
                             let domRect = this.$refs.msg.getBoundingClientRect();
                             this.$root.$emit('toggleChatPopup', { message: this.message, domRect });
                         }
@@ -293,6 +293,19 @@ export default {
                         reaction: reaction
                     }
                 );
+        },
+
+        toggleUpvote() {
+            if (this.message.user.id != this.userId) {
+                this.$root
+                    .$emit(
+                        'toggleMessageReaction',
+                        {
+                            message: this.message,
+                            reaction: 'upvote'
+                        }
+                    );
+            }
         },
 
         hasOwnReaction(reactionType) {

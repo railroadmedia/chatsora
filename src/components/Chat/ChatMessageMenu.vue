@@ -66,18 +66,24 @@
                 </div>
             </div>
         </div>
-        <div class="cs-main-menu tw-flex tw-flex-row tw-rounded-full tw-cursor-pointer tw-px-1">
+        <div
+            class="cs-main-menu tw-flex tw-flex-row tw-rounded-full tw-cursor-pointer tw-px-1"
+            :class="{ 'cs-menu-opened': messageMenu || messageReact }"
+        >
             <div class="cs-divide-right tw-px-2 cs-text-xs tw-flex tw-flex-row tw-items-center tw-cursor-default">
                 <span>{{ $_message_time }}</span>
             </div>
             <div
-                class="cs-divide-right tw-px-2 cs-text-sm"
+                class="cs-divide-right cs-tooltip-container tw-px-2 cs-text-sm tw-relative"
                 @click.stop.prevent="markAsAnswered()"
                 v-if="showUpvote && isAdministrator"
-            ><i class="fas fa-check"></i></div>
+            >
+                <i class="fas fa-check"></i>
+                <div class="cs-tooltip tw-absolute tw-rounded-md tw-px-2 tw-py-1 tw-text-xs tw-text-white tw-overflow-hidden tw-whitespace-nowrap">Mark as Answered</div>
+                <div class="cs-tooltip-arrow tw-absolute tw-transform tw-rotate-45"></div>
+            </div>
             <div
                 class="cs-divide-right cs-tooltip-container tw-px-2 cs-text-sm tw-relative"
-                :class="{'menu-active': messageReact}"
                 @click.stop.prevent="toggleMessageReact()"
                 v-if="!showUpvote"
             >
@@ -185,14 +191,14 @@ export default {
                 }
             );
 
-        // this.$root
-        //     .$on(
-        //         'closeMessageMenus',
-        //         () => {
-        //             this.messageReact = false;
-        //             this.messageMenu = false;
-        //         }
-        //     );
+        this.$root
+            .$on(
+                'closeMessageMenus',
+                () => {
+                    this.messageReact = false;
+                    this.messageMenu = false;
+                }
+            );
     },
     methods: {
         toggleMessageMenu() {

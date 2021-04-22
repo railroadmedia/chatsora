@@ -350,7 +350,6 @@
 import { DateTime } from 'luxon';
 import { StreamChat } from 'stream-chat';
 import RailchatService from '../../assets/js/services/railchat.js';
-import TextParserService from '../../assets/js/services/text-parser.js';
 import ChatEmoji from './ChatEmoji.vue';
 import ChatMessage from './ChatMessage.vue';
 import ChatUser from './ChatUser.vue';
@@ -638,7 +637,7 @@ export default {
                 let message = {
                     'id': '',
                     'type': 'regular',
-                    'text': this.getParsedMessage(payload.text),
+                    'text': payload.text,
                     'reply_count': 0,
                     'pinned': false,
                     'user': this.userData,
@@ -649,7 +648,8 @@ export default {
                     'pinnedAt': null,
                     'reactions': [],
                     'replies': [],
-                    'key': 'user-' + this.userId + this.userMessageId++
+                    'key': 'user-' + this.userId + this.userMessageId++,
+                    'category': 'message',
                 };
 
                 this.messages.push(message);
@@ -680,7 +680,7 @@ export default {
                 let message = {
                     'id': '',
                     'type': 'regular',
-                    'text': this.getParsedMessage(text),
+                    'text': text,
                     'reply_count': 0,
                     'pinned': false,
                     'user': this.userData,
@@ -691,7 +691,8 @@ export default {
                     'pinnedAt': null,
                     'reactions': [],
                     'replies': [],
-                    'key': 'user-' + this.userId + this.userQuestionId++
+                    'key': 'user-' + this.userId + this.userQuestionId++,
+                    'category': 'question',
                 };
 
                 this.questions.push(message);
@@ -897,7 +898,7 @@ export default {
         unpinMessages(keep = 2) {
             if (this.$_pinned_messages.length > keep) {
                 let revesedSorted = this.$_pinned_messages
-                                        .map(({id, originalText, pinnedAt}) => ({id, originalText, pinnedAt}))
+                                        .map(({id, text, pinnedAt}) => ({id, text, pinnedAt}))
                                         .sort((a, b)=> b.pinnedAt - a.pinnedAt);
 
                 revesedSorted.forEach((message, idx) => {
@@ -919,13 +920,6 @@ export default {
             });
         },
 
-        getParsedMessage(text) {
-
-            let urlParsed = TextParserService.parseUrls(text);
-
-            return TextParserService.parseEmoji(urlParsed);
-        },
-
         /**
          * Create a copy of user object
          */
@@ -942,9 +936,6 @@ export default {
             let messageCopy = (({ id, type, text, reply_count, pinned }) => ({ id, type, text, reply_count, pinned }))(message);
 
             messageCopy.user = this.getUserCopy(message.user);
-
-            messageCopy.originalText = messageCopy.text;
-            messageCopy.text = this.getParsedMessage(messageCopy.text);
 
             messageCopy.reaction_counts = {...message.reaction_counts};
             messageCopy.reaction_scores = {...message.reaction_scores};
@@ -1005,7 +996,7 @@ export default {
 
             if (message.user.id == this.userId) {
                 if (message.type == 'regular') {
-                    let messageIdx;
+                    let messageIdx = null;
 
                     collection.forEach((msg, idx) => {
                         if (!msg.id && msg.user.id == this.userId && msg.text == messageCopy.text) {
@@ -1014,7 +1005,7 @@ export default {
                         }
                     });
 
-                    if (messageIdx) {
+                    if (messageIdx != null) {
                         messageCopy.key = collection[messageIdx].key
 
                         collection.splice(messageIdx, 1, messageCopy);
@@ -1038,6 +1029,12 @@ export default {
                         }
                     });
                 }
+            }
+
+            if (message.type == 'regular' && message.user.id == this.userId && category == 'question' && !message.own_reactions.length) {
+                this.$nextTick(() => {
+                    this.toggleMessageReaction({ message: messageCopy, reaction: 'upvote' });
+                });
             }
 
             if (!found) {
@@ -1102,16 +1099,14 @@ export default {
         updateMessageState({ message, collection }) {
             collection.forEach((storedMessage) => {
                 if (message.type == 'regular' && storedMessage.id == message.id) {
-                    storedMessage.originalText = message.text;
-                    storedMessage.text = this.getParsedMessage(message.text);
+                    storedMessage.text = message.text;
                     storedMessage.pinned = message.pinned;
                     storedMessage.pinnedAt = message.pinned_at ? DateTime.fromISO(message.pinned_at) : null;
                     this.unpinMessages();
                 } else if (message.type == 'reply' && message.parent_id && storedMessage.id == message.parent_id) {
                     storedMessage.replies.forEach((storedReplyMessage) => {
                         if (storedReplyMessage.id == message.id) {
-                            storedMessage.originalText = message.text;
-                            storedReplyMessage.text = this.getParsedMessage(message.text);
+                            storedReplyMessage.text = message.text;
                         }
                     });
                 }
@@ -1428,18 +1423,21 @@ export default {
                 }
             });
 
-            selectedMessage.reaction_counts[reaction] = (selectedMessage.reaction_counts[reaction] || 0) + 1;
+            if (selectedMessage) {
+                selectedMessage.reaction_counts[reaction] = (selectedMessage.reaction_counts[reaction] || 0) + 1;
 
-            selectedMessage.own_reactions.push({type: reaction, score: 1});
+                selectedMessage.own_reactions.push({type: reaction, score: 1});
+            }
         },
 
         toggleMessageReaction({ message, reaction }) {
             let errors = this.currentTab == 'chat' ? this.messageErrors : this.questionErrors;
+            let channel = message.category == 'message' ? this.chatChannel : this.questionsChannel;
 
             if (this.hasOwnReaction(message, reaction)) {
                 this.removeOwnReaction({ message, reaction });
 
-                this.chatChannel
+                channel
                     .deleteReaction(message.id, reaction)
                     .then(() => {
                         this.messageErrors = [];
@@ -1450,7 +1448,7 @@ export default {
             } else {
                 this.addOwnReaction({ message, reaction });
 
-                this.chatChannel
+                channel
                     .sendReaction(message.id, { type: reaction })
                     .then(() => {
                         this.messageErrors = [];
@@ -1478,7 +1476,7 @@ export default {
 
         pinMessage({ message }) {
             this.streamClient
-                .pinMessage({ id: message.id, text: message.originalText }, null)
+                .pinMessage({ id: message.id, text: message.text }, null)
                 .then(() => {
                     this.messageErrors = [];
                 })
@@ -1489,7 +1487,7 @@ export default {
 
         unpinMessage({ message }) {
             this.streamClient
-                .unpinMessage({id: message.id, text: message.originalText }, null)
+                .unpinMessage({id: message.id, text: message.text }, null)
                 .then(() => {
                     this.messageErrors = [];
                 })
@@ -1543,11 +1541,11 @@ export default {
             const end = textarea.selectionEnd;
             textarea.setRangeText(`${emoji.emoji}`, start, end, 'end');
             this.message = textarea.value;
-            // this.insertedEmoji.push(`:${emoji}:`);
             this.showEmoji = false;
         },
 
         removeEmoji() {
+            // todo - update
             if (this.insertedEmoji.length) {
                 const emoji = this.insertedEmoji.pop();
 
