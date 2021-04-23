@@ -22,7 +22,7 @@
             <div class="tw-p-3">
                 <textarea
                     v-model="search"
-                    placeholder="Seach emoji"
+                    placeholder="Search Emojis"
                     wrap="off"
                     rows="1"
                     class="tw-resize-none tw-whitespace-nowrap tw-overflow-x-auto tw-rounded-full cs-text-sm"
@@ -119,6 +119,7 @@ export default {
         },
 
         closeEmojiWindow() {
+            this.search = '';
             this.$root.$emit('closeEmojiWindow', { });
         },
     }
