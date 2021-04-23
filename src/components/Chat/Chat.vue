@@ -296,10 +296,12 @@
                     <textarea
                         v-model="message"
                         placeholder="Say something..."
+                        onfocus="this.placeholder = ''"
+                        onblur="this.placeholder = 'Say something...'"
                         v-on:keyup.enter="sendMessage()"
                         wrap="off"
                         rows="1"
-                        class="tw-resize-none cs-text-sm tw-bg-black"
+                        class="tw-resize-none cs-text-sm tw-bg-black tw-rounded-none"
                         :class="{'cs-typing': message != ''}"
                         ref="newMessage"
                         v-if="currentTab == 'chat'"
@@ -307,10 +309,12 @@
                     <textarea
                         v-model="question"
                         placeholder="Ask a question..."
+                        onfocus="this.placeholder = ''"
+                        onblur="this.placeholder = 'Ask a question...'"
                         v-on:keyup.enter="sendQuestion()"
                         wrap="off"
                         rows="1"
-                        class="tw-resize-none cs-text-sm tw-bg-black"
+                        class="tw-resize-none cs-text-sm tw-bg-black tw-rounded-none"
                         :class="{'cs-typing': question != ''}"
                         v-if="currentTab == 'questions'"
                     ></textarea>
