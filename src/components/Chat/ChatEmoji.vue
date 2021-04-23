@@ -16,7 +16,7 @@
                 </div>
                 <a
                     class="tw-p-2 cs-text-gray tw-cursor-pointer"
-                    @click.stop.prevent="removeEmoji()"
+                    @click.stop.prevent="closeEmojiWindow()"
                 ><i class="fal fa-backspace"></i></a>
             </div>
             <div class="tw-p-3">
@@ -31,7 +31,7 @@
             <div class="tw-px-3 tw-text-white tw-font-semibold">{{ $_current_tab_label }}</div>
             <div class="tw-py-2 tw-overflow-hidden">
                 <div class="cs-emoji-list" ref="simplebar">
-                    <div class="tw-py-3 tw-px-2 tw-grid tw-grid-cols-10 tw-gap-y-3 tw-text-lg tw-overflow-auto">
+                    <div class="tw-py-3 tw-px-2 tw-grid tw-grid-cols-8 tw-gap-y-3 tw-text-2xl tw-overflow-auto">
                         <a
                             class="tw-text-center tw-cursor-pointer"
                             v-for="item in $_emoji"
@@ -64,12 +64,12 @@ export default {
             emojiData: {},
             tabIcons: {
               "Smileys & People": "fa-smile",
-              "Animals & Nature": "fa-cat",
-              "Food & Drink": "fa-burger-soda",
-              "Travel & Places": "fa-route",
-              "Activities": "fa-hiking",
-              "Objects": "fa-object-group",
-              "Symbols": "fa-icons",
+              "Animals & Nature": "fa-leaf",
+              "Food & Drink": "fa-hamburger",
+              "Travel & Places": "fa-globe",
+              "Activities": "fa-football-ball",
+              "Objects": "fa-lightbulb",
+              "Symbols": "fa-peace",
               "Flags": "fa-flag",
             },
             currentTab: 'Smileys & People',
@@ -118,8 +118,8 @@ export default {
             this.$root.$emit('insertEmoji', emoji);
         },
 
-        removeEmoji() {
-            this.$root.$emit('removeEmoji', { });
+        closeEmojiWindow() {
+            this.$root.$emit('closeEmojiWindow', { });
         },
     }
 }

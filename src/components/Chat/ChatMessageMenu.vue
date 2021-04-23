@@ -2,50 +2,50 @@
     <div class="cs-message-menu tw-absolute tw-text-base">
         <div class="tw-relative">
             <div
-                class="cs-sub-menu tw-absolute tw-right-0 tw-bottom-0 tw-w-44 tw-p-3 tw-flex tw-flex-col tw-bg-black tw-rounded-lg tw-text-white cs-text-sm tw-z-50"
+                class="cs-sub-menu tw-absolute tw-right-0 tw-bottom-0 tw-w-44 tw-py-3 tw-flex tw-flex-col tw-bg-black tw-rounded-lg tw-text-white cs-text-sm tw-z-50"
                 :class="{'cs-downdown':dropdownMenu}"
                 v-if="messageMenu"
             >
                 <div v-if="message.user.id != userId && !isAdministrator">
-                    <a :href="message.user.profileUrl" target="_blank" class="tw-no-underline tw-text-white">View Profile</a>
+                    <a :href="message.user.profileUrl" target="_blank" class="cs-sub-menu-item tw-px-3 tw-no-underline tw-text-white">View Profile</a>
                 </div>
                 <div
                     :class="{'tw-mb-2': isAdministrator}"
                     v-if="message.user.id == userId"
                 >
                     <div
-                        class="tw-mb-1 tw-cursor-pointer"
+                        class="cs-sub-menu-item tw-px-3 tw-mb-1 tw-cursor-pointer"
                         @click.stop.prevent="editMessage()"
                     >Edit Message</div>
                     <div
-                        class="tw-mb-1 tw-cursor-pointer"
+                        class="cs-sub-menu-item tw-px-3 tw-mb-1 tw-cursor-pointer"
                         @click.stop.prevent="removeMessage()"
                     >Delete</div>
                 </div>
                 <div v-if="isAdministrator">
-                    <div class="tw-mb-2 tw-font-semibold tw-cursor-default">Moderation</div>
+                    <div class="tw-px-3 tw-mb-2 tw-font-semibold tw-cursor-default">Moderation</div>
                     <div
-                        class="tw-mb-1 tw-cursor-pointer"
+                        class="cs-sub-menu-item tw-px-3 tw-mb-1 tw-cursor-pointer"
                         @click.stop.prevent="pinMessage()"
                         v-if="$_show_pin"
                     >Pin Message</div>
                     <div
-                        class="tw-mb-1 tw-cursor-pointer"
+                        class="cs-sub-menu-item tw-px-3 tw-mb-1 tw-cursor-pointer"
                         @click.stop.prevent="unpinMessage()"
                         v-if="$_show_unpin"
                     >Unpin Message</div>
                     <div
-                        class="tw-mb-1 tw-cursor-pointer"
+                        class="cs-sub-menu-item tw-px-3 tw-mb-1 tw-cursor-pointer"
                         @click.stop.prevent="removeMessage()"
                         v-if="message.user.id != userId"
                     >Remove Message</div>
                     <div
-                        class="tw-mb-1 tw-cursor-pointer"
+                        class="cs-sub-menu-item tw-px-3 tw-mb-1 tw-cursor-pointer"
                         @click.stop.prevent="removeAllMessages()"
                         v-if="message.user.id != userId"
                     >Remove All Messages</div>
                     <div
-                        class="tw-cursor-pointer"
+                        class="cs-sub-menu-item tw-px-3 tw-cursor-pointer"
                         @click.stop.prevent="blockUser()"
                         v-if="message.user.id != userId"
                     >Block Student</div>
@@ -59,10 +59,10 @@
                 <div class="tw-flex tw-flex-row tw-bg-black tw-rounded-full tw-text-center space-x-1 tw-py-2 tw-px-3 tw-mb-4">
                     <div
                         class="tw-text-2xl tw-cursor-pointer tw-p-1"
-                        v-for="(classes, reaction) in messageReactions"
+                        v-for="(emoji, reaction) in messageReactions"
                         :key="`add-reaction-${reaction}`"
                         @click.stop.prevent="reactToMessage(reaction)"
-                    ><i :class="classes"></i></div>
+                    ><span>{{ emoji }}</span></div>
                 </div>
             </div>
         </div>
@@ -146,6 +146,10 @@ export default {
             type: Boolean,
             default: () => true,
         },
+        pinnedMessage: {
+            type: Boolean,
+            default: () => false,
+        },
     },
     data() {
         return {
@@ -191,14 +195,14 @@ export default {
                 }
             );
 
-        this.$root
-            .$on(
-                'closeMessageMenus',
-                () => {
-                    this.messageReact = false;
-                    this.messageMenu = false;
-                }
-            );
+        // this.$root
+        //     .$on(
+        //         'closeMessageMenus',
+        //         () => {
+        //             this.messageReact = false;
+        //             this.messageMenu = false;
+        //         }
+        //     );
     },
     methods: {
         toggleMessageMenu() {
@@ -223,7 +227,7 @@ export default {
         },
 
         editMessage() {
-            this.$root.$emit('editMessage', { message: this.message });
+            this.$root.$emit('editMessage', { message: this.message, pinnedMessage: this.pinnedMessage });
         },
 
         removeMessage() {

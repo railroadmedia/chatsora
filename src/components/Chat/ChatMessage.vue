@@ -1,8 +1,9 @@
 <template>
     <div
         class="cs-message tw-p-3 tw-rounded-md tw-relative tw-top-0"
-        :class="{'system': message.type == 'system'}"
+        :class="{'system': message.type == 'system', 'pinned': message.pinned && showPin}"
         @mouseleave="closeMessageMenus()"
+        @click.stop.prevent="closeMessageMenus()"
         ref="msg"
     >
         <div class="tw-max-w-full" v-if="message.pinned && showPin">
@@ -39,7 +40,7 @@
                                 @click.stop.prevent="toggleMessageReaction(reaction)"
                                 :title="getReactionUsers(reaction)"
                             >
-                                <i :class="getReactionClasses(reaction)"></i>
+                                <span>{{ getReactionEmoji(reaction) }}</span>
                                 <span class="tw-text-xs tw-text-white tw-ml-1" v-if="count > 1">{{ count }}</span>
                             </div>
                         </div>
@@ -66,6 +67,7 @@
                 :show-thread="showThread"
                 :show-upvote="showUpvote"
                 :dropdown-menu="dropdownMenu"
+                :pinned-message="showPin"
                 v-if="showMenu"
             ></chat-message-menu>
         </div>
@@ -73,7 +75,7 @@
             <div class="cs-message-edit">
                 <textarea
                     v-model="messageEdit.text"
-                    class="cs-text-sm tw-p-2 tw-bg-black tw-text-white tw-resize-none tw-rounded-md"
+                    class="cs-text-sm tw-p-2 tw-bg-black tw-text-white tw-resize-none tw-rounded-md tw-border-0"
                 ></textarea>
                 <div class="tw-flex tw-flex-row tw-justify-end tw-mt-2">
                     <div
@@ -163,15 +165,15 @@ export default {
                 text: ''
             },
             messageReactions: {
-                'thumb': 'fas fa-thumbs-up cs-react-blue',
-                'thumbs-down': 'fas fa-thumbs-down cs-react-blue',
-                'heart': 'fas fa-heart cs-react-red',
-                'fire': 'fas fa-fire cs-react-yellow',
-                'meh-rolling-eyes': 'fas fa-meh-rolling-eyes cs-react-yellow',
-                'grin-hearts': 'fas fa-grin-hearts cs-react-yellow',
-                'sad-cry': 'fas fa-sad-cry cs-react-yellow',
-                'grin-squint': 'fas fa-grin-squint cs-react-yellow',
-                'grin-tears': 'fas fa-grin-tears cs-react-yellow',
+                'thumb': '👍',
+                'thumbs-down': '👎',
+                'heart': '💓',
+                'fire': '🔥',
+                'meh-rolling-eyes': '🙄',
+                'grin-hearts': '😍',
+                'sad-cry': '😢',
+                'grin-squint': '😆',
+                'grin-tears': '😂',
             },
         };
     },
@@ -221,8 +223,8 @@ export default {
             this.$root
                 .$on(
                     'editMessage',
-                    ({ message }) => {
-                        if (message.id == this.message.id) {
+                    ({ message, pinnedMessage }) => {
+                        if (message.id == this.message.id && pinnedMessage == this.showPin) {
                             this.messageEdit = {
                                 id: message.id,
                                 text: message.text
@@ -280,7 +282,7 @@ export default {
             };
         },
 
-        getReactionClasses(reaction) {
+        getReactionEmoji(reaction) {
             return this.messageReactions[reaction];
         },
 

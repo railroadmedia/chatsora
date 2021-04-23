@@ -27,23 +27,23 @@
             </div>
             <div class="tw-relative">
                 <div
-                    class="cs-top-menu cs-text-sm tw-leading-relaxed tw-absolute tw-right-4 tw-p-3 tw-flex tw-flex-col tw-bg-black tw-rounded-lg tw-text-white tw-z-30"
+                    class="cs-top-menu cs-text-sm tw-leading-relaxed tw-absolute tw-right-4 tw-py-3 tw-flex tw-flex-col tw-bg-black tw-rounded-lg tw-text-white tw-z-30"
                     v-if="chatMenu"
                 >
-                    <div class="tw-mb-2 tw-font-semibold tw-cursor-default" v-if="isAdministrator">Moderation</div>
-                    <div class="tw-mb-1 tw-cursor-pointer" @click.stop.prevent="toggleShowMembers()">Participants</div>
+                    <div class="tw-px-3 tw-mb-2 tw-font-semibold tw-cursor-default" v-if="isAdministrator">Moderation</div>
+                    <div class="cs-top-menu-item tw-px-3 tw-mb-1 tw-cursor-pointer" @click.stop.prevent="toggleShowMembers()">Participants</div>
                     <a
-                        class="tw-mb-1 tw-text-white tw-no-underline"
+                        class="cs-top-menu-item tw-px-3 tw-mb-1 tw-text-white tw-no-underline"
                         target="_blank"
                         :href="embedUrl"
                     >Pop Out Chat</a>
                     <div
-                        class="tw-mb-1 tw-cursor-pointer"
+                        class="cs-top-menu-item tw-px-3 tw-mb-1 tw-cursor-pointer"
                         @click.stop.prevent="toggleShowBannedUsers()"
                         v-if="isAdministrator"
                     >Blocked Students</div>
                     <div
-                        class="tw-mb-1 tw-cursor-pointer"
+                        class="cs-top-menu-item tw-px-3 tw-mb-1 tw-cursor-pointer"
                         @click.stop.prevent="removeAllQuestions()"
                         v-if="currentTab == 'questions' && isAdministrator"
                     >Clear All Questions</div>
@@ -537,7 +537,7 @@ export default {
         this.$root.$on('pinMessage', this.pinMessage);
         this.$root.$on('unpinMessage', this.unpinMessage);
         this.$root.$on('insertEmoji', this.insertEmoji);
-        this.$root.$on('removeEmoji', this.removeEmoji);
+        this.$root.$on('closeEmojiWindow', this.closeEmojiWindow);
         this.$root.$on('markAsAnswered', this.markAsAnswered);
         this.$root.$on('postQuestion', this.postQuestion);
     },
@@ -1287,7 +1287,8 @@ export default {
             this.streamClient
                 .updateMessage({
                     id: message.id,
-                    text
+                    text,
+                    pinned: message.pinned
                 })
                 .then(() => {
                     this.messageErrors = [];
@@ -1544,13 +1545,8 @@ export default {
             this.showEmoji = false;
         },
 
-        removeEmoji() {
-            // todo - update
-            if (this.insertedEmoji.length) {
-                const emoji = this.insertedEmoji.pop();
-
-                this.message = this.message.replace(emoji, '');
-            }
+        closeEmojiWindow() {
+            this.showEmoji = false;
         },
 
         setCurrentTab(tab) {

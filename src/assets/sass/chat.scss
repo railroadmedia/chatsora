@@ -184,6 +184,10 @@
 .cs-top-menu {
   top: -18px;
   width: 190px;
+
+  .cs-top-menu-item:hover {
+    background-color: #141616;
+  }
 }
 
 /* body and containers */
@@ -254,18 +258,25 @@
         }
       }
 
-      .cs-sub-menu.cs-downdown {
-        display: inline-table;
-        top: 25px;
+      .cs-sub-menu {
+        &.cs-downdown {
+          display: inline-table;
+          top: 25px;
+        }
+
+        .cs-sub-menu-item:hover {
+          background-color: #141616;
+        }
       }
     }
 
-    &:hover:not(.system) {
+    &:hover:not(.system),
+    &.pinned {
       background-color: $gray3Color;
+    }
 
-      .cs-message-menu {
-        display: block;
-      }
+    &:hover:not(.system) .cs-message-menu {
+      display: block;
     }
   }
 
