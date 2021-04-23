@@ -58,7 +58,7 @@
             >
                 <div class="tw-flex tw-flex-row tw-bg-black tw-rounded-full tw-text-center space-x-1 tw-py-2 tw-px-3 tw-mb-4">
                     <div
-                        class="tw-text-2xl tw-cursor-pointer tw-p-1"
+                        class="tw-text-xl tw-cursor-pointer tw-p-1 tw-px-0.5"
                         v-for="(emoji, reaction) in messageReactions"
                         :key="`add-reaction-${reaction}`"
                         @click.stop.prevent="reactToMessage(reaction)"
