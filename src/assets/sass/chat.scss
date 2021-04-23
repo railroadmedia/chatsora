@@ -217,6 +217,26 @@
     min-height: 300px;
   }
 
+  /* width */
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #0D0E0E;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #8C9698;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #a5b2b4;
+  }
+
   p {
     margin: 0;
   }

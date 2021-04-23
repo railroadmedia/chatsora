@@ -32298,10 +32298,30 @@ video {
   padding-left: 5px;
   padding-right: 5px;
   scroll-behavior: smooth;
+  /* width */
+  /* Track */
+  /* Handle */
+  /* Handle on hover */
 }
 
 .cs-messages-container:not(.cs-fit) {
   min-height: 300px;
+}
+
+.cs-messages-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.cs-messages-container::-webkit-scrollbar-track {
+  background: #0D0E0E;
+}
+
+.cs-messages-container::-webkit-scrollbar-thumb {
+  background: #8C9698;
+}
+
+.cs-messages-container::-webkit-scrollbar-thumb:hover {
+  background: #a5b2b4;
 }
 
 .cs-messages-container p {
