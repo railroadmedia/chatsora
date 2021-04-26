@@ -438,6 +438,10 @@ export default {
             userMessageId: 0,
             userQuestionId: 0,
             insertedEmoji: [],
+            messagesMenusOpened: false,
+            questionsMenusOpened: false,
+            messagesAutoscroll: false,
+            questionsAutoscroll: false,
         };
     },
     computed: {
@@ -544,6 +548,7 @@ export default {
         this.$root.$on('closeEmojiWindow', this.closeEmojiWindow);
         this.$root.$on('markAsAnswered', this.markAsAnswered);
         this.$root.$on('postQuestion', this.postQuestion);
+        this.$root.$on('messageMenuToggled', this.messageMenuToggledHandler);
     },
     watch: {
         $_messages_count: function () {
@@ -561,16 +566,50 @@ export default {
     },
     methods: {
 
+        messageMenuToggledHandler({ message, value }) {
+
+            if (message.category == 'message') {
+                if (value == false) {
+
+                    this.messagesMenusOpened = false;
+
+                    if (this.messagesAutoscroll) {
+                        this.scrollMessages(true);
+                    }
+
+                } else {
+                    this.messagesMenusOpened = true;
+                }
+            } else {
+                if (value == false) {
+
+                    this.questionsMenusOpened = false;
+
+                    if (this.questionsAutoscroll) {
+                        this.scrollQuestions(true);
+                    }
+
+                } else {
+                    this.questionsMenusOpened = true;
+                }
+            }
+        },
+
         scrollMessages(force = false) {
             let container = this.$refs.messages;
 
             if (force || Math.ceil(container.scrollHeight - container.scrollTop) === container.clientHeight) {
-                this.$nextTick(() => {
-                    container.scroll({
-                        top: container.scrollHeight,
-                        behavior: 'smooth'
+                if (this.messagesMenusOpened) {
+                    this.messagesAutoscroll = true;
+                } else {
+                    this.messagesAutoscroll = false;
+                    this.$nextTick(() => {
+                        container.scroll({
+                            top: container.scrollHeight,
+                            behavior: 'smooth'
+                        });
                     });
-                });
+                }
             }
         },
 
@@ -578,12 +617,17 @@ export default {
             let container = this.$refs.questions;
 
             if (force || Math.ceil(container.scrollHeight - container.scrollTop) === container.clientHeight) {
-                this.$nextTick(() => {
-                    container.scroll({
-                        top: container.scrollHeight,
-                        behavior: 'smooth'
+                if (this.questionsMenusOpened) {
+                    this.questionsAutoscroll = true;
+                } else {
+                    this.questionsAutoscroll = false;
+                    this.$nextTick(() => {
+                        container.scroll({
+                            top: container.scrollHeight,
+                            behavior: 'smooth'
+                        });
                     });
-                });
+                }
             }
         },
 
