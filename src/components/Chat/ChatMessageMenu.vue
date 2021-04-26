@@ -195,28 +195,32 @@ export default {
                 }
             );
 
-        // this.$root
-        //     .$on(
-        //         'closeMessageMenus',
-        //         () => {
-        //             this.messageReact = false;
-        //             this.messageMenu = false;
-        //         }
-        //     );
+        this.$root
+            .$on(
+                'closeMessageMenus',
+                () => {
+                    if (this.messageReact || this.messageMenu) {
+                        this.$root.$emit('messageMenuToggled', { message: this.message, value: false });
+                    }
+
+                    this.messageReact = false;
+                    this.messageMenu = false;
+                }
+            );
     },
     methods: {
         toggleMessageMenu() {
-            this.$root.$emit('messageMenuToggled', { message: this.message });
-
             this.messageMenu = !this.messageMenu;
             this.messageReact = false;
+
+            this.$root.$emit('messageMenuToggled', { message: this.message, value: this.messageMenu });
         },
 
         toggleMessageReact() {
-            this.$root.$emit('messageMenuToggled', { message: this.message });
-
             this.messageReact = !this.messageReact;
             this.messageMenu = false;
+
+            this.$root.$emit('messageMenuToggled', { message: this.message, value: this.messageReact });
         },
 
         messageThread() {

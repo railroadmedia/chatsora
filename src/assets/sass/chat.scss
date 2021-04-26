@@ -107,6 +107,24 @@
       background-color: $coachColor;
     }
   }
+
+  &.cs-membership-guitar {
+    background-color:$guitareoColor;
+
+    img {
+      border-color:$guitareoColor;
+      background-color:$guitareoColor;
+    }
+  }
+
+  &.cs-membership-piano {
+    background-color:$pianoteColor;
+
+    img {
+      border-color:$pianoteColor;
+      background-color:$pianoteColor;
+    }
+  }
 }
 
 /* emoji and reactions elements */
