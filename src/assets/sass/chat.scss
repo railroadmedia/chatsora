@@ -265,6 +265,11 @@
       margin-top: 5px;
       margin-bottom: 5px;
       line-height: 18px;
+      overflow-wrap: anywhere;
+
+      a {
+        color: #07a0ff;
+      }
     }
 
     .cs-pin-container {

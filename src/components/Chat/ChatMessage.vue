@@ -3,7 +3,7 @@
         class="cs-message tw-p-3 tw-rounded-md tw-relative tw-top-0"
         :class="{'system': message.type == 'system', 'pinned': message.pinned && showPin}"
         @mouseleave="closeMessageMenus()"
-        @click.stop.prevent="closeMessageMenus()"
+        @click.stop.prevent="closeMessageMenus($event)"
         ref="msg"
     >
         <div class="tw-max-w-full" v-if="message.pinned && showPin">
@@ -386,7 +386,11 @@ export default {
             return this.message.text ? this.message.text.split(' ')[0].length : 0;
         },
 
-        closeMessageMenus() {
+        closeMessageMenus(event) {
+            if (event && event.target && event.target.classList.contains('chat-message-link')) {
+                window.open(event.target.href);
+            }
+
             this.$root.$emit('closeMessageMenus', {});
         },
     },

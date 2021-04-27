@@ -357,6 +357,7 @@ import RailchatService from '../../assets/js/services/railchat.js';
 import ChatEmoji from './ChatEmoji.vue';
 import ChatMessage from './ChatMessage.vue';
 import ChatUser from './ChatUser.vue';
+import 'linkifyjs/lib/linkify-string'
 
 export default {
     name: 'Chat',
@@ -448,7 +449,12 @@ export default {
         $_messages: {
             cache: false,
             get() {
-                return this.messages;
+                return this.messages.map(message => ({
+                    ...message,
+                    text: this.stripHtml(message.text).linkify({
+                      className: 'chat-message-link'
+                    }),
+                }));
             },
         },
         $_messages_count: {
@@ -471,12 +477,19 @@ export default {
             get() {
                 let questions = [...this.questions];
 
-                return questions.sort((a, b) => {
-                    let aUpVotes = a?.reaction_counts?.upvote || 0;
-                    let bUpVotes = b?.reaction_counts?.upvote || 0;
+                return questions
+                    .sort((a, b) => {
+                        let aUpVotes = a?.reaction_counts?.upvote || 0;
+                        let bUpVotes = b?.reaction_counts?.upvote || 0;
 
-                    return bUpVotes - aUpVotes;
-                });
+                        return bUpVotes - aUpVotes;
+                    })
+                    .map(question => ({
+                        ...question,
+                        text: this.stripHtml(question.text).linkify({
+                            className: 'chat-message-link'
+                        }),
+                    }));
             },
         },
         $_questions_count: {
@@ -662,7 +675,7 @@ export default {
         },
 
         sendMessage() {
-            let payload = { text:  this.message.trim() };
+            let payload = { text:  this.stripHtml(this.message.trim()) };
 
             this.message = '';
 
@@ -710,7 +723,7 @@ export default {
         },
 
         sendQuestion() {
-            let text = this.question.trim();
+            let text = this.stripHtml(this.question.trim());
 
             this.question = '';
 
@@ -1610,6 +1623,11 @@ export default {
             let inactive = ['cs-text-gray', 'tw-border-transparent'];
 
             return this.currentTab == tab ? active : inactive;
+        },
+
+        stripHtml(html) {
+            let doc = new DOMParser().parseFromString(html, 'text/html');
+            return doc.body.textContent || "";
         },
     },
 }
