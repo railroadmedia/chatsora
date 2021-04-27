@@ -460,16 +460,17 @@ export default {
         $_messages: {
             cache: false,
             get() {
-            	this.messages.map(message => ({
+                let messages = this.messages.map(message => ({
                     ...message,
                     text: this.stripHtml(message.text).linkify({
-                      className: 'chat-message-link'
+                        className: 'chat-message-link'
                     }),
                 }));
-                if (this.messages.length > (this.messagesPageSize * this.messagesPage)) {
-                    return this.messages.slice(-1 * this.messagesPageSize * this.messagesPage);
+
+                if (messages.length > (this.messagesPageSize * this.messagesPage)) {
+                    return messages.slice(-1 * this.messagesPageSize * this.messagesPage);
                 } else {
-                    return this.messages;
+                    return messages;
                 }
             },
         },
