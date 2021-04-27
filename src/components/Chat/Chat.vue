@@ -32,11 +32,10 @@
                 >
                     <div class="tw-px-3 tw-mb-2 tw-font-semibold tw-cursor-default" v-if="isAdministrator">Moderation</div>
                     <div class="cs-top-menu-item tw-px-3 tw-mb-1 tw-cursor-pointer" @click.stop.prevent="toggleShowMembers()">Participants</div>
-                    <a
-                        class="cs-top-menu-item tw-px-3 tw-mb-1 tw-text-white tw-no-underline"
-                        target="_blank"
-                        :href="embedUrl"
-                    >Pop Out Chat</a>
+                    <div
+                        class="cs-top-menu-item tw-px-3 tw-mb-1 tw-cursor-pointer"
+                        @click.stop.prevent="popoutChat()"
+                    >Pop Out Chat</div>
                     <div
                         class="cs-top-menu-item tw-px-3 tw-mb-1 tw-cursor-pointer"
                         @click.stop.prevent="toggleShowBannedUsers()"
@@ -192,7 +191,15 @@
                 class="cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-scroll"
                 ref="messages"
                 v-show="currentTab == 'chat' && !showThread"
+                @scroll="messagesScrolled"
             >
+                <div
+                    class="tw-cursor-pointer tw-pb-5 tw-py-3 tw-flex tw-flex-row tw-place-content-center"
+                    @click.stop.prevent="loadMoreMessages"
+                    v-if="$_show_load_more_messages"
+                >
+                    <span class="cs-text-sm tw-text-white">Load more messages</span>
+                </div>
                 <div
                     v-for="(item, index) in $_messages"
                     :key="item.key"
@@ -256,10 +263,6 @@
                 <div class="tw-w-full tw-h-full tw-flex tw-flex-col tw-place-content-center tw-place-items-center">
                     <div class="cs-dialog-window tw-rounded-lg tw-flex-none tw-bg-black tw-z-30 tw-relative">
                         <div class="tw-absolute tw-top-2 tw-right-3 tw-text-white"><i class="fal fa-times tw-font-semibold tw-cursor-pointer" @click.stop.prevent="closeDialog()"></i></div>
-                        <div
-                            class="tw-mt-6 tw-mx-8 cs-text-sm tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"
-                            v-if="messageRemove != null"
-                        >Are you sure you want to delete this message from the chat?</div>
 
                         <div
                             class="tw-mt-6 tw-mx-8 cs-text-sm tw-text-center tw-text-white tw-tracking-tight tw-leading-relaxed"
@@ -408,6 +411,14 @@ export default {
             type: String,
             default: () => '',
         },
+        messagesPageSize: {
+            type: Number,
+            default: () => 50,
+        },
+        popupWindowSettings: {
+            type: String,
+            default: () => 'width=440,height=820',
+        },
     },
     data() {
         return {
@@ -427,7 +438,6 @@ export default {
             currentTab: 'chat',
             messageThread: null,
             messageErrors: [],
-            messageRemove: null,
             questionRemove: null,
             questionErrors: [],
             userBlock: null,
@@ -443,24 +453,36 @@ export default {
             questionsMenusOpened: false,
             messagesAutoscroll: false,
             questionsAutoscroll: false,
+            messagesPage: 1,
         };
     },
     computed: {
         $_messages: {
             cache: false,
             get() {
-                return this.messages.map(message => ({
+            	this.messages.map(message => ({
                     ...message,
                     text: this.stripHtml(message.text).linkify({
                       className: 'chat-message-link'
                     }),
                 }));
+                if (this.messages.length > (this.messagesPageSize * this.messagesPage)) {
+                    return this.messages.slice(-1 * this.messagesPageSize * this.messagesPage);
+                } else {
+                    return this.messages;
+                }
             },
         },
         $_messages_count: {
             cache: false,
             get() {
-                return  this.messages.length;
+                return this.messages.length;
+            },
+        },
+        $_show_load_more_messages: {
+            cache: false,
+            get() {
+                return this.messages.length > (this.messagesPageSize * this.messagesPage);
             },
         },
         $_pinned_messages: {
@@ -562,6 +584,8 @@ export default {
         this.$root.$on('markAsAnswered', this.markAsAnswered);
         this.$root.$on('postQuestion', this.postQuestion);
         this.$root.$on('messageMenuToggled', this.messageMenuToggledHandler);
+
+
     },
     watch: {
         $_messages_count: function () {
@@ -578,6 +602,28 @@ export default {
         },
     },
     methods: {
+
+        popoutChat() {
+            this.chatMenu = false;
+
+            window.open(this.embedUrl, 'ChatWindow', this.popupWindowSettings);
+        },
+
+        messagesScrolled() {
+            let container = this.$refs.messages;
+
+            if (Math.ceil(container.scrollHeight - container.scrollTop) === container.clientHeight) {
+                this.messagesPage = 1;
+            }
+        },
+
+        loadMoreMessages() {
+            let firstMessage = this.$_messages[0];
+            this.messagesPage++;
+            this.$nextTick(() => {
+                this.$root.$emit('scrollIntoView', { message: firstMessage });
+            });
+        },
 
         messageMenuToggledHandler({ message, value }) {
 
@@ -1360,8 +1406,14 @@ export default {
         },
 
         removeMessage({ message }) {
-            this.messageRemove = message;
-            this.showDialog = true;
+            this.streamClient
+                .deleteMessage(message.id)
+                .then(() => {
+                    this.messageErrors = [];
+                })
+                .catch(({ response }) => {
+                    this.errorHandler(response, 'Message delete error', this.messageErrors);
+                });
         },
 
         blockUser({ user }) {
@@ -1385,18 +1437,7 @@ export default {
 
             if (confirmation) {
 
-                if (this.messageRemove) {
-
-                    this.streamClient
-                        .deleteMessage(this.messageRemove.id)
-                        .then(() => {
-                            this.messageErrors = [];
-                        })
-                        .catch(({ response }) => {
-                            this.errorHandler(response, 'Message delete error', this.messageErrors);
-                        });
-
-                } else if (this.userBlock) {
+                if (this.userBlock) {
 
                     RailchatService
                         .banUser(this.userBlock.id)
@@ -1430,7 +1471,6 @@ export default {
             }
 
             this.showDialog = false;
-            this.messageRemove = null;
             this.questionRemove = null;
             this.userBlock = null;
             this.userDeleteMessages = null;
