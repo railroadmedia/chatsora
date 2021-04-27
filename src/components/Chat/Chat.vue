@@ -611,7 +611,7 @@ export default {
         scrollMessages(force = false) {
             let container = this.$refs.messages;
 
-            if (force || Math.ceil(container.scrollHeight - container.scrollTop) === container.clientHeight) {
+            if (force || Math.ceil(container.scrollHeight - container.scrollTop) <= (container.clientHeight + 100)) {
                 if (this.messagesMenusOpened) {
                     this.messagesAutoscroll = true;
                 } else {
@@ -629,7 +629,7 @@ export default {
         scrollQuestions(force = false) {
             let container = this.$refs.questions;
 
-            if (force || Math.ceil(container.scrollHeight - container.scrollTop) === container.clientHeight) {
+            if (force || Math.ceil(container.scrollHeight - container.scrollTop) <= (container.clientHeight + 100)) {
                 if (this.questionsMenusOpened) {
                     this.questionsAutoscroll = true;
                 } else {
@@ -647,7 +647,7 @@ export default {
         scrollThreadMessages(force = false) {
             let container = this.$refs.threadMessages;
 
-            if (container && (force || Math.ceil(container.scrollHeight - container.scrollTop) === container.clientHeight)) {
+            if (container && (force || Math.ceil(container.scrollHeight - container.scrollTop) <= (container.clientHeight + 100))) {
                 this.$nextTick(() => {
                     container.scroll({
                         top: container.scrollHeight,
