@@ -3,7 +3,7 @@
         class="cs-message tw-p-3 tw-rounded-md tw-relative tw-top-0"
         :class="{'system': message.type == 'system', 'pinned': message.pinned && showPin}"
         @mouseleave="closeMessageMenus()"
-        @click.stop.prevent="closeMessageMenus()"
+        @click.stop="closeMessageMenus()"
         ref="msg"
     >
         <div class="tw-max-w-full" v-if="message.pinned && showPin">
@@ -252,6 +252,16 @@ export default {
                         if (message.id == this.message.id && this.$refs.msg) {
                             let domRect = this.$refs.msg.getBoundingClientRect();
                             this.$root.$emit('toggleChatPopup', { message: this.message, domRect });
+                        }
+                    }
+                );
+
+            this.$root
+                .$on(
+                    'scrollIntoView',
+                    ({ message }) => {
+                        if (message.id == this.message.id && this.$refs.msg) {
+                            this.$refs.msg.scrollIntoView();
                         }
                     }
                 );
