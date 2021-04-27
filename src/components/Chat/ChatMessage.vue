@@ -396,11 +396,7 @@ export default {
             return this.message.text ? this.message.text.split(' ')[0].length : 0;
         },
 
-        closeMessageMenus(event) {
-            if (event && event.target && event.target.classList.contains('chat-message-link')) {
-                window.open(event.target.href);
-            }
-
+        closeMessageMenus() {
             this.$root.$emit('closeMessageMenus', {});
         },
     },

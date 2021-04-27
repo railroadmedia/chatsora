@@ -463,7 +463,8 @@ export default {
                 let messages = this.messages.map(message => ({
                     ...message,
                     text: this.stripHtml(message.text).linkify({
-                        className: 'chat-message-link'
+                        className: 'chat-message-link',
+                        target: '_blank'
                     }),
                 }));
 
