@@ -133,7 +133,7 @@
             </div>
         </div>
 
-        <div class="cs-body tw-flex-grow tw-flex tw-flex-col tw-overflow-hidden">
+        <div class="cs-body tw-flex-grow tw-flex tw-flex-col tw-overflow-hidden tw-relative">
             <div
                 class="cs-messages-container tw-pt-4 tw-overflow-y-scroll tw-z-40"
                 v-if="showThread"
@@ -191,7 +191,7 @@
                 class="cs-messages-container tw-px-3 tw-pt-4 tw-overflow-y-scroll"
                 ref="messages"
                 v-show="currentTab == 'chat' && !showThread"
-                @scroll="messagesScrolled"
+                @scroll="containerScrolled"
             >
                 <div
                     class="tw-cursor-pointer tw-pb-5 tw-py-3 tw-flex tw-flex-row tw-place-content-center"
@@ -225,6 +225,7 @@
                 class="cs-messages-container tw-pt-4 tw-overflow-y-scroll"
                 ref="questions"
                 v-show="currentTab == 'questions' && !showThread"
+                @scroll="containerScrolled"
             >
                 <div
                     v-for="(item, index) in $_questions"
@@ -249,6 +250,16 @@
                     v-for="(message, index) in questionErrors"
                     :key="`error-question-${index}`"
                 >{{ message }}</div>
+            </div>
+            <div
+                class="tw-absolute tw-left-0 tw-right-0 tw-bottom-2 tw-flex tw-flex-row tw-place-content-center"
+                v-if="$_show_scroll"
+            >
+                <div
+                    class="tw-flex tw-items-center tw-place-content-center cs-round-btn cs-bg-brand tw-text-white tw-rounded-full tw-cursor-pointer"
+                    :class="brand"
+                    @click.stop.prevent="scrollDown()"
+                ><i class="fas fa-arrow-down"></i></div>
             </div>
         </div>
 
@@ -454,6 +465,9 @@ export default {
             messagesAutoscroll: false,
             questionsAutoscroll: false,
             messagesPage: 1,
+            showScroll: false,
+            messagesBottom: true,
+            questionsBottom: true,
         };
     },
     computed: {
@@ -569,6 +583,20 @@ export default {
                 return this.userBlock != null && this.userBlock.displayName.length <= 12;
             }
         },
+        $_show_scroll: {
+            cache: false,
+            get() {
+                return this.showScroll;
+            },
+        },
+    },
+    created: function () {
+        window.addEventListener('focus', this.restoreScrollState);
+        window.addEventListener('blur', this.setScrollState);
+    },
+    destroyed: function () {
+        window.removeEventListener('focus', this.restoreScrollState);
+        window.removeEventListener('blur', this.setScrollState);
     },
     mounted() {
         this.setupChat();
@@ -605,26 +633,74 @@ export default {
     },
     methods: {
 
+        restoreScrollState() {
+            if (this.currentTab == 'chat') {
+                if (this.messagesBottom) {
+                    this.$nextTick(() => {
+                        this.scrollMessages(true);
+                    });
+                }
+            } else {
+                if (this.questionsBottom) {
+                    this.$nextTick(() => {
+                        this.scrollQuestions(true);
+                    });
+                }
+            }
+        },
+
+        setScrollState() {
+            if (this.currentTab == 'chat') {
+                let container = this.$refs.messages;
+                if (Math.ceil(container.scrollHeight - container.scrollTop) === container.clientHeight) {
+                    this.messagesBottom = true;
+                } else {
+                    this.messagesBottom = false;
+                }
+            } else {
+                let container = this.$refs.questions;
+                if (Math.ceil(container.scrollHeight - container.scrollTop) === container.clientHeight) {
+                    this.questionsBottom = true;
+                } else {
+                    this.questionsBottom = false;
+                }
+            }
+        },
+
+        scrollDown() {
+            if (this.currentTab == 'chat') {
+                this.scrollMessages(true);
+            } else {
+                this.scrollQuestions(true);
+            }
+        },
+
         popoutChat() {
             this.chatMenu = false;
 
             window.open(this.embedUrl, 'ChatWindow', this.popupWindowSettings);
         },
 
-        messagesScrolled() {
-            let container = this.$refs.messages;
+        containerScrolled() {
+            let container = this.currentTab == 'chat' ? this.$refs.messages : this.$refs.questions;
 
             if (Math.ceil(container.scrollHeight - container.scrollTop) === container.clientHeight) {
-                this.messagesPage = 1;
+                if (this.currentTab == 'chat') {
+                    this.messagesPage = 1;
+                }
+                this.showScroll = false;
+            } else {
+                this.showScroll = true;
             }
         },
 
         loadMoreMessages() {
-            let firstMessage = this.$_messages[0];
             this.messagesPage++;
-            this.$nextTick(() => {
-                this.$root.$emit('scrollIntoView', { message: firstMessage });
-            });
+
+            // let firstMessage = this.$_messages[0];
+            // this.$nextTick(() => {
+            //     this.$root.$emit('scrollIntoView', { message: firstMessage });
+            // });
         },
 
         messageMenuToggledHandler({ message, value }) {
@@ -1654,7 +1730,12 @@ export default {
 
         setCurrentTab(tab) {
             if (tab == 'chat' || tab == 'questions') {
+                this.setScrollState();
                 this.currentTab = tab;
+                this.$nextTick(() => {
+                    this.restoreScrollState();
+                    this.containerScrolled();
+                });
             }
             this.chatMenu = false;
             this.showEmoji = false;

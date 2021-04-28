@@ -16,8 +16,18 @@
   font-size: 13px;
 }
 
-.cs-bg-gray {
+.cs-bg-brand {
+  &.drumeo {
+    background-color: $edgeColor;
+  }
+  &.pianote {
+    background-color: $pianoteColor;
+  }
+}
 
+.cs-round-btn {
+  width: 30px;
+  height: 30px;
 }
 
 /* user related elements */
