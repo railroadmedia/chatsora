@@ -682,10 +682,15 @@ export default {
         },
 
         containerScrolled() {
-            let container = this.currentTab == 'chat' ? this.$refs.messages : this.$refs.questions;
+            let container = this.currentTab === 'chat' ? this.$refs.messages : this.$refs.questions;
+
+            if (this.currentTab === 'questions') {
+                this.showScroll = false;
+                return;
+            }
 
             if (Math.ceil(container.scrollHeight - container.scrollTop) === container.clientHeight) {
-                if (this.currentTab == 'chat') {
+                if (this.currentTab === 'chat') {
                     this.messagesPage = 1;
                 }
                 this.showScroll = false;
@@ -705,8 +710,8 @@ export default {
 
         messageMenuToggledHandler({ message, value }) {
 
-            if (message.category == 'message') {
-                if (value == false) {
+            if (message.category === 'message') {
+                if (value === false) {
 
                     this.messagesMenusOpened = false;
 
@@ -718,7 +723,7 @@ export default {
                     this.messagesMenusOpened = true;
                 }
             } else {
-                if (value == false) {
+                if (value === false) {
 
                     this.questionsMenusOpened = false;
 
@@ -1733,7 +1738,7 @@ export default {
                 this.setScrollState();
                 this.currentTab = tab;
                 this.$nextTick(() => {
-                    this.restoreScrollState();
+                    // this.restoreScrollState();
                     this.containerScrolled();
                 });
             }
