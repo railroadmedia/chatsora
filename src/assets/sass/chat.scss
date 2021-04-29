@@ -233,8 +233,29 @@
       height: 90vh;
     }
   }
-  @media screen and (max-width: 1023px) {
+
+  @media screen and (max-width: 767px) {
     height: 90vh;
+  }
+
+  @include tablet {
+    height: 437px;
+  }
+
+  @include large {
+    height: 440px;
+  }
+
+  @include desktop {
+    height: 471px;
+  }
+
+  @include xLarge {
+    height: 540px;
+  }
+
+  @include desktopXl {
+    height: 690px;
   }
 }
 .cs-embed .cs-container {

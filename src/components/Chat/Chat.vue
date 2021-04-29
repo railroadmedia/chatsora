@@ -468,6 +468,7 @@ export default {
             showScroll: false,
             messagesBottom: true,
             questionsBottom: true,
+            scrollingMessages: false,
         };
     },
     computed: {
@@ -654,6 +655,7 @@ export default {
                 let container = this.$refs.messages;
                 if (Math.ceil(container.scrollHeight - container.scrollTop) === container.clientHeight) {
                     this.messagesBottom = true;
+                    this.scrollingMessages = false;
                 } else {
                     this.messagesBottom = false;
                 }
@@ -694,7 +696,8 @@ export default {
                     this.messagesPage = 1;
                 }
                 this.showScroll = false;
-            } else {
+                this.scrollingMessages = false;
+            } else if (!this.scrollingMessages) {
                 this.showScroll = true;
             }
         },
@@ -744,6 +747,7 @@ export default {
                 if (this.messagesMenusOpened) {
                     this.messagesAutoscroll = true;
                 } else {
+                    this.scrollingMessages = true;
                     this.messagesAutoscroll = false;
                     this.$nextTick(() => {
                         container.scroll({
@@ -752,6 +756,8 @@ export default {
                         });
                     });
                 }
+            } else {
+                this.scrollingMessages = false;
             }
         },
 
@@ -1736,9 +1742,10 @@ export default {
         setCurrentTab(tab) {
             if (tab == 'chat' || tab == 'questions') {
                 this.setScrollState();
+                this.scrollingMessages = true;
                 this.currentTab = tab;
                 this.$nextTick(() => {
-                    // this.restoreScrollState();
+                    this.restoreScrollState();
                     this.containerScrolled();
                 });
             }
