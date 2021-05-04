@@ -424,7 +424,7 @@ export default {
         },
         messagesPageSize: {
             type: Number,
-            default: () => 50,
+            default: () => 20,
         },
         popupWindowSettings: {
             type: String,
@@ -691,7 +691,7 @@ export default {
                 return;
             }
 
-            if (Math.ceil(container.scrollHeight - container.scrollTop) === container.clientHeight) {
+            if (Math.ceil(container.scrollHeight - container.scrollTop) <= (container.clientHeight + 5)) {
                 if (this.currentTab === 'chat') {
                     this.messagesPage = 1;
                 }
@@ -1344,6 +1344,7 @@ export default {
          * Locates the internal message, main channel message or reply, and calls addMessageReaction
          */
         pushMessageReaction({ message, reaction, collection }) {
+            let scroll = !this.showScroll;
             collection.forEach((storedMessage) => {
                 if (message.parent_id && storedMessage.id == message.parent_id) {
                     storedMessage.replies.forEach((storedReplyMessage) => {
@@ -1370,9 +1371,10 @@ export default {
                 this.$nextTick(() => {
                     this.scrollThreadMessages();
                 });
-            } else if (this.messageThread == null) {
-                this.scrollMessages();
-                this.scrollQuestions();
+            } else if (this.messageThread == null && scroll) {
+                this.$nextTick(() => {
+                    this.scrollMessages(true);
+                });
             }
         },
 
@@ -1615,9 +1617,16 @@ export default {
             });
 
             if (selectedMessage) {
+                let scroll = !this.showScroll;
                 selectedMessage.reaction_counts[reaction] = (selectedMessage.reaction_counts[reaction] || 0) + 1;
 
                 selectedMessage.own_reactions.push({type: reaction, score: 1});
+
+                if (scroll) {
+                    this.$nextTick(() => {
+                        this.scrollMessages(true);
+                    });
+                }
             }
         },
 

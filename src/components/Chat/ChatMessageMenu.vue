@@ -228,6 +228,8 @@ export default {
 
             this.messageReact = false;
             this.messageMenu = false;
+
+            this.$root.$emit('messageMenuToggled', { message: this.message, value: this.messageMenu });
         },
 
         editMessage() {
@@ -247,6 +249,8 @@ export default {
         },
 
         reactToMessage(reaction) {
+            this.messageReact = false;
+            this.$root.$emit('messageMenuToggled', { message: this.message, value: this.messageReact });
             this.$root.$emit(
                 'toggleMessageReaction',
                 {
@@ -254,7 +258,6 @@ export default {
                     reaction: reaction
                 }
             );
-            this.messageReact = false;
         },
 
         pinMessage() {
