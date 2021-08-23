@@ -475,18 +475,10 @@ export default {
         $_messages: {
             cache: false,
             get() {
-                let messages = this.messages.map(message => ({
-                    ...message,
-                    text: this.stripHtml(message.text).linkify({
-                        className: 'chat-message-link',
-                        target: '_blank'
-                    }),
-                }));
-
-                if (messages.length > (this.messagesPageSize * this.messagesPage)) {
-                    return messages.slice(-1 * this.messagesPageSize * this.messagesPage);
+                if (this.messages.length > (this.messagesPageSize * this.messagesPage)) {
+                    return this.messages.slice(-1 * this.messagesPageSize * this.messagesPage);
                 } else {
-                    return messages;
+                    return this.messages;
                 }
             },
         },
@@ -522,13 +514,7 @@ export default {
                         let bUpVotes = b?.reaction_counts?.upvote || 0;
 
                         return bUpVotes - aUpVotes;
-                    })
-                    .map(question => ({
-                        ...question,
-                        text: this.stripHtml(question.text).linkify({
-                            className: 'chat-message-link'
-                        }),
-                    }));
+                    });
             },
         },
         $_questions_count: {
@@ -810,7 +796,7 @@ export default {
         },
 
         sendMessage() {
-            let payload = { text:  this.stripHtml(this.message.trim()) };
+            let payload = { text:  this.stripHtml(this.message).trim() };
 
             this.message = '';
 
@@ -858,7 +844,7 @@ export default {
         },
 
         sendQuestion() {
-            let text = this.stripHtml(this.question.trim());
+            let text = this.stripHtml(this.question).trim();
 
             this.question = '';
 
@@ -1130,6 +1116,8 @@ export default {
          */
         getMessageCopy(message) {
             let messageCopy = (({ id, type, text, reply_count, pinned }) => ({ id, type, text, reply_count, pinned }))(message);
+
+            messageCopy.text = this.stripHtml(messageCopy.text).linkify({ className: 'chat-message-link' });
 
             messageCopy.user = this.getUserCopy(message.user);
 
@@ -1770,8 +1758,9 @@ export default {
         },
 
         stripHtml(html) {
-            let doc = new DOMParser().parseFromString(html, 'text/html');
-            return doc.body.textContent || "";
+            return html
+                .replace(/(<([^>]+)>)/gi, '')
+                .replace(/[\u200B-\u200D\uFEFF\u200E\u200F]/g, '');
         },
     },
 }

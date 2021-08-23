@@ -21489,12 +21489,14 @@ module.exports = function (argument) {
 /***/ }),
 
 /***/ "5135":
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+var toObject = __webpack_require__("7b0b");
 
 var hasOwnProperty = {}.hasOwnProperty;
 
-module.exports = function (it, key) {
-  return hasOwnProperty.call(it, key);
+module.exports = function hasOwn(it, key) {
+  return hasOwnProperty.call(toObject(it), key);
 };
 
 
@@ -21702,7 +21704,7 @@ var store = __webpack_require__("c6cd");
 (module.exports = function (key, value) {
   return store[key] || (store[key] = value !== undefined ? value : {});
 })('versions', []).push({
-  version: '3.10.2',
+  version: '3.11.0',
   mode: IS_PURE ? 'pure' : 'global',
   copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
 });
@@ -32441,97 +32443,16 @@ var web_dom_collections_for_each = __webpack_require__("159b");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.keys.js
 var es_object_keys = __webpack_require__("b64b");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"439f264e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=template&id=eed1491a&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"05de5336-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/Chat.vue?vue&type=template&id=070098ef&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cs-container t-relative t-h-full t-w-full t-flex t-flex-col vuesora-override",class:_vm.brand},[_c('div',{staticClass:"cs-top t-flex-none"},[_c('div',{staticClass:"t-h-full t-w-full t-flex t-flex-row t-items-center t-place-content-between"},[_c('div',{staticClass:"t-h-full t-ml-4 t-flex t-flex-row t-items-end t-space-x-4 cs-text-sm"},[_c('a',{staticClass:"t-no-underline t-px-3 t-border-b-2 t-h-full t-flex t-flex-row t-items-center",class:_vm.getTabClasses('chat'),attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.setCurrentTab('chat')}}},[_vm._v("Chat")]),_c('a',{staticClass:"t-no-underline t-px-3 t-border-b-2 t-h-full t-flex t-flex-row t-items-center",class:_vm.getTabClasses('questions'),attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.setCurrentTab('questions')}}},[_vm._v("Questions")])]),_c('a',{staticClass:"t-no-underline t-font-semibold t-px-4 cs-text-gray t-border-b-2 t-border-transparent t-h-full t-flex t-flex-row t-items-center",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleChatMenu()}}},[_c('i',{staticClass:"fas fa-ellipsis-v"})])]),_c('div',{staticClass:"t-relative"},[(_vm.chatMenu)?_c('div',{staticClass:"cs-top-menu cs-text-sm t-leading-relaxed t-absolute t-right-4 t-py-3 t-flex t-flex-col t-bg-black t-rounded-lg t-text-white t-z-30"},[(_vm.isAdministrator)?_c('div',{staticClass:"t-px-3 t-mb-2 t-font-semibold t-cursor-default"},[_vm._v("Moderation")]):_vm._e(),_c('div',{staticClass:"cs-top-menu-item t-px-3 t-mb-1 t-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowMembers()}}},[_vm._v("Participants")]),_c('div',{staticClass:"cs-top-menu-item t-px-3 t-mb-1 t-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.popoutChat()}}},[_vm._v("Pop Out Chat")]),(_vm.isAdministrator)?_c('div',{staticClass:"cs-top-menu-item t-px-3 t-mb-1 t-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowBannedUsers()}}},[_vm._v("Blocked Students")]):_vm._e(),(_vm.currentTab == 'questions' && _vm.isAdministrator)?_c('div',{staticClass:"cs-top-menu-item t-px-3 t-mb-1 t-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.removeAllQuestions()}}},[_vm._v("Clear All Questions")]):_vm._e()]):_vm._e()])]),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.showThread),expression:"showThread"}],staticClass:"t-absolute t-top-0 t-right-0 t-left-0 t-flex t-flex-col t-z-40"},[_c('div',{staticClass:"cs-top t-flex-none"},[_c('div',{staticClass:"t-h-full t-w-full t-flex t-flex-row t-place-items-center t-justify-between"},[_c('a',{staticClass:"t-ml-3 t-no-underline t-text-white",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.hideMessageThread()}}},[_c('i',{staticClass:"fas fa-arrow-left"}),_c('span',{staticClass:"t-ml-2"},[_vm._v("Thread")]),_c('span',{staticClass:"t-ml-3"},[_vm._v(_vm._s(_vm.$_reply_count_label))])]),_c('div',{staticClass:"t-mr-3"},[_c('i',{staticClass:"fal fa-times t-text-white t-font-semibold t-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.hideMessageThread()}}})])])])]),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.showMembers),expression:"showMembers"}],staticClass:"t-absolute t-inset-0 t-flex t-flex-col t-z-40"},[_c('div',{staticClass:"cs-top t-flex-none"},[_c('div',{staticClass:"t-h-full t-w-full t-flex t-flex-row t-items-center"},[_c('a',{staticClass:"t-ml-3 t-no-underline t-text-white",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowMembers()}}},[_c('i',{staticClass:"fas fa-arrow-left"}),_c('span',{staticClass:"t-ml-2 cs-text-sm"},[_vm._v("Participants")])])])]),_c('div',{staticClass:"cs-body t-flex-grow t-overflow-y-auto"},[_c('div',{staticClass:"cs-members-container t-mt-1 t-p-3"},_vm._l((_vm.$_watchers),function(item){return _c('div',{key:item.id,staticClass:"t-py-2"},[_c('chat-user',{attrs:{"user":item}})],1)}),0)]),_c('div',{staticClass:"cs-footer t-flex-none t-h-8"},[_c('div',{staticClass:"t-h-full t-flex t-flex-row t-items-center t-px-3"},[_c('span',{staticClass:"cs-text-gray t-text-xs"},[_vm._v(_vm._s(_vm.$_watcher_count)+" Online")])])])]),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.showBannedUsers),expression:"showBannedUsers"}],staticClass:"t-absolute t-inset-0 t-flex t-flex-col t-z-40"},[_c('div',{staticClass:"cs-top t-flex-none"},[_c('div',{staticClass:"t-h-full t-w-full t-flex t-flex-row t-items-center"},[_c('a',{staticClass:"t-ml-3 t-no-underline t-text-white",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowBannedUsers()}}},[_c('i',{staticClass:"fas fa-arrow-left"}),_c('span',{staticClass:"t-ml-2 cs-text-sm"},[_vm._v("Blocked Students")])])])]),_c('div',{staticClass:"cs-body t-flex-grow t-overflow-y-auto"},[(_vm.fetchingBannedUsers || _vm.$_banned_users_count == 0)?_c('div',{staticClass:"t-mt-1 t-p-3 cs-text-gray"},[(_vm.fetchingBannedUsers)?_c('span',[_vm._v("Fetching blocked students information...")]):_vm._e(),(!_vm.fetchingBannedUsers && _vm.$_banned_users_count == 0)?_c('span',[_vm._v("There are no students blocked from this chat.")]):_vm._e()]):_vm._e(),(!_vm.fetchingBannedUsers && _vm.$_banned_users_count > 0)?_c('div',{staticClass:"cs-members-container t-mt-1 t-p-3"},_vm._l((_vm.bannedUsers),function(item){return _c('div',{key:item.id,staticClass:"t-py-2"},[_c('div',{staticClass:"cs-user t-p-3 t-rounded-md"},[_c('chat-user',{attrs:{"user":item}},[_c('div',{staticClass:"t-flex-grow t-text-right"},[_c('a',{staticClass:"cs-user-unblock cs-text-sm",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.unblockUser(item)}}},[_c('span',[_vm._v("Unblock")]),_c('i',{staticClass:"t-ml-1 fas fa-times-circle"})])])])],1)])}),0):_vm._e()]),_c('div',{staticClass:"cs-footer t-flex-none t-h-8"},[_c('div',{staticClass:"t-h-full t-flex t-flex-row t-items-center t-px-3"},[_c('span',{staticClass:"cs-text-gray t-text-xs"},[_vm._v(_vm._s(_vm.$_watcher_count)+" Online")])])])]),_c('div',{staticClass:"cs-body t-flex-grow t-flex t-flex-col t-overflow-hidden t-relative"},[(_vm.showThread)?_c('div',{ref:"threadMessages",staticClass:"cs-messages-container t-pt-4 t-overflow-y-scroll t-z-40"},[_c('div',{staticClass:"t-border-b t-border-gray-600"},[_c('div',{staticClass:"t-my-4"},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":_vm.messageThread,"user-id":_vm.userId,"show-upvote":false,"show-menu":false,"show-thread":false,"brand":_vm.brand}})],1)]),_c('div',{staticClass:"cs-messages-container t-mt-4"},_vm._l((_vm.$_message_thread_replies),function(item){return _c('div',{key:item.id},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":false,"show-thread":false,"brand":_vm.brand}})],1)}),0)]):_vm._e(),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.$_pinned_messages.length && _vm.currentTab == 'chat' && !_vm.showThread),expression:"$_pinned_messages.length && currentTab == 'chat' && !showThread"}],staticClass:"cs-messages-container cs-fit t-pt-4 t-pb-2 t-z-20"},_vm._l((_vm.$_pinned_messages),function(item){return _c('div',{key:item.key},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":false,"show-thread":_vm.enableThread,"dropdown-menu":true,"brand":_vm.brand}})],1)}),0),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.currentTab == 'chat' && !_vm.showThread),expression:"currentTab == 'chat' && !showThread"}],ref:"messages",staticClass:"cs-messages-container t-px-3 t-pt-4 t-overflow-y-scroll",on:{"scroll":_vm.containerScrolled}},[(_vm.$_show_load_more_messages)?_c('div',{staticClass:"t-cursor-pointer t-pb-5 t-py-3 t-flex t-flex-row t-place-content-center",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.loadMoreMessages($event)}}},[_c('span',{staticClass:"cs-text-sm t-text-white"},[_vm._v("Load more messages")])]):_vm._e(),_vm._l((_vm.$_messages),function(item,index){return _c('div',{key:item.key},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":false,"show-thread":_vm.enableThread,"show-pin":false,"dropdown-menu":index <= 1,"brand":_vm.brand}})],1)}),_vm._l((_vm.messageErrors),function(message,index){return _c('div',{key:("error-message-" + index),staticClass:"t-p-3 t-text-red-400"},[_vm._v(_vm._s(message))])})],2),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.currentTab == 'questions' && !_vm.showThread),expression:"currentTab == 'questions' && !showThread"}],ref:"questions",staticClass:"cs-messages-container t-pt-4 t-overflow-y-scroll",on:{"scroll":_vm.containerScrolled}},[_vm._l((_vm.$_questions),function(item,index){return _c('div',{key:item.key},[_c('chat-message',{attrs:{"is-administrator":_vm.isAdministrator,"message":item,"user-id":_vm.userId,"show-upvote":true,"show-thread":_vm.enableThread,"dropdown-menu":index < 1,"brand":_vm.brand}})],1)}),(_vm.$_questions.length == 0)?_c('div',{staticClass:"cs-text-gray t-px-3 t-py-1 cs-text-sm"},[_vm._v("There are no questions in this chat")]):_vm._e(),_vm._l((_vm.questionErrors),function(message,index){return _c('div',{key:("error-question-" + index),staticClass:"t-p-3 t-text-red-400"},[_vm._v(_vm._s(message))])})],2),(_vm.$_show_scroll)?_c('div',{staticClass:"t-absolute t-left-0 t-right-0 t-bottom-2 t-flex t-flex-row t-place-content-center"},[_c('div',{staticClass:"t-flex t-items-center t-place-content-center cs-round-btn cs-bg-brand t-text-white t-rounded-full t-cursor-pointer",class:_vm.brand,on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.scrollDown()}}},[_c('i',{staticClass:"fas fa-arrow-down"})])]):_vm._e()]),(_vm.showDialog)?_c('div',{staticClass:"cs-dialog-container t-absolute t-inset-0 t-z-50"},[_c('div',{staticClass:"t-w-full t-h-full t-relative"},[_c('div',{staticClass:"cs-dialog-overlay t-absolute t-inset-0 t-opacity-100 t-z-20",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}}),_c('div',{staticClass:"t-w-full t-h-full t-flex t-flex-col t-place-content-center t-place-items-center"},[_c('div',{staticClass:"cs-dialog-window t-rounded-lg t-flex-none t-bg-black t-z-30 t-relative"},[_c('div',{staticClass:"t-absolute t-top-2 t-right-3 t-text-white"},[_c('i',{staticClass:"fal fa-times t-font-semibold t-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog()}}})]),(_vm.userDeleteMessages != null)?_c('div',{staticClass:"t-mt-6 t-mx-8 cs-text-sm t-text-center t-text-white t-tracking-tight t-leading-relaxed"},[_vm._v("Are you sure you want to delete all user's messages from the chat?")]):_vm._e(),(_vm.questionRemove != null)?_c('div',{staticClass:"t-mt-6 t-mx-8 cs-text-sm t-text-center t-text-white t-tracking-tight t-leading-relaxed"},[_vm._v("Are you sure you want to mark this question as answered?")]):_vm._e(),(_vm.userBlock != null)?_c('div',{staticClass:"t-mt-6 t-mx-6 cs-text-sm t-text-center t-text-white t-tracking-tight t-leading-relaxed",class:{'t-pb-2': _vm.$_short_username}},[_vm._v("Are you sure you want to block "),_c('span',{staticClass:"t-font-bold"},[_vm._v(_vm._s(_vm.userBlock.displayName))]),_vm._v(" from this chat?")]):_vm._e(),_c('div',{staticClass:"t-mt-3 t-flex t-flex-row t-justify-center"},[_c('div',{staticClass:"cs-btn cs-text-sm t-cursor-pointer t-cursor-pointer t-rounded-full t-leading-none t-tracking-normal t-font-bold focus:t-outline-none focus:t-shadow-outline t-uppercase t-text-white t-w-28 t-flex t-justify-center",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeDialog(true)}}},[_vm._v("confirm")])])])])])]):_vm._e(),_c('chat-emoji',{attrs:{"show-window":_vm.showEmoji}}),_c('div',{staticClass:"cs-new-message-container t-flex-none box-border"},[_c('div',{staticClass:"t-h-full t-flex t-flex-col t-place-content-between t-py-2 t-px-4 t-relative"},[_c('div',{staticClass:"cs-new-message-wrapper t-rounded"},[(_vm.currentTab == 'chat')?_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.message),expression:"message"}],ref:"newMessage",staticClass:"t-resize-none cs-text-sm t-bg-black t-rounded-none",class:{'cs-typing': _vm.message != ''},attrs:{"placeholder":"Say something...","onfocus":"this.placeholder = ''","onblur":"this.placeholder = 'Say something...'","wrap":"off","rows":"1"},domProps:{"value":(_vm.message)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.sendMessage()},"input":function($event){if($event.target.composing){ return; }_vm.message=$event.target.value}}}):_vm._e(),(_vm.currentTab == 'questions')?_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.question),expression:"question"}],staticClass:"t-resize-none cs-text-sm t-bg-black t-rounded-none",class:{'cs-typing': _vm.question != ''},attrs:{"placeholder":"Ask a question...","onfocus":"this.placeholder = ''","onblur":"this.placeholder = 'Ask a question...'","wrap":"off","rows":"1"},domProps:{"value":(_vm.question)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.sendQuestion()},"input":function($event){if($event.target.composing){ return; }_vm.question=$event.target.value}}}):_vm._e()]),_c('div',{staticClass:"cs-new-message-menu t-absolute t-text-lg"},[(_vm.currentTab == 'chat')?_c('a',{staticClass:"cs-text-gray t-mr-3",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowEmoji()}}},[_c('i',{staticClass:"fal fa-smile"})]):_vm._e(),(_vm.currentTab == 'chat')?_c('a',{staticClass:"cs-text-gray",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.sendMessage()}}},[_c('div',{staticClass:"send-icon",class:{'blue': _vm.message != ''}})]):_vm._e(),(_vm.currentTab == 'questions')?_c('a',{staticClass:"cs-text-gray",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.sendQuestion()}}},[_c('div',{staticClass:"send-icon",class:{'blue': _vm.question != ''}})]):_vm._e()]),_c('div',[_c('span',{staticClass:"cs-text-gray t-text-xs t-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleShowMembers()}}},[_vm._v(_vm._s(_vm.$_watcher_count)+" Online")])])])])],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/Chat/Chat.vue?vue&type=template&id=eed1491a&
+// CONCATENATED MODULE: ./src/components/Chat/Chat.vue?vue&type=template&id=070098ef&
 
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
-
-  return arr2;
-}
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
-}
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.symbol.js
 var es_symbol = __webpack_require__("a4d3");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.symbol.description.js
-var es_symbol_description = __webpack_require__("e01a");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.to-string.js
-var es_object_to_string = __webpack_require__("d3b7");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.symbol.iterator.js
-var es_symbol_iterator = __webpack_require__("d28b");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.iterator.js
-var es_array_iterator = __webpack_require__("e260");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.iterator.js
-var es_string_iterator = __webpack_require__("3ca3");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.iterator.js
-var web_dom_collections_iterator = __webpack_require__("ddb0");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.from.js
-var es_array_from = __webpack_require__("a630");
-
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArray.js
-
-
-
-
-
-
-
-
-function _iterableToArray(iter) {
-  if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
-}
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.slice.js
-var es_array_slice = __webpack_require__("fb6a");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
-var es_function_name = __webpack_require__("b0c0");
-
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
-
-
-
-
-
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js
-
-
-
-
-function _toConsumableArray(arr) {
-  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
-}
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.filter.js
 var es_array_filter = __webpack_require__("4de4");
 
@@ -32598,6 +32519,87 @@ function _objectSpread2(target) {
 
   return target;
 }
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.symbol.description.js
+var es_symbol_description = __webpack_require__("e01a");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.to-string.js
+var es_object_to_string = __webpack_require__("d3b7");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.symbol.iterator.js
+var es_symbol_iterator = __webpack_require__("d28b");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.iterator.js
+var es_array_iterator = __webpack_require__("e260");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.iterator.js
+var es_string_iterator = __webpack_require__("3ca3");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.iterator.js
+var web_dom_collections_iterator = __webpack_require__("ddb0");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.from.js
+var es_array_from = __webpack_require__("a630");
+
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArray.js
+
+
+
+
+
+
+
+
+function _iterableToArray(iter) {
+  if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.slice.js
+var es_array_slice = __webpack_require__("fb6a");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
+var es_function_name = __webpack_require__("b0c0");
+
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
+
+
+
+
+
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js
+
+
+
+
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.number.constructor.js
 var es_number_constructor = __webpack_require__("a9e3");
 
@@ -32616,14 +32618,14 @@ var es_string_search = __webpack_require__("841c");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.splice.js
 var es_array_splice = __webpack_require__("a434");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.reduce.js
-var es_array_reduce = __webpack_require__("13d5");
-
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.values.js
 var es_object_values = __webpack_require__("07ac");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("99af");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.replace.js
+var es_string_replace = __webpack_require__("5319");
 
 // EXTERNAL MODULE: ./node_modules/luxon/build/cjs-browser/luxon.js
 var luxon = __webpack_require__("1315");
@@ -32677,7 +32679,7 @@ var axios_default = /*#__PURE__*/__webpack_require__.n(axios);
     });
   }
 });
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"439f264e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatEmoji.vue?vue&type=template&id=58b3a234&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"05de5336-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatEmoji.vue?vue&type=template&id=58b3a234&
 var ChatEmojivue_type_template_id_58b3a234_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"t-relative"},[(_vm.showWindow)?_c('div',{staticClass:"cs-emoji t-absolute t-right-0 t-bottom-4 t-rounded-md"},[_c('div',{staticClass:"cs-emoji-tabs t-flex t-flex-row t-items-center t-justify-between t-border-b t-border-gray-800 t-text-lg"},[_c('div',_vm._l((this.emojiData),function(emojiArray,category){return _c('a',{key:category,staticClass:"t-p-3 t-cursor-pointer",class:{'cs-text-gray': _vm.currentTab != category, 'cs-text-blue': _vm.currentTab == category},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.setCurrentTab(category)}}},[_c('i',{staticClass:"fal",class:_vm.tabIcons[category]})])}),0),_c('a',{staticClass:"t-p-2 cs-text-gray t-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.closeEmojiWindow()}}},[_c('i',{staticClass:"fal fa-backspace"})])]),_c('div',{staticClass:"t-p-3"},[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.search),expression:"search"}],staticClass:"t-resize-none t-whitespace-nowrap t-overflow-x-auto t-rounded-full cs-text-sm",attrs:{"placeholder":"Search Emojis","wrap":"off","rows":"1"},domProps:{"value":(_vm.search)},on:{"input":function($event){if($event.target.composing){ return; }_vm.search=$event.target.value}}})]),_c('div',{staticClass:"t-px-3 t-text-white t-font-semibold"},[_vm._v(_vm._s(_vm.$_current_tab_label))]),_c('div',{staticClass:"t-py-2 t-overflow-hidden"},[_c('div',{ref:"simplebar",staticClass:"cs-emoji-list"},[_c('div',{staticClass:"t-py-3 t-px-2 t-grid t-grid-cols-8 t-gap-y-3 t-text-2xl t-overflow-auto"},_vm._l((_vm.$_emoji),function(item){return _c('a',{key:item.no,staticClass:"t-text-center t-cursor-pointer",attrs:{"data-item-no":item.no},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.insertEmoji(item)}}},[_vm._v(_vm._s(item.emoji))])}),0)])])]):_vm._e()])}
 var ChatEmojivue_type_template_id_58b3a234_staticRenderFns = []
 
@@ -32724,15 +32726,15 @@ var lodash_memoize_default = /*#__PURE__*/__webpack_require__.n(lodash_memoize);
 // EXTERNAL MODULE: ./node_modules/resize-observer-polyfill/dist/ResizeObserver.es.js
 var ResizeObserver_es = __webpack_require__("6dd8");
 
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.reduce.js
+var es_array_reduce = __webpack_require__("13d5");
+
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.match.js
 var es_string_match = __webpack_require__("466d");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.replace.js
-var es_string_replace = __webpack_require__("5319");
-
 // CONCATENATED MODULE: ./node_modules/simplebar/dist/simplebar.esm.js
 /**
- * SimpleBar.js - v5.3.0
+ * SimpleBar.js - v5.3.2
  * Scrollbars, simpler.
  * https://grsmto.github.io/simplebar/
  *
@@ -32760,37 +32762,6 @@ var es_string_replace = __webpack_require__("5319");
 
 
 
-
-var cachedScrollbarWidth = null;
-var cachedDevicePixelRatio = null;
-
-if (can_use_dom_default.a) {
-  window.addEventListener('resize', function () {
-    if (cachedDevicePixelRatio !== window.devicePixelRatio) {
-      cachedDevicePixelRatio = window.devicePixelRatio;
-      cachedScrollbarWidth = null;
-    }
-  });
-}
-
-function scrollbarWidth() {
-  if (cachedScrollbarWidth === null) {
-    if (typeof document === 'undefined') {
-      cachedScrollbarWidth = 0;
-      return cachedScrollbarWidth;
-    }
-
-    var body = document.body;
-    var box = document.createElement('div');
-    box.classList.add('simplebar-hide-scrollbar');
-    body.appendChild(box);
-    var width = box.getBoundingClientRect().right;
-    body.removeChild(box);
-    cachedScrollbarWidth = width;
-  }
-
-  return cachedScrollbarWidth;
-}
 
 // Helper function to retrieve options from element attributes
 var getOptions = function getOptions(obj) {
@@ -32837,6 +32808,39 @@ function getElementDocument(element) {
   }
 
   return element.ownerDocument;
+}
+
+var cachedScrollbarWidth = null;
+var cachedDevicePixelRatio = null;
+
+if (can_use_dom_default.a) {
+  window.addEventListener('resize', function () {
+    if (cachedDevicePixelRatio !== window.devicePixelRatio) {
+      cachedDevicePixelRatio = window.devicePixelRatio;
+      cachedScrollbarWidth = null;
+    }
+  });
+}
+
+function scrollbarWidth(el) {
+  if (cachedScrollbarWidth === null) {
+    var document = getElementDocument(el);
+
+    if (typeof document === 'undefined') {
+      cachedScrollbarWidth = 0;
+      return cachedScrollbarWidth;
+    }
+
+    var body = document.body;
+    var box = document.createElement('div');
+    box.classList.add('simplebar-hide-scrollbar');
+    body.appendChild(box);
+    var width = box.getBoundingClientRect().right;
+    body.removeChild(box);
+    cachedScrollbarWidth = width;
+  }
+
+  return cachedScrollbarWidth;
 }
 
 var simplebar_esm_SimpleBar =
@@ -33541,10 +33545,10 @@ function () {
       if (getComputedStyle(this.contentWrapperEl, '::-webkit-scrollbar').display === 'none' || 'scrollbarWidth' in document.documentElement.style || '-ms-overflow-style' in document.documentElement.style) {
         return 0;
       } else {
-        return scrollbarWidth();
+        return scrollbarWidth(this.el);
       }
     } catch (e) {
-      return scrollbarWidth();
+      return scrollbarWidth(this.el);
     }
   };
 
@@ -33988,7 +33992,7 @@ var component = normalizeComponent(
 )
 
 /* harmony default export */ var ChatEmoji = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"439f264e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatMessage.vue?vue&type=template&id=5694cdd8&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"05de5336-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatMessage.vue?vue&type=template&id=5694cdd8&
 var ChatMessagevue_type_template_id_5694cdd8_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"msg",staticClass:"cs-message t-p-3 t-rounded-md t-relative t-top-0",class:{'system': _vm.message.type == 'system', 'pinned': _vm.message.pinned && _vm.showPin},on:{"mouseleave":function($event){return _vm.closeMessageMenus()},"click":function($event){$event.stopPropagation();return _vm.closeMessageMenus()}}},[(_vm.message.pinned && _vm.showPin)?_c('div',{staticClass:"t-max-w-full"},[_c('div',{staticClass:"cs-pin-container"},[_c('a',{staticClass:"cs-text-sm cs-text-gray t-flex t-flex-row t-items-center",attrs:{"href":"#"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.unpinMessage()}}},[_c('i',{staticClass:"fal fa-thumbtack"}),_c('span',{staticClass:"t-ml-1 leading-none"},[_vm._v("Pinned")])])])]):_vm._e(),(_vm.messageEdit.id != _vm.message.id && _vm.message.type != 'system')?_c('div',{staticClass:"t-flex t-flex-col t-max-w-full"},[_c('chat-user',{attrs:{"user":_vm.message.user},scopedSlots:_vm._u([{key:"footer",fn:function(){return [_c('div',{staticClass:"cs-message-text t-whitespace-normal cs-text-sm",domProps:{"innerHTML":_vm._s(_vm.message.text)}}),(_vm.$_has_reactions || _vm.showUpvote)?_c('div',{staticClass:"t-inline-flex t-items-center"},[(_vm.showUpvote)?_c('div',{staticClass:"cs-upvote t-flex t-flex-row t-items-center t-px-3 t-rounded-full cs-text-xs",class:_vm.$_message_upvote_class,on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleUpvote()}}},[_c('i',{staticClass:"cs-icon fas fa-arrow-up"}),_c('span',{staticClass:"cs-reaction-count"},[_vm._v(_vm._s(_vm.$_message_upvote))])]):_vm._e(),(_vm.$_has_reactions)?_c('div',{staticClass:"t-flex t-flex-row t-text-gray-500 t-cursor-pointer"},_vm._l((_vm.$_message_reactions),function(count,reaction){return _c('div',{key:("message-reaction-" + reaction),staticClass:"t-flex t-flex-row t-place-content-center t-p-1",attrs:{"title":_vm.getReactionUsers(reaction)},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleMessageReaction(reaction)}}},[_c('span',[_vm._v(_vm._s(_vm.getReactionEmoji(reaction)))]),(count > 1)?_c('span',{staticClass:"t-text-xs t-text-white t-ml-1"},[_vm._v(_vm._s(count))]):_vm._e()])}),0):_vm._e()]):_vm._e(),(_vm.message.reply_count && _vm.showThread)?_c('div',{staticClass:"t-inline-flex"},[_c('a',{staticClass:"t-flex t-flex-row t-content-end",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.messageThread()}}},[_c('div',{staticClass:"t-transform t--rotate-180"},[_c('i',{staticClass:"fal fa-reply"})]),_c('span',{staticClass:"t-ml-1 cs-text-sm"},[_vm._v(_vm._s(_vm.$_reply_count_label))])])]):_vm._e()]},proxy:true}],null,false,401509462)}),(_vm.showMenu)?_c('chat-message-menu',{attrs:{"is-administrator":_vm.isAdministrator,"message":_vm.message,"message-reactions":_vm.messageReactions,"user-id":_vm.userId,"show-thread":_vm.showThread,"show-upvote":_vm.showUpvote,"dropdown-menu":_vm.dropdownMenu,"pinned-message":_vm.showPin}}):_vm._e()],1):_vm._e(),(_vm.messageEdit.id == _vm.message.id)?_c('div',[_c('div',{staticClass:"cs-message-edit"},[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.messageEdit.text),expression:"messageEdit.text"}],staticClass:"cs-text-sm t-p-2 t-bg-black t-text-white t-resize-none t-rounded-md t-border-0",domProps:{"value":(_vm.messageEdit.text)},on:{"input":function($event){if($event.target.composing){ return; }_vm.$set(_vm.messageEdit, "text", $event.target.value)}}}),_c('div',{staticClass:"t-flex t-flex-row t-justify-end t-mt-2"},[_c('div',{staticClass:"cs-btn-outline-white t-cursor-pointer t-rounded-full t-leading-none t-font-bold focus:t-outline-none focus:t-shadow-outline t-uppercase t-border-2 t-border-white t-text-white t-w-28 t-flex t-items-center t-justify-center t-mr-2",attrs:{"title":"Cancel message edit"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.cancelMessageEdit()}}},[_vm._v("Cancel")]),_c('div',{staticClass:"cs-btn-save t-cursor-pointer t-cursor-pointer t-rounded-full t-leading-none t-font-bold focus:t-outline-none focus:t-shadow-outline t-uppercase t-border-2 t-text-white t-w-28 t-flex t-items-center t-justify-center",class:_vm.brand,attrs:{"title":"Save message updates"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.saveMessageEdit()}}},[_vm._v("Save")])])])]):_vm._e(),(_vm.message.type == 'system')?_c('div',{staticClass:"t-py-2 t-text-white cs-text-sm"},[_vm._v(" "+_vm._s(_vm.message.text)+" ")]):_vm._e()])}
 var ChatMessagevue_type_template_id_5694cdd8_staticRenderFns = []
 
@@ -33998,7 +34002,7 @@ var ChatMessagevue_type_template_id_5694cdd8_staticRenderFns = []
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.split.js
 var es_string_split = __webpack_require__("1276");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"439f264e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatMessageMenu.vue?vue&type=template&id=6b5dfde9&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"05de5336-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatMessageMenu.vue?vue&type=template&id=6b5dfde9&
 var ChatMessageMenuvue_type_template_id_6b5dfde9_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cs-message-menu t-absolute t-text-base"},[_c('div',{staticClass:"t-relative"},[(_vm.messageMenu)?_c('div',{staticClass:"cs-sub-menu t-absolute t-right-0 t-bottom-0 t-w-44 t-py-3 t-flex t-flex-col t-bg-black t-rounded-lg t-text-white cs-text-sm t-z-50",class:{'cs-downdown':_vm.dropdownMenu}},[(_vm.message.user.id != _vm.userId && !_vm.isAdministrator)?_c('div',[_c('a',{staticClass:"cs-sub-menu-item t-px-3 t-no-underline t-text-white",attrs:{"href":_vm.message.user.profileUrl,"target":"_blank"}},[_vm._v("View Profile")])]):_vm._e(),(_vm.message.user.id == _vm.userId)?_c('div',{class:{'t-mb-2': _vm.isAdministrator}},[_c('div',{staticClass:"cs-sub-menu-item t-px-3 t-mb-1 t-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.editMessage()}}},[_vm._v("Edit Message")]),_c('div',{staticClass:"cs-sub-menu-item t-px-3 t-mb-1 t-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.removeMessage()}}},[_vm._v("Delete")])]):_vm._e(),(_vm.isAdministrator)?_c('div',[_c('div',{staticClass:"t-px-3 t-mb-2 t-font-semibold t-cursor-default"},[_vm._v("Moderation")]),(_vm.$_show_pin)?_c('div',{staticClass:"cs-sub-menu-item t-px-3 t-mb-1 t-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.pinMessage()}}},[_vm._v("Pin Message")]):_vm._e(),(_vm.$_show_unpin)?_c('div',{staticClass:"cs-sub-menu-item t-px-3 t-mb-1 t-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.unpinMessage()}}},[_vm._v("Unpin Message")]):_vm._e(),(_vm.message.user.id != _vm.userId)?_c('div',{staticClass:"cs-sub-menu-item t-px-3 t-mb-1 t-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.removeMessage()}}},[_vm._v("Remove Message")]):_vm._e(),(_vm.message.user.id != _vm.userId)?_c('div',{staticClass:"cs-sub-menu-item t-px-3 t-mb-1 t-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.removeAllMessages()}}},[_vm._v("Remove All Messages")]):_vm._e(),(_vm.message.user.id != _vm.userId)?_c('div',{staticClass:"cs-sub-menu-item t-px-3 t-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.blockUser()}}},[_vm._v("Block Student")]):_vm._e()]):_vm._e()]):_vm._e(),(_vm.messageReact)?_c('div',{staticClass:"cs-react-menu t-absolute t-right-0",class:{'cs-downdown':_vm.dropdownMenu}},[_c('div',{staticClass:"t-flex t-flex-row t-bg-black t-rounded-full t-text-center space-x-1 t-py-2 t-px-3 t-mb-4"},_vm._l((_vm.messageReactions),function(emoji,reaction){return _c('div',{key:("add-reaction-" + reaction),staticClass:"t-text-xl t-cursor-pointer t-p-1 t-px-0.5",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.reactToMessage(reaction)}}},[_c('span',[_vm._v(_vm._s(emoji))])])}),0)]):_vm._e()]),_c('div',{staticClass:"cs-main-menu t-flex t-flex-row t-rounded-full t-cursor-pointer t-px-1",class:{ 'cs-menu-opened': _vm.messageMenu || _vm.messageReact }},[_c('div',{staticClass:"cs-divide-right t-px-2 cs-text-xs t-flex t-flex-row t-items-center t-cursor-default"},[_c('span',[_vm._v(_vm._s(_vm.$_message_time))])]),(_vm.showUpvote && _vm.isAdministrator)?_c('div',{staticClass:"cs-divide-right cs-tooltip-container t-px-2 cs-text-sm t-relative",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.markAsAnswered()}}},[_c('i',{staticClass:"fas fa-check"}),_c('div',{staticClass:"cs-tooltip t-absolute t-rounded-md t-px-2 t-py-1 t-text-xs t-text-white t-overflow-hidden t-whitespace-nowrap"},[_vm._v("Mark as Answered")]),_c('div',{staticClass:"cs-tooltip-arrow t-absolute t-transform t-rotate-45"})]):_vm._e(),(!_vm.showUpvote)?_c('div',{staticClass:"cs-divide-right cs-tooltip-container t-px-2 cs-text-sm t-relative",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleMessageReact()}}},[_c('i',{staticClass:"fas fa-smile-plus"}),_c('div',{staticClass:"cs-tooltip t-absolute t-rounded-md t-px-2 t-py-1 t-text-xs t-text-white t-overflow-hidden t-whitespace-nowrap"},[_vm._v("Add Reaction")]),_c('div',{staticClass:"cs-tooltip-arrow t-absolute t-transform t-rotate-45"})]):_vm._e(),(_vm.showThread)?_c('div',{staticClass:"cs-divide-right t-px-2 cs-text-sm",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.messageThread()}}},[_c('i',{staticClass:"fal fa-reply-all"})]):_vm._e(),_c('div',{staticClass:"t-px-2 cs-text-sm",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.toggleMessageMenu()}}},[_c('i',{staticClass:"fas fa-ellipsis-h"})])])])}
 var ChatMessageMenuvue_type_template_id_6b5dfde9_staticRenderFns = []
 
@@ -34321,7 +34325,7 @@ var ChatMessageMenu_component = normalizeComponent(
 )
 
 /* harmony default export */ var ChatMessageMenu = (ChatMessageMenu_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"439f264e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatUser.vue?vue&type=template&id=4f2a230f&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"05de5336-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatUser.vue?vue&type=template&id=4f2a230f&
 var ChatUservue_type_template_id_4f2a230f_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"t-flex t-flex-row"},[_c('div',{staticClass:"t-flex-none t-mr-3 t-relative t-overflow-hidden cs-user-avatar",class:_vm.getUserMembershipClass()},[_c('a',{staticClass:"t-no-underline",attrs:{"href":_vm.user.profileUrl,"target":"_blank"}},[_c('img',{staticClass:"t-max-w-full t-h-auto",attrs:{"src":_vm.user.avatarUrl}})])]),_c('div',{staticClass:"t-flex-grow cs-text-sm t-text-white t-flex t-flex-col"},[_c('div',{staticClass:"t-flex t-flex-row"},[_c('a',{staticClass:"t-flex-none t-no-underline hover:t-underline t-text-white t-font-semibold",attrs:{"href":_vm.user.profileUrl,"target":"_blank"}},[_vm._v(_vm._s(_vm.user.displayName))]),_vm._t("default")],2),_vm._t("footer")],2)])}
 var ChatUservue_type_template_id_4f2a230f_staticRenderFns = []
 
@@ -35326,21 +35330,10 @@ var linkify_string = __webpack_require__("feef");
     $_messages: {
       cache: false,
       get: function get() {
-        var _this = this;
-
-        var messages = this.messages.map(function (message) {
-          return _objectSpread2(_objectSpread2({}, message), {}, {
-            text: _this.stripHtml(message.text).linkify({
-              className: 'chat-message-link',
-              target: '_blank'
-            })
-          });
-        });
-
-        if (messages.length > this.messagesPageSize * this.messagesPage) {
-          return messages.slice(-1 * this.messagesPageSize * this.messagesPage);
+        if (this.messages.length > this.messagesPageSize * this.messagesPage) {
+          return this.messages.slice(-1 * this.messagesPageSize * this.messagesPage);
         } else {
-          return messages;
+          return this.messages;
         }
       }
     },
@@ -35371,8 +35364,6 @@ var linkify_string = __webpack_require__("feef");
     $_questions: {
       cache: false,
       get: function get() {
-        var _this2 = this;
-
         var questions = _toConsumableArray(this.questions);
 
         return questions.sort(function (a, b) {
@@ -35381,12 +35372,6 @@ var linkify_string = __webpack_require__("feef");
           var aUpVotes = (a === null || a === void 0 ? void 0 : (_a$reaction_counts = a.reaction_counts) === null || _a$reaction_counts === void 0 ? void 0 : _a$reaction_counts.upvote) || 0;
           var bUpVotes = (b === null || b === void 0 ? void 0 : (_b$reaction_counts = b.reaction_counts) === null || _b$reaction_counts === void 0 ? void 0 : _b$reaction_counts.upvote) || 0;
           return bUpVotes - aUpVotes;
-        }).map(function (question) {
-          return _objectSpread2(_objectSpread2({}, question), {}, {
-            text: _this2.stripHtml(question.text).linkify({
-              className: 'chat-message-link'
-            })
-          });
         });
       }
     },
@@ -35492,18 +35477,18 @@ var linkify_string = __webpack_require__("feef");
   },
   methods: {
     restoreScrollState: function restoreScrollState() {
-      var _this3 = this;
+      var _this = this;
 
       if (this.currentTab == 'chat') {
         if (this.messagesBottom) {
           this.$nextTick(function () {
-            _this3.scrollMessages(true);
+            _this.scrollMessages(true);
           });
         }
       } else {
         if (this.questionsBottom) {
           this.$nextTick(function () {
-            _this3.scrollQuestions(true);
+            _this.scrollQuestions(true);
           });
         }
       }
@@ -35643,30 +35628,30 @@ var linkify_string = __webpack_require__("feef");
       }
     },
     removeAllQuestions: function removeAllQuestions() {
-      var _this4 = this;
+      var _this2 = this;
 
       if (this.questions.length) {
         this.chatMenu = false;
         var questionRemove = this.questions[0];
         this.streamClient.deleteMessage(questionRemove.id).then(function () {
-          _this4.deleteMessage({
+          _this2.deleteMessage({
             message: questionRemove,
-            collection: _this4.questions
+            collection: _this2.questions
           });
 
-          _this4.removeAllQuestions();
+          _this2.removeAllQuestions();
         }).catch(function (_ref2) {
           var response = _ref2.response;
 
-          _this4.errorHandler(response, 'Mark question as answered error', _this4.questionErrors);
+          _this2.errorHandler(response, 'Mark question as answered error', _this2.questionErrors);
         });
       }
     },
     sendMessage: function sendMessage() {
-      var _this5 = this;
+      var _this3 = this;
 
       var payload = {
-        text: this.stripHtml(this.message.trim())
+        text: this.stripHtml(this.message).trim()
       };
       this.message = '';
 
@@ -35677,11 +35662,11 @@ var linkify_string = __webpack_require__("feef");
         }
 
         this.chatChannel.sendMessage(payload).then(function () {
-          _this5.messageErrors = [];
+          _this3.messageErrors = [];
         }).catch(function (_ref3) {
           var response = _ref3.response;
 
-          _this5.errorHandler(response, 'Message send error', _this5.messageErrors);
+          _this3.errorHandler(response, 'Message send error', _this3.messageErrors);
         });
         var message = {
           'id': '',
@@ -35703,25 +35688,25 @@ var linkify_string = __webpack_require__("feef");
         this.messages.push(message);
         this.insertedEmoji = [];
         this.$nextTick(function () {
-          _this5.scrollMessages(true);
+          _this3.scrollMessages(true);
         });
       }
     },
     sendQuestion: function sendQuestion() {
-      var _this6 = this;
+      var _this4 = this;
 
-      var text = this.stripHtml(this.question.trim());
+      var text = this.stripHtml(this.question).trim();
       this.question = '';
 
       if (text) {
         this.questionsChannel.sendMessage({
           text: text
         }).then(function () {
-          _this6.questionErrors = [];
+          _this4.questionErrors = [];
         }).catch(function (_ref4) {
           var response = _ref4.response;
 
-          _this6.errorHandler(response, 'Question send error', _this6.questionErrors);
+          _this4.errorHandler(response, 'Question send error', _this4.questionErrors);
         });
         var message = {
           'id': '',
@@ -35742,7 +35727,7 @@ var linkify_string = __webpack_require__("feef");
         };
         this.questions.push(message);
         this.$nextTick(function () {
-          _this6.scrollQuestions(true);
+          _this4.scrollQuestions(true);
         });
       }
     },
@@ -35772,12 +35757,12 @@ var linkify_string = __webpack_require__("feef");
       errors.push(message);
     },
     attachChatEventHandlers: function attachChatEventHandlers(channel, collection, category) {
-      var _this7 = this;
+      var _this5 = this;
 
       channel.on('message.new', function (_ref6) {
         var message = _ref6.message;
 
-        _this7.pushMessage({
+        _this5.pushMessage({
           message: message,
           collection: collection,
           category: category
@@ -35786,7 +35771,7 @@ var linkify_string = __webpack_require__("feef");
       channel.on('message.updated', function (_ref7) {
         var message = _ref7.message;
 
-        _this7.updateMessageState({
+        _this5.updateMessageState({
           message: message,
           collection: collection
         });
@@ -35794,7 +35779,7 @@ var linkify_string = __webpack_require__("feef");
       channel.on('message.deleted', function (_ref8) {
         var message = _ref8.message;
 
-        _this7.deleteMessage({
+        _this5.deleteMessage({
           message: message,
           collection: collection
         });
@@ -35803,7 +35788,7 @@ var linkify_string = __webpack_require__("feef");
         var message = _ref9.message,
             reaction = _ref9.reaction;
 
-        _this7.pushMessageReaction({
+        _this5.pushMessageReaction({
           message: message,
           reaction: reaction,
           collection: collection
@@ -35813,7 +35798,7 @@ var linkify_string = __webpack_require__("feef");
         var message = _ref10.message,
             reaction = _ref10.reaction;
 
-        _this7.deleteMessageReaction({
+        _this5.deleteMessageReaction({
           message: message,
           reaction: reaction,
           collection: collection
@@ -35823,7 +35808,7 @@ var linkify_string = __webpack_require__("feef");
         var message = _ref11.message,
             reaction = _ref11.reaction;
 
-        _this7.updateMessageReaction({
+        _this5.updateMessageReaction({
           message: message,
           reaction: reaction,
           collection: collection
@@ -35835,16 +35820,16 @@ var linkify_string = __webpack_require__("feef");
             user = _ref12.user;
 
         if (type == 'delete_user_messages') {
-          if (channel_id == _this7.chatChannelName) {
-            _this7.deleteUserMessages(user);
-          } else if (channel_id == _this7.questionsChannelName) {
-            _this7.deleteUserQuestions(user);
+          if (channel_id == _this5.chatChannelName) {
+            _this5.deleteUserMessages(user);
+          } else if (channel_id == _this5.questionsChannelName) {
+            _this5.deleteUserQuestions(user);
           }
         }
       });
     },
     setupChat: function setupChat() {
-      var _this8 = this;
+      var _this6 = this;
 
       this.streamClient = new browser_es["a" /* StreamChat */](this.apiKey, {
         timeout: 6000
@@ -35852,14 +35837,14 @@ var linkify_string = __webpack_require__("feef");
       this.streamClient.connectUser({
         id: this.userId
       }, this.token).then(function () {
-        _this8.chatChannel = _this8.streamClient.channel('messaging', _this8.chatChannelName, {});
-        return _this8.chatChannel.watch();
+        _this6.chatChannel = _this6.streamClient.channel('messaging', _this6.chatChannelName, {});
+        return _this6.chatChannel.watch();
       }).then(function (state) {
-        _this8.fetchWatchers();
+        _this6.fetchWatchers();
 
-        _this8.fetchPinnedMessages();
+        _this6.fetchPinnedMessages();
 
-        _this8.processMessages(state, _this8.messages, 'message');
+        _this6.processMessages(state, _this6.messages, 'message');
 
         var greeting = {
           id: 'greeting',
@@ -35867,39 +35852,39 @@ var linkify_string = __webpack_require__("feef");
           text: 'Welcome to chat!'
         };
 
-        _this8.messages.push(greeting);
+        _this6.messages.push(greeting);
 
-        _this8.chatChannel.on('user.watching.start', function (_ref13) {
+        _this6.chatChannel.on('user.watching.start', function (_ref13) {
           var user = _ref13.user;
 
-          _this8.$set(_this8.channelWatchers, user.id, user);
+          _this6.$set(_this6.channelWatchers, user.id, user);
         });
 
-        _this8.chatChannel.on('user.watching.stop', function (_ref14) {
+        _this6.chatChannel.on('user.watching.stop', function (_ref14) {
           var user = _ref14.user;
 
-          if (_this8.channelWatchers[user.id]) {
-            _this8.$delete(_this8.channelWatchers, user.id);
+          if (_this6.channelWatchers[user.id]) {
+            _this6.$delete(_this6.channelWatchers, user.id);
           }
         });
 
-        _this8.attachChatEventHandlers(_this8.chatChannel, _this8.messages, 'message');
+        _this6.attachChatEventHandlers(_this6.chatChannel, _this6.messages, 'message');
 
-        _this8.setupQuestionsChannel();
+        _this6.setupQuestionsChannel();
       });
     },
     setupQuestionsChannel: function setupQuestionsChannel() {
-      var _this9 = this;
+      var _this7 = this;
 
       this.questionsChannel = this.streamClient.channel('messaging', this.questionsChannelName, {});
       this.questionsChannel.watch().then(function (state) {
-        _this9.processMessages(state, _this9.questions, 'question');
+        _this7.processMessages(state, _this7.questions, 'question');
 
-        _this9.attachChatEventHandlers(_this9.questionsChannel, _this9.questions, 'question');
+        _this7.attachChatEventHandlers(_this7.questionsChannel, _this7.questions, 'question');
       });
     },
     fetchWatchers: function fetchWatchers() {
-      var _this10 = this;
+      var _this8 = this;
 
       var limit = 1000;
       this.chatChannel.query({
@@ -35912,13 +35897,13 @@ var linkify_string = __webpack_require__("feef");
 
         if (watchers) {
           watchers.forEach(function (user) {
-            _this10.$set(_this10.channelWatchers, user.id, user);
+            _this8.$set(_this8.channelWatchers, user.id, user);
           });
         }
       });
     },
     fetchBannedUsers: function fetchBannedUsers() {
-      var _this11 = this;
+      var _this9 = this;
 
       this.fetchingBannedUsers = true;
       this.bannedUsers = {};
@@ -35931,13 +35916,13 @@ var linkify_string = __webpack_require__("feef");
       }).then(function (_ref16) {
         var users = _ref16.users;
         users.forEach(function (user) {
-          _this11.$set(_this11.bannedUsers, user.id, user);
+          _this9.$set(_this9.bannedUsers, user.id, user);
         });
-        _this11.fetchingBannedUsers = false;
+        _this9.fetchingBannedUsers = false;
       });
     },
     fetchPinnedMessages: function fetchPinnedMessages() {
-      var _this12 = this;
+      var _this10 = this;
 
       var limit = 1000;
       this.chatChannel.search({
@@ -35951,32 +35936,32 @@ var linkify_string = __webpack_require__("feef");
           var message = _ref18.message;
 
           if (message.type == 'regular') {
-            _this12.insertMessage(message);
+            _this10.insertMessage(message);
           }
         });
 
-        _this12.unpinMessages();
+        _this10.unpinMessages();
       });
     },
     deleteUserMessages: function deleteUserMessages(user) {
-      var _this13 = this;
+      var _this11 = this;
 
       this.messages.forEach(function (message, index) {
         var _message$user;
 
         if (((_message$user = message.user) === null || _message$user === void 0 ? void 0 : _message$user.id) == user.id) {
-          _this13.messages.splice(index, 1);
+          _this11.messages.splice(index, 1);
         }
       });
     },
     deleteUserQuestions: function deleteUserQuestions(user) {
-      var _this14 = this;
+      var _this12 = this;
 
       this.questions.forEach(function (message, index) {
         var _message$user2;
 
         if (((_message$user2 = message.user) === null || _message$user2 === void 0 ? void 0 : _message$user2.id) == user.id) {
-          _this14.questions.splice(index, 1);
+          _this12.questions.splice(index, 1);
         }
       });
     },
@@ -35986,7 +35971,7 @@ var linkify_string = __webpack_require__("feef");
      * Unpins all but last specified value of pinned messages
      */
     unpinMessages: function unpinMessages() {
-      var _this15 = this;
+      var _this13 = this;
 
       var keep = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 2;
 
@@ -36005,7 +35990,7 @@ var linkify_string = __webpack_require__("feef");
         });
         revesedSorted.forEach(function (message, idx) {
           if (idx > keep - 1) {
-            _this15.unpinMessage({
+            _this13.unpinMessage({
               message: message
             });
           }
@@ -36017,12 +36002,12 @@ var linkify_string = __webpack_require__("feef");
      * Iterate over initial channel messages and call push message only for main channel non-deleted messages
      */
     processMessages: function processMessages(_ref20, collection, category) {
-      var _this16 = this;
+      var _this14 = this;
 
       var messages = _ref20.messages;
       messages.forEach(function (message) {
         if (message.type == 'regular') {
-          _this16.pushMessage({
+          _this14.pushMessage({
             message: message,
             collection: collection,
             category: category
@@ -36057,7 +36042,7 @@ var linkify_string = __webpack_require__("feef");
      * The message replies are not populated in this method
      */
     getMessageCopy: function getMessageCopy(message) {
-      var _this17 = this;
+      var _this15 = this;
 
       var messageCopy = function (_ref22) {
         var id = _ref22.id,
@@ -36074,6 +36059,9 @@ var linkify_string = __webpack_require__("feef");
         };
       }(message);
 
+      messageCopy.text = this.stripHtml(messageCopy.text).linkify({
+        className: 'chat-message-link'
+      });
       messageCopy.user = this.getUserCopy(message.user);
       messageCopy.reaction_counts = _objectSpread2({}, message.reaction_counts);
       messageCopy.reaction_scores = _objectSpread2({}, message.reaction_scores);
@@ -36097,7 +36085,7 @@ var linkify_string = __webpack_require__("feef");
         message.latest_reactions.forEach(function (reaction) {
           messageCopy.reactions.push({
             type: reaction.type,
-            user: _this17.getUserCopy(reaction.user)
+            user: _this15.getUserCopy(reaction.user)
           });
         });
       } else {
@@ -36108,7 +36096,7 @@ var linkify_string = __webpack_require__("feef");
           reactions.forEach(function (reaction) {
             messageCopy.reactions.push({
               type: reaction.type,
-              user: _this17.getUserCopy(reaction.user)
+              user: _this15.getUserCopy(reaction.user)
             });
           });
         });
@@ -36122,7 +36110,7 @@ var linkify_string = __webpack_require__("feef");
      * If the message has replies the method will fetch them from API
      */
     pushMessage: function pushMessage(_ref25) {
-      var _this18 = this;
+      var _this16 = this;
 
       var message = _ref25.message,
           collection = _ref25.collection,
@@ -36135,15 +36123,15 @@ var linkify_string = __webpack_require__("feef");
         this.chatChannel.getReplies(message.id, {
           limit: 1000
         }).then(function (_ref26) {
-          var _this18$messageThread;
+          var _this16$messageThread;
 
           var messages = _ref26.messages;
           messages.forEach(function (reply) {
-            messageCopy.replies.push(_this18.getMessageCopy(reply));
+            messageCopy.replies.push(_this16.getMessageCopy(reply));
           });
 
-          if (((_this18$messageThread = _this18.messageThread) === null || _this18$messageThread === void 0 ? void 0 : _this18$messageThread.id) == messageCopy.id) {
-            _this18.scrollThreadMessages();
+          if (((_this16$messageThread = _this16.messageThread) === null || _this16$messageThread === void 0 ? void 0 : _this16$messageThread.id) == messageCopy.id) {
+            _this16.scrollThreadMessages();
           }
         });
       }
@@ -36154,7 +36142,7 @@ var linkify_string = __webpack_require__("feef");
         if (message.type == 'regular') {
           var messageIdx = null;
           collection.forEach(function (msg, idx) {
-            if (!msg.id && msg.user.id == _this18.userId && msg.text == messageCopy.text) {
+            if (!msg.id && msg.user.id == _this16.userId && msg.text == messageCopy.text) {
               messageIdx = idx;
               found = true;
             }
@@ -36170,7 +36158,7 @@ var linkify_string = __webpack_require__("feef");
               var _messageIdx;
 
               parentMessage.replies.forEach(function (msg, idx) {
-                if (!msg.id && msg.user.id == _this18.userId && msg.text == messageCopy.text) {
+                if (!msg.id && msg.user.id == _this16.userId && msg.text == messageCopy.text) {
                   _messageIdx = idx;
                   found = true;
                 }
@@ -36187,7 +36175,7 @@ var linkify_string = __webpack_require__("feef");
 
       if (message.type == 'regular' && message.user.id == this.userId && category == 'question' && !message.own_reactions.length) {
         this.$nextTick(function () {
-          _this18.toggleMessageReaction({
+          _this16.toggleMessageReaction({
             message: messageCopy,
             reaction: 'upvote'
           });
@@ -36214,7 +36202,7 @@ var linkify_string = __webpack_require__("feef");
      * If the message already exists in the internal state, it will not be duplicated
      */
     insertMessage: function insertMessage(message) {
-      var _this19 = this;
+      var _this17 = this;
 
       var exists = false;
       var idx = null;
@@ -36238,7 +36226,7 @@ var linkify_string = __webpack_require__("feef");
           }).then(function (_ref27) {
             var messages = _ref27.messages;
             messages.forEach(function (reply) {
-              messageCopy.replies.push(_this19.getMessageCopy(reply));
+              messageCopy.replies.push(_this17.getMessageCopy(reply));
             });
           });
         }
@@ -36255,7 +36243,7 @@ var linkify_string = __webpack_require__("feef");
      * Update message text and pinned status
      */
     updateMessageState: function updateMessageState(_ref28) {
-      var _this20 = this;
+      var _this18 = this;
 
       var message = _ref28.message,
           collection = _ref28.collection;
@@ -36265,7 +36253,7 @@ var linkify_string = __webpack_require__("feef");
           storedMessage.pinned = message.pinned;
           storedMessage.pinnedAt = message.pinned_at ? luxon["DateTime"].fromISO(message.pinned_at) : null;
 
-          _this20.unpinMessages();
+          _this18.unpinMessages();
         } else if (message.type == 'reply' && message.parent_id && storedMessage.id == message.parent_id) {
           storedMessage.replies.forEach(function (storedReplyMessage) {
             if (storedReplyMessage.id == message.id) {
@@ -36310,7 +36298,7 @@ var linkify_string = __webpack_require__("feef");
      * Locates the internal message, main channel message or reply, and calls addMessageReaction
      */
     pushMessageReaction: function pushMessageReaction(_ref30) {
-      var _this21 = this;
+      var _this19 = this;
 
       var message = _ref30.message,
           reaction = _ref30.reaction,
@@ -36320,21 +36308,21 @@ var linkify_string = __webpack_require__("feef");
         if (message.parent_id && storedMessage.id == message.parent_id) {
           storedMessage.replies.forEach(function (storedReplyMessage) {
             if (storedReplyMessage.id == message.id) {
-              _this21.addMessageReaction(storedReplyMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
+              _this19.addMessageReaction(storedReplyMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
             }
           });
         } else if (storedMessage.id == message.id) {
-          _this21.addMessageReaction(storedMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
+          _this19.addMessageReaction(storedMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
         }
       });
 
       if (this.messageThread && this.messageThread.id == message.id) {
         this.$nextTick(function () {
-          _this21.scrollThreadMessages();
+          _this19.scrollThreadMessages();
         });
       } else if (this.messageThread == null && scroll) {
         this.$nextTick(function () {
-          _this21.scrollMessages(true);
+          _this19.scrollMessages(true);
         });
       }
     },
@@ -36365,7 +36353,7 @@ var linkify_string = __webpack_require__("feef");
      * Locates the internal message, main channel message or reply, and calls removeMessageReaction
      */
     deleteMessageReaction: function deleteMessageReaction(_ref31) {
-      var _this22 = this;
+      var _this20 = this;
 
       var message = _ref31.message,
           reaction = _ref31.reaction,
@@ -36374,11 +36362,11 @@ var linkify_string = __webpack_require__("feef");
         if (message.parent_id && storedMessage.id == message.parent_id) {
           storedMessage.replies.forEach(function (storedReplyMessage) {
             if (storedReplyMessage.id == message.id) {
-              _this22.removeMessageReaction(storedReplyMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
+              _this20.removeMessageReaction(storedReplyMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
             }
           });
         } else if (storedMessage.id == message.id) {
-          _this22.removeMessageReaction(storedMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
+          _this20.removeMessageReaction(storedMessage, reaction, _objectSpread2({}, message.reaction_counts), _objectSpread2({}, message.reaction_scores));
         }
       });
     },
@@ -36407,7 +36395,7 @@ var linkify_string = __webpack_require__("feef");
       }
     },
     updateMessageReaction: function updateMessageReaction(_ref32) {
-      var _this23 = this;
+      var _this21 = this;
 
       var message = _ref32.message,
           reaction = _ref32.reaction,
@@ -36417,14 +36405,14 @@ var linkify_string = __webpack_require__("feef");
           storedMessage.reaction_counts = _objectSpread2({}, message.reaction_counts);
           storedMessage.reaction_scores = _objectSpread2({}, message.reaction_scores);
 
-          if (reaction.user.id == _this23.userId) {
+          if (reaction.user.id == _this21.userId) {
             storedMessage.own_reactions.forEach(function (ownReaction) {
               if (ownReaction.type == reaction.type) {
                 ownReaction.score = reaction.score;
               }
             });
 
-            _this23.$root.$emit('messageOwnReactionUpdate', {
+            _this21.$root.$emit('messageOwnReactionUpdate', {
               message: message
             });
           }
@@ -36447,7 +36435,7 @@ var linkify_string = __webpack_require__("feef");
       this.showEmoji = !this.showEmoji;
     },
     updateMessage: function updateMessage(_ref33) {
-      var _this24 = this;
+      var _this22 = this;
 
       var message = _ref33.message,
           text = _ref33.text;
@@ -36457,23 +36445,23 @@ var linkify_string = __webpack_require__("feef");
         text: text,
         pinned: message.pinned
       }).then(function () {
-        _this24.messageErrors = [];
+        _this22.messageErrors = [];
       }).catch(function (_ref34) {
         var response = _ref34.response;
 
-        _this24.errorHandler(response, 'Message update error', errors);
+        _this22.errorHandler(response, 'Message update error', errors);
       });
     },
     removeMessage: function removeMessage(_ref35) {
-      var _this25 = this;
+      var _this23 = this;
 
       var message = _ref35.message;
       this.streamClient.deleteMessage(message.id).then(function () {
-        _this25.messageErrors = [];
+        _this23.messageErrors = [];
       }).catch(function (_ref36) {
         var response = _ref36.response;
 
-        _this25.errorHandler(response, 'Message delete error', _this25.messageErrors);
+        _this23.errorHandler(response, 'Message delete error', _this23.messageErrors);
       });
     },
     blockUser: function blockUser(_ref37) {
@@ -36492,7 +36480,7 @@ var linkify_string = __webpack_require__("feef");
       this.showDialog = true;
     },
     closeDialog: function closeDialog(confirmation) {
-      var _this26 = this;
+      var _this24 = this;
 
       var errors = this.currentTab == 'chat' ? this.messageErrors : this.questionErrors;
 
@@ -36503,24 +36491,24 @@ var linkify_string = __webpack_require__("feef");
           }).catch(function (_ref40) {
             var response = _ref40.response;
 
-            _this26.railErrorHandler(response, 'User ban error', errors);
+            _this24.railErrorHandler(response, 'User ban error', errors);
           });
         } else if (this.questionRemove) {
           this.streamClient.deleteMessage(this.questionRemove.id).then(function () {
-            _this26.questionErrors = [];
+            _this24.questionErrors = [];
           }).catch(function (_ref41) {
             var response = _ref41.response;
 
-            _this26.errorHandler(response, 'Mark question as answered error', _this26.questionErrors);
+            _this24.errorHandler(response, 'Mark question as answered error', _this24.questionErrors);
           });
         } else if (this.userDeleteMessages) {
           railchat.deleteUserMessages(this.userDeleteMessages.id).then(function () {
-            _this26.messageErrors = [];
-            _this26.questionErrors = [];
+            _this24.messageErrors = [];
+            _this24.questionErrors = [];
           }).catch(function (_ref42) {
             var response = _ref42.response;
 
-            _this26.railErrorHandler(response, 'Delete user messages error', errors);
+            _this24.railErrorHandler(response, 'Delete user messages error', errors);
           });
         }
       }
@@ -36568,7 +36556,7 @@ var linkify_string = __webpack_require__("feef");
       }
     },
     addOwnReaction: function addOwnReaction(_ref45) {
-      var _this27 = this;
+      var _this25 = this;
 
       var message = _ref45.message,
           reaction = _ref45.reaction;
@@ -36590,13 +36578,13 @@ var linkify_string = __webpack_require__("feef");
 
         if (scroll) {
           this.$nextTick(function () {
-            _this27.scrollMessages(true);
+            _this25.scrollMessages(true);
           });
         }
       }
     },
     toggleMessageReaction: function toggleMessageReaction(_ref46) {
-      var _this28 = this;
+      var _this26 = this;
 
       var message = _ref46.message,
           reaction = _ref46.reaction;
@@ -36609,11 +36597,11 @@ var linkify_string = __webpack_require__("feef");
           reaction: reaction
         });
         channel.deleteReaction(message.id, reaction).then(function () {
-          _this28.messageErrors = [];
+          _this26.messageErrors = [];
         }).catch(function (_ref47) {
           var response = _ref47.response;
 
-          _this28.errorHandler(response, 'Message reaction remove error', errors);
+          _this26.errorHandler(response, 'Message reaction remove error', errors);
         });
       } else {
         this.addOwnReaction({
@@ -36623,23 +36611,23 @@ var linkify_string = __webpack_require__("feef");
         channel.sendReaction(message.id, {
           type: reaction
         }).then(function () {
-          _this28.messageErrors = [];
+          _this26.messageErrors = [];
         }).catch(function (_ref48) {
           var response = _ref48.response;
 
-          _this28.errorHandler(response, 'Message reaction send error', errors);
+          _this26.errorHandler(response, 'Message reaction send error', errors);
         });
       }
     },
     showMessageThread: function showMessageThread(_ref49) {
-      var _this29 = this;
+      var _this27 = this;
 
       var message = _ref49.message;
       this.messageThread = message;
       this.showMembers = false;
       this.showThread = true;
       this.$nextTick(function () {
-        _this29.scrollThreadMessages(true);
+        _this27.scrollThreadMessages(true);
       });
     },
     hideMessageThread: function hideMessageThread() {
@@ -36647,33 +36635,33 @@ var linkify_string = __webpack_require__("feef");
       this.messageThread = null;
     },
     pinMessage: function pinMessage(_ref50) {
-      var _this30 = this;
+      var _this28 = this;
 
       var message = _ref50.message;
       this.streamClient.pinMessage({
         id: message.id,
         text: message.text
       }, null).then(function () {
-        _this30.messageErrors = [];
+        _this28.messageErrors = [];
       }).catch(function (_ref51) {
         var response = _ref51.response;
 
-        _this30.errorHandler(response, 'Message pin error', _this30.messageErrors);
+        _this28.errorHandler(response, 'Message pin error', _this28.messageErrors);
       });
     },
     unpinMessage: function unpinMessage(_ref52) {
-      var _this31 = this;
+      var _this29 = this;
 
       var message = _ref52.message;
       this.streamClient.unpinMessage({
         id: message.id,
         text: message.text
       }, null).then(function () {
-        _this31.messageErrors = [];
+        _this29.messageErrors = [];
       }).catch(function (_ref53) {
         var response = _ref53.response;
 
-        _this31.errorHandler(response, 'Message unpin error', _this31.messageErrors);
+        _this29.errorHandler(response, 'Message unpin error', _this29.messageErrors);
       });
     },
     toggleShowPinned: function toggleShowPinned() {
@@ -36684,17 +36672,17 @@ var linkify_string = __webpack_require__("feef");
       this.showEmoji = false;
     },
     unblockUser: function unblockUser(_ref54) {
-      var _this32 = this;
+      var _this30 = this;
 
       var id = _ref54.id;
       railchat.unbanUser(id).then(function () {
-        _this32.messageErrors = [];
+        _this30.messageErrors = [];
 
-        _this32.fetchBannedUsers();
+        _this30.fetchBannedUsers();
       }).catch(function (_ref55) {
         var response = _ref55.response;
 
-        _this32.railErrorHandler(response, 'User unban error');
+        _this30.railErrorHandler(response, 'User unban error');
       });
     },
     railErrorHandler: function railErrorHandler(response, action, errors) {
@@ -36728,16 +36716,16 @@ var linkify_string = __webpack_require__("feef");
       this.showEmoji = false;
     },
     setCurrentTab: function setCurrentTab(tab) {
-      var _this33 = this;
+      var _this31 = this;
 
       if (tab == 'chat' || tab == 'questions') {
         this.setScrollState();
         this.scrollingMessages = true;
         this.currentTab = tab;
         this.$nextTick(function () {
-          _this33.restoreScrollState();
+          _this31.restoreScrollState();
 
-          _this33.containerScrolled();
+          _this31.containerScrolled();
         });
       }
 
@@ -36750,8 +36738,7 @@ var linkify_string = __webpack_require__("feef");
       return this.currentTab == tab ? active : inactive;
     },
     stripHtml: function stripHtml(html) {
-      var doc = new DOMParser().parseFromString(html, 'text/html');
-      return doc.body.textContent || "";
+      return html.replace(/(<([^>]+)>)/gi, '').replace(/[\u200B-\u200D\uFEFF\u200E\u200F]/g, '');
     }
   }
 });
@@ -36777,7 +36764,7 @@ var Chat_component = normalizeComponent(
 )
 
 /* harmony default export */ var Chat = (Chat_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"439f264e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatPopup.vue?vue&type=template&id=dbbe2b36&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"05de5336-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chat/ChatPopup.vue?vue&type=template&id=dbbe2b36&
 var ChatPopupvue_type_template_id_dbbe2b36_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.message)?_c('div',{staticClass:"t-fixed t-top-0 t-right-0 t-left-0 t-h-screen",staticStyle:{"z-index":"200"}},[_c('div',{staticStyle:{"overflow-y":"scroll","top":"0","right":"0","height":"100%","position":"fixed"}}),_c('div',{staticClass:"cs-overlay t-absolute t-inset-0 t-bg-gray-100 t-bg-opacity-10",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.close()}}}),_c('div',{staticClass:"t-fixed",style:(_vm.position)},[_c('div',{staticClass:"t-absolute t-text-base",staticStyle:{"bottom":"12px","right":"10px"}},[_c('div',{staticClass:"cs-sub-menu t-w-44 t-p-3 t-flex t-flex-col t-bg-black t-rounded-lg t-text-white cs-text-sm t-z-50"},[(_vm.message.user.id != _vm.userId && !_vm.isAdministrator)?_c('div',[_c('a',{staticClass:"t-no-underline t-text-white",attrs:{"href":_vm.message.user.profileUrl,"target":"_blank"}},[_vm._v("View Profile")])]):_vm._e(),(_vm.message.user.id == _vm.userId)?_c('div',{class:{'t-mb-2': _vm.isAdministrator}},[_c('div',{staticClass:"t-mb-1 t-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.editMessage()}}},[_vm._v("Edit Message")]),_c('div',{staticClass:"t-mb-1 t-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.removeMessage()}}},[_vm._v("Delete")])]):_vm._e(),(_vm.isAdministrator)?_c('div',[_c('div',{staticClass:"t-mb-2 t-font-semibold t-cursor-default"},[_vm._v("Moderation")]),(_vm.$_show_pin)?_c('div',{staticClass:"t-mb-1 t-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.pinMessage()}}},[_vm._v("Pin Message")]):_vm._e(),(_vm.$_show_unpin)?_c('div',{staticClass:"t-mb-1 t-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.unpinMessage()}}},[_vm._v("Unpin Message")]):_vm._e(),(_vm.message.user.id != _vm.userId)?_c('div',{staticClass:"t-mb-1 t-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.removeMessage()}}},[_vm._v("Remove Message")]):_vm._e(),(_vm.message.user.id != _vm.userId)?_c('div',{staticClass:"t-mb-1 t-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.removeAllMessages()}}},[_vm._v("Remove All Messages")]):_vm._e(),(_vm.message.user.id != _vm.userId)?_c('div',{staticClass:"t-cursor-pointer",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.blockUser()}}},[_vm._v("Block Student")]):_vm._e()]):_vm._e()])])])]):_vm._e()}
 var ChatPopupvue_type_template_id_dbbe2b36_staticRenderFns = []
 
