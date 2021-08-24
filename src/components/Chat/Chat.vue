@@ -819,7 +819,7 @@ export default {
                 let message = {
                     'id': '',
                     'type': 'regular',
-                    'text': payload.text,
+                    'text': payload.text.linkify({ className: 'chat-message-link' }),
                     'reply_count': 0,
                     'pinned': false,
                     'user': this.userData,
@@ -862,7 +862,7 @@ export default {
                 let message = {
                     'id': '',
                     'type': 'regular',
-                    'text': text,
+                    'text': text.linkify({ className: 'chat-message-link' }),
                     'reply_count': 0,
                     'pinned': false,
                     'user': this.userData,
