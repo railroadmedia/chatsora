@@ -819,7 +819,7 @@ export default {
                 let message = {
                     'id': '',
                     'type': 'regular',
-                    'text': payload.text.linkify({ className: 'chat-message-link' }),
+                    'text': payload.text.linkify({ className: 'chat-message-link', target: '_blank' }),
                     'reply_count': 0,
                     'pinned': false,
                     'user': this.userData,
@@ -862,7 +862,7 @@ export default {
                 let message = {
                     'id': '',
                     'type': 'regular',
-                    'text': text.linkify({ className: 'chat-message-link' }),
+                    'text': text.linkify({ className: 'chat-message-link', target: '_blank' }),
                     'reply_count': 0,
                     'pinned': false,
                     'user': this.userData,
@@ -1117,7 +1117,7 @@ export default {
         getMessageCopy(message) {
             let messageCopy = (({ id, type, text, reply_count, pinned }) => ({ id, type, text, reply_count, pinned }))(message);
 
-            messageCopy.text = this.stripHtml(messageCopy.text).linkify({ className: 'chat-message-link' });
+            messageCopy.text = this.stripHtml(messageCopy.text).linkify({ className: 'chat-message-link', target: '_blank' });
 
             messageCopy.user = this.getUserCopy(message.user);
 
