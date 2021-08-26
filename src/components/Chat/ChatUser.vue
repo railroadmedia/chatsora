@@ -17,7 +17,7 @@
                 <a
                     :href="user.profileUrl"
                     target="_blank"
-                    class="t-flex-none t-no-underline hover:t-underline t-text-white t-font-semibold"
+                    class="t-no-underline hover:t-underline t-text-white t-font-semibold"
                 >{{ user.displayName }}</a>
                 <slot></slot>
             </div>
