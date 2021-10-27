@@ -1021,7 +1021,7 @@ export default {
 
         fetchWatchers() {
 
-            const limit = 1000;
+            const limit = 100;
 
             this.chatChannel
                 .query({
@@ -1040,7 +1040,7 @@ export default {
             this.fetchingBannedUsers = true;
             this.bannedUsers = {};
 
-            const limit = 1000;
+            const limit = 100;
 
             this.streamClient
                 .queryUsers({ banned:true }, {}, { limit, offset:0 })
@@ -1053,7 +1053,7 @@ export default {
         },
 
         fetchPinnedMessages() {
-            const limit = 1000;
+            const limit = 100;
 
             this.chatChannel
                 .search(
@@ -1153,7 +1153,7 @@ export default {
 
             } else {
                 this.chatChannel
-                    .getReactions(message.id, { limit: 1000 })
+                    .getReactions(message.id, { limit: 100 })
                     .then(({ reactions }) => {
                         reactions.forEach((reaction) => {
                             messageCopy.reactions.push({ type: reaction.type, user: this.getUserCopy(reaction.user) });
@@ -1176,7 +1176,7 @@ export default {
 
             if (message.reply_count) {
                 this.chatChannel
-                    .getReplies(message.id, { limit: 1000 })
+                    .getReplies(message.id, { limit: 100 })
                     .then(({ messages }) => {
                         messages.forEach((reply) => {
                             messageCopy.replies.push(this.getMessageCopy(reply));
@@ -1273,7 +1273,7 @@ export default {
 
                 if (message.reply_count) {
                     this.chatChannel
-                        .getReplies(message.id, { limit: 1000 })
+                        .getReplies(message.id, { limit: 100 })
                         .then(({ messages }) => {
                             messages.forEach((reply) => {
                                 messageCopy.replies.push(this.getMessageCopy(reply));
