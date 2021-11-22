@@ -1016,7 +1016,9 @@ export default {
                 .then(({ watchers }) => {
                     if (watchers) {
                         watchers.forEach(user => {
-                            this.$set(this.channelWatchers, user.id, user);
+                            if (Math.abs(DateTime.fromISO(user.last_active).diffNow('hours').toObject().hours) < 4) {
+                              this.$set(this.channelWatchers, user.id, user);
+                            }
                         });
                     }
                 });
